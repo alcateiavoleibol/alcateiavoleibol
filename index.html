@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Início - Alcateia Voleibol</title>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+<img alt="Logo Alcateia Voleibol" src="imagens/logo1.png" style="max-height: 100px;"/>
+<h1>Alcateia Voleibol 2025</h1>
+</header>
+<nav>
+<a href="index.html">Início</a>
+<a href="galeria.html">Galeria</a>
+<a href="sobre.html">Sobre</a>
+<a href="contato.html">Contato</a>
+</nav>
+<main>
+<section class="games-section">
+<h2>Próximos Encontros</h2>
+<ul>
+<li>01/06/2025 - RJ Beach Arena - 08:00h</li>
+<li>15/06/2025 - RJ Beach Arena - 08:00h</li>
+<li>29/06/2025 - RJ Beach Arena - 08:00h</li>
+</ul>
+</section>
+</main>
+<main>
+<div class="slide-container">
+<div class="slide">
+<img class="active" src="imagens/sd1.jpg"/>
+<img src="imagens/sd2.jpg"/>
+<img src="imagens/sd3.jpg"/>
+</div>
+</div>
+</main>
+    <footer>
+        <div class="social-icons">
+            <a href="https://chat.whatsapp.com/F2oOvWdu36mGt9yRZbpxD2"target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/whatsapp.png" alt="WhatsApp"></a>
+            <a href="https://discord.gg/N4nsKvTAEy"target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/discord-logo.png" alt="Discord"></a>
+            <a href="https://www.youtube.com/@FORTYSEV7N" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/youtube-play.png" alt="YouTube"></a>
+        </div>
+        <p>&copy; 2025 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p>
+    </footer>
+	<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide img");
+    setInterval(() => {
+      slides[slideIndex].classList.remove("active");
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add("active");
+    }, 3000);
+  </script>
+</body>
+</html>
