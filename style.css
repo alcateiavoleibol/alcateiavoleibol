@@ -1,89 +1,83 @@
-body { 
-  font-family: Arial, sans-serif; 
-  margin: 0;
-  padding: 0; 
-  }
 
-header, footer { 
-  background-color: #001225; 
-  color: white; 
-  text-align: center; 
-  padding: 20px; 
-  }
-  
-nav { 
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+header, footer {
+  background-color: #001225;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+header img {
+  max-width: 100%;
+  height: auto;
+}
+
+nav {
   background-color: #002139;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  }
-  
-nav a { 
-  color: white; 
-  padding: 15px; 
-  text-decoration: none;
-  }
-  
-nav a:hover { 
-  background-color: #005599;
-  }  
-  
-main { 
-  padding: 20px; 
-  }
-  
-  main h1{ 
-    font-size: 60px;
-    background-color: #000;
-    color: #F2FFFC;
-    text-align: center;
-    font-family: "Open Sans Condensed", sans-serif;
-    padding 20px;
-    margin: 0;
-    text-transform: uppercase;
-  }
-  
-    main h2{ 
-    font-size: 90px;
-    background-color: #002139;
-    color: #F2FFFC;
-    text-align: center;
-    font-family: "Open Sans Condensed", sans-serif;
-    padding 20px;
-    margin: 0;
-	line-height: 0.9;
-	letter-spacing: 5px;
-	text-transform: uppercase;
-  }
-  
-.slide-container { 
-  max-width: 100%; 
-  position: relative; 
-  overflow: hidden;
-  margin-bottom: 30px; 
-  }
-  
-.slide img { 
-  width: 35%; 
-  display: none;
-  }
-  
-.slide img.active {
-  display: block; 
-  }
-  
-.games-section, .about-section, .contact-section {
-  margin-bottom: 30px; 
-  }
-  
-footer a { 
-  margin: 0 10px;
+}
+
+nav a {
   color: white;
-  text-decoration: none; 
-  }
-  
+  padding: 15px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #005599;
+}
+
+main {
+  padding: 20px;
+}
+
+main h1 {
+  font-size: 3rem;
+  background: linear-gradient(to right, #005599, #00aaff);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 20px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
 @media (max-width: 768px) {
-   nav { 
-   flex-direction: column;
-   }
+  nav {
+    flex-direction: column;
+  }
+
+  main h1 {
+    font-size: 2rem;
+  }
+
+  main p, main li {
+    font-size: 1rem;
+  }
+}
+
+/* Animação de fade-in ao rolar */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
