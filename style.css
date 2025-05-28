@@ -48,6 +48,28 @@ main h1 {
   margin-bottom: 20px;
 }
 
+  main h3{ 
+    font-size: 60px;
+    background-color: #000;
+    color: #F2FFFC;
+    text-align: center;
+    font-family: "Open Sans Condensed", sans-serif;
+    padding 20px;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  
+   main h4{ 
+    font-size: 60px;
+    background-color: #002139;
+    color: #002139;
+    text-align: center;
+    font-family: "Open Sans Condensed", sans-serif;
+    padding 20px;
+    margin: 0;
+    text-transform: uppercase;
+  } 
+
 img {
   max-width: 100%;
   height: auto;
@@ -61,12 +83,33 @@ img {
 
   main h1 {
     font-size: 2rem;
+	background-color: #000;
+    color: #F2FFFC;
+    text-align: center;
+    font-family: "Open Sans Condensed", sans-serif;
+    padding 20px;
+    margin: 0;
+    text-transform: uppercase;
   }
 
   main p, main li {
     font-size: 1rem;
+	padding: 20px; 
   }
 }
+
+    main h2{ 
+    font-size: 90px;
+    background-color: #002139;
+    color: #F2FFFC;
+    text-align: center;
+    font-family: "Open Sans Condensed", sans-serif;
+    padding 20px;
+    margin: 0;
+	line-height: 0.9;
+	letter-spacing: 5px;
+	text-transform: uppercase;
+  }
 
 /* Animação de fade-in ao rolar */
 .fade-in {
@@ -92,7 +135,7 @@ img {
   }
   
 .games-section, .about-section, .contact-section {
-  margin-bottom: 0px;
+  margin-bottom: 30px;
   }
 
 @keyframes fadeInUp {

@@ -5,10 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Galeria - Alcateia Voleibol</title>
   <link rel="stylesheet" href="style.css"/>
+   <style>
+    .flex-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .games-section, .slide-container {
+      flex: 1;
+      min-width: 300px;
+    }
+    @media (max-width: 768px) {
+      .flex-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
 <script>
-  const senhaCorreta = "alcateia2025";
+  const senhaCorreta = "2025";
   const acesso = prompt("Digite a senha para acessar a galeria:");
   if (acesso !== senhaCorreta) {
     alert("Senha incorreta!");
@@ -26,30 +45,101 @@
 </nav>
 <main class="fade-in">
 <section>
-  <h2>Galerias por Data</h2>
-  <ul class="galeria-links">
-    <li><a href="downloads/2025-02-22.zip" download>2025.02.22 - Alcateia Voleibol - (Beach Arena)</a></li>
-    <li><a href="downloads/2025-03-08.zip" download>2025.03.08 - Alcateia Voleibol - (Beach Arena)</a></li>
-    <li><a href="downloads/2025-04-21.zip" download>2025.04.21 - Alcateia Voleibol - (Beach Arena)</a></li>
-  </ul>
-</section>
-
-<div class="slide-container">
-  <div class="slide">
-    <img class="active" src="imagens/sd1.jpg"/>
-    <img src="imagens/sd2.jpg"/>
-    <img src="imagens/sd3.jpg"/>
-  </div>
+  <h4>
+    <div style="text-align:center;">
+      <font size="7" color="#FDD015">
+	     Momentos em Fotos
+	    </font>
+		    </h4>
+			
+<main class="fade-in">
+  <div class="flex-container">
+    <section class="games-section">
+      <center> <h1>∴ NOSSOS ÚLTIMOS ENCONTROS ∴</h1>
+	<section>
+      <a href="downloads/2025-02-22.zip" download>
+        <div style="text-align:center;">
+  <font size="5" color="#971B2F">	  
+         21/04/2025 - Alcateia Voleibol ∴ (INDISPONÍVEL)</font> </div> 
+	   <div style="text-align:center;">
+  <font size="5" color="#012169">	
+	   <img alt="Bola" src="imagens/bola.jpg" style="width:20px; margin: 0 10px;"/> RJ Beach Arena - 08:00h | 13:00h
+	       </font> 
+		      </div> </a>
+		   <br>
+		    <br>
+		   <div style="text-align:center;">
+  <font size="5" color="#971B2F">	  
+         08/03/2025 - Alcateia Voleibol ∴ (INDISPONÍVEL)</font> </div> 
+	   <div style="text-align:center;">
+  <font size="5" color="#012169">	
+	   <img alt="Bola" src="imagens/bola.jpg" style="width:20px; margin: 0 10px;"/> RJ Beach Arena - 08:00h | 11:30h
+	       </font> 
+		      </div>
+		   <br>
+		      <br>
+		   <div style="text-align:center;">
+  <font size="5" color="#971B2F">	  
+         22/02/2025 - Alcateia Voleibol ∴ (INDISPONÍVEL)</font> </div> 
+	   <div style="text-align:center;">
+  <font size="5" color="#012169">	
+	   <img alt="Bola" src="imagens/bola.jpg" style="width:20px; margin: 0 10px;"/> RJ Beach Arena - 08:00h | 11:30h
+	       </font> 
+		      </div>
+		   <br>
+		     <br>
+		   <div style="text-align:center;">
+  <font size="5" color="#971B2F">	  
+         20.01.2025 - Alcateia Voleibol ∴ (INDISPONÍVEL)</font> </div> 
+	   <div style="text-align:center;">
+  <font size="5" color="#012169">	
+	   <img alt="Bola" src="imagens/bola.jpg" style="width:20px; margin: 0 10px;"/> RJ Beach Arena - 07:00h | 12:15h
+	       </font> 
+		      </div>
+			     <br>
+				 <br>
+				 <br>
+   <main class="fade-in">
+     <section class="about-section">
+       <h3 style="font-size:250%">AVISO: GALERIA EM MANUTENÇÃO</h3>
+    <br>
+     <h4>
+      <div style="text-align:center;">
+  <font size="5" color="#FFFFFF">
+	
+	Atualmente, nosso site e o acervo de <img alt="Instagram" src="imagens/google-photos.png" style="width:40px; margin: 0 10px;"/></a> Fotos | Vídeos <img alt="Instagram" src="imagens/youtube.png" style="width:40px; margin: 0 10px;"/></a> estão passando por uma fase de manutenção para melhorias significativas. Pedimos a sua paciência, pois em breve teremos novidades empolgantes para compartilhar. 
+    
+  </font>
 </div>
+<div style="text-align:left;">
+  <font size="5" color="#FFFF00">
+    <p>
+      <br>&nbsp Agradecemos a compreensão.
+      <br><br>&nbsp Att., Equipe Alcateia <br><br>
+    </p>
+  </font>
+</div>
+</h4>				 
+  </center>
+    </section>
+	    <div class="slide-container">
+      <div class="slide">
+        <img class="active" src="imagens/sd1.jpg"/>
+        <img src="imagens/sd2.jpg"/>
+        <img src="imagens/sd3.jpg"/>
+		<img src="imagens/sd4.jpg"/>
+      </div>
+    </div>
+  </div>
 </main>
 <footer>
-<div class="social-icons" style="text-align:center; margin-top: 20px;">
-<a href="https://www.tiktok.com" target="_blank"><img alt="TikTok" src="imagens/tiktok.png" style="width:30px; margin: 0 10px;"/></a>
-<a href="https://www.instagram.com" target="_blank"><img alt="Instagram" src="imagens/instagram.png" style="width:30px; margin: 0 10px;"/></a>
-<a href="https://wa.me/" target="_blank"><img alt="WhatsApp" src="imagens/whatsapp.png" style="width:30px; margin: 0 10px;"/></a>
-<a href="https://www.facebook.com" target="_blank"><img alt="Facebook" src="imagens/facebook.png" style="width:30px; margin: 0 10px;"/></a>
-<a href="https://www.youtube.com" target="_blank"><img alt="YouTube" src="imagens/youtube.png" style="width:30px; margin: 0 10px;"/></a>
-</div>
+  <div class="social-icons" style="text-align:center; margin-top: 20px;">
+    <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank"><img alt="TikTok" src="imagens/tiktok.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://www.instagram.com/alcateiavoleibol.oficial" target="_blank"><img alt="Instagram" src="imagens/instagram.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://wa.me/21967248256" target="_blank"><img alt="WhatsApp" src="imagens/whatsapp.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://alcateiavoleibol.github.io/alcateiavoleibol/" target="_blank"><img alt="Facebook" src="imagens/facebook.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://www.youtube.com/@AlcateiaVoleibol" target="_blank"><img alt="YouTube" src="imagens/youtube.png" style="width:30px; margin: 0 10px;"/></a>
+  </div>
    <p>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p>
 </footer>
 <script>
