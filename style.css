@@ -41,7 +41,7 @@ main {
 }
 
 main h1 {
-  font-size: 3rem;
+  font-size: 1.5rem;
   background: linear-gradient(to right, #005599, #00aaff);
   -webkit-background-clip: text;
   color: transparent;
@@ -73,7 +73,27 @@ img {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.8s forwards;
-}
+  }
+
+.slide-container { 
+  max-width: 100%; 
+  position: relative; 
+  overflow: hidden;
+  margin-bottom: 30px; 
+  }
+  
+.slide img { 
+  width: 100%;
+  display: none;
+  }
+  
+.slide img.active {
+  display: block;
+  }
+  
+.games-section, .about-section, .contact-section {
+  margin-bottom: 0px;
+  }
 
 @keyframes fadeInUp {
   to {

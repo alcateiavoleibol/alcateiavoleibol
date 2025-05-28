@@ -1,59 +1,117 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Início - Alcateia Voleibol</title>
-<link href="style.css" rel="stylesheet"/>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Início - Alcateia Voleibol</title>
+  <link href="style.css" rel="stylesheet"/>
+  <style>
+    .flex-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .games-section, .slide-container {
+      flex: 1;
+      min-width: 300px;
+    }
+    @media (max-width: 768px) {
+      .flex-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
 <header>
-<img alt="Logo Alcateia Voleibol" src="imagens/banner.png" style="max-height: 100%";/>
+  <img alt="Logo Alcateia Voleibol" src="imagens/banner.png" style="max-height: 100%;" />
 </header>
 <nav>
-<a href="index.html">INÍCIO</a>
-<a href="galeria.html">GALERIA</a>
-<a href="sobre.html">SOBRE</a>
-<a href="contato.html">CONTATO</a>
+  <a href="index.html">INÍCIO</a>
+  <a href="galeria.html">GALERIA</a>
+  <a href="sobre.html">SOBRE</a>
+  <a href="contato.html">CONTATO</a>
 </nav>
 <main class="fade-in">
-<section class="games-section">
-<h1>∴ESTAMOS EM MANUTENÇÃO∴</h1>
-<ul>
-<li>01/06/2025 - RJ Beach Arena - 08:00h</li>
-<li>15/06/2025 - RJ Beach Arena - 08:00h</li>
-<li>29/06/2025 - RJ Beach Arena - 08:00h</li>
-</ul>
-</section>
+  <div class="flex-container">
+    <section class="games-section">
+      <center> <h1>∴ PRÓXIMOS ENCONTROS ∴</h1>
+
+<div style="text-align:center;">
+  <font size="5" color="#971B2F">	  
+         07/06/2025 - Sábado </font> </div> 
+	   <div style="text-align:center;">
+  <font size="5" color="#012169">	
+	   <img alt="TikTok" src="imagens/bola.jpg" style="width:20px; margin: 0 10px;"/> RJ Beach Arena - 08:00h | 11:30h
+	       </font> 
+		      </div>
+		   <br>
+		    <br>
+		   <div style="text-align:center;">
+  <font size="5" color="#971B2F">	  
+         15/06/2025 - Domingo </font> </div> 
+	   <div style="text-align:center;">
+  <font size="5" color="#012169">	
+	   <img alt="TikTok" src="imagens/bola.jpg" style="width:20px; margin: 0 10px;"/> RJ Beach Arena - 08:00h | 11:30h
+	       </font> 
+		      </div>
+		   <br>
+		      <br>
+		   <div style="text-align:center;">
+  <font size="5" color="#971B2F">	  
+         19/06/2025 - Quinta-feira </font> </div> 
+	   <div style="text-align:center;">
+  <font size="5" color="#012169">	
+	   <img alt="TikTok" src="imagens/bola.jpg" style="width:20px; margin: 0 10px;"/> RJ Beach Arena - 08:00h | 11:30h
+	       </font> 
+		      </div>
+		   <br>
+		     <br>
+		   <div style="text-align:center;">
+  <font size="5" color="#971B2F">	  
+         28/06/2025 - Sábado </font> </div> 
+	   <div style="text-align:center;">
+  <font size="5" color="#012169">	
+	   <img alt="TikTok" src="imagens/bola.jpg" style="width:20px; margin: 0 10px;"/> RJ Beach Arena - 08:00h | 11:30h
+	       </font> 
+		      </div>
+		   <br>  	  
+  </center>
+    </section>
+    <div class="slide-container">
+      <div class="slide">
+        <img class="active" src="imagens/sd1.jpg"/>
+        <img src="imagens/sd2.jpg"/>
+        <img src="imagens/sd3.jpg"/>
+      </div>
+    </div>
+  </div>
 </main>
-<main class="fade-in">
-<div class="slide-container">
-<div class="slide">
-<img class="active" src="imagens/sd1.jpg"/>
-<img src="imagens/sd2.jpg"/>
-<img src="imagens/sd3.jpg"/>
-</div>
-</div>
-</main>
+
+<img class="active" src="imagens/logo1.png"/>
+
 <footer>
-<div class="social-icons" style="text-align:center; margin-top: 20px;">
-<a href="https://www.tiktok.com" target="_blank"><img alt="TikTok" src="imagens/tiktok.png" style="width:30px; margin: 0 10px;"/></a>
-<a href="https://www.instagram.com" target="_blank"><img alt="Instagram" src="imagens/instagram.png" style="width:30px; margin: 0 10px;"/></a>
-<a href="https://wa.me/" target="_blank"><img alt="WhatsApp" src="imagens/whatsapp.png" style="width:30px; margin: 0 10px;"/></a>
-<a href="https://www.facebook.com" target="_blank"><img alt="Facebook" src="imagens/facebook.png" style="width:30px; margin: 0 10px;"/></a>
-<a href="https://www.youtube.com" target="_blank"><img alt="YouTube" src="imagens/youtube.png" style="width:30px; margin: 0 10px;"/></a>
-</div>
-   <p>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p>
+  <div class="social-icons" style="text-align:center; margin-top: 20px;">
+    <a href="https://www.tiktok.com" target="_blank"><img alt="TikTok" src="imagens/tiktok.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://www.instagram.com" target="_blank"><img alt="Instagram" src="imagens/instagram.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://wa.me/" target="_blank"><img alt="WhatsApp" src="imagens/whatsapp.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://www.facebook.com" target="_blank"><img alt="Facebook" src="imagens/facebook.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://www.youtube.com" target="_blank"><img alt="YouTube" src="imagens/youtube.png" style="width:30px; margin: 0 10px;"/></a>
+  </div>
+  <p>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p>
 </footer>
-	<script>
-    let slideIndex = 0;
-    const slides = document.querySelectorAll(".slide img");
-    setInterval(() => {
-      slides[slideIndex].classList.remove("active");
-      slideIndex = (slideIndex + 1) % slides.length;
-      slides[slideIndex].classList.add("active");
-    }, 3000);
-  </script>
+<script>
+  let slideIndex = 0;
+  const slides = document.querySelectorAll(".slide img");
+  setInterval(() => {
+    slides[slideIndex].classList.remove("active");
+    slideIndex = (slideIndex + 1) % slides.length;
+    slides[slideIndex].classList.add("active");
+  }, 3000);
+</script>
 </body>
 </html>
