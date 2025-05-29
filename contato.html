@@ -1,11 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <title>Contato | Alcateia Voleibol</title>
   <link rel="stylesheet" href="formulario.css">
-  <link rel="stylesheet" href="style.css">
-   <script>
+  <script>
     function updateCharCount() {
       const textarea = document.getElementById("mensagem");
       const counter = document.getElementById("charCount");
@@ -20,20 +20,12 @@
   </script>
 </head>
 <body>
-   <header>
-     <img alt="Logo Alcateia Voleibol" src="imagens/banner.png" style="max-height: 100%";/>
-   </header>
-     <nav>
-       <a href="index.html">INÍCIO</a>
-       <a href="galeria.html">GALERIA</a>
-       <a href="sobre.html">SOBRE</a>
-       <a href="contato.html">CONTATO</a>
-     </nav>
-     <h2 class="blinking centered">Entre em Contato com a Alcateia Voleibol</h2>
 
-    <form action="https://formsubmit.co/alcateiavoleibol@outlook.com.br" method="POST" class="fade-in">
+  <h2 class="blinking centered">Entre em Contato com a Alcateia Voleibol</h2>
 
-    <input type="hidden" name="_cc" value="alcateiavoleibol2023@gmail.com">
+  <form action="https://formsubmit.co/62fcb6afd3e0168dd2d1faa0a315d155" method="POST" class="fade-in">
+
+    <input type="hidden" name="_cc" value="alcateiavoleibol@outlook.com.br">
     <input type="hidden" name="_next" value="https://alcateiavoleibol.github.io/alcateiavoleibol/obrigado.html">
     <input type="hidden" name="_captcha" value="false">
 
@@ -82,41 +74,7 @@
     <div id="charCount">Restam 600 caracteres</div>
 
     <button type="submit">Enviar</button>
-  
-    <p id="successMessage" style="display:none; text-align:center; margin-top:20px; color:#00ff88;">
-      Ticket gerado e mensagem enviada com sucesso. Obrigado!
-    </p>
-    </form>
-    <script>
-      document.querySelector("form").addEventListener("submit", function(event) {
-        event.preventDefault();
-        const form = this;
-        const data = new FormData(form);
-        fetch(form.action, {
-          method: "POST",
-          body: data,
-          headers: {
-            'Accept': 'application/json'
-          }
-        }).then(response => {
-          if (response.ok) {
-            document.getElementById("successMessage").style.display = "block";
-            form.reset();
-            updateCharCount();
-            toggleOutroCampo({value: ""});
-          }
-        });
-      });
-    </script>
-<footer>
-  <div class="social-icons" style="text-align:center; margin-top: 20px;">
-    <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank"><img alt="TikTok" src="imagens/tiktok.png" style="width:30px; margin: 0 10px;"/></a>
-    <a href="https://www.instagram.com/alcateiavoleibol.oficial" target="_blank"><img alt="Instagram" src="imagens/instagram.png" style="width:30px; margin: 0 10px;"/></a>
-    <a href="https://api.whatsapp.com/send?l=pt&phone=5521967248256" target="_blank"><img alt="WhatsApp" src="imagens/whatsapp.png" style="width:30px; margin: 0 10px;"/></a>
-    <a href="https://alcateiavoleibol.github.io/alcateiavoleibol/" target="_blank"><img alt="Facebook" src="imagens/facebook.png" style="width:30px; margin: 0 10px;"/></a>
-    <a href="https://www.youtube.com/@AlcateiaVoleibol" target="_blank"><img alt="YouTube" src="imagens/youtube.png" style="width:30px; margin: 0 10px;"/></a>
-  </div>
-   <p>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p>
-</footer>
+  </form>
+
 </body>
 </html>
