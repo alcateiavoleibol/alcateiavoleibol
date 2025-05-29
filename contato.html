@@ -17,6 +17,27 @@
       const outroInput = document.getElementById("outroInput");
       outroInput.style.display = select.value === "Outros" ? "block" : "none";
     }
+	
+	      document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const form = this;
+        const data = new FormData(form);
+        fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: {
+            'Accept': 'application/json'
+          }
+        }).then(response => {
+          if (response.ok) {
+            document.getElementById("successMessage").style.display = "block";
+            form.reset();
+            updateCharCount();
+            toggleOutroCampo({value: ""});
+          }
+        });
+      });
+	  
   </script>
 </head>
 <body>
@@ -87,7 +108,7 @@
       Ticket gerado e mensagem enviada com sucesso. Obrigado!
     </p>
     </form>
-   <!-- <script>
+  <!-- <script>
       document.querySelector("form").addEventListener("submit", function(event) {
         event.preventDefault();
         const form = this;
