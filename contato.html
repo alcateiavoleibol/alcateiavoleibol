@@ -17,8 +17,9 @@
       const outroInput = document.getElementById("outroInput");
       outroInput.style.display = select.value === "Outros" ? "block" : "none";
     }
-	
-	      document.querySelector("form").addEventListener("submit", function(event) {
+  </script>
+     <script>
+	           document.querySelector("form").addEventListener("submit", function(event) {
         event.preventDefault();
         const form = this;
         const data = new FormData(form);
@@ -37,8 +38,10 @@
           }
         });
       });
-	  
-  </script>
+    </script>
+	   
+	     
+  
 </head>
 <body>
    <header>
@@ -50,7 +53,7 @@
        <a href="sobre.html">SOBRE</a>
        <a href="contato.html">CONTATO</a>
      </nav>
-     <h2 class="blinking centered">Entre em Contato com a Alcateia Voleibol</h2>
+     <h2 class="blinking centered">Entre em Contato com a Alcateia Voleibol TESTE</h2>
 
     <form action="https://formsubmit.co/alcateiavoleibol2023@gmail.com" method="POST" class="fade-in">
 
