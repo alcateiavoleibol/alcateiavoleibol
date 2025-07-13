@@ -1,1 +1,57 @@
-<!-- style.css gerado automaticamente -->
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f4f4;
+  color: #222;
+}
+header {
+  background: #012169;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+header .logo {
+  width: 60px;
+  vertical-align: middle;
+}
+nav {
+  background: #003366;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+nav a:hover {
+  text-decoration: underline;
+}
+main {
+  padding: 20px;
+}
+footer {
+  background: #012169;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+.social-icons img {
+  width: 30px;
+  margin: 0 10px;
+}
+.slider {
+  max-width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.slide {
+  display: none;
+  width: 100%;
+}
+.slide.active {
+  display: block;
+}
