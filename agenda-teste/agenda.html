@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agenda de Jogos</title>
+  <link rel="stylesheet" href="agenda.css"/>
+  <script src="agenda.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Agenda de Jogos - Alcateia Voleibol</h1>
+  </header>
+  <nav>
+  <a href="index.html">INÍCIO</a>
+  <a href="agenda.html">AGENDA</a>
+  <a href="galeria.html">GALERIA</a>
+  <a href="sobre.html">SOBRE</a>
+  <a href="contato.html">CONTATO</a>
+</nav>
+  <main>
+    <div id="login-section">
+      <h2>Acesso Restrito</h2>
+      <input type="password" id="senha" placeholder="Digite a senha" />
+      <button id="btn-login">Acessar</button>
+      <p id="login-message" class="message"></p>
+    </div>
+
+    <section id="admin-section" class="hidden">
+      <section class="form-section">
+        <h2>Adicionar Jogo</h2>
+        <form id="form-jogo">
+          <input type="date" id="data" required />
+          <input type="time" id="hora-inicio" required />
+          <input type="time" id="hora-termino" required />
+          <input type="text" id="local" placeholder="Local do jogo" required />
+          <button type="submit">Adicionar</button>
+        </form>
+      </section>
+      <section class="lista-section">
+        <h2>Jogos Agendados</h2>
+        <ul id="lista-jogos"></ul>
+      </section>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 ALCATEIA VOLEIBOL</p>
+  </footer>
+</body>
+</html>
