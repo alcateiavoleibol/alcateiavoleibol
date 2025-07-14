@@ -1,10 +1,9 @@
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-}
+} 
 
 header, footer {
   background-color: #001225;
@@ -98,7 +97,7 @@ img {
   }
 }
 
-    main h2{ 
+   main h2{ 
     font-size: 90px;
     background-color: #002139;
     color: #F2FFFC;
@@ -109,7 +108,7 @@ img {
 	line-height: 0.9;
 	letter-spacing: 5px;
 	text-transform: uppercase;
-  }
+  } 
 
 /* Animação de fade-in ao rolar */
 .fade-in {
