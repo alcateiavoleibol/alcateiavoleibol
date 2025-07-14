@@ -20,4 +20,21 @@
         "local": "Quadra Leste",
         "endereco": "Rua Nova, 789"
     }
+    ,
+    {
+        "data": "17-07-2025",
+        "horaInicio": "7:30",
+        "horaFim": "9:30",
+        "local": "Centro Esportivo",
+        "endereco": "Rua Olinda Ellis, 540"
+    }
+        ,
+    {
+        "data": "17-07-2025",
+        "horaInicio": "7:30",
+        "horaFim": "9:30",
+        "taxa": "R$ 12,00",
+        "local": "Centro Esportivo",
+        "endereco": "Rua Olinda Ellis, 540"
+    }
 ]
