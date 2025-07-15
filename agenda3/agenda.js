@@ -123,7 +123,7 @@ async function salvarNoGitHub() {
     if (!confirm('Deseja salvar as alterações no GitHub?')) return;
 
     // 🔒 Substitua pelo seu token TEMPORÁRIO durante os testes
-    const token = "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"; // ← Substitua manualmente
+    const token = "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"; // ← Substitua manualmente
 
     try {
         const repoOwner = 'alcateiavoleibol';
