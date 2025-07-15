@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Jogos | Alcateia Vôlei</title>
+    <link rel="stylesheet" href="agenda.css">
+	<link rel="stylesheet" href="../responsivo.css">
+</head>
+<body>
+    <header>
+        <img alt="Logo Alcateia Voleibol" src="../imagens/banner.png" style="max-height: 100%;" />
+        <button id="adminBtn">Área Administrativa</button>
+    </header>
+<nav>
+  <a href="../index.html">INÍCIO</a>
+  <a href="../agenda/agenda.html">AGENDA</a>
+  <a href="../galeria/galeria.html">GALERIA</a>
+  <a href="../sobre.html">SOBRE</a>
+  <a href="../contato.html">CONTATO</a>
+</nav>
+    <main id="agenda"></main>
+
+    <div id="adminPanel" class="hidden">
+        <h2>Administração</h2>
+        <input type="password" id="adminPassword" placeholder="Digite a senha...">
+        <button onclick="authAdmin()">Entrar</button>
+
+        <div id="adminControls" class="hidden">
+            <h3>Gerenciar Jogos</h3>
+            <input type="text" id="dataInput" placeholder="Data (DD/MM/YYYY)">
+            <input type="text" id="horaInicioInput" placeholder="Hora Início (HH:MM)">
+            <input type="text" id="horaFimInput" placeholder="Hora Fim (HH:MM)">
+            <input type="text" id="taxaInput" placeholder="Taxa de Aluguel (R$)">
+            <input type="text" id="localInput" placeholder="Local">
+            <input type="text" id="enderecoInput" placeholder="Endereço">
+            <button onclick="addJogo()">Adicionar Jogo</button>
+            <button onclick="salvarNoGitHub()" id="saveBtn">Salvar no GitHub</button>
+            <div id="jogosAdmin"></div>
+        </div>
+    </div>
+
+    <script src="agenda.js"></script>
+</body>
+</html>
