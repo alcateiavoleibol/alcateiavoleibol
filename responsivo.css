@@ -2,14 +2,6 @@
 
 @media (min-width: 576px) {
 	/* celular */
-	
-	body.home header {
-		min-height: 25.25rem;
-	}
-	
-	.bg-yellow {
-		margin-top: 0;
-	}
 }
 
 @media (min-width: 768px) {
@@ -23,7 +15,5 @@
 
 @media (min-width: 1200px) {
 	/* grandes telas */
-
-	body.home header {
-		min-height: 31.25rem;
+	
 	}
