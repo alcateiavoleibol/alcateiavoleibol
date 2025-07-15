@@ -82,10 +82,10 @@ img {
   border-radius: 8px;
 }
 
-/*@media (max-width: 768px) {
+@media (max-width: 768px) {
   nav {
     flex-direction: column;
-  } */
+  } 
 
   main h1 {
     font-size: 2rem;
