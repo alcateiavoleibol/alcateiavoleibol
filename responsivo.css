@@ -1,28 +1,29 @@
-
 /* Media Queries */
 
-/* Telas menores que 768px (tablets e celulares em modo paisagem) */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  .container {
-    padding: 10px;
-  }
+@media (min-width: 576px) {
+	/* celular */
+	
+	body.home header {
+		min-height: 25.25rem;
+	}
+	
+	.bg-yellow {
+		margin-top: 0;
+	}
 }
 
-/* Telas menores que 480px (smartphones em modo retrato) */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  p {
-    font-size: 0.9rem;
-  }
-
-  .col {
-    min-width: 100%;
-  }
+@media (min-width: 768px) {
+	/* celular / tablet */
 }
+
+@media (min-width: 992px) {
+	/* pequenas telas */
+
+}
+
+@media (min-width: 1200px) {
+	/* grandes telas */
+
+	body.home header {
+		min-height: 31.25rem;
+	}
