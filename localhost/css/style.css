@@ -1,0 +1,199 @@
+
+/* Cores do Site */
+
+:root {
+	--color1: #EFCA11;
+	--color2: #AA0000;
+	--color3: #C9A805;
+	--color4: #910000;
+	--branco: #ffffff;
+	--preto:  #000000;
+}
+
+
+*,
+*:hover {
+	transition: 0.3s all;
+}
+
+
+.all {
+	margin: :0;
+	padding: 0;
+}
+
+
+body { 
+	font-family:'Josefin Sans', sans-serif;
+	font-weight: 400;
+	font-size: 110% 
+}
+
+header {
+	background-image: url('../imagens/banner.png');
+	background-size: cover;
+}
+
+/* MENU SOCIAL */
+
+section#social ul {
+	background-color: var(--color1); /* COR DAS REDES */
+	margin: 0;
+	padding: .2rem;
+}
+
+/* MENU PRINCIPAL */
+
+.navbar-toggler,
+.custom-toggler.navbar-toggler-icon {
+	border-color: #FFFFFF !important;
+}
+
+.navbar-toggler-icon {
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+
+#menu #navbarPrincipal ul {
+	margin-top: .4rem;
+}
+
+#menu #navbarPrincipal ul li {
+	margin: 0 1.1rem;
+}
+
+#menu #navbarPrincipal ul li a {
+	border-bottom: 1px solid transparent;
+	color: var(--color2); /* COR DO MENU */
+	font-size: 1.1rem;
+	padding: 0;
+	text-transform: lowercase;		
+}
+
+#menu #navbarPrincipal ul li a:hover, #menu #navbarPrincipal ul li.active a {
+	color: var(--color3); /* COR DA NAVEGAÇÃO MENU */
+	border-bottom: 1px solid var(--color1);
+}
+
+/* SLIDE */
+
+img.slide {
+	width: 100%;
+}
+
+/* CONTEUDO */
+
+section#content .content {
+	background: url('../imagens/bg_fundo.png') repeat var(--color3); /* COR DO FUNDO */
+}
+
+.bg-white {
+	background: url('../imagens/bg.png'); /* BG */
+}
+
+.bg-shadow {
+	box-shadow: 0 9px 10px 0px white, 0 10px 0px 0px white, 12px 0 60px -4px rgba(68, 68, 68, 0.8), -12px 0 6px -4px rgba(68, 68, 68, 0.8);
+}
+
+/* MAP */
+
+.bg-yellow {
+	background: url('../imagens/bg_red.png') repeat var(--color2);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem 0;
+}
+
+.bg-yellow .address {
+	width: 20rem;
+	height: 6rem;
+}
+
+.bg-yellow .address h3 {
+	text-transform: uppercase;
+	font-weight: 700;
+	color: var(--color2);
+}
+
+/* RODAPÉ */
+
+footer .footer {
+	background:  url('../imagens/rodape.png') repeat var(--color2);
+}
+
+footer .footer p {
+	color: var(--branco); /* COR DO TEXTO DO RODAPÉ */
+}
+
+/* PÁGINA | A PIZZARIA */
+
+h3.title { 
+	text-transform: uppercase;
+	color: var(--color1);
+
+}
+
+
+@media (min-width: 576px) {
+	/* celular */
+	
+	body.home header {
+		min-height: 25.25rem;
+	}
+	
+	.bg-yellow {
+		margin-top: 0;
+	}
+}
+
+@media (min-width: 768px) {
+	/* celular / tablet */
+}
+
+@media (min-width: 992px) {
+	/* pequenas telas */
+
+}
+
+@media (min-width: 1200px) {
+	/* grandes telas */
+
+	body.home header {
+		min-height: 31.25rem;
+	}
+}
+
+/* Animação de fade-in ao rolar */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards;
+  }
+
+.slide-container { 
+  max-width: 100%; 
+  position: relative; 
+  overflow: hidden;
+  margin-bottom: 30px; 
+  }
+  
+.slide img { 
+  width: 100%;
+  display: none;
+  }
+  
+.slide img.active {
+  display: block;
+  }
+  
+.games-section, .about-section, .contact-section {
+  margin-bottom: 30px;
+  }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
