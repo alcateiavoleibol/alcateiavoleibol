@@ -123,12 +123,12 @@ async function salvarNoGitHub() {
     if (!confirm('Deseja salvar as alterações no GitHub?')) return;
 
     // 🔒 Substitua pelo seu token TEMPORÁRIO durante os testes
-    const token = "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"; // ← Substitua manualmente
+    const token = "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"; // ← Substitua manualmente
 
     try {
         const repoOwner = 'alcateiavoleibol';
         const repoName = 'alcateiavoleibol';
-        const filePath = 'agenda/agenda.json';
+        const filePath = '../agenda/agenda.json';
         const branch = 'main';
         const commitMessage = 'Atualização da agenda via painel admin';
 
