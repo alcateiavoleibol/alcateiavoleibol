@@ -6,21 +6,5 @@
         "taxa": "200,00",
         "local": "Ginásio Alcateia",
         "endereco": "Rua das Palmeiras, 123"
-    },
-    {
-        "data": "25/07/2025",
-        "horaInicio": "19:00",
-        "horaFim": "21:00",
-        "taxa": "250,00",
-        "local": "Arena Central",
-        "endereco": "Av. Principal, 456"
-    },
-    {
-        "data": "01/08/2025",
-        "horaInicio": "17:30",
-        "horaFim": "19:30",
-        "taxa": "180,00",
-        "local": "Quadra Leste",
-        "endereco": "Rua Nova, 789"
     }
 ]
