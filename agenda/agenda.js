@@ -123,12 +123,12 @@ async function salvarNoGitHub() {
     if (!confirm('Deseja salvar as alterações no GitHub?')) return;
 
     // 🔒 Substitua pelo seu token TEMPORÁRIO durante os testes
-    const token = "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"; // ← Substitua manualmente
+    const token = "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"; // ← Substitua manualmente
 
     try {
         const repoOwner = 'alcateiavoleibol';
         const repoName = 'alcateiavoleibol';
-        const filePath = 'https://alcateiavoleibol.github.io/alcateiavoleibol/agenda/agenda.json';
+        const filePath = 'agenda/agenda.json';
         const branch = 'main';
         const commitMessage = 'Atualização da agenda via painel admin';
 
