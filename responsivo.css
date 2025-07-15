@@ -1,0 +1,28 @@
+
+/* Media Queries */
+
+/* Telas menores que 768px (tablets e celulares em modo paisagem) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .container {
+    padding: 10px;
+  }
+}
+
+/* Telas menores que 480px (smartphones em modo retrato) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  .col {
+    min-width: 100%;
+  }
+}
