@@ -1,13 +1,24 @@
 
-/* Estilo base */
+/* Menu Responsivo com Animação */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  background-color: #002139;
+  padding: 0.5rem 1rem;
+  border: none;
+  text-align: center;
+}
+
 .menu {
   display: flex;
   gap: 1rem;
-  background-color: #111;
+  background-color: #002139;
   padding: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-  transition: max-height 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .menu a {
@@ -18,17 +29,8 @@
 }
 
 .menu a:hover {
-  background: #333;
-}
-
-.menu-toggle {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: white;
-  background-color: #111;
-  padding: 0.5rem 1rem;
-  border: none;
+  background: #005599;
+  border-radius: 5px;
 }
 
 @media (max-width: 768px) {
@@ -45,5 +47,21 @@
 
   .menu-toggle {
     display: block;
+  }
+}
+
+/* Flex container global */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .flex-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
