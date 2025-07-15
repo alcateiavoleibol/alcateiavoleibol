@@ -65,12 +65,12 @@ input {
     max-width: 300px;
 }
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     #agenda {
         padding: 0.5rem;
     }
 
     .jogo {
         font-size: 0.9rem;
-    }
+    } */
 }
