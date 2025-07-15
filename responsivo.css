@@ -1,69 +1,49 @@
-/* Media Queries */
 
-/* Estilos padrão para telas maiores */
+/* Estilo base */
 .menu {
-  display: flex; /* ou inline-block, etc. */
-  /* ... outros estilos do menu */
+  display: flex;
+  gap: 1rem;
+  background-color: #111;
+  padding: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: background 0.3s;
+}
+
+.menu a:hover {
+  background: #333;
 }
 
 .menu-toggle {
-  display: none; /* Ícone escondido por padrão */
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  background-color: #111;
+  padding: 0.5rem 1rem;
+  border: none;
 }
-
-@media (min-width: 576px) {
-	/* celular */
-	
-}
-
-@media (max-width: 576px) {
-	/* celular */
-	
-}
-
-@media (min-width: 768px) {
-	/* celular / tablet */
-
-}
-
 
 @media (max-width: 768px) {
-  nav {
-      flex-direction: column;
-  } 
-   .flex-container {
-        flex-direction: column;
-        align-items: center;
   .menu {
-    display: none; /* Oculta o menu */
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .menu.active {
+    display: flex;
   }
 
   .menu-toggle {
-    display: block; /* Mostra o ícone do hambúrguer */
-    /* ... estilos do ícone */
-  }
-
-  /* Estilos para o menu quando aberto */
-  .menu.active {
-    display: block; /* Mostra o menu quando a classe 'active' é adicionada */
+    display: block;
   }
 }
-    }
-@media (min-width: 992px) {
-	/* pequenas telas */
-
-}
-
-@media (max-width: 992px) {
-	/* pequenas telas */
-
-}
-
-@media (min-width: 1200px) {
-	/* grandes telas */
-
-	}
-	
-@media (max-width: 1200px) {
-	/* grandes telas */
-
-	}	
