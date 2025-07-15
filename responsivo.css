@@ -6,6 +6,8 @@
 
 @media (min-width: 768px) {
 	/* celular / tablet */
+nav {
+    flex-direction: column;
 }
 
 @media (min-width: 992px) {
