@@ -128,7 +128,7 @@ async function salvarNoGitHub() {
     try {
         const repoOwner = 'alcateiavoleibol';
         const repoName = 'alcateiavoleibol';
-        const filePath = 'agenda2/agenda.json';
+        const filePath = 'agenda3/agenda.json';
         const branch = 'main';
         const commitMessage = 'Atualização da agenda via painel admin';
 
