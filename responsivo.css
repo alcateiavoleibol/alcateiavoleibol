@@ -1,5 +1,15 @@
 /* Media Queries */
 
+/* Estilos padrão para telas maiores */
+.menu {
+  display: flex; /* ou inline-block, etc. */
+  /* ... outros estilos do menu */
+}
+
+.menu-toggle {
+  display: none; /* Ícone escondido por padrão */
+}
+
 @media (min-width: 576px) {
 	/* celular */
 	
@@ -23,8 +33,21 @@
    .flex-container {
         flex-direction: column;
         align-items: center;
-}
+  .menu {
+    display: none; /* Oculta o menu */
+  }
 
+  .menu-toggle {
+    display: block; /* Mostra o ícone do hambúrguer */
+    /* ... estilos do ícone */
+  }
+
+  /* Estilos para o menu quando aberto */
+  .menu.active {
+    display: block; /* Mostra o menu quando a classe 'active' é adicionada */
+  }
+}
+    }
 @media (min-width: 992px) {
 	/* pequenas telas */
 
