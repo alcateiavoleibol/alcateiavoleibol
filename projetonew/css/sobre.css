@@ -23,6 +23,7 @@ header {
 .banner {
     width: 100%;
     height: auto;
+	display: block;
 }
 
 nav {
@@ -44,6 +45,8 @@ nav {
 #menu-list a {
     color: white;
     text-decoration: none;
+    font-weight: bold;
+	line-height: 2.5;
 }
 
 #menu-toggle {
@@ -56,7 +59,11 @@ nav {
 }
 
 main {
-    padding: 20px;
+    padding: 50px;
+}
+
+section {
+    margin-bottom: 40px;
 }
 
 footer {

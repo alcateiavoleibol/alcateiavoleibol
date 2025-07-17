@@ -5,6 +5,16 @@ body {
     color: #333;
 }
 
+p {
+    text-align: justify;
+    line-height: 1.5;
+}
+
+p1 {
+    text-align: center;
+    line-height: 1.5;
+}
+
 header {
     background-color: #002139;
     color: white;
@@ -36,6 +46,7 @@ nav {
     color: white;
     text-decoration: none;
     font-weight: bold;
+	line-height: 2.5;
 }
 
 #menu-toggle {
@@ -48,7 +59,7 @@ nav {
 }
 
 main {
-    padding: 20px;
+    padding: 50px;
 }
 
 section {
