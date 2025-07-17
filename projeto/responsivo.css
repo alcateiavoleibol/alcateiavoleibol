@@ -1,0 +1,20 @@
+@media (max-width: 768px) {
+    #menu-list {
+        display: none;
+        flex-direction: column;
+        text-align: center;
+        background-color: #002139;
+    }
+
+    #menu-list.show {
+        display: flex;
+    }
+
+    #menu-toggle {
+        display: block;
+    }
+
+    #menu-list li {
+        margin: 10px 0;
+    }
+}
