@@ -1,22 +1,38 @@
 [
     {
-        "data": "2025-07-18",
+        "dia": 18,
+        "mes": 7,
+        "ano": 2025,
         "hora_inicio": "07",
         "minuto_inicio": "00",
         "hora_fim": "12",
         "minuto_fim": "00",
         "taxa": "0,00",
-        "local": "Centro Esportivo",
+        "local": "Centro Esportivo"",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160"
     },
     {
-        "data": "2025-07-25",
-        "hora_inicio": "10",
-        "minuto_inicio": "20",
-        "hora_fim": "13",
-        "minuto_fim": "15",
+        "dia": 25,
+        "mes": 7,
+        "ano": 2025,
+        "hora_inicio": "19",
+        "minuto_inicio": "00",
+        "hora_fim": "21",
+        "minuto_fim": "30",
         "taxa": "12,00",
         "local": "RJ Beach Arena",
         "endereco": "R. Catiara, 58 - Campo Grande, Rio de Janeiro - RJ, 23045-140"
+    },
+    {
+        "dia": 29,
+        "mes": 7,
+        "ano": 2025,
+        "hora_inicio": "17",
+        "minuto_inicio": "00",
+        "hora_fim": "19",
+        "minuto_fim": "00",
+        "taxa": "7,50",
+        "local": "Arena 12",
+        "endereco": "Rua Porto, 100 - Centro"
     }
 ]

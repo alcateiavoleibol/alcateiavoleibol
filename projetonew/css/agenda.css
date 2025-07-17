@@ -11,24 +11,15 @@
     transition: transform 0.3s;
 }
 
-.jogo:first-child {
-    border-color: #00FFAA;
-    background-color: rgba(0, 255, 170, 0.1);
-}
-
 .jogo:hover {
     transform: scale(1.02);
 }
 
-button.admin-btn {
-    margin-top: 10px;
-    background: #FF4500;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
+.jogo.destaque {
+    border-color: #00FFAA;
+    background-color: rgba(0, 255, 170, 0.1);
 }
+
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px);}

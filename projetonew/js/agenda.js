@@ -1,16 +1,3 @@
-let isAdmin = false;
-
-function validarAdmin() {
-    const senha = document.getElementById('admin-password').value;
-    if (senha === '2020') {
-        isAdmin = true;
-        alert('Acesso administrativo liberado!');
-        carregarAgenda();
-    } else {
-        alert('Senha incorreta.');
-    }
-}
-
 function carregarAgenda() {
     fetch('../agenda.json')
         .then(response => response.json())
@@ -22,51 +9,31 @@ function renderizarAgenda(jogos) {
     const agendaDiv = document.getElementById('agenda');
     agendaDiv.innerHTML = '';
 
-    jogos.sort((a, b) => new Date(a.data) - new Date(b.data));
+    jogos.sort((a, b) => {
+        const dataA = new Date(a.ano, a.mes - 1, a.dia);
+        const dataB = new Date(b.ano, b.mes - 1, b.dia);
+        return dataA - dataB;
+    });
 
     jogos.forEach((jogo, index) => {
         const divJogo = document.createElement('div');
         divJogo.className = 'jogo';
 
+        if (index === 0) {
+            divJogo.classList.add('destaque');
+        }
+
         divJogo.innerHTML = `
             <h2>Jogo ${index + 1}</h2>
-            <p><strong>Data:</strong> ${jogo.data}</p>
+            <p><strong>Data:</strong> ${jogo.dia.toString().padStart(2, '0')}/${jogo.mes.toString().padStart(2, '0')}/${jogo.ano}</p>
             <p><strong>Horário:</strong> ${jogo.hora_inicio}h${jogo.minuto_inicio}m até ${jogo.hora_fim}h${jogo.minuto_fim}m</p>
             <p><strong>Taxa de Aluguel:</strong> R$ ${jogo.taxa}</p>
             <p><strong>Local:</strong> ${jogo.local}</p>
             <p><strong>Endereço:</strong> ${jogo.endereco}</p>
         `;
 
-        if (isAdmin) {
-            divJogo.innerHTML += `
-                <button class="admin-btn" onclick="editarJogo(${index})">Editar</button>
-                <button class="admin-btn" onclick="excluirJogo(${index})">Excluir</button>
-            `;
-        }
-
         agendaDiv.appendChild(divJogo);
     });
-}
-
-function editarJogo(index) {
-    alert('Função de edição a ser implementada para o jogo ' + (index + 1));
-    // Você pode expandir para um editor real se desejar.
-}
-
-function excluirJogo(index) {
-    if (confirm('Deseja realmente excluir este jogo?')) {
-        fetch('agenda.json')
-            .then(response => response.json())
-            .then(jogos => {
-                jogos.splice(index, 1);
-                salvarAgenda(jogos);
-            });
-    }
-}
-
-function salvarAgenda(jogos) {
-    alert('Alterações precisam ser feitas manualmente no arquivo agenda.json no ambiente de hospedagem.');
-    // Em ambiente estático não é possível salvar via JS puro.
 }
 
 carregarAgenda();
