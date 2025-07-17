@@ -1,0 +1,22 @@
+[
+    {
+        "data": "2025-07-18",
+        "hora_inicio": "07",
+        "minuto_inicio": "00",
+        "hora_fim": "12",
+        "minuto_fim": "00",
+        "taxa": "0,00",
+        "local": "Centro Esportivo",
+        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160"
+    },
+    {
+        "data": "2025-07-25",
+        "hora_inicio": "10",
+        "minuto_inicio": "20",
+        "hora_fim": "13",
+        "minuto_fim": "15",
+        "taxa": "12,00",
+        "local": "RJ Beach Arena",
+        "endereco": "R. Catiara, 58 - Campo Grande, Rio de Janeiro - RJ, 23045-140"
+    }
+]

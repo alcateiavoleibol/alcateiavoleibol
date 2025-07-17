@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre</title>
-    <link rel="stylesheet" href="css/sobre.css">
-    <link rel="stylesheet" href="css/responsivo.css">
-	<script src="js/sobre.js" defer></script>
+    <title>Agenda</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsivo.css">
+    <link rel="stylesheet" href="css/agenda.css">
+	<script src="js/agenda.js"></script>
 </head>
 <body>
 
@@ -25,13 +26,13 @@
 </header>
 
 <main>
-    <section>
-        <h1>SOBRE</h1>
-		<p><font size="4" color="#FF0000">∴ EM CONSTRUÇÃO!!!.</font></p>
-		<br>
-        <p><font size="4" color="#FFF">Bem-vindo à nossa história!</font></p>
-    	<p><font size="4" color="#FFF">A Alcateia Voleibol nasceu em 2023, quando quatro amigos — apaixonados por vôlei, desafios e companheirismo — decidiram transformar seus treinos em algo maior. Cada um com personalidades únicas, mas unidos por uma mesma energia: o desejo de evoluir, competir e inspirar. (...)</font></p>	
-    </section>
+    <h1>Agenda de Jogos</h1>
+    <div id="agenda"></div>
+
+    <div id="admin-panel">
+        <input type="password" id="admin-password" placeholder="Senha de Administrador">
+        <button onclick="validarAdmin()">Entrar como Admin</button>
+    </div>
 </main>
 
 <footer>
@@ -46,6 +47,5 @@
 	<br>
     <p1>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p1>
 </footer>
-
 </body>
 </html>
