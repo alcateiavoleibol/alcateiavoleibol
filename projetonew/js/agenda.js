@@ -1,8 +1,3 @@
-document.getElementById('menu-toggle').onclick = function () {
-    const menuList = document.getElementById('menu-list');
-    menuList.style.display = (menuList.style.display === 'block') ? 'none' : 'block';
-};
-
 let isAdmin = false;
 
 function validarAdmin() {
@@ -17,7 +12,7 @@ function validarAdmin() {
 }
 
 function carregarAgenda() {
-    fetch('agenda.json')
+    fetch('../agenda.json')
         .then(response => response.json())
         .then(data => renderizarAgenda(data))
         .catch(error => console.error('Erro ao carregar agenda:', error));
