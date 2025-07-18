@@ -1,31 +1,49 @@
-document.addEventListener("DOMContentLoaded", function () {
+// Função para carregar os álbuns da galeria a partir do JSON
+function carregarGaleria() {
     fetch("galeria.json")
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
-            const container = document.getElementById("galeria");
-            data.albuns.forEach((album, index) => {
-                const capa = album.capa || "book.jpg";
-                const albumDiv = document.createElement("div");
-                albumDiv.className = "album" + (index === 0 ? " album-destaque" : "");
-                albumDiv.innerHTML = `
-                    <a href="${album.link}" target="_blank">
-                        <img src="imagens/book/${capa}" alt="Capa do Álbum">
-                        <strong>${album.titulo}</strong>
-                        <p>${album.data}</p>
-                    </a>
-                `;
-                container.appendChild(albumDiv);
-            });
-        });
-});
+            const galeria = document.getElementById("galeria");
+            data.albuns.forEach(album => {
+                const div = document.createElement("div");
+                div.classList.add("album");
 
+                div.innerHTML = `
+                    <img src="imagens/${album.capa}" alt="${album.titulo}">
+                    <a href="${album.link}" target="_blank">${album.titulo}</a>
+                    <p style="color:#fff;">📅 ${album.data}</p>
+                `;
+
+                galeria.appendChild(div);
+            });
+        })
+        .catch(error => {
+            console.error("Erro ao carregar a galeria:", error);
+        });
+}
+
+// Função para verificar senha e exibir a galeria
 function verificarSenha() {
-    const senhaCorreta = "2025";
+    const senhaCorreta = "123"; // Troque aqui pela senha real
     const senhaDigitada = document.getElementById("senha").value;
+
     if (senhaDigitada === senhaCorreta) {
         document.getElementById("login").style.display = "none";
         document.getElementById("galeria").style.display = "grid";
+        carregarGaleria();
     } else {
-        alert("Senha incorreta.");
+        alert("Senha incorreta!");
     }
 }
+
+// Controle do menu responsivo
+document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu-list");
+
+    if (toggle && menu) {
+        toggle.addEventListener("click", () => {
+            menu.classList.toggle("show");
+        });
+    }
+});
