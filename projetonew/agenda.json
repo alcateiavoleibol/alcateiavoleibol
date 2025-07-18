@@ -4,9 +4,9 @@
         "mes": 7,
         "ano": 2025,
         "hora_inicio": "07",
-        "minuto_inicio": "00",
+        "minuto_inicio": "00h",
         "hora_fim": "12",
-        "minuto_fim": "00",
+        "minuto_fim": "00h",
         "taxa": "0,00",
         "local": "Centro Esportivo",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160"
@@ -17,8 +17,8 @@
         "ano": 2025,
         "hora_inicio": "19",
         "minuto_inicio": "00",
-        "hora_fim": "21",
-        "minuto_fim": "30",
+        "hora_fim": "21h",
+        "minuto_fim": "30m",
         "taxa": "12,00",
         "local": "RJ Beach Arena",
         "endereco": "R. Catiara, 58 - Campo Grande, Rio de Janeiro - RJ, 23045-140"
