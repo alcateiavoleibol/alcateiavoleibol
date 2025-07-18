@@ -1,7 +1,7 @@
 {
   "albuns": [
     {
-      "data": "12-07-2025-07",
+      "data": "12-07-2025",
       "titulo": "Álbum 1",
       "link": "https://photos.app.goo.gl/L3jT2hbnPg6zQJvD9",
       "capa": "capa-001.jpg"
@@ -22,19 +22,19 @@
       "data": "2025-07-09",
       "titulo": "Álbum 4",
       "link": "https://photos.app.goo.gl/jHmwJMYXRz7VFChS8",
-      "capa": "./imagens/book/capa-004.jpg"
+      "capa": "capa-004.jpg"
     },
     {
       "data": "2025-07-08",
       "titulo": "Álbum 5",
       "link": "https://photos.app.goo.gl/6RViNRJGAWNaWSR86",
-      "capa": "../imagens/book/capa-005.jpg"
+      "capa": "capa-005.jpg"
     },
     {
       "data": "2025-07-07",
       "titulo": "Álbum 6",
       "link": "https://photos.app.goo.gl/fqzrRsMESSfWSuTG8",
-      "capa": "../imagens/book/capa-001.jpg"
+      "capa": "capa-001.jpg"
     }
   ]
 }
