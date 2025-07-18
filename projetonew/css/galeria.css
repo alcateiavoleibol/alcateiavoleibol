@@ -39,7 +39,7 @@ button:hover {
   margin: 0 auto; /* centraliza horizontalmente */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 50px;
+  gap: 1px;
   animation: fadeIn 1.5s ease-in-out;
   justify-content: center; /* centraliza o grid */
 }
