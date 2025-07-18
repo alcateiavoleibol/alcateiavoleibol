@@ -1,13 +1,50 @@
+/* CENTRALIZA LOGIN */
+.login {
+  text-align: center;
+  margin: 50px auto;
+  max-width: 400px;
+}
+
+h2 {
+  font-size: 35px;
+  color: #fff;
+}
+
+input[type="password"] {
+  padding: 10px;
+  font-size: 15px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+  height: 30px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1abc9c;
+}
+
+/* GALERIA AJUSTÁVEL */
 .galeria {
-  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* sempre 3 colunas no desktop */
-  gap: 20px;
-  animation: fadeIn 1.5s ease-in-out;
-  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .album {
@@ -19,12 +56,16 @@
   overflow: hidden;
 }
 
+.album:hover {
+  transform: scale(1.05);
+}
+
 .album img {
-  width: 90%;
-  max-width: 220px;
-  margin: 0 auto 10px auto;
-  display: block;
+  width: 100%;
+  max-width: 200px;
   height: auto;
+  display: block;
+  margin: 0 auto 10px auto;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
@@ -37,26 +78,9 @@
   margin-top: 5px;
 }
 
-.album:hover {
-  transform: scale(1.05);
-}
-
 .album-destaque {
   animation: pulse 2s infinite;
   border: 2px solid #f1c40f;
-}
-
-/* RESPONSIVO - MOBILE */
-@media (max-width: 768px) {
-  .galeria {
-    grid-template-columns: 1fr; /* 1 álbum por linha */
-    padding: 10px;
-  }
-
-  .album img {
-    width: 100%;
-    max-width: 100%;
-  }
 }
 
 @keyframes fadeIn {
