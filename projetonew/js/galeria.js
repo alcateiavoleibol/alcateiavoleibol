@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             const container = document.getElementById("galeria");
             data.albuns.forEach((album, index) => {
-                const capa = album.capa || "book/book.jpg";
+                const capa = album.capa || "book.jpg";
                 const albumDiv = document.createElement("div");
                 albumDiv.className = "album" + (index === 0 ? " album-destaque" : "");
                 albumDiv.innerHTML = `
                     <a href="${album.link}" target="_blank">
-                        <img src="imagens/${capa}" alt="Capa do Álbum">
+                        <img src="..book/imagens/book${capa}" alt="Capa do Álbum">
                         <strong>${album.titulo}</strong>
                         <p>${album.data}</p>
                     </a>
