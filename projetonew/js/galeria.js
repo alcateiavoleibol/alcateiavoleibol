@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("js/galeria.json")
+    fetch("galeria.json")
         .then(res => res.json())
         .then(data => {
             const container = document.getElementById("galeria");
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 albumDiv.className = "album" + (index === 0 ? " album-destaque" : "");
                 albumDiv.innerHTML = `
                     <a href="${album.link}" target="_blank">
-                        <img src="..book/imagens/book${capa}" alt="Capa do Álbum">
+                        <img src="..book/imagens/book/${capa}" alt="Capa do Álbum">
                         <strong>${album.titulo}</strong>
                         <p>${album.data}</p>
                     </a>
