@@ -18,7 +18,7 @@ function carregarGaleria() {
         const div = document.createElement("div");
         div.className = "album" + (index === 0 ? " album-destaque" : "");
         div.innerHTML = `
-          <img src="capa.jpg" alt="Capa do Álbum">
+          <img src="../imagens/capa.jpg" alt="Capa do Álbum">
           <h3>${album.data}</h3>
           <a href="${album.link}" target="_blank">${album.titulo}</a>`;
         galeria.appendChild(div);
