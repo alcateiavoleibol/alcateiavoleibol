@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     const agendaDiv = document.getElementById("agenda");
     const calendarioInput = document.getElementById("calendario");
@@ -10,11 +9,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (calendarioInput) {
                 calendarioInput.addEventListener("change", function () {
-                    const dataSelecionada = new Date(this.value);
+                    const partes = this.value.split("-");
+                    const dataSelecionada = new Date(
+                        Number(partes[0]),         // ano
+                        Number(partes[1]) - 1,     // mês (0-indexado)
+                        Number(partes[2])          // dia
+                    );
+
                     const jogosFiltrados = jogos.filter(jogo => {
                         const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
                         return dataJogo.toDateString() === dataSelecionada.toDateString();
                     });
+
                     exibirJogos(jogosFiltrados);
                 });
             }
