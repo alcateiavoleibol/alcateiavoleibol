@@ -9,11 +9,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (calendarioInput) {
                 calendarioInput.addEventListener("change", function () {
+                    if (!this.value) {
+                        exibirJogos(jogos); // Mostrar todos os jogos se o campo for limpo
+                        return;
+                    }
+
                     const partes = this.value.split("-");
                     const dataSelecionada = new Date(
-                        Number(partes[0]),         // ano
-                        Number(partes[1]) - 1,     // mês (0-indexado)
-                        Number(partes[2])          // dia
+                        Number(partes[0]),
+                        Number(partes[1]) - 1,
+                        Number(partes[2])
                     );
 
                     const jogosFiltrados = jogos.filter(jogo => {
