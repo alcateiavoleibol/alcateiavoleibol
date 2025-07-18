@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             const container = document.getElementById("galeria");
             data.albuns.forEach((album, index) => {
-                const capa = album.capa || "capa.jpg";
+                const capa = album.capa || "book/book.jpg";
                 const albumDiv = document.createElement("div");
                 albumDiv.className = "album" + (index === 0 ? " album-destaque" : "");
                 albumDiv.innerHTML = `
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function verificarSenha() {
-    const senhaCorreta = "1829";
+    const senhaCorreta = "2025";
     const senhaDigitada = document.getElementById("senha").value;
     if (senhaDigitada === senhaCorreta) {
         document.getElementById("login").style.display = "none";

@@ -4,37 +4,37 @@
       "data": "2025-07-12",
       "titulo": "Álbum 1",
       "link": "https://photos.app.goo.gl/L3jT2hbnPg6zQJvD9",
-      "capa": "sd1.jpg"
+      "capa": "book/capa001.jpg"
     },
     {
       "data": "2025-07-11",
       "titulo": "Álbum 2",
       "link": "https://photos.app.goo.gl/71EkfYYNknidXmC67",
-      "capa": "sd2.jpg"
+      "capa": "book/capa002.jpg"
     },
     {
       "data": "2025-07-10",
       "titulo": "Álbum 3",
       "link": "https://photos.app.goo.gl/RXHZn9YihBedyBWo7",
-      "capa": "sd3.jpg"
+      "capa": "book/capa003.jpg"
     },
     {
       "data": "2025-07-09",
       "titulo": "Álbum 4",
       "link": "https://photos.app.goo.gl/jHmwJMYXRz7VFChS8",
-      "capa": "capa.jpg"
+      "capa": "book/capa004.jpg"
     },
     {
       "data": "2025-07-08",
       "titulo": "Álbum 5",
       "link": "https://photos.app.goo.gl/6RViNRJGAWNaWSR86",
-      "capa": "capa.jpg"
+      "capa": "book/capa005.jpg"
     },
     {
       "data": "2025-07-07",
       "titulo": "Álbum 6",
       "link": "https://photos.app.goo.gl/fqzrRsMESSfWSuTG8",
-      "capa": "capa.jpg"
+      "capa": "book/capa001.jpg"
     }
   ]
 }
