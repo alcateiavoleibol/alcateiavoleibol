@@ -34,11 +34,11 @@ button:hover {
 
 .galeria {
   padding: 20px;
-  width: 100%;
-  max-width: 1000px;
+  width: 90%;
+  max-width: 900px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* redução para 200px mínimo */
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); /* redução para 200px mínimo */
   gap: 15px;
   animation: fadeIn 1.5s ease-in-out;
   justify-content: center;
@@ -58,8 +58,8 @@ button:hover {
 }
 
 .album img {
-  width: 90%;           /* redução para 90% do card */
-  max-width: 180px;     /* limita o tamanho da imagem */
+  width: 80%;           /* redução para 90% do card */
+  max-width: 160px;     /* limita o tamanho da imagem */
   height: auto;
   margin: 0 auto 10px auto;
   border-radius: 8px;
