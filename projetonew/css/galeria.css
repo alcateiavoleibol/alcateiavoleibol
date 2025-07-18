@@ -2,10 +2,10 @@
   text-align: center;
   margin-top: 100px;
 }
+
 h2 {
-	font-size: 35px;
-	color: #fff;
-	
+  font-size: 35px;
+  color: #fff;
 }
 
 input[type="password"] {
@@ -15,7 +15,7 @@ input[type="password"] {
   border: none;
   border-radius: 5px;
   width: 285px;
-  height: 28px;    
+  height: 28px;
 }
 
 button {
@@ -36,12 +36,12 @@ button:hover {
   padding: 20px;
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto; /* centraliza horizontalmente */
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* redução para 200px mínimo */
+  gap: 15px;
   animation: fadeIn 1.5s ease-in-out;
-  justify-content: center; /* centraliza o grid */
+  justify-content: center;
 }
 
 .album {
@@ -58,9 +58,12 @@ button:hover {
 }
 
 .album img {
-  width: 100%;
+  width: 90%;           /* redução para 90% do card */
+  max-width: 180px;     /* limita o tamanho da imagem */
+  height: auto;
+  margin: 0 auto 10px auto;
   border-radius: 8px;
-  margin-bottom: 10px;
+  display: block;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
@@ -75,6 +78,25 @@ button:hover {
 .album-destaque {
   animation: pulse 2s infinite;
   border: 2px solid #f1c40f;
+}
+
+@media (max-width: 600px) {
+  .galeria {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .album img {
+    max-width: 140px;
+  }
+
+  button {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
 }
 
 @keyframes fadeIn {
