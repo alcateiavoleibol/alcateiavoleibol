@@ -9,7 +9,7 @@ function carregarGaleria() {
                 div.classList.add("album");
 
                 div.innerHTML = `
-                    <img src="imagens/book${album.capa}" alt="${album.titulo}">
+                    <img src="imagens/book/${album.capa}" alt="${album.titulo}">
                     <a href="${album.link}" target="_blank">${album.titulo}</a>
                     <p style="color:#fff;">📅 ${album.data}</p>
                 `;
