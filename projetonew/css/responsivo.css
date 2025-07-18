@@ -9,7 +9,7 @@
         display: block;
         background-color: #002139;
         color: white;
-        font-size: 2.5rem;
+        font-size: 1.7rem;
         border: none;
         margin: 10px;
     }
@@ -28,11 +28,11 @@
     }
 
     #menu-list li {
-        margin: 10px 0;
+        margin: 2px 0;
     }
 
     header nav ul li a {
-        padding: 10px 0;
+        padding: 2px 0;
         display: block;
         width: 100%;
     }
