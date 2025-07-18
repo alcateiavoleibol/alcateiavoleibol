@@ -10,7 +10,7 @@ function verificarSenha() {
 }
 
 function carregarGaleria() {
-  fetch("../galeria.json")
+  fetch("./galeria.json")
     .then(response => response.json())
     .then(data => {
       const galeria = document.getElementById("galeria");
