@@ -1,45 +1,11 @@
-.login {
-  text-align: center;
-  margin-top: 100px;
-}
-
-h2 {
-  font-size: 35px;
-  color: #fff;
-}
-
-input[type="password"] {
-  padding: 10px;
-  font-size: 15px;
-  margin: 20px 0;
-  border: none;
-  border-radius: 5px;
-  width: 285px;
-  height: 28px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 27px;
-  background-color: #003366;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #1abc9c;
-}
-
 .galeria {
   padding: 20px;
-  width: 90%;
-  max-width: 900px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); /* redução para 200px mínimo */
-  gap: 15px;
+  grid-template-columns: repeat(3, 1fr); /* sempre 3 colunas no desktop */
+  gap: 20px;
   animation: fadeIn 1.5s ease-in-out;
   justify-content: center;
 }
@@ -53,17 +19,13 @@ button:hover {
   overflow: hidden;
 }
 
-.album:hover {
-  transform: scale(1.05);
-}
-
 .album img {
-  width: 80%;           /* redução para 90% do card */
-  max-width: 160px;     /* limita o tamanho da imagem */
-  height: auto;
+  width: 90%;
+  max-width: 220px;
   margin: 0 auto 10px auto;
-  border-radius: 8px;
   display: block;
+  height: auto;
+  border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
@@ -75,33 +37,31 @@ button:hover {
   margin-top: 5px;
 }
 
+.album:hover {
+  transform: scale(1.05);
+}
+
 .album-destaque {
   animation: pulse 2s infinite;
   border: 2px solid #f1c40f;
 }
 
-@media (max-width: 600px) {
+/* RESPONSIVO - MOBILE */
+@media (max-width: 768px) {
   .galeria {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
+    grid-template-columns: 1fr; /* 1 álbum por linha */
+    padding: 10px;
   }
 
   .album img {
-    max-width: 140px;
-  }
-
-  button {
-    font-size: 20px;
-  }
-
-  h2 {
-    font-size: 28px;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
 @keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes pulse {
