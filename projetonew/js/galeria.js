@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 albumDiv.className = "album" + (index === 0 ? " album-destaque" : "");
                 albumDiv.innerHTML = `
                     <a href="${album.link}" target="_blank">
-                        <img src="../imagens/book/${capa}" alt="Capa do Álbum">
+                        <img src="imagens/book/${capa}" alt="Capa do Álbum">
                         <strong>${album.titulo}</strong>
                         <p>${album.data}</p>
                     </a>
