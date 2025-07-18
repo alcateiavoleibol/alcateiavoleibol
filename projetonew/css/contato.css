@@ -50,7 +50,7 @@ input[type="range"] {
 #charCount {
   text-align: right;
   font-size: 0.85em;
-  color: #ccc;
+  color: #fff; /*ccc*/
 }
 
 button {
@@ -71,9 +71,9 @@ button:hover {
   animation: fadeIn 1.2s ease-in;
 }
 
-.blinking {
-  animation: blinkingText 1.5s infinite;
-}
+/*.blinking {
+  animation: blinkingText 4.5s infinite;
+}*/
 
 @keyframes fadeIn {
   from { opacity: 0; }
