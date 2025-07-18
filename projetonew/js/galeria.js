@@ -9,7 +9,7 @@ function carregarGaleria() {
                 div.classList.add("album");
 
                 div.innerHTML = `
-                    <img src="imagens/${album.capa}" alt="${album.titulo}">
+                    <img src="imagens/book${album.capa}" alt="${album.titulo}">
                     <a href="${album.link}" target="_blank">${album.titulo}</a>
                     <p style="color:#fff;">📅 ${album.data}</p>
                 `;
@@ -24,7 +24,7 @@ function carregarGaleria() {
 
 // Função para verificar senha e exibir a galeria
 function verificarSenha() {
-    const senhaCorreta = "123"; // Troque aqui pela senha real
+    const senhaCorreta = "2025"; // Troque aqui pela senha real
     const senhaDigitada = document.getElementById("senha").value;
 
     if (senhaDigitada === senhaCorreta) {
