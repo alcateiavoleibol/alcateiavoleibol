@@ -35,10 +35,10 @@ button:hover {
 .galeria {
   padding: 20px;
   width: 100%;
-  max-width: 700px;
+  max-width: 1000px;
   margin: 0 auto; /* centraliza horizontalmente */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 20px;
   animation: fadeIn 1.5s ease-in-out;
   justify-content: center; /* centraliza o grid */
