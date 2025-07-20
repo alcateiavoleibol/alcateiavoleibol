@@ -1,6 +1,6 @@
 /* Centraliza o conteúdo com limite de largura */
 .sobre-container {
-    max-width: 1100px; /* TAMANHO DO TEXTO */
+    max-width: 1200px; /* TAMANHO DO TEXTO */
     margin: 0 auto;
     padding: 20px;
     animation: fadeIn 1.2s ease-in-out;
