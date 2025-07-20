@@ -1,9 +1,8 @@
 /* Centraliza o conteúdo com limite de largura */
 .sobre-container {
-    max-width: 1100px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
-    text-align: center;
     animation: fadeIn 1.2s ease-in-out;
 }
 
@@ -11,14 +10,16 @@
 .sobre-container h1 {
     font-size: 2rem;
     color: #F0F0D0;
+    text-align: center;
     text-shadow: 1px 1px 2px #000;
+    margin-bottom: 30px;
 }
 
-/* Parágrafos mais legíveis e bem espaçados */
+/* Parágrafos bem legíveis e espaçados */
 .sobre-container p {
-    font-size: 1.7rem; /* TAMANHO DO SOBRE */
+    font-size: 1.2rem;
     color: #FFF;
-    line-height: 1.8; /* ESPAÇAMENTO ENTRE LINHAS */
+    line-height: 1.8;
     margin-bottom: 20px;
     text-align: justify;
 }
@@ -35,13 +36,18 @@
     }
 }
 
-/* Responsivo extra se quiser ajustes menores */
+/* 📱 Ajustes para telas menores */
 @media (max-width: 768px) {
     .sobre-container {
-        padding: 15px;
+        padding: 15px 20px;
     }
 
     .sobre-container h1 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+    }
+
+    .sobre-container p {
+        font-size: 1rem;
+        line-height: 1.6;
     }
 }
