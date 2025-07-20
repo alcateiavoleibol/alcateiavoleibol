@@ -39,7 +39,8 @@
 /* 📱 Ajustes para telas menores */
 @media (max-width: 768px) {
     .sobre-container {
-        padding: 5px 20px;
+        max-width: 600px;
+        padding: 15px 20px;
     }
 
     .sobre-container h1 {
