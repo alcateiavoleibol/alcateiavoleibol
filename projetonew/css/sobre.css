@@ -34,3 +34,14 @@
         transform: translateY(0);
     }
 }
+
+/* Responsivo extra se quiser ajustes menores */
+@media (max-width: 768px) {
+    .sobre-container {
+        padding: 15px;
+    }
+
+    .sobre-container h1 {
+        font-size: 1.5rem;
+    }
+}

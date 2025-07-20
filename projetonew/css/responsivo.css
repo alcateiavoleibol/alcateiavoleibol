@@ -2,12 +2,6 @@
     nav#menu {
         flex-direction: column;
         align-items: center;
-		.sobre-container {
-            padding: 15px; }
-       .sobre-container h1 {
-            font-size: 1.5rem; }
-    }
-
 }
 
     #menu-toggle {
