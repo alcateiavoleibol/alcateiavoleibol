@@ -3,6 +3,7 @@ body {
   color: #fff;
   margin: 0;
   font-family: Arial, sans-serif;
+  
 }
 
 main {
@@ -10,6 +11,7 @@ main {
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
+  
 }
 
 .centered {
@@ -19,17 +21,18 @@ main {
 form {
   background: #01213a; /* COR DO FORMULÁRIO | FUNDO*/
   padding: 20px;
-  border-radius: 8px;
-  max-width: 600px;
+  border-radius: 9px;
+  max-width: 1000px;
   margin: auto;
   box-shadow: 0 0 10px rgba(255,25,255,0.1);
   animation: slideUp 0.8s ease;
+  font-size: 1.5em; /* TEXTO DO FORMULÁRIO */
 }
 
 label {
   display: block;
   margin: 12px 0 6px; /* MARGEM DO FORMULÁRIO | TEXTO*/
-  color: #FFF; /* COR DO FORMULÁRIO | TEXTO*/
+  color: #FFF; /* COR DO FORMULÁRIO | TEXTO */
 }
 
 input, select, textarea {
@@ -49,7 +52,7 @@ input[type="range"] {
 .range-numbers {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85em; /* TAMANHO DOS NÚMEROS | PROBABILIDADE */
+  font-size: 1.20em; /* TAMANHO DOS NÚMEROS | PROBABILIDADE */
   margin-bottom: 4px;
   color: #FFFF00; /* PROBABILIDADE | COR NÚMEROS */
 }
