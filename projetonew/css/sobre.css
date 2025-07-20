@@ -1,6 +1,6 @@
 /* Centraliza o conteúdo com limite de largura */
 .sobre-container {
-    max-width: 900px;
+    max-width: 1100px; /* TAMANHO DO TEXTO */
     margin: 0 auto;
     padding: 20px;
     animation: fadeIn 1.2s ease-in-out;
@@ -17,7 +17,7 @@
 
 /* Parágrafos bem legíveis e espaçados */
 .sobre-container p {
-    font-size: 1.2rem;
+    font-size: 1.6rem; /* TAMANHO DO TEXTO */
     color: #FFF;
     line-height: 1.8;
     margin-bottom: 20px;
