@@ -20,10 +20,21 @@ header {
     color: white;
 }
 
+/* Banner padrão responsivo */
 .banner {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%;
+  height: auto;
+  max-height: 350px;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container opcional para controle de layout se precisar aplicar margem ou sombra */
+.top-banner {
+  width: 100%;
+  overflow: hidden;
 }
 
 nav {
