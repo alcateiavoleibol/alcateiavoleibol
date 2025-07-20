@@ -2,7 +2,7 @@
     nav#menu {
         flex-direction: column;
         align-items: center;
-}
+    }
 
     #menu-toggle {
         display: block;
@@ -11,6 +11,8 @@
         font-size: 1.5rem;
         border: none;
         margin: 10px;
+        padding: 10px 20px;
+        cursor: pointer;
     }
 
     #menu-list {
@@ -18,6 +20,7 @@
         flex-direction: column;
         text-align: center;
         background-color: #002139;
+        width: 100%;
         padding: 0;
         margin: 0;
     }
@@ -28,11 +31,13 @@
 
     #menu-list li {
         margin: 5px 0;
+        width: 100%;
     }
 
-    header nav ul li a {
-        padding: 10px 0;
+    #menu-list li a {
+        padding: 12px 0;
         display: block;
         width: 100%;
+        border-top: 1px solid #003;
     }
 }

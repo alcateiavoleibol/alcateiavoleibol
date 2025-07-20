@@ -1,3 +1,17 @@
+body {
+  background-color: #001226;
+  color: #fff;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  padding: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 /* CENTRALIZA LOGIN */
 .login {
   text-align: center;
