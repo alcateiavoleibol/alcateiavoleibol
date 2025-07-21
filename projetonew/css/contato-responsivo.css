@@ -62,6 +62,13 @@
     margin-right: 8px;
 }
 
+.contato-container .g-recaptcha {
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
 /* 📱 Mobile */
 @media (max-width: 768px) {
     .contato-container form {
