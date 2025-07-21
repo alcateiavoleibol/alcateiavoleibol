@@ -136,6 +136,13 @@ button:hover {
   text-align: justify;
 }
 
+.contato-container .g-recaptcha {
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
 /* 📱 Responsividade básica (ainda terá mais no contato-responsivo.css) */
 @media (max-width: 768px) {
   .contato-container {
