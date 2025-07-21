@@ -1,4 +1,5 @@
-/* Responsividade apenas no formulário de contato */
+/* 🎯 Responsividade apenas para a área de contato (formulário) */
+
 .contato-container form {
     background: #01213a;
     padding: 20px;
@@ -62,22 +63,46 @@
     margin-right: 8px;
 }
 
-/* 📱 Mobile */
+
+/* 📱 Responsividade: aumentar tamanho e melhorar formulário apenas no mobile */
+
 @media (max-width: 768px) {
     .contato-container form {
-        padding: 15px;
-        font-size: 1em;
+        padding: 20px 15px;
+        font-size: 1.2em;
     }
 
-    .contato-container {
-        padding: 10px;
+    .contato-container input,
+    .contato-container select,
+    .contato-container textarea {
+        font-size: 1.1em;
     }
 
     .contato-container button {
-        font-size: 1.1em;
+        font-size: 1.2em;
+        padding: 18px;
     }
 }
 
+
+/* ✅ Corrigir tamanho do reCAPTCHA */
+.contato-container .g-recaptcha {
+    transform: scale(0.9);
+    transform-origin: center;
+    max-width: 100%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 480px) {
+    .contato-container .g-recaptcha {
+        transform: scale(0.75);
+    }
+}
+
+
+/* Animação */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
