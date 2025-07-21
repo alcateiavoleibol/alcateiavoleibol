@@ -4,13 +4,11 @@
         align-items: center;
     }
 
+    .banner {
+        max-height: 115px;
+        object-fit: cover;
+    }
 
-@media (max-width: 768px) {
-  .banner {
-    max-height: 115px; /* aumenta o tamanho em telas pequenas 350*/
-    object-fit: cover;
-  }
-}
     #menu-toggle {
         display: block;
         background-color: #002139;
