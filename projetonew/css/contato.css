@@ -1,40 +1,52 @@
-.contato-container form {
-    background: #01213a;
-    padding: 20px;
-    border-radius: 9px;
-    max-width: 900px; /* Diminuído para telas grandes */
-    margin: 30px auto;
-    box-shadow: 0 0 10px rgba(255,25,255,0.1);
+/* 🏐 Estilo do texto principal */
+.titulo-contato {
+    color: #FBEA80;
+    font-size: 2em;
+    text-align: center;
+}
+
+.texto-contato {
     font-size: 1.3em;
+    color: #FFFFFF;
+    text-align: center;
+    margin: 20px auto;
+    max-width: 700px;
 }
 
-.contato-container input,
-.contato-container select,
-.contato-container textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-    border: 2px solid #204050;
-    background: #000;
-    color: #FFF;
-    box-sizing: border-box;
+/* 🎨 Redes Sociais */
+.titulo-redes {
+    color: #FBEA80;
+    font-size: 1.8em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
 }
 
-.contato-container button {
-    width: 200px;  /* Diminuído botão nas telas grandes */
-    background: #003366;
-    color: white;
-    font-size: 1.2em;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: block;
+.redes-sociais {
+    max-width: 600px;
     margin: 0 auto;
+    font-size: 1.2em;
+    text-align: left;
 }
 
-.contato-container button:hover {
-    background: #0055aa;
-    transition: background 0.3s ease;
+.icon-rede {
+    width: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.texto-whatsapp {
+    color: #25D366;
+}
+
+.texto-instagram {
+    color: #E1306C;
+}
+
+.texto-tiktok {
+    color: #00F2EA;
+}
+
+.texto-youtube {
+    color: #FF0000;
 }
