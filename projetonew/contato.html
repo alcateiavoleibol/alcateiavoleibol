@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contato</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsivo.css">
     <link rel="stylesheet" href="css/contato.css">
     <link rel="stylesheet" href="css/contato-responsivo.css">
-    <script src="js/script.js" defer></script>
+    <script src="jv/script.js" defer></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
@@ -31,8 +30,10 @@
   <div class="contato-container">
     
     <section>
-        <h1>Tem interesse em conhecer melhor a Alcateia Voleibol?</h1>
-        <p>Preencha o formulário e nossa equipe entrará em contato com você para esclarecer todas as dúvidas e apoiar você no próximo passo dessa jornada conosco.</p>
+        <h1 class="titulo-contato">Tem interesse em conhecer melhor a Alcateia Voleibol?</h1>
+        <p class="texto-contato">
+            Preencha o formulário e nossa equipe entrará em contato com você para esclarecer todas as dúvidas e apoiar você no próximo passo dessa jornada conosco.
+        </p>
     </section>
 
     <form onsubmit="handleSubmit(event)" class="fade-in">
@@ -68,6 +69,7 @@
         </select>
 
         <input type="text" name="Outro (especifique)" id="outroInput" style="display:none;" placeholder="Especifique como conheceu">
+
     <label for="indicacao">Qual a probabilidade de você indicar a Alcateia para um amigo ou colega?</label>
     <div class="range-numbers">
       <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
@@ -79,56 +81,5 @@
     <input type="range" id="indicacao" name="Probabilidade de Indicação" min="0" max="10">
 
         <label for="mensagem">Mensagem (máx. 600 caracteres)</label>
-        <textarea id="mensagem" name="Mensagem" maxlength="600" rows="5" oninput="updateCharCount()"></textarea>
+        <textarea id="mensagem" name="Mensagem" maxlength="600" rows="5"></textarea>
         <div id="charCount">Restam 600 caracteres</div>
-
-        <div class="g-recaptcha" data-sitekey="6LeTME4rAAAAAAAORlAzu67I3RVQ3R6_eTC6x0QC" style="margin: 20px 0;"></div>
-
-        <button type="submit">Enviar</button>
-
-        <p id="successMessage" style="display:none; text-align:center; margin-top:20px; color:#00ff88;">
-            Ticket gerado e mensagem enviada com sucesso. Obrigado!
-        </p>
-    </form>
-
-    <section>
-        <h2>Nos sigam nas redes sociais!</h2>
-        <p class="social-list">
-            <img src="imagens/whatsapp.png" alt="WhatsApp" class="social-icon"> (21) 96724-8256<br><br>
-            <img src="imagens/instagram.png" alt="Instagram" class="social-icon">@alcateiavoleibol.oficial<br><br>
-            <img src="imagens/tiktok.png" alt="TikTok" class="social-icon">@alcateiavoleibol<br><br>
-            <img src="imagens/youtube.png" alt="YouTube" class="social-icon">@alcateiavoleibol
-        </p>
-    </section>
-
-  </div>
-</main>
-
-
-  <footer>
-    <div class="social-icons" style="text-align:center; margin-top: 20px;">
-      <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank"><img alt="TikTok" src="imagens/tiktok.png" style="width:30px; margin: 0 10px;"/></a>
-      <a href="https://www.instagram.com/alcateiavoleibol.oficial" target="_blank"><img alt="Instagram" src="imagens/instagram.png" style="width:30px; margin: 0 10px;"/></a>
-      <a href="https://api.whatsapp.com/send?l=pt&phone=5521967248256" target="_blank"><img alt="WhatsApp" src="imagens/whatsapp.png" style="width:30px; margin: 0 10px;"/></a>
-      <a href="https://alcateiavoleibol.github.io/alcateiavoleibol/" target="_blank"><img alt="Facebook" src="imagens/facebook.png" style="width:30px; margin: 0 10px;"/></a>
-      <a href="https://www.youtube.com/@AlcateiaVoleibol" target="_blank"><img alt="YouTube" src="imagens/youtube.png" style="width:30px; margin: 0 10px;"/></a>
-    </div>
-    <p>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p>
-  </footer>
-
-<script>
-    function updateCharCount() {
-        const textarea = document.getElementById("mensagem");
-        const counter = document.getElementById("charCount");
-        const remaining = 600 - textarea.value.length;
-        counter.textContent = `Restam ${remaining} caracteres`;
-    }
-
-    function toggleOutroCampo(select) {
-        const outroInput = document.getElementById("outroInput");
-        outroInput.style.display = select.value === "Outros" ? "block" : "none";
-    }
-</script>
-
-</body>
-</html>
