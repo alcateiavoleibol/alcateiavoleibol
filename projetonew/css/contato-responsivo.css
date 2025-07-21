@@ -63,7 +63,7 @@
 }
 
 .contato-container .g-recaptcha {
-    max-width: 100%;
+    max-width: 80%;
     overflow: hidden;
     display: flex;
     justify-content: center;
