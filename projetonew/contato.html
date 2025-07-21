@@ -68,12 +68,15 @@
         </select>
 
         <input type="text" name="Outro (especifique)" id="outroInput" style="display:none;" placeholder="Especifique como conheceu">
-
-        <label for="indicacao">Qual a probabilidade de você indicar a Alcateia para um amigo ou colega?</label>
-        <div class="range-numbers">
-        <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
-         </div>
-        <input type="range" id="indicacao" name="Probabilidade de Indicação" min="0" max="10">
+    <label for="indicacao">Qual a probabilidade de você indicar a Alcateia para um amigo ou colega?</label>
+    <div class="range-numbers">
+      <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+    </div>
+    <div class="range-labels">
+      <span>Nada provável</span>
+      <span>Extremamente provável</span>
+    </div>
+    <input type="range" id="indicacao" name="Probabilidade de Indicação" min="0" max="10">
 
         <label for="mensagem">Mensagem (máx. 600 caracteres)</label>
         <textarea id="mensagem" name="Mensagem" maxlength="600" rows="5" oninput="updateCharCount()"></textarea>
@@ -101,16 +104,17 @@
   </div>
 </main>
 
-<footer>
-    <div class="social-icons">
-        <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank"><img src="imagens/tiktok.png"></a>
-        <a href="https://www.instagram.com/alcateiavoleibol.oficial" target="_blank"><img src="imagens/instagram.png"></a>
-        <a href="https://api.whatsapp.com/send?l=pt&phone=5521967248256" target="_blank"><img src="imagens/whatsapp.png"></a>
-        <a href="https://alcateiavoleibol.github.io/alcateiavoleibol/" target="_blank"><img src="imagens/facebook.png"></a>
-        <a href="https://www.youtube.com/@AlcateiaVoleibol" target="_blank"><img src="imagens/youtube.png"></a>
+
+  <footer>
+    <div class="social-icons" style="text-align:center; margin-top: 20px;">
+      <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank"><img alt="TikTok" src="imagens/tiktok.png" style="width:30px; margin: 0 10px;"/></a>
+      <a href="https://www.instagram.com/alcateiavoleibol.oficial" target="_blank"><img alt="Instagram" src="imagens/instagram.png" style="width:30px; margin: 0 10px;"/></a>
+      <a href="https://api.whatsapp.com/send?l=pt&phone=5521967248256" target="_blank"><img alt="WhatsApp" src="imagens/whatsapp.png" style="width:30px; margin: 0 10px;"/></a>
+      <a href="https://alcateiavoleibol.github.io/alcateiavoleibol/" target="_blank"><img alt="Facebook" src="imagens/facebook.png" style="width:30px; margin: 0 10px;"/></a>
+      <a href="https://www.youtube.com/@AlcateiaVoleibol" target="_blank"><img alt="YouTube" src="imagens/youtube-play.png" style="width:30px; margin: 0 10px;"/></a>
     </div>
-    <p>&copy; 2025 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p>
-</footer>
+    <p>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p>
+  </footer>
 
 <script>
     function updateCharCount() {
