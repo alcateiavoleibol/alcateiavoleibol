@@ -7,7 +7,7 @@
 
 @media (max-width: 768px) {
   .banner {
-    max-height: 300px; /* aumenta o tamanho em telas pequenas */
+    max-height: 150px; /* aumenta o tamanho em telas pequenas 350*/
     object-fit: cover;
   }
 }
