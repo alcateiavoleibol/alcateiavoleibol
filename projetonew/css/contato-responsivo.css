@@ -1,6 +1,5 @@
-/* ✅ Responsividade e ajustes finais do formulário */
-
-form {
+/* Responsividade apenas no formulário de contato */
+.contato-container form {
     background: #01213a;
     padding: 20px;
     border-radius: 9px;
@@ -11,7 +10,9 @@ form {
     animation: fadeInUp 1s ease;
 }
 
-input, select, textarea {
+.contato-container input,
+.contato-container select,
+.contato-container textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 12px;
@@ -22,7 +23,7 @@ input, select, textarea {
     box-sizing: border-box;
 }
 
-button {
+.contato-container button {
     width: 100%;
     background: #003366;
     color: white;
@@ -33,19 +34,21 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.contato-container button:hover {
     background: #0055aa;
     transition: background 0.3s ease;
 }
 
-input:focus, textarea:focus, select:focus {
+.contato-container input:focus,
+.contato-container textarea:focus,
+.contato-container select:focus {
     outline: none;
     border-color: #50C080;
     box-shadow: 0 0 8px rgba(80, 192, 128, 0.6);
     transition: 0.3s ease;
 }
 
-.range-numbers {
+.contato-container .range-numbers {
     display: flex;
     justify-content: space-between;
     font-size: 1em;
@@ -53,7 +56,7 @@ input:focus, textarea:focus, select:focus {
     margin-bottom: 4px;
 }
 
-.social-icon {
+.contato-container .social-icon {
     width: 30px;
     vertical-align: middle;
     margin-right: 8px;
@@ -61,7 +64,7 @@ input:focus, textarea:focus, select:focus {
 
 /* 📱 Mobile */
 @media (max-width: 768px) {
-    form {
+    .contato-container form {
         padding: 15px;
         font-size: 1em;
     }
@@ -70,7 +73,7 @@ input:focus, textarea:focus, select:focus {
         padding: 10px;
     }
 
-    button {
+    .contato-container button {
         font-size: 1.1em;
     }
 }
