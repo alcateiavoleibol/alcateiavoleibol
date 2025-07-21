@@ -1,0 +1,81 @@
+/* ✅ Responsividade e ajustes finais do formulário */
+
+form {
+    background: #01213a;
+    padding: 20px;
+    border-radius: 9px;
+    max-width: 800px;
+    margin: 30px auto;
+    box-shadow: 0 0 10px rgba(255,25,255,0.1);
+    font-size: 1.2em;
+    animation: fadeInUp 1s ease;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: 2px solid #204050;
+    background: #000;
+    color: #FFF;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    background: #003366;
+    color: white;
+    font-size: 1.2em;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0055aa;
+    transition: background 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #50C080;
+    box-shadow: 0 0 8px rgba(80, 192, 128, 0.6);
+    transition: 0.3s ease;
+}
+
+.range-numbers {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1em;
+    color: #FFFF00;
+    margin-bottom: 4px;
+}
+
+.social-icon {
+    width: 30px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+        font-size: 1em;
+    }
+
+    .contato-container {
+        padding: 10px;
+    }
+
+    button {
+        font-size: 1.1em;
+    }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
