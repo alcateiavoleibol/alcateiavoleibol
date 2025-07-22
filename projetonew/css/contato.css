@@ -133,25 +133,79 @@ label {
 }
 
 .range-numbers {
-  color: #FFFF00; /* COR DA PROBABILIDADE */
+  color: #FFFF00;
 }
 
 .range-labels {
   color: #50C080;
 }
 
-/* Responsividade do input range */
-input[type="range"] {
+/* Estilização do range input com bolha */
+.range-wrapper {
+  position: relative;
   width: 100%;
-  max-width: 600px;
-  display: block;
-  margin: 10px auto;
+  max-width: 795px; /* TAMANHO DA PROBABILIDADE | BARRA */
+  margin: 30px auto;
 }
 
-@media (max-width: 480px) {
-  input[type="range"] {
-    max-width: 100%;
-  }
+.range-wrapper input[type="range"] {
+  width: 100%;
+  background: transparent;
+  appearance: none;
+  height: 15px;
+}
+
+.range-wrapper input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: linear-gradient(to right, #50C080, #0055aa);
+  border-radius: 5px;
+}
+
+.range-wrapper input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: linear-gradient(to right, #50C080, #0055aa);
+  border-radius: 5px;
+}
+
+.range-wrapper input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #FBEA80;
+  border: 2px solid #003;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -7px;
+  transition: transform 0.2s;
+}
+
+.range-wrapper input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #FBEA80;
+  border: 2px solid #003;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.range-wrapper input[type="range"]::-webkit-slider-thumb:hover,
+.range-wrapper input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+.range-wrapper output {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0055aa;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: left 0.1s ease-out;
 }
 
 /* ---------------------------- */
@@ -214,5 +268,16 @@ input[type="range"] {
   .g-recaptcha {
     transform: scale(0.85);
     transform-origin: 0 0;
+  }
+
+  .range-wrapper input[type="range"] {
+    max-width: 80%;
+    height: 4px;
+  }
+
+  .range-wrapper input[type="range"]::-webkit-slider-thumb,
+  .range-wrapper input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
   }
 }
