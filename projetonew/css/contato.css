@@ -74,7 +74,7 @@ label {
 
 /* Botão */
 .contato-container button {
-  width: 30%; /*TAMANHO DO BOTÃO ENVIAR */
+  width: 30%;
   background: #003366;
   color: white;
   font-size: 1.2em;
@@ -121,23 +121,42 @@ label {
   color: #FBEA80;
 }
 
-/* Range (se usado) */
+/* ---------------------------- */
+/* 📊 RANGE (PROBABILIDADE)    */
+/* ---------------------------- */
 .range-numbers,
 .range-labels {
   display: flex;
   justify-content: space-between;
   font-size: 1em;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
 }
 
 .range-numbers {
-  color: #FFFF00;
+  color: #FFFF00; /* COR DA PROBABILIDADE */
 }
 
 .range-labels {
   color: #50C080;
 }
 
+/* Responsividade do input range */
+input[type="range"] {
+  width: 100%;
+  max-width: 600px;
+  display: block;
+  margin: 10px auto;
+}
+
+@media (max-width: 480px) {
+  input[type="range"] {
+    max-width: 100%;
+  }
+}
+
+/* ---------------------------- */
+/* 🌐 ÍCONES SOCIAIS           */
+/* ---------------------------- */
 .contato-container .social-icon {
   width: 30px;
   vertical-align: middle;
@@ -186,6 +205,7 @@ label {
   }
 
   .contato-container button {
+    width: 100%;
     font-size: 1.1em;
   }
 }
