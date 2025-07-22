@@ -169,3 +169,18 @@ button:hover {
     width: 100%;
   }
 }
+
+/* 🔵 Fundo da área principal (central) */
+main {
+  background-color: #001226;
+  padding: 40px 5%;
+  box-sizing: border-box;
+}
+
+/* 🔵 Reduz o reCAPTCHA em telas pequenas */
+@media (max-width: 480px) {
+  .g-recaptcha {
+    transform: scale(0.85);
+    transform-origin: 0 0;
+  }
+}
