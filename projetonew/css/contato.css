@@ -1,3 +1,4 @@
+/* Container principal da página de contato */
 .contato-container {
   max-width: 1300px;
   margin: 0 auto;
@@ -5,6 +6,7 @@
   animation: fadeIn 1.2s ease-in-out;
 }
 
+/* Título da seção */
 .contato-container h1 {
   font-size: 2rem;
   color: #F0F0D0;
@@ -13,6 +15,7 @@
   margin-bottom: 30px;
 }
 
+/* Parágrafo descritivo da seção */
 .contato-container p {
   font-size: 1.6rem;
   color: #FFF;
@@ -21,6 +24,7 @@
   text-align: justify;
 }
 
+/* Estilo do formulário */
 form {
   background: #01213a;
   padding: 20px;
@@ -32,13 +36,17 @@ form {
   font-size: 1.2em;
 }
 
+/* Estilo dos rótulos do formulário */
 label {
   display: block;
   margin: 12px 0 6px;
   color: #FFF;
 }
 
-input, select, textarea {
+/* Campos de entrada do formulário */
+input,
+select,
+textarea {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -48,6 +56,7 @@ input, select, textarea {
   color: #FFF;
 }
 
+/* Botão de envio */
 button {
   background: #003366;
   color: white;
@@ -56,12 +65,38 @@ button {
   border-radius: 5px;
   font-size: 1.2em;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 button:hover {
   background: #0055aa;
 }
 
+/* Contador de caracteres */
+#charCount {
+  text-align: right;
+  font-size: 0.85em;
+  color: #50C080;
+}
+
+/* Probabilidade (se usada) */
+.range-numbers,
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1em;
+  margin-bottom: 6px;
+}
+
+.range-numbers {
+  color: #FFFF00;
+}
+
+.range-labels {
+  color: #50C080;
+}
+
+/* Animações */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -72,7 +107,39 @@ button:hover {
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* Mobile */
+/* Títulos de destaque para encontros */
+.titulo-encontro {
+  text-align: center;
+  color: #E0FFFF;
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+/* Estilo para cada encontro na agenda */
+.encontro {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.encontro .data {
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.encontro .local {
+  font-size: 1.3rem;
+  color: #FBEA80;
+}
+
+/* Rodapé personalizado */
+.rodape {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: 10px;
+}
+
+/* Responsividade para mobile */
 @media (max-width: 768px) {
   .contato-container {
     padding: 15px 5%;
@@ -91,5 +158,14 @@ button:hover {
   form {
     font-size: 1rem;
     padding: 15px;
+  }
+
+  .encontro .data,
+  .encontro .local {
+    font-size: 1.1rem;
+  }
+
+  button {
+    width: 100%;
   }
 }
