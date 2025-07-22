@@ -1,40 +1,165 @@
-.contato-container form {
-    background: #01213a;
-    padding: 20px;
-    border-radius: 9px;
-    max-width: 900px; /* Diminuído para telas grandes */
-    margin: 30px auto;
-    box-shadow: 0 0 10px rgba(255,25,255,0.1);
-    font-size: 1.3em;
+body {
+  background-color: #001226;
+  color: #fff;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  
 }
 
-.contato-container input,
-.contato-container select,
-.contato-container textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-    border: 2px solid #204050;
-    background: #000;
-    color: #FFF;
-    box-sizing: border-box;
+main {
+  padding: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  
 }
 
-.contato-container button {
-    width: 200px;  /* Diminuído botão nas telas grandes */
-    background: #003366;
-    color: white;
-    font-size: 1.2em;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: block;
+.centered {
+  text-align: center;
+}
+
+form {
+  background: #01213a; /* COR DO FORMULÁRIO | FUNDO*/
+  padding: 20px;
+  border-radius: 9px;
+  max-width: 1000px;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(255,25,255,0.1);
+  animation: slideUp 0.8s ease;
+  font-size: 1.5em; /* TEXTO DO FORMULÁRIO */
+}
+
+label {
+  display: block;
+  margin: 12px 0 6px; /* MARGEM DO FORMULÁRIO | TEXTO*/
+  color: #FFF; /* COR DO FORMULÁRIO | TEXTO */
+}
+
+input, select, textarea {
+  width: 98%;
+  padding: 8px; /* MARGEM DO PREENCHIMENTO | FORMULÁRIO*/
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border: 2px solid #204050; /* COR DO PREENCHIMENTO DA BORDA */
+  background: #000; /* COR DO FUNDO DO FORMULÁRIO */
+  color: #FFF; /* COR DO PREENCHIMENTO DO FORMULÁRIO */
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+.range-numbers {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.20em; /* TAMANHO DOS NÚMEROS | PROBABILIDADE */
+  margin-bottom: 4px;
+  color: #FFFF00; /* PROBABILIDADE | COR NÚMEROS */
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em; /* TAMANHO DO TEXTO | PROBABILIDADE */
+  margin-bottom: 6px;
+  color: #50C080; /* PROBABILIDADE | COR TEXTO */
+}
+
+#charCount {
+  text-align: right;
+  font-size: 0.85em;
+  color: #50C080; /* PROBABILIDADE | COR CARACTERES */
+}
+
+button {
+  background: #003366;
+  color: white;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #0055aa;
+}
+
+.fade-in {
+  animation: fadeIn 1.2s ease-in;
+}
+
+/*.blinking {
+  animation: blinkingText 4.5s infinite;
+}*/
+
+@keyframes fadeIn {
+  from { opacity: 0;
+    transform: translateY(20px);  }
+  to { opacity: 1;
+    transform: translateY(0);  }
+   }
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes blinkingText {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+/* Centraliza o conteúdo com limite de largura */
+.contato-container {
+    max-width: 1300px; /* TAMANHO DO TEXTO */
     margin: 0 auto;
+    padding: 20px;
+    animation: fadeIn 1.2s ease-in-out;
 }
 
-.contato-container button:hover {
-    background: #0055aa;
-    transition: background 0.3s ease;
+/* Títulos com destaque e leve sombra */
+.contato-container h1 {
+    font-size: 2rem;
+    color: #F0F0D0;
+    text-align: center;
+    text-shadow: 1px 1px 2px #000;
+    margin-bottom: 30px;
+}
+
+/* Parágrafos bem legíveis e espaçados */
+.contato-container p {
+    font-size: 1.6rem; /* TAMANHO DO TEXTO */
+    color: #FFF;
+    line-height: 1.8; /* ESPAÇAMENTO ENTRE LINHAS */
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* Animação de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 📱 Ajustes para telas menores */
+@media (max-width: 768px) {
+    .contato-container {
+        padding: 15px 20px;
+    }
+
+    .contato-container h1 {
+        font-size: 1.4rem;
+    }
+
+    .contato-container p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
 }
