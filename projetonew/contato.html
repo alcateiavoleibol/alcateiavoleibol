@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsivo.css">
-	<link rel="stylesheet" href="css/contato.css">
-	<script src="js/script.js" defer></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contato</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsivo.css" />
+  <link rel="stylesheet" href="css/contato.css" />
+  <script src="js/script.js" defer></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script>
     function updateCharCount() {
       const textarea = document.getElementById("mensagem");
@@ -59,125 +59,117 @@
   </script>
 </head>
 <body>
-<header>
-    <img src="imagens/banner.png" alt="Banner do Site" class="banner">
-    <nav id="menu">
-        <button id="menu-toggle">☰ MENU</button>
-        <ul id="menu-list">
-            <li><a href="index.html">INÍCIO</a></li>
-            <li><a href="agenda.html">AGENDA</a></li>
-            <li><a href="galeria.html">GALERIA</a></li>
-            <li><a href="sobre.html">SOBRE</a></li>
-            <li><a href="contato.html">CONTATO</a></li>
-        </ul>
-    </nav>
 
-  <!-- Conteúdo -->
+  <!-- Header com Banner e Menu -->
+  <header>
+    <img src="imagens/banner.png" alt="Banner do Site" class="banner"/>
+    <nav id="menu">
+      <button id="menu-toggle">☰ MENU</button>
+      <ul id="menu-list">
+        <li><a href="index.html">INÍCIO</a></li>
+        <li><a href="agenda.html">AGENDA</a></li>
+        <li><a href="galeria.html">GALERIA</a></li>
+        <li><a href="sobre.html">SOBRE</a></li>
+        <li><a href="contato.html">CONTATO</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Conteúdo principal -->
   <main>
     <div class="contato-container">
       <h1>Fale Conosco</h1>
       <p>Preencha o formulário abaixo para entrar em contato com a equipe Alcateia Voleibol.</p>
 
-     <form onsubmit="handleSubmit(event)" class="fade-in">
-    <input type="hidden" name="_captcha" value="false">
+      <form onsubmit="handleSubmit(event)" class="fade-in">
+        <input type="hidden" name="_captcha" value="false"/>
 
-    <label for="nome">Nome  <font color="#F02030">*</font></label>
-    <input type="text" id="nome" name="Nome" required>
+        <label for="nome">Nome <font color="#F02030">*</font></label>
+        <input type="text" id="nome" name="Nome" required />
 
-    <label for="telefone">Telefone <font color="#F02030">*</font></label>
-    <input type="tel" id="telefone" name="Telefone" required>
+        <label for="telefone">Telefone <font color="#F02030">*</font></label>
+        <input type="tel" id="telefone" name="Telefone" required />
 
-    <label for="email">E-mail <font color="#F02030">*</font></label>
-    <input type="email" id="email" name="Email" required>
+        <label for="email">E-mail <font color="#F02030">*</font></label>
+        <input type="email" id="email" name="Email" required />
 
-    <label for="sexo">Sexo <font color="#F02030">*</font></label>
-    <select id="sexo" name="Sexo" required>
-      <option value="">Selecione</option>
-      <option value="Masculino">Masculino</option>
-      <option value="Feminino">Feminino</option>
-      <option value="Prefiro não informar">Prefiro não informar</option>
-    </select>
+        <label for="sexo">Sexo <font color="#F02030">*</font></label>
+        <select id="sexo" name="Sexo" required>
+          <option value="">Selecione</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Feminino">Feminino</option>
+          <option value="Prefiro não informar">Prefiro não informar</option>
+        </select>
 
-    <label for="origem">Como conheceu a ALCATEIA VOLEIBOL?</label>
-    <select id="origem" name="Como conheceu?" onchange="toggleOutroCampo(this)">
-      <option value="">Selecione</option>
-      <option value="Google">Google</option>
-      <option value="Instagram">Instagram</option>
-      <option value="TikTok">TikTok</option>
-      <option value="YouTube">YouTube</option>
-      <option value="Facebook">Facebook</option>
-      <option value="Amigo/Colega">Amigo/Colega</option>
-      <option value="Outros">Outros</option>
-    </select>
-    <input type="text" name="Outro (especifique)" id="outroInput" style="display:none;" placeholder="Especifique como conheceu">
+        <label for="origem">Como conheceu a ALCATEIA VOLEIBOL?</label>
+        <select id="origem" name="Como conheceu?" onchange="toggleOutroCampo(this)">
+          <option value="">Selecione</option>
+          <option value="Google">Google</option>
+          <option value="Instagram">Instagram</option>
+          <option value="TikTok">TikTok</option>
+          <option value="YouTube">YouTube</option>
+          <option value="Facebook">Facebook</option>
+          <option value="Amigo/Colega">Amigo/Colega</option>
+          <option value="Outros">Outros</option>
+        </select>
+        <input type="text" name="Outro (especifique)" id="outroInput" style="display:none;" placeholder="Especifique como conheceu"/>
 
-    <label for="indicacao">Qual a probabilidade de você indicar a Alcateia para um amigo ou colega?</label>
-    <div class="range-numbers">
-      <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        <label for="indicacao">Qual a probabilidade de você indicar a Alcateia para um amigo ou colega?</label>
+        <div class="range-numbers">
+          <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span>
+          <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        </div>
+        <div class="range-labels">
+          <span>
+            <img src="imagens/gif/morto.gif" alt="target" width="45" />
+            <br><font color="#F02030">Nada provável</font>
+          </span>
+          <span>
+            <img src="imagens/gif/campeao.gif" alt="target" width="45" />
+            <br>Extremamente provável
+          </span>
+        </div>
+        <input type="range" id="indicacao" name="Probabilidade de Indicação" min="0" max="10"/>
+
+        <label for="mensagem">Mensagem (máx. 600 caracteres)</label>
+        <textarea id="mensagem" name="Mensagem" maxlength="600" rows="5" oninput="updateCharCount()"></textarea>
+        <div id="charCount">Restam 600 caracteres</div>
+
+        <div class="g-recaptcha" data-sitekey="6LeTME4rAAAAAAAORlAzu67I3RVQ3R6_eTC6x0QC" style="margin: 20px 0;"></div>
+
+        <button type="submit">Enviar</button>
+
+        <p id="successMessage" style="display:none; text-align:center; margin-top:20px; color:#00ff88;">
+          Ticket gerado e mensagem enviada com sucesso. Obrigado!
+        </p>
+      </form>
     </div>
-    <div class="range-labels">
-     <span><img src="imagens/gif/morto.gif" style="float: left;" alt="target" width="45" style="vertical-align:middle;"><br><br>
-	  <font color="#F02030"><br>Nada provável</font></span>
-      <span><img src="imagens/gif/campeao.gif" style="float: right;" alt="target" width="45" style="vertical-align:middle;"><br><br><br>Extremamente provável</span>
-    </div>
-    <input type="range" id="indicacao" name="Probabilidade de Indicação" min="0" max="10">
 
-    <label for="mensagem">Mensagem (máx. 600 caracteres)</label>
-    <textarea id="mensagem" name="Mensagem" maxlength="600" rows="5" oninput="updateCharCount()"></textarea>
-    <div id="charCount">Restam 600 caracteres</div>
-
-    <div class="g-recaptcha" data-sitekey="6LeTME4rAAAAAAAORlAzu67I3RVQ3R6_eTC6x0QC" style="margin: 20px 0;"></div>
-
-    <button type="submit">Enviar</button>
-
-    <p id="successMessage" style="display:none; text-align:center; margin-top:20px; color:#00ff88;">
-      Ticket gerado e mensagem enviada com sucesso. Obrigado!
-    </p>
-  </form>
-   <br>
-   <main>
-      <div class="contato-container">
-    <section>
+    <!-- Redes sociais -->
+    <section class="contato-container">
       <center>
-		   <h2> 
-    <font size="6" color="#FBEA80">Nos sigam nas redes sociais!</font>
-	   	      </h2>
-	<main> <font size="5" color="#128C7E">			
-       <img alt="WhatsApp" src="imagens/whatsapp.png" style="width:45px; margin: 0 10px;"/><br>(21) 96724-8256</font>
-	   <br>
-	     <br>
-	 <font size="5" color="#CD486B ">			
-       <img alt="Instagram" src="imagens/instagram.png" style="width:45px; margin: 0 10px;"/><br>@alcateiavoleibol.oficial</font>
-	   <br>
-	    <br>
-	 <font size="5" color="#00F2EA">	
-	   <img alt="TikTok" src="imagens/tiktok.png" style="width:45px; margin: 0 10px;"/><br> 
-        @alcateiavoleibol</font><br>
-	 <br>
-	  <font size="5" color="#DC143C">		
-	   <img alt="YouTube" src="imagens/youtube.png" style="width:45px; margin: 0 10px;"/><br> 
-        @alcateiavoleibol</font><br>
-	     </font> </main>
-	        </div> 
-  </center>
-    </section>
-	   </main>
-<footer>
-  <div class="social-icons" style="text-align:center; margin-top: 20px;">
-    <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank"><img alt="TikTok" src="imagens/tiktok.png" style="width:30px; margin: 0 10px;"/></a>
+        <h2><font size="6" color="#FBEA80">Nos sigam nas redes sociais!</font></h2>
 
-    <a href="https://www.instagram.com/alcateiavoleibol.oficial" target="_blank"><img alt="Instagram" src="imagens/instagram.png" style="width:30px; margin: 0 10px;"/></a>
-	
-    <a href="https://api.whatsapp.com/send?l=pt&phone=5521967248256" target="_blank"><img alt="WhatsApp" src="imagens/whatsapp.png" style="width:30px; margin: 0 10px;"/></a>
-	
-    <a href="https://alcateiavoleibol.github.io/alcateiavoleibol/" target="_blank"><img alt="Facebook" src="imagens/facebook.png" style="width:30px; margin: 0 10px;"/></a>
-	
-    <a href="https://www.youtube.com/@AlcateiaVoleibol" target="_blank"><img alt="YouTube" src="imagens/youtube.png" style="width:30px; margin: 0 10px;"/></a>
-  </div>
-	<br>
-	<br>
+        <p><img src="imagens/whatsapp.png" width="45" /> <br><font size="5" color="#128C7E">(21) 96724-8256</font></p>
+        <p><img src="imagens/instagram.png" width="45" /> <br><font size="5" color="#CD486B">@alcateiavoleibol.oficial</font></p>
+        <p><img src="imagens/tiktok.png" width="45" /> <br><font size="5" color="#00F2EA">@alcateiavoleibol</font></p>
+        <p><img src="imagens/youtube.png" width="45" /> <br><font size="5" color="#DC143C">@alcateiavoleibol</font></p>
+      </center>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="social-icons" style="text-align:center; margin-top: 20px;">
+      <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank"><img src="imagens/tiktok.png" style="width:30px; margin: 0 10px;" /></a>
+      <a href="https://www.instagram.com/alcateiavoleibol.oficial" target="_blank"><img src="imagens/instagram.png" style="width:30px; margin: 0 10px;" /></a>
+      <a href="https://api.whatsapp.com/send?l=pt&phone=5521967248256" target="_blank"><img src="imagens/whatsapp.png" style="width:30px; margin: 0 10px;" /></a>
+      <a href="https://alcateiavoleibol.github.io/alcateiavoleibol/" target="_blank"><img src="imagens/facebook.png" style="width:30px; margin: 0 10px;" /></a>
+      <a href="https://www.youtube.com/@AlcateiaVoleibol" target="_blank"><img src="imagens/youtube.png" style="width:30px; margin: 0 10px;" /></a>
+    </div>
+    <br><br>
     <p1>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p1>
-</footer>
+  </footer>
 
 </body>
 </html>
