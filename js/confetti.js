@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return {
             x: Math.random() * canvas.width,
             y: Math.random() * -canvas.height,
-            size: Math.random() * 8 + 4,
+            size: Math.random() * 4 + 2, /*trocar 8+4 */
             speedY: Math.random() * 1.5 + 0.5,
             speedX: Math.random() * 1 - 0.5,
             color: colors[Math.floor(Math.random() * colors.length)],
