@@ -305,3 +305,105 @@ footer .social-icons img:hover {
 .birthday-card.highlight span {
     color: #000;
 }
+
+
+/* carrosel */
+
+
+.birthday-carousel-section {
+    position: relative;
+    background: linear-gradient(145deg, #001226, #002139);
+    padding: 30px 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+    flex: 1;
+}
+
+#confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.birthday-carousel-section h2 {
+    position: relative;
+    z-index: 2;
+    color: #FBEA80;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.carousel-track {
+    display: flex;
+    width: max-content;
+    animation: scrollCarousel 20s linear infinite;
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes scrollCarousel {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.birthday-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #FBEA80;
+    border-radius: 20px;
+    padding: 15px 20px;
+    width: 160px;
+    margin: 0 10px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.birthday-card:hover {
+    transform: scale(1.1);
+}
+
+.birthday-card img {
+    width: 40px;
+    margin-bottom: 10px;
+}
+
+.birthday-card p {
+    color: #FFF;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.birthday-card span {
+    color: #FBEA80;
+    font-size: 0.9rem;
+}
+
+.birthday-card.highlight {
+    background: #FFD700 !important;
+    color: #000 !important;
+    transform: scale(1.2);
+    z-index: 5;
+}
+
+.birthday-card.highlight span {
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .birthday-card {
+        width: 120px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .birthday-card {
+        width: 90px;
+        padding: 8px;
+    }
+}
