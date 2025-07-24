@@ -12,14 +12,15 @@
 }
 
 .intro-section h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #FBEA80;
-    margin-bottom: 15px;
+    margin-bottom: 40px;
 }
 
 .intro-section .slogan {
     font-size: 1.3rem;
     font-weight: bold;
+	text-align: center;
     color: #ffffff;
     margin: 15px 0;
 }

@@ -102,3 +102,206 @@ footer .social-icons img {
 footer .social-icons img:hover {
     transform: scale(1.2);
 }
+
+
+/* BDAY */
+
+.birthday-section {
+    background: linear-gradient(145deg, #001226, #002139);
+    padding: 30px 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+    animation: pulseGlow 3s infinite ease-in-out;
+    flex: 1;
+}
+
+.birthday-section h2 {
+    color: #FBEA80;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.birthday-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.birthday-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #FBEA80;
+    border-radius: 20px;
+    padding: 15px 20px;
+    width: 160px;
+    animation: floatCard 4s infinite ease-in-out;
+    transition: transform 0.3s ease;
+}
+
+.birthday-card:hover {
+    transform: scale(1.1);
+}
+
+.birthday-card img {
+    width: 40px;
+    margin-bottom: 10px;
+}
+
+.birthday-card p {
+    color: #FFF;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.birthday-card span {
+    color: #FBEA80;
+    font-size: 0.9rem;
+}
+
+/* Animação de brilho no container */
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px rgba(251, 234, 128, 0.4); }
+    50% { box-shadow: 0 0 25px rgba(251, 234, 128, 0.8); }
+    100% { box-shadow: 0 0 10px rgba(251, 234, 128, 0.4); }
+}
+
+/* Flutuar cards de forma alternada */
+@keyframes floatCard {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .birthday-card {
+        width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .birthday-card {
+        width: 90%;
+    }
+}
+
+
+
+/* new2 */
+
+.birthday-carousel-section {
+    position: relative;
+    background: linear-gradient(145deg, #001226, #002139);
+    padding: 30px 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+    flex: 1;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+}
+
+.birthday-carousel-section h2 {
+    color: #FBEA80;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Confetes */
+.confetti-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(#FBEA80 2px, transparent 2px),
+                      radial-gradient(#FF6347 2px, transparent 2px),
+                      radial-gradient(#00CED1 2px, transparent 2px),
+                      radial-gradient(#ADFF2F 2px, transparent 2px);
+    background-size: 20px 20px;
+    animation: confettiMove 10s linear infinite;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+@keyframes confettiMove {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-20px, -20px); }
+}
+
+/* Carrossel Horizontal Infinito */
+.carousel-track {
+    display: flex;
+    width: max-content;
+    animation: scrollCarousel 20s linear infinite;
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes scrollCarousel {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.birthday-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #FBEA80;
+    border-radius: 20px;
+    padding: 15px 20px;
+    width: 160px;
+    margin: 0 10px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.birthday-card:hover {
+    transform: scale(1.1);
+}
+
+.birthday-card img {
+    width: 40px;
+    margin-bottom: 10px;
+}
+
+.birthday-card p {
+    color: #FFF;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.birthday-card span {
+    color: #FBEA80;
+    font-size: 0.9rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .birthday-card {
+        width: 120px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .birthday-card {
+        width: 90px;
+        padding: 8px;
+    }
+}
+
+
+/* card novo json */
+
+.birthday-card.highlight {
+    background: #FFD700 !important;
+    color: #000 !important;
+    transform: scale(1.2);
+    z-index: 5;
+}
+
+.birthday-card.highlight span {
+    color: #000;
+}
