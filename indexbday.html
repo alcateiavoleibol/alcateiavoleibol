@@ -3,34 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alcateia Voleibol</title>
+    <title>Alcateia Voleibol - Aniversariantes</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsivo.css">
     <link rel="stylesheet" href="css/intro.css">
     <link rel="stylesheet" href="css/aniversario.css">
     <script src="js/script.js" defer></script>
-	<script src="js/slide.js" defer></script>
+    <script src="js/slide.js" defer></script>
     <script src="js/aniversario.js" defer></script>
+    <script src="js/confetti.js" defer></script>
 </head>
 <body>
-<header>
-    <header class="top-banner">
-        <img src="imagens/banner.png" alt="Banner" class="banner">
-    </header>
-    <nav id="menu">
-        <button id="menu-toggle">ENU</button>
-        <ul id="menu-list">
-            <li><a href="index.html">INÍCIO</a></li>
-            <li><a href="agenda.html">AGENDA</a></li>
-            <li><a href="galeria.html">GALERIA</a></li>
-            <li><a href="sobre.html">SOBRE</a></li>
-            <li><a href="contato.html">CONTATO</a></li>
-        </ul>
-    </nav>
+<header class="top-banner">
+    <img src="imagens/banner.png" alt="Banner" class="banner">
 </header>
+<nav id="menu">
+    <button id="menu-toggle">MENU</button>
+    <ul id="menu-list">
+        <li><a href="index.html">INICIO</a></li>
+        <li><a href="agenda.html">AGENDA</a></li>
+        <li><a href="galeria.html">GALERIA</a></li>
+        <li><a href="sobre.html">SOBRE</a></li>
+        <li><a href="contato.html">CONTATO</a></li>
+    </ul>
+</nav>
 
 <main class="fade-in">
-    <!-- BLOCO INTRODUÇÃO ALCATEIA -->
+     <!-- BLOCO INTRODUÇÃO ALCATEIA -->
     <section id="intro" class="intro-section fade-in">
         				<h1>BEM-VINDO À ALCATEIA VOLEIBOL!</h1>
 			<img src="imagens/gif/lobogif.gif" alt="target" width="460" style="vertical-align:middle;">
@@ -48,28 +47,25 @@
             <a href="contato.html" class="button highlight">📲 Fale com a Gente</a>
         </div>
     </section>
-	</main>
-<main>
+
     <div class="flex-container">
         <section class="birthday-carousel-section">
-            <h2>Aniversariantes do Mês</h2>
-            <div class="confetti-background"></div>
+            <canvas id="confetti-canvas"></canvas>
+            <h2>Aniversariantes do Mes</h2>
             <div id="birthday-carousel" class="carousel-track">
-                <!-- Conte\u00fado ser\u00e1 gerado via JS -->
+                <!-- Conte\u00fado gerado via JS -->
             </div>
         </section>
 
-  </center>
-    </section>
-    <div class="slide-container">
-      <div class="slide">
-        <img class="active" src="imagens/sd1.jpg"/>
-        <img src="imagens/sd2.jpg"/>
-        <img src="imagens/sd3.jpg"/>
-		<img src="imagens/sd4.jpg"/>
-      </div>
+        <div class="slide-container">
+            <div class="slide">
+                <img class="active" src="imagens/sd1.jpg"/>
+                <img src="imagens/sd2.jpg"/>
+                <img src="imagens/sd3.jpg"/>
+                <img src="imagens/sd4.jpg"/>
+            </div>
+        </div>
     </div>
-  </div>
 </main>
 
 <footer>
