@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     function formatarDataBrasilia(dataISO) {
-        const data = new Date(dataISO + 'T00:00:00-03:00'); // Força horário de Brasília
+        const data = new Date(dataISO + 'T00:00:00-03:00'); // Horário de Brasília
         const dia = String(data.getDate()).padStart(2, '0');
         const mes = String(data.getMonth() + 1).padStart(2, '0');
         const ano = data.getFullYear();
@@ -12,36 +12,54 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             const carousel = document.getElementById('birthday-carousel');
-            const currentMonth = new Date().getMonth() + 1; // Janeiro = 0
             const today = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
 
-            let aniversariantesDoMes = data.filter(pessoa => {
-                const dataAniversario = new Date(pessoa.data + 'T00:00:00-03:00');
-                return dataAniversario.getMonth() + 1 === currentMonth;
+            // Adiciona ano atual às datas para comparar corretamente
+            const aniversariantesAtualizados = data.map(pessoa => {
+                const originalDate = new Date(pessoa.data + 'T00:00:00-03:00');
+                const aniversarioEsteAno = new Date(today.getFullYear(), originalDate.getMonth(), originalDate.getDate());
+                return {
+                    ...pessoa,
+                    aniversarioHoje: aniversarioEsteAno.getDate() === today.getDate() && aniversarioEsteAno.getMonth() === today.getMonth(),
+                    aniversarioComparado: aniversarioEsteAno
+                };
             });
 
-            aniversariantesDoMes.sort((a, b) => new Date(a.data) - new Date(b.data));
+            // Ordena por data do ano (não considera o ano de nascimento)
+            aniversariantesAtualizados.sort((a, b) => a.aniversarioComparado - b.aniversarioComparado);
 
-            let proximoAniversarianteIndex = aniversariantesDoMes.findIndex(pessoa => {
-                const aniversarioData = new Date(pessoa.data + 'T00:00:00-03:00');
-                return aniversarioData >= today;
-            });
-            if (proximoAniversarianteIndex === -1) proximoAniversarianteIndex = 0;
+            const aniversariantesHoje = aniversariantesAtualizados.filter(p => p.aniversarioHoje);
 
-            const montarCard = (pessoa, isDestaque) => `
+            let proximoAniversariante = null;
+
+            if (aniversariantesHoje.length === 0) {
+                proximoAniversariante = aniversariantesAtualizados.find(p => p.aniversarioComparado >= today);
+                if (!proximoAniversariante) {
+                    // Se acabou o ano, pega o primeiro do próximo ano
+                    proximoAniversariante = aniversariantesAtualizados[0];
+                }
+            }
+
+            const montarCard = (pessoa, isDestaque, isHoje) => `
                 <div class="birthday-card ${isDestaque ? 'highlight' : ''}">
                     <img src="imagens/gif/bolo.gif" alt="Bolo">
-                    <p>${pessoa.nome}<br><span>${formatarDataBrasilia(pessoa.data)}</span></p>
+                    <p>${pessoa.nome}<br>
+                    <span>${formatarDataBrasilia(pessoa.data)}${isHoje ? ' (HOJE 🎉)' : ''}</span></p>
                 </div>
             `;
 
-            aniversariantesDoMes.forEach((pessoa, index) => {
-                carousel.innerHTML += montarCard(pessoa, index === proximoAniversarianteIndex);
-            });
-
-            // Duplicação para efeito de loop infinito no carrossel
-            aniversariantesDoMes.forEach((pessoa, index) => {
-                carousel.innerHTML += montarCard(pessoa, index === proximoAniversarianteIndex);
-            });
+            // Exibe aniversariantes de hoje ou o próximo
+            if (aniversariantesHoje.length > 0) {
+                aniversariantesHoje.forEach(p => {
+                    carousel.innerHTML += montarCard(p, true, true);
+                });
+                // duplicar para o efeito do carrossel
+                aniversariantesHoje.forEach(p => {
+                    carousel.innerHTML += montarCard(p, true, true);
+                });
+            } else {
+                carousel.innerHTML += montarCard(proximoAniversariante, true, false);
+                carousel.innerHTML += montarCard(proximoAniversariante, true, false); // duplicado
+            }
         });
 });
