@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const montarCard = (pessoa, isDestaque) => `
                 <div class="birthday-card ${isDestaque ? 'highlight' : ''}">
-                    <img src="imagens/bolo.png" alt="Bolo">
+                    <img src="../imagens/gif/bolo.gif" alt="Bolo">
                     <p>${pessoa.nome}<br><span>${formatarDataBrasilia(pessoa.data)}</span></p>
                 </div>
             `;
