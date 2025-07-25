@@ -35,48 +35,44 @@
 
     <!-- BLOCO INTRODUÇÃO ALCATEIA -->
     <section id="intro" class="intro-section fade-in">
-        				<h1>BEM-VINDO À ALCATEIA VOLEIBOL!</h1>
+        				<h1>BEM-VINDO À ALCATEIA VOLEIBOL !</h1>
 			<img src="imagens/gif/lobogif.gif" alt="target" width="460" style="vertical-align:middle;">
 	
-        <p class="slogan">Aqui, não é um tapa no saque...<strong>é uma PORRADA NA VIAGEM!</strong></p>
+        <p class="slogan">NÃO É UM <img src="imagens/gif/mao.gif" alt="target" width="30" style="vertical-align:middle;"> TAPA NO SAQUE <strong>É UMA P<img src="imagens/gif/soco.gif" alt="target" width="30" style="vertical-align:middle;">RR#D<img src="imagens/gif/boca-aberta.gif" alt="target" width="25" style="vertical-align:middle;"> NA <img src="imagens/gif/foguete.gif" alt="target" width="25" style="vertical-align:middle;"> VIAGEM! <img src="imagens/gif/volei.gif" alt="target" width="40" style="vertical-align:middle;"></strong></p>
         <p>
             Entre areia e quadra, nossa matilha joga pesado. Somos a <strong>Alcateia Voleibol</strong>: unidos pela paixão,
             movidos pela garra e sempre prontos para a próxima disputa. Treinamos, competimos e vencemos juntos – porque aqui
             o espírito de equipe fala mais alto.
-        </p>
-        <p>🏐 <strong>Vôlei de Areia</strong> ou <strong>Vôlei de Quadra</strong>? Na Alcateia, jogamos os dois. E jogamos pra ganhar.</p>
-        <div class="cta-buttons">
+        </p> <br>
+		
+<div style="display: flex; align-items: center; justify-content: center; color: #dddddd; line-height: 1.7; font-size: 1.3rem; max-width: 900px; margin: 20px auto;">
+  
+  <!-- Imagem à esquerda -->
+  <img src="imagens/gif/volei.gif" alt="Alcateia" style="height: 100px; margin-right: 20px;">
+  
+  <!-- Barra vertical decorativa -->
+  <div style="font-size: 4.2rem; margin-right: 20px; color: #888;">|</div>
+  
+  <!-- Textos empilhados -->
+  <div>
+    <div>Vôlei de Areia ou Vôlei de Quadra?</div>
+    <div>Na Alcateia, jogamos os dois. E jogamos pra ganhar. <img src="imagens/gif/campeao.gif" alt="Alcateia" style="height: 45px; margin-right: 20px;"></div>
+  </div>
+</div>
+	    <div class="cta-buttons">
             <a href="agenda.html" class="button">🔔 Acompanhe Nossa Agenda</a>
             <a href="galeria.html" class="button">📸 Ver Galeria</a>
             <a href="contato.html" class="button highlight">📲 Fale com a Gente</a>
         </div>
     </section>
 	</main>
-	
-	
-	<main>
-		    <div class="flex-container">
-        <section class="birthday-carousel-section">
-            <canvas id="confetti-canvas"></canvas>
-            <h2>Aniversariantes do Mes</h2>
-            <div id="birthday-carousel" class="carousel-track">
-                <!-- Conte\u00fado gerado via JS -->
-            </div>
-        </section> </main>
-	
-	
-	
-	
-<main class="fade-in">
-		    <div class="flex-container">
-        <section class="birthday-carousel-section">
-            <canvas id="confetti-canvas"></canvas>
-            <h2>Aniversariantes do Mes</h2>
-            <div id="birthday-carousel" class="carousel-track">
-                <!-- Conte\u00fado gerado via JS -->
-            </div>
-        </section>
-		   <br>  	  
+   <main class="fade-in">
+    <div class="flex-container">
+    <section class="games-section">
+	<center>
+	    
+		<div id="quote-typing" class="typing-animation"></div>
+<div id="quote-author" class="author-line" style="display: none;">∴ Bernardinho</div> 
   </center>
     </section>
     <div class="slide-container">
@@ -89,6 +85,55 @@
     </div>
   </div>
 </main>
+	<main>
+		    <div class="flex-container">
+        <section class="birthday-carousel-section">
+            <canvas id="confetti-canvas"></canvas>
+            <h2>Happy Birthday!</h2>
+            <div id="birthday-carousel" class="carousel-track">
+               </div>
+        </section> </main>
+<script>
+    const quote = "\"Não devemos nos orgulhar de sermos melhores que os outros, mas sim melhores do que já fomos.\"";
+
+    const typingElement = document.getElementById('quote-typing');
+    const authorElement = document.getElementById('quote-author');
+    let index = 0;
+    let isDeleting = false;
+
+    function typeLoop() {
+        const currentText = quote.substring(0, index);
+        typingElement.innerHTML = currentText + '<span style="animation: blinkCursor 0.7s step-end infinite;"></span>';
+
+        if (!isDeleting) {
+            if (index < quote.length) {
+                index++;
+                setTimeout(typeLoop, 50);
+            } else {
+                // Quando terminar de digitar a frase, mostra o autor
+                authorElement.style.display = 'block';
+                setTimeout(() => {
+                    isDeleting = true;
+                    typeLoop();
+                }, 3500); /* TEMPO DE ESPERA */
+            }
+        } else {
+            if (index > 0) {
+                // Esconde o autor quando começar a apagar
+                if (index === quote.length) {
+                    authorElement.style.display = 'none';
+                }
+                index--;
+                setTimeout(typeLoop, 20); /* TEMPO PARA APAGAR */
+            } else {
+                isDeleting = false;
+                setTimeout(typeLoop, 700); /* TEMPO DE ESCRITA */
+            }
+        }
+    }
+
+    typeLoop();
+</script>
 
 
 
