@@ -81,22 +81,22 @@
 /* Lobogif Responsivo em Todas as Telas */
 .responsive-lobo-gif {
     width: 100%;
-    max-width: 460px; /* Limite máximo no desktop */
+    max-width: 460px; /* Desktop */
     height: auto;
     display: block;
     margin: 0 auto;
 }
 
-/* Telas até 768px */
+/* Telas até 768px (Tablets) */
 @media (max-width: 768px) {
     .responsive-lobo-gif {
-        max-width: 300px;
+        max-width: 350px; /* Aumentado de 300px para 350px */
     }
 }
 
-/* Telas até 480px */
+/* Telas até 480px (Celulares) */
 @media (max-width: 480px) {
     .responsive-lobo-gif {
-        max-width: 290px;
+        max-width: 280px; /* Aumentado de 200px para 280px */
     }
 }
