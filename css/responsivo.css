@@ -90,7 +90,7 @@
 /* Telas até 768px */
 @media (max-width: 768px) {
     .responsive-lobo-gif {
-        max-width: 300px;
+        max-width: 380px;
     }
 }
 
