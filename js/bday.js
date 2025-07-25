@@ -7,12 +7,15 @@ const birthdays = [
   { nome: "Teste Maio", data: "2025-05-08" }, // MAIO
   { nome: "Teste Junho", data: "2025-06-17" }, // JUNHO
 
-  { nome: "Mariana Silva", data: "2025-07-05" },
-  { nome: "Lucas Pereira", data: "2025-07-12" },
-  { nome: "Rafaela Costa", data: "2025-07-20" },
-  { nome: "Kauãn Martins", data: "2025-07-25" },
-  { nome: "Letícia Sales", data: "2025-07-25" },
-  { nome: "Diego Almeida", data: "2025-07-29" }, // JULHO
+  { nome: "MARIANA SILVA", data: "2025-07-05" },
+  { nome: "LUCAS FRIGOLETTO", data: "2025-07-12" },
+  { nome: "RAFAELA DUTRA", data: "2025-07-20" },
+  { nome: "KAUÃN MARTINS", data: "2025-07-25" },
+  { nome: "LETÍCIA SPINOLLA", data: "2025-07-25" },
+  { nome: "DIEGO SILVA", data: "2025-07-26" }, // JULHO
+  { nome: "RAQUEL MURILLO", data: "2025-07-27" },
+  { nome: "FERNANDA CAROLINE", data: "2025-07-28" },
+  { nome: "NATHALIA MARIANE", data: "2025-07-29" },
 
   { nome: "Ana Souza", data: "2025-08-03" },
   { nome: "Carlos Lima", data: "2025-08-15" },
