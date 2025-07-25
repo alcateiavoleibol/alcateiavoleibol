@@ -76,3 +76,27 @@
         font-size: 1rem;
     }
 }
+
+
+/* Lobogif Responsivo em Todas as Telas */
+.responsive-lobo-gif {
+    width: 100%;
+    max-width: 460px; /* Limite máximo no desktop */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Telas até 768px */
+@media (max-width: 768px) {
+    .responsive-lobo-gif {
+        max-width: 300px;
+    }
+}
+
+/* Telas até 480px */
+@media (max-width: 480px) {
+    .responsive-lobo-gif {
+        max-width: 200px;
+    }
+}
