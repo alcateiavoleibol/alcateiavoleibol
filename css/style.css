@@ -131,6 +131,64 @@ section {
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
 }
 
+.birthday-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-right: 60px;
+  padding: 10px;
+  border-radius: 12px;
+  min-width: 180px;
+}
+
+
+
+
+
+.birthday-card p {
+  margin: 0;
+  padding: 0;
+  font-size: 24px; /* Aumentado */
+  line-height: 1.5;
+  font-weight: bold;
+  color: #fff;
+}
+
+.birthday-card span {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #ddd;
+}
+
+.birthday-card img {
+  width: 60px;
+  margin-bottom: 5px;
+}
+
+/* Destaque para aniversariantes do dia */
+.birthday-card.highlight {
+  background: linear-gradient(135deg, #4e4eff, #4207a1);
+  animation: brilho 2s infinite alternate; /* TEMPO DA ANIMAÇÃO DA SOMBRA */
+  box-shadow: 0 0 15px rgba(144, 238, 144, 0.7);
+}
+
+@keyframes brilho {
+  from {
+    box-shadow: 0 0 10px rgba(50, 5, 10, 0.6);
+  }
+  to {
+    box-shadow: 0 0 25px rgba(25, 74, 51, 1); /* COR DA SOMBRA DO CARD */
+  }
+}
+
+
+
+
+
+
+
 #confetti-canvas {
     position: absolute;
     top: 0;
@@ -144,9 +202,9 @@ section {
 .birthday-carousel-section h2 {
     position: relative;
     z-index: 2;
-    color: #FBEA80;
+    color: #FFF; /* COR DO TEXTO | HAPPY BIRTHDAT! */
     font-size: 1.8rem;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 /* --- CAROUSEL TRACK --- */
@@ -166,7 +224,7 @@ section {
 /* --- BIRTHDAY CARD --- */
 .birthday-card {
     background: rgba(255, 255, 255, 0.1);
-    border: 2px solid #FBEA80;
+    border: 2px solid #6c97ba; /* COR DO CARTÃO DE ANIVERSÁRIO */
     border-radius: 20px;
     padding: 15px 20px;
     width: 160px;
@@ -197,7 +255,7 @@ section {
 }
 
 .birthday-card.highlight {
-    background: #FFD700 !important;
+    background: #5e0117 !important; /* COR DO ANIVERSARIANTE DO DIA */
     color: #000 !important;
     transform: scale(1.2);
     z-index: 5;
