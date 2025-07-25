@@ -72,33 +72,52 @@ section {
     margin-bottom: 40px;
 }
 
-/* --- FOOTER --- */
-footer {
-    background-color: #011a36;
-    color: #FFF;
-    text-align: center;
-    padding: 40px 15px;
+/* --- FLEX CONTAINER (Typing + Slide side by side) --- */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.typing-section {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+}
+
+.slide-container {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+}
+
+/* --- TYPING EFFECT --- */
+.typing-animation {
+    font-size: 1.2rem;
+    color: #FBEA80;
+    font-family: 'Courier New', monospace;
+    white-space: normal;
+    overflow: hidden;
+    display: inline-block;
+    border-right: 2px solid #FBEA80;
+    word-break: break-word;
+}
+
+.author-line {
     font-size: 1rem;
-    border-top: 2px solid #FBEA80;
+    color: #FBEA80;
+    margin-top: 10px;
+    font-family: 'Courier New', monospace;
 }
 
-footer a {
-    color: #ccc;
-    text-decoration: none;
-    transition: color 0.3s ease;
+/* Cursor Blink Animation */
+@keyframes blinkCursor {
+    from { border-right-color: #FBEA80; }
+    to { border-right-color: transparent; }
 }
 
-footer a:hover {
-    color: #ffffff;
-}
-
-footer .social-icons img {
-    transition: transform 0.3s ease;
-}
-
-footer .social-icons img:hover {
-    transform: scale(1.2);
-}
 
 /* --- BIRTHDAY CAROUSEL SECTION --- */
 .birthday-carousel-section {
@@ -194,6 +213,10 @@ footer .social-icons img:hover {
         width: 120px;
         padding: 10px;
     }
+    .typing-section, .slide-container {
+        flex: 1 1 100%;
+        text-align: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -201,4 +224,35 @@ footer .social-icons img:hover {
         width: 90px;
         padding: 8px;
     }
+    .typing-animation {
+        font-size: 1rem;
+    }
+}
+
+/* --- FOOTER --- */
+footer {
+    background-color: #011a36;
+    color: #FFF;
+    text-align: center;
+    padding: 40px 15px;
+    font-size: 1rem;
+    border-top: 2px solid #FBEA80;
+}
+
+footer a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffffff;
+}
+
+footer .social-icons img {
+    transition: transform 0.3s ease;
+}
+
+footer .social-icons img:hover {
+    transform: scale(1.2);
 }
