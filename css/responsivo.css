@@ -90,13 +90,13 @@
 /* Telas até 768px */
 @media (max-width: 768px) {
     .responsive-lobo-gif {
-        max-width: 380px;
+        max-width: 300px;
     }
 }
 
 /* Telas até 480px */
 @media (max-width: 480px) {
     .responsive-lobo-gif {
-        max-width: 200px;
+        max-width: 290px;
     }
 }
