@@ -11,14 +11,12 @@
 </head>
 <body>
   <div class="placar-container">
-    <div class="data-hora" id="dataHora"></div>
     <div class="cronometro" id="cronometro">00:00:00</div>
 
     <div class="times">
       <div class="time-bloco">
         <input class="time-nome-input" id="time1-nome" value="ALCATEIA A1">
         <div class="set-control">
-          <button onclick="alterarSet('set1', -1)">-</button>
           <span id="set1" onclick="alterarSet('set1', 1)">0</span>
         </div>
       </div>
@@ -28,7 +26,6 @@
       <div class="time-bloco">
         <input class="time-nome-input" id="time2-nome" value="ALCATEIA A2">
         <div class="set-control">
-          <button onclick="alterarSet('set2', -1)">-</button>
           <span id="set2" onclick="alterarSet('set2', 1)">0</span>
         </div>
       </div>
@@ -36,14 +33,12 @@
 
     <div class="pontuacoes">
       <div class="pontuacao">
-        <button onclick="alterarPonto('time1', -1)">-</button>
         <span id="pontos1">0</span>
       </div>
 
       <span class="versus">X</span>
 
       <div class="pontuacao">
-        <button onclick="alterarPonto('time2', -1)">-</button>
         <span id="pontos2">0</span>
       </div>
     </div>
@@ -56,7 +51,10 @@
       <button onclick="resetarPartida()">RESET GERAL</button>
     </div>
 
-    <div class="creditos">Desenvolvido por Alcateia Voleibol</div>
+    <div class="creditos">
+      Desenvolvido por Alcateia Voleibol
+      <div class="data-hora" id="dataHora">00/00/0000 | 00:00:00</div>
+    </div>
   </div>
 
   <script src="js/placar.js"></script>

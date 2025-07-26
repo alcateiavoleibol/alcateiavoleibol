@@ -1,11 +1,12 @@
 const CACHE_NAME = 'placar-alcateia-cache-v1';
 const urlsToCache = [
-  './placar.html',
-  './css/placar.css',
-  './css/responsivo-placar.css',
-  './js/placar.js',
-  './js/manifest.json',
-  './imagens/icone.png'
+  './',
+  './index.html',
+  './placar.css',
+  './responsivo-placar.css',
+  './placar.js',
+  './icone.png',
+  './manifest.json'
 ];
 
 self.addEventListener('install', function(event) {
@@ -23,7 +24,7 @@ self.addEventListener('fetch', function(event) {
         if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
           return networkResponse;
         }
-        const responseToCache = networkResponse.clone();
+        let responseToCache = networkResponse.clone();
         caches.open(CACHE_NAME).then(function(cache) {
           cache.put(event.request, responseToCache);
         });
