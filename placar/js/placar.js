@@ -58,7 +58,9 @@ function alterarSet(setId, valor) {
 function alternarTelaCheia() {
   const elem = document.documentElement;
   if (!document.fullscreenElement) {
-    elem.requestFullscreen().catch(err => alert(`Erro: ${err.message}`));
+    elem.requestFullscreen().catch((err) => {
+      alert(`Erro ao entrar em tela cheia: ${err.message}`);
+    });
   } else {
     document.exitFullscreen();
   }
@@ -69,39 +71,80 @@ function girarTela() {
 }
 
 function atualizarDataHora() {
-  const dataHora = new Date().toLocaleString('pt-BR', {
-    timeZone: 'America/Sao_Paulo',
-    hour12: false
-  });
-  document.getElementById('dataHora').textContent = dataHora;
+  try {
+    const agora = new Date();
+    const utc = agora.getTime() + (agora.getTimezoneOffset() * 60000);
+    const brasilia = new Date(utc - 3 * 3600000);
+    const dataHora = brasilia.toLocaleDateString('pt-BR') + ' ' + brasilia.toLocaleTimeString('pt-BR', { hour12: false });
+    document.getElementById('dataHora').textContent = dataHora;
+  } catch (e) {
+    console.error("Erro ao atualizar data/hora:", e);
+    document.getElementById('dataHora').textContent = "Erro no horário";
+  }
 }
 
 setInterval(atualizarDataHora, 1000);
+
 window.onload = () => {
-  atualizarDataHora();
-  carregarEstado();
+  try {
+    atualizarDataHora();
+    carregarEstado();
+    aplicarToquePonto('pontos1', 'time1');
+    aplicarToquePonto('pontos2', 'time2');
+  } catch (e) {
+    console.error("Erro ao carregar placar:", e);
+  }
 };
 
+// Toque longo: pressiona 1s para remover ponto
+function aplicarToquePonto(idElemento, time) {
+  const el = document.getElementById(idElemento);
+  let timer;
+
+  el.addEventListener('mousedown', () => {
+    timer = setTimeout(() => {
+      alterarPonto(time, -1);
+    }, 1000); // 1 segundo
+  });
+
+  el.addEventListener('mouseup', () => clearTimeout(timer));
+  el.addEventListener('mouseleave', () => clearTimeout(timer));
+  el.addEventListener('touchstart', () => {
+    timer = setTimeout(() => {
+      alterarPonto(time, -1);
+    }, 1000);
+  });
+  el.addEventListener('touchend', () => clearTimeout(timer));
+}
+
 function salvarEstado() {
-  const estado = {
-    tempo,
-    pontos1: document.getElementById('pontos1').textContent,
-    pontos2: document.getElementById('pontos2').textContent,
-    set1: document.getElementById('set1').textContent,
-    set2: document.getElementById('set2').textContent,
-    cronometro: document.getElementById('cronometro').textContent
-  };
-  localStorage.setItem('placarEstado', JSON.stringify(estado));
+  try {
+    const estado = {
+      tempo,
+      pontos1: document.getElementById('pontos1').textContent,
+      pontos2: document.getElementById('pontos2').textContent,
+      set1: document.getElementById('set1').textContent,
+      set2: document.getElementById('set2').textContent,
+      cronometro: document.getElementById('cronometro').textContent
+    };
+    localStorage.setItem('placarEstado', JSON.stringify(estado));
+  } catch (e) {
+    console.warn("Erro ao salvar estado:", e);
+  }
 }
 
 function carregarEstado() {
-  const estado = JSON.parse(localStorage.getItem('placarEstado'));
-  if (estado) {
-    tempo = estado.tempo;
-    document.getElementById('pontos1').textContent = estado.pontos1;
-    document.getElementById('pontos2').textContent = estado.pontos2;
-    document.getElementById('set1').textContent = estado.set1;
-    document.getElementById('set2').textContent = estado.set2;
-    document.getElementById('cronometro').textContent = estado.cronometro;
+  try {
+    const estado = JSON.parse(localStorage.getItem('placarEstado'));
+    if (estado) {
+      tempo = estado.tempo;
+      document.getElementById('pontos1').textContent = estado.pontos1;
+      document.getElementById('pontos2').textContent = estado.pontos2;
+      document.getElementById('set1').textContent = estado.set1;
+      document.getElementById('set2').textContent = estado.set2;
+      document.getElementById('cronometro').textContent = estado.cronometro;
+    }
+  } catch (e) {
+    console.warn("Erro ao carregar estado:", e);
   }
 }
