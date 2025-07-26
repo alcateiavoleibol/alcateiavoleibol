@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Placar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="css/placar.css">
   <link rel="stylesheet" href="css/responsivo-placar.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <div class="placar-container">
@@ -22,9 +22,7 @@
         </div>
       </div>
 
-      <div class="set-info">
-        SETS
-      </div>
+      <div class="set-info">SETS</div>
 
       <div class="time-bloco">
         <input class="time-nome-input" id="time2-nome" value="ALCATEIA A2">
@@ -65,6 +63,7 @@
 
   <script src="js/placar.js"></script>
   <script>
+    // Função de segurança (caso o JS externo não carregue)
     function alterarSet(setId, valor) {
       const elemento = document.getElementById(setId);
       let atual = parseInt(elemento.innerText);
