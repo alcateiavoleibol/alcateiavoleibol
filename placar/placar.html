@@ -2,22 +2,24 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Placar</title>
+  <title>Placar Alcateia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="manifest" href="js/manifest.json">
   <link rel="stylesheet" href="css/placar.css">
   <link rel="stylesheet" href="css/responsivo-placar.css">
+  <link rel="icon" href="imagens/icone.png" type="image/png">
 </head>
 <body>
   <div class="placar-container">
     <div class="data-hora" id="dataHora"></div>
-    <div class="cronometro" id="cronometro">00:00</div>
+    <div class="cronometro" id="cronometro">00:00:00</div>
 
     <div class="times">
       <div class="time-bloco">
         <input class="time-nome-input" id="time1-nome" value="ALCATEIA A1">
         <div class="set-control">
           <button onclick="alterarSet('set1', -1)">-</button>
-          <span id="set1">0</span>
+          <span id="set1" onclick="alterarSet('set1', 1)">0</span>
           <button onclick="alterarSet('set1', 1)">+</button>
         </div>
       </div>
@@ -28,7 +30,7 @@
         <input class="time-nome-input" id="time2-nome" value="ALCATEIA A2">
         <div class="set-control">
           <button onclick="alterarSet('set2', -1)">-</button>
-          <span id="set2">0</span>
+          <span id="set2" onclick="alterarSet('set2', 1)">0</span>
           <button onclick="alterarSet('set2', 1)">+</button>
         </div>
       </div>
@@ -37,7 +39,7 @@
     <div class="pontuacoes">
       <div class="pontuacao">
         <button onclick="alterarPonto('time1', -1)">-</button>
-        <span id="pontos1">0</span>
+        <span id="pontos1" onclick="alterarPonto('time1', 1)">0</span>
         <button onclick="alterarPonto('time1', 1)">+</button>
       </div>
 
@@ -45,7 +47,7 @@
 
       <div class="pontuacao">
         <button onclick="alterarPonto('time2', -1)">-</button>
-        <span id="pontos2">0</span>
+        <span id="pontos2" onclick="alterarPonto('time2', 1)">0</span>
         <button onclick="alterarPonto('time2', 1)">+</button>
       </div>
     </div>
@@ -61,14 +63,12 @@
     <div class="creditos">Desenvolvido por Alcateia Voleibol</div>
   </div>
 
-  <script src="js/placar.js"></script>
+  <script src="placar.js"></script>
   <script>
-    // Função de segurança (caso o JS externo não carregue)
-    function alterarSet(setId, valor) {
-      const elemento = document.getElementById(setId);
-      let atual = parseInt(elemento.innerText);
-      atual = Math.max(0, atual + valor);
-      elemento.innerText = atual;
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/alcateiavoleibol/placar/placar-pwa/service-worker.js')
+        .then(() => console.log('Service Worker registrado!'))
+        .catch((error) => console.error('Erro ao registrar Service Worker:', error));
     }
   </script>
 </body>

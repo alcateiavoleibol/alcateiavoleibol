@@ -1,135 +1,31 @@
-/* Estilo Geral - Mobile First */
-body {
-  transform-origin: center center;
-  transition: transform 0.3s ease;
+
+@media (max-width: 768px) {
+  .data-hora { font-size: 5vw; }
+  .cronometro { font-size: 8vw; }
+  .time-nome-input { font-size: 5vw; width: 80%; }
+  .set-info { font-size: 5vw; }
+  .pontuacoes { font-size: 12vw; gap: 20px; }
+  .pontuacao button { font-size: 7vw; }
+  .versus { font-size: 8vw; }
+  .botoes button { font-size: 4vw; padding: 8px 15px; }
+  .creditos { font-size: 3vw; }
 }
 
-.placar-container {
-  display: grid;
-  grid-template-rows: auto auto auto auto 1fr auto;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.data-hora {
-  font-size: 5vw;
-}
-
-.cronometro {
-  font-size: 8vw;
-}
-
-.times {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.time-bloco {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.time-nome-input {
-  font-size: 5vw;
-  text-align: center;
-  width: 80%;
-}
-
-.set-control {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.set-control button {
-  font-size: 5vw;
-}
-
-.set-info {
-  font-size: 5vw;
-  margin: 10px 0;
-}
-
-.pontuacoes {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12vw;
-  gap: 20px;
-}
-
-.pontuacao button {
-  font-size: 7vw;
-}
-
-.pontuacao span {
-  margin: 0 20px;
-}
-
-.versus {
-  font-size: 8vw;
-}
-
-.botoes {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.botoes button {
-  font-size: 4vw;
-  padding: 8px 15px;
-}
-
-.creditos {
-  font-size: 3vw;
-  text-align: center;
-  margin-top: 20px;
-}
-
-/* Landscape Mode */
 @media (orientation: landscape) {
-  .times {
-    flex-direction: row;
-    justify-content: space-around;
-  }
+  .times { flex-direction: row; justify-content: space-around; }
+  .time-nome-input { font-size: 3vw; }
+  .set-info { font-size: 3vw; }
+  .data-hora { font-size: 3vw; }
+  .cronometro { font-size: 5vw; }
+  .pontuacoes { font-size: 8vw; }
+  .pontuacao button { font-size: 4vw; }
+  .botoes button { font-size: 2.5vw; }
+  .creditos { font-size: 2vw; }
+}
 
-  .time-nome-input {
-    font-size: 3vw;
-    width: auto;
-  }
-
-  .set-info {
-    font-size: 3vw;
-  }
-
-  .data-hora {
-    font-size: 3vw;
-  }
-
-  .cronometro {
-    font-size: 5vw;
-  }
-
-  .pontuacoes {
-    font-size: 8vw;
-  }
-
-  .pontuacao button {
-    font-size: 4vw;
-  }
-
-  .botoes button {
-    font-size: 2.5vw;
-  }
-
-  .creditos {
-    font-size: 2vw;
-  }
+@media (max-width: 480px) {
+  .cronometro { font-size: 9vw; }
+  .botoes button { font-size: 5vw; padding: 5px 10px; margin: 8px; }
+  .pontuacao button { font-size: 6vw; }
+  .pontuacoes { font-size: 13vw; }
 }

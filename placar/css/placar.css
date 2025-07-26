@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   padding: 0;
@@ -11,6 +12,8 @@ body {
   overflow: hidden;
   text-align: center;
   font-size: 3.5rem;
+  transform-origin: center center;
+  transition: transform 0.3s ease;
 }
 
 body.girado {
@@ -42,10 +45,10 @@ body.girado {
   margin-top: 20px;
 }
 
-.time-nome {
+.time-nome-input {
   font-size: 2.5rem;
-  color: #00BFFF;
-  width: 30%;
+  text-align: center;
+  width: 80%;
 }
 
 .set-info {
@@ -60,11 +63,6 @@ body.girado {
   align-items: center;
   font-size: 8.5rem;
   margin: 1px 0;
-}
-
-.pontuacao {
-  display: flex;
-  align-items: center;
 }
 
 .pontuacao span {
@@ -100,4 +98,15 @@ button {
   margin-top: 40px;
   font-size: 1.2rem;
   color: #888;
+}
+
+.btn-menor {
+  font-size: 1.5rem;
+  padding: 5px 10px;
+  margin: 0 5px;
+  background-color: #00BFFF;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
