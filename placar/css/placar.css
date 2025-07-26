@@ -13,6 +13,10 @@ body {
   font-size: 3.5rem;
 }
 
+body.girado {
+  transform: rotate(90deg);
+}
+
 .placar-container {
   max-width: 100%;
   width: 100%;
