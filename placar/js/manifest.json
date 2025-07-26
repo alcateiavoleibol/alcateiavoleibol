@@ -1,13 +1,13 @@
 {
   "name": "Alcateia Voleibol | Placar",
   "short_name": "Placar Alcateia",
-  "start_url": "js/manifest.json",
+  "start_url": "../placar.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#00BFFF",
   "icons": [
     {
-      "src": "icone.png",
+      "src": "../imagens/icone.png",
       "sizes": "512x512",
       "type": "image/png"
     }

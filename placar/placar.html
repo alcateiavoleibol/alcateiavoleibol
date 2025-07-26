@@ -63,10 +63,10 @@
     <div class="creditos">Desenvolvido por Alcateia Voleibol</div>
   </div>
 
-  <script src="placar.js"></script>
+  <script src="js/placar.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/alcateiavoleibol/placar/placar-pwa/service-worker.js')
+      navigator.serviceWorker.register('js/service-worker.js')
         .then(() => console.log('Service Worker registrado!'))
         .catch((error) => console.error('Erro ao registrar Service Worker:', error));
     }
