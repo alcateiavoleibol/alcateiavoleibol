@@ -1,0 +1,24 @@
+
+@media (max-width: 768px) {
+  .data-hora { font-size: 5vw; }
+  .cronometro { font-size: 8vw; }
+  .time-nome-input { font-size: 5vw; width: 80%; }
+  .set-info { font-size: 5vw; }
+  .pontuacoes { font-size: 12vw; gap: 20px; }
+  .pontuacao button { font-size: 7vw; }
+  .versus { font-size: 8vw; }
+  .botoes button { font-size: 4vw; padding: 8px 15px; }
+  .creditos { font-size: 3vw; }
+}
+
+@media (orientation: landscape) {
+  .times { flex-direction: row; justify-content: space-around; }
+  .time-nome-input { font-size: 3vw; }
+  .set-info { font-size: 3vw; }
+  .data-hora { font-size: 3vw; }
+  .cronometro { font-size: 5vw; }
+  .pontuacoes { font-size: 8vw; }
+  .pontuacao button { font-size: 4vw; }
+  .botoes button { font-size: 2.5vw; }
+  .creditos { font-size: 2vw; }
+}

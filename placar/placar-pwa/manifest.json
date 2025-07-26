@@ -1,0 +1,16 @@
+
+{
+  "name": "Placar Alcateia",
+  "short_name": "Placar",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00BFFF",
+  "icons": [
+    {
+      "src": "icone.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
