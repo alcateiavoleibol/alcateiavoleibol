@@ -1,0 +1,9 @@
+@media (max-width: 600px) {
+  .perfil {
+    flex-direction: column;
+    align-items: center;
+  }
+  .ficha label {
+    font-size: 14px;
+  }
+}
