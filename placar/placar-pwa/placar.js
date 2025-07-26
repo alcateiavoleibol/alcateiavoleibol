@@ -108,3 +108,11 @@ function carregarEstado() {
     document.getElementById('cronometro').textContent = estado.cronometro;
   }
 }
+
+function incrementarTouch(time) {
+  alterarPonto(time, 1);
+}
+
+function decrementarTouch(time) {
+  alterarPonto(time, -1);
+}

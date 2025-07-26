@@ -1,7 +1,6 @@
-
 {
-  "name": "Placar Alcateia",
-  "short_name": "Placar",
+  "name": "Alcateia Voleibol | Placar",
+  "short_name": "Placar Alcateia",
   "start_url": "/alcateiavoleibol/placar/placar-pwa/",
   "display": "standalone",
   "background_color": "#000000",

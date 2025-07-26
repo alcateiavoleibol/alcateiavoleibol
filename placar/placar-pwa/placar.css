@@ -99,3 +99,14 @@ button {
   font-size: 1.2rem;
   color: #888;
 }
+
+.btn-menor {
+  font-size: 1.5rem;
+  padding: 5px 10px;
+  margin: 0 5px;
+  background-color: #00BFFF;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
