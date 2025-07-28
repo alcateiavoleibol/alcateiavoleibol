@@ -73,4 +73,11 @@
   .creditos-container {
     font-size: 0.75rem;
   }
+
+@media (orientation: portrait) and (display-mode: fullscreen) {
+  .placar-container {
+    margin-top: 40px; /* ou ajuste conforme necessário */
+  }
+}
+  
 }
