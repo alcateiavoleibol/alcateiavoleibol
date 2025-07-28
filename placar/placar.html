@@ -65,7 +65,7 @@
       <button onclick="iniciarPartida()">▶️ START</button>
       <button onclick="resetarPontos()">🧹 ZERAR</button>
       <button onclick="desfazerPonto()">❌ PONTO</button>
-	  <button onclick="resetarPartida()">🔄 RESET</button>
+      <button onclick="resetarPartida()">🔄 RESET</button>
       <button onclick="alternarTelaCheia()">🖥️ CHEIA</button>
     </div>
 
@@ -80,24 +80,22 @@
   <script src="js/placar.js"></script>
 
   <script>
-    // Gira tela ao clicar no ícone no topo
     document.querySelector('.icone-girar').addEventListener('click', () => {
       document.body.classList.toggle('girado');
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(() => {});
+      }
     });
 
-    // Tratamento para pontos (rodadas) - clique esquerdo + direito
     function pontoMouseDown(event, time) {
       event.preventDefault();
       if (event.button === 0) {
-        // clique esquerdo: incrementa
         incrementarTouch(time);
       } else if (event.button === 2) {
-        // clique direito: decrementa
         decrementarTouch(time);
       }
     }
 
-    // Tratamento para sets - clique esquerdo + direito
     function setMouseDown(event, setId) {
       event.preventDefault();
       if (event.button === 0) {

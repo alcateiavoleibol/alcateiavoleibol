@@ -5,16 +5,70 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: black;
   }
+
   .placar-container {
+    width: 100%;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .data-hora {
+    font-size: 5vw;
+    margin-bottom: 5px;
+    color: #00BFFF;
+  }
+
+  .cronometro {
+    font-size: 7vw;
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .times {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px 10px;
+  }
+
+  .time-nome-input {
+    font-size: 5vw;
+    width: 45%;
+    text-align: center;
+  }
+
+  .set-info {
+    font-size: 3.5vw;
+    width: 50%;
+    text-align: center;
+    color: white;
+    margin-top: 5px;
+  }
+
+  .set-control {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
     width: 100%;
   }
-  .data-hora { font-size: 5vw; }
-  .cronometro { font-size: 7vw; }
-  .time-nome-input { font-size: 5vw; width: 80%; }
-  .set-info { font-size: 4vw; }
-  .set-control span { font-size: 6vw; min-width: 50px; }
+
+  .set-control span {
+    font-size: 6vw;
+    min-width: 50px;
+    color: white;
+  }
+
   .pontuacoes {
     font-size: 20vw;
     display: flex;
@@ -22,61 +76,97 @@
     align-items: center;
     flex-wrap: nowrap;
     gap: 5vw;
+    margin: 10px 0;
   }
+
   .pontuacao span {
     font-size: 20vw;
     min-width: 100px;
     display: inline-block;
   }
-  .versus { font-size: 10vw; }
+
+  .versus {
+    font-size: 10vw;
+    color: #00BFFF;
+  }
+
+  .botoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+  }
+
   .botoes button {
     font-size: 4.5vw;
     padding: 5px 10px;
     margin: 4px;
     min-width: 80px;
   }
-  .botoes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .creditos { font-size: 3vw; }
-  .times {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
+
+  .creditos {
+    font-size: 3vw;
+    margin-top: 20px;
+    color: #888;
   }
 }
 
 @media (orientation: landscape) {
-  .times { flex-direction: row; justify-content: space-around; flex-wrap: wrap; }
-  .time-nome-input { font-size: 3vw; }
-  .set-info { font-size: 3vw; }
-  .set-control span { font-size: 6vw; min-width: 40px; }
-  .data-hora { font-size: 3vw; }
-  .cronometro { font-size: 5vw; }
+  .times {
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .time-nome-input {
+    font-size: 3vw;
+    width: 40%;
+  }
+
+  .set-info {
+    font-size: 3vw;
+    width: 100%;
+    text-align: center;
+  }
+
+  .set-control span {
+    font-size: 6vw;
+    min-width: 40px;
+  }
+
+  .data-hora {
+    font-size: 3vw;
+  }
+
+  .cronometro {
+    font-size: 5vw;
+  }
+
   .pontuacoes {
     font-size: 14vw;
     flex-wrap: nowrap;
     justify-content: center;
     gap: 4vw;
   }
+
   .pontuacao span {
     font-size: 14vw;
     min-width: 100px;
   }
-  .versus { font-size: 8vw; }
+
+  .versus {
+    font-size: 8vw;
+  }
+
   .botoes button {
-    font-size: 2.5vw;
+    font-size: 3vw;
     padding: 5px 8px;
     min-width: 100px;
   }
-  .botoes {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+
+  .creditos {
+    font-size: 2vw;
   }
-  .creditos { font-size: 2vw; }
 }
