@@ -1,28 +1,51 @@
 @media (max-width: 768px) {
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  .placar-container {
+    padding: 10px;
+    width: 100%;
+  }
   .data-hora { font-size: 5vw; }
-  .cronometro { font-size: 8vw; }
+  .cronometro { font-size: 7vw; }
   .time-nome-input { font-size: 5vw; width: 80%; }
-  .set-info { font-size: 5vw; }
-  .set-control span { font-size: 10vw; min-width: 60px; }
-  .pontuacoes { font-size: 18vw; gap: 10px; }
-  .pontuacao span { font-size: 18vw; min-width: 80px; }
+  .set-info { font-size: 4vw; }
+  .set-control span { font-size: 6vw; min-width: 50px; }
+  .pontuacoes {
+    font-size: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 5vw;
+  }
+  .pontuacao span {
+    font-size: 20vw;
+    min-width: 100px;
+    display: inline-block;
+  }
   .versus { font-size: 10vw; }
   .botoes button {
-    font-size: 4vw;
-    padding: 6px 10px;
-    min-width: 90px;
-    margin: 5px;
+    font-size: 4.5vw;
+    padding: 5px 10px;
+    margin: 4px;
+    min-width: 80px;
   }
   .botoes {
-    flex-direction: row;
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
   }
   .creditos { font-size: 3vw; }
   .times {
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 }
 
@@ -33,15 +56,24 @@
   .set-control span { font-size: 6vw; min-width: 40px; }
   .data-hora { font-size: 3vw; }
   .cronometro { font-size: 5vw; }
-  .pontuacoes { font-size: 12vw; }
-  .pontuacao span { font-size: 12vw; }
-  .versus { font-size: 7vw; }
+  .pontuacoes {
+    font-size: 14vw;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 4vw;
+  }
+  .pontuacao span {
+    font-size: 14vw;
+    min-width: 100px;
+  }
+  .versus { font-size: 8vw; }
   .botoes button {
-    font-size: 2vw;
+    font-size: 2.5vw;
     padding: 5px 8px;
     min-width: 100px;
   }
   .botoes {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
