@@ -1,47 +1,41 @@
-const CACHE_NAME = 'placar-alcateia-cache-v1';
-const urlsToCache = [
-  './',
-  './index.html',
-  './placar.css',
-  './responsivo-placar.css',
-  './placar.js',
-  './icone.png',
-  './manifest.json'
+// service-worker.js - Cache PWA
+
+const CACHE_NAME = "placar-v1";
+const URLS_TO_CACHE = [
+  "/",
+  "/index.html",
+  "/css/placar.css",
+  "/css/responsivo-placar.css",
+  "/js/placar.js",
+  "/manifest.json",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png"
 ];
 
-self.addEventListener('install', function(event) {
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll(urlsToCache);
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(URLS_TO_CACHE);
     })
   );
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then(function(response) {
-      return response || fetch(event.request).then(function(networkResponse) {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-          return networkResponse;
-        }
-        let responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then(function(cache) {
-          cache.put(event.request, responseToCache);
-        });
-        return networkResponse;
-      });
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
     })
   );
 });
 
-self.addEventListener('activate', function(event) {
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(function(cacheNames) {
+    caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.filter(function(cacheName) {
-          return cacheName !== CACHE_NAME;
-        }).map(function(cacheName) {
-          return caches.delete(cacheName);
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
         })
       );
     })

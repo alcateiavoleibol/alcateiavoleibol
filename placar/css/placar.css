@@ -1,52 +1,43 @@
+/* placar.css - Estilos principais do placar */
+
 body {
   margin: 0;
-  padding: 0;
-  background-color: black;
-  color: white;
-  font-family: 'Arial Black', sans-serif;
+  font-family: 'Arial', sans-serif;
+  background-color: #000814;
+  color: #ffffff;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-  text-align: center;
-  font-size: 2.5rem;
-  transform-origin: center center;
-  transition: transform 0.3s ease;
   flex-direction: column;
-}
-
-body.girado {
-  transform: rotate(90deg);
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .placar-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 100vh;
-  width: 100vw;
-  padding: 10px 10px 100px;
-  box-sizing: border-box;
-  user-select: none;
-  overflow: hidden;
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
 }
 
-/* Cronômetro */
+.data-hora {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
 .cronometro {
-  font-size: 3.5rem;
-  color: white;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ffd60a;
+  margin-bottom: 20px;
 }
 
-/* Times */
 .times {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
-  max-width: 700px;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .time-bloco {
@@ -56,256 +47,95 @@ body.girado {
 }
 
 .time-nome-input {
-  width: 160px;
-  font-size: 2rem;
-  background: transparent;
-  border: none;
-  color: white;
+  background: #001d3d;
+  color: #fff;
+  border: 2px solid #003566;
+  font-size: 1rem;
   text-align: center;
-  font-weight: bold;
-  user-select: text;
-  white-space: nowrap;
-  overflow: visible;
-  padding: 1vh 1vw;
-}
-
-/* Sets */
-.set-control span {
-  cursor: pointer;
-  font-size: 3rem;
-  margin-top: 5px;
-  display: inline-block;
-  user-select: none;
+  padding: 5px;
+  border-radius: 5px;
+  width: 130px;
+  margin-bottom: 5px;
 }
 
 .set-info {
+  font-weight: bold;
+  color: #ffc300;
+}
+
+.set-control span {
   font-size: 2rem;
-  color: white;
-  margin: 0 10px;
+  cursor: pointer;
   user-select: none;
 }
 
-/* Pontuação */
 .pontuacoes {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 7rem;
-  gap: 40px;
-  margin: 20px 0;
-  width: 100%;
-  max-width: 800px;
-  flex-shrink: 0;
+  margin-top: 10px;
 }
 
 .pontuacao span {
-  min-width: 100px;
-  color: white;
+  font-size: 6rem;
+  font-weight: bold;
+  background: #001d3d;
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin: 10px;
   cursor: pointer;
   user-select: none;
-  display: inline-block;
 }
 
 .versus {
-  font-size: 5rem;
-  color: #00bfff;
-  user-select: none;
-}
-
-/* Créditos e Data/Hora */
-.creditos-container {
-  text-align: center;
-  color: #888;
-  font-size: 1.2rem;
-  margin-top: 2vh;
-  padding: 0 10px;
-  user-select: none;
-  line-height: 1.4;
-  position: relative;
-  bottom: -3vh;
-}
-
-.data-hora {
   font-size: 2rem;
-  color: #00bfff;
-  margin-bottom: 5px;
-  user-select: none;
+  margin: 0 10px;
+  color: #ffc300;
 }
 
-/* Menu fixo */
 .botoes {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: black;
-  padding: 10px 5px 15px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  z-index: 100;
+  padding: 15px;
+  background: #000814;
+  position: sticky;
+  bottom: 50px;
+  z-index: 10;
 }
 
 .botoes button {
-  font-size: 1.5rem;
   padding: 10px 15px;
-  background-color: #00bfff;
-  color: black;
+  font-size: 1rem;
   border: none;
   border-radius: 8px;
+  background-color: #003566;
+  color: #fff;
   cursor: pointer;
-  min-width: 120px;
-  white-space: nowrap;
-  font-weight: bold;
   transition: background-color 0.3s ease;
 }
 
 .botoes button:hover {
-  background-color: #0080c0;
+  background-color: #00509d;
 }
 
-/* Responsivo geral */
-@media (max-width: 768px) {
-  body {
-    font-size: 3.5vw;
-  }
-
-  .cronometro {
-    font-size: 6vw;
-  }
-
-  .times {
-    max-width: 100%;
-    padding: 0 5vw;
-  }
-
-  .time-nome-input {
-    width: 45vw;
-    font-size: 4.5vw;
-  }
-
-  .set-control span {
-    font-size: 5vw;
-  }
-
-  .set-info {
-    font-size: 4vw;
-  }
-
-  .pontuacoes {
-    font-size: 14vw;
-    gap: 8vw;
-    margin: 10px 0;
-    max-width: 100%;
-  }
-
-  .pontuacao span {
-    min-width: 35vw;
-    font-size: 15vw;
-  }
-
-  .versus {
-    font-size: 10vw;
-  }
-
-  .creditos-container {
-    font-size: 1.5vw;
-    bottom: -2vh;
-  }
-
-  .botoes button {
-    font-size: 4vw;
-    min-width: 45vw;
-    padding: 10px 0;
-  }
+.creditos-container {
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 8px;
+  background-color: #000814;
+  color: #ccc;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 5;
 }
 
-/* Modo retrato com rotação */
-@media (max-width: 768px) and (orientation: portrait) {
-  body.girado {
-    font-size: 2.5vw;
-  }
-
-  .pontuacoes {
-    font-size: 10vw !important;
-    gap: 6vw !important;
-  }
-
-  .cronometro {
-    font-size: 5vw !important;
-  }
-
-  .time-nome-input {
-    font-size: 4vw !important;
-    width: 50vw !important;
-  }
-
-  .set-control span {
-    font-size: 4vw !important;
-  }
-
-  .set-info {
-    font-size: 3.5vw !important;
-  }
-
-  .botoes button {
-    font-size: 3.5vw !important;
-    min-width: 40vw !important;
-  }
-}
-
-/* Ajustes para telas grandes */
-@media (min-width: 1024px) {
-  body {
-    font-size: 2rem;
-  }
-
-  .cronometro {
-    font-size: 3rem;
-  }
-
-  .times {
-    max-width: 600px;
-    padding: 0 30px;
-  }
-
-  .time-nome-input {
-    font-size: 2.9vw;
-    width: 100%;
-    padding: 3vh 5vw;
-  }
-
-  .set-control span {
-    font-size: 2.5rem;
-  }
-
-  .set-info {
-    font-size: 1.8rem;
-  }
-
-  .pontuacoes {
-    font-size: 6.5rem;
-    max-width: 600px;
-    gap: 40px;
-    margin: 20px 0;
-  }
-
-  .pontuacao span {
-    min-width: 90px;
-  }
-
-  .versus {
-    font-size: 4rem;
-  }
-
-  .creditos-container {
-    font-size: 1.9vw;
-    bottom: -4.3vh;
-  }
-
-  .botoes button {
-    font-size: 1.3rem;
-    min-width: 140px;
-  }
+.girado {
+  transform: rotate(90deg);
+  transform-origin: center;
+  width: 100vh;
+  height: 100vw;
+  overflow: hidden;
 }
