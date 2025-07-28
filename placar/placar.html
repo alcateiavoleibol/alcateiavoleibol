@@ -1,55 +1,72 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Placar Alcateia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="manifest" href="js/manifest.json">
-  <link rel="stylesheet" href="css/placar.css">
-  <link rel="stylesheet" href="css/responsivo-placar.css">
-  <link rel="icon" href="imagens/icone.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="manifest" href="js/manifest.json" />
+  <link rel="stylesheet" href="css/placar.css" />
+  <link rel="stylesheet" href="css/responsivo-placar.css" />
+  <link rel="icon" href="imagens/icone.png" type="image/png" />
 </head>
 <body>
+  <div class="icone-girar" title="Girar tela (90°)">⤵️</div>
+
   <div class="placar-container">
-    <div class="cronometro" id="cronometro">00:00:00</div>
+    <div class="cronometro" id="cronometro">00:00</div>
 
     <div class="times">
       <div class="time-bloco">
-        <input class="time-nome-input" id="time1-nome" value="ALCATEIA A1">
+        <input class="time-nome-input" id="time1-nome" value="ALCATEIA A1" />
         <div class="set-control">
-          <span id="set1" onclick="alterarSet('set1', 1)">0</span>
+          <span
+            id="set1"
+            onmousedown="setMouseDown(event, 'set1')"
+            oncontextmenu="event.preventDefault();"
+          >0</span>
         </div>
       </div>
 
       <div class="set-info">SETS</div>
 
       <div class="time-bloco">
-        <input class="time-nome-input" id="time2-nome" value="ALCATEIA A2">
+        <input class="time-nome-input" id="time2-nome" value="ALCATEIA A2" />
         <div class="set-control">
-          <span id="set2" onclick="alterarSet('set2', 1)">0</span>
+          <span
+            id="set2"
+            onmousedown="setMouseDown(event, 'set2')"
+            oncontextmenu="event.preventDefault();"
+          >0</span>
         </div>
       </div>
     </div>
 
     <div class="pontuacoes">
       <div class="pontuacao">
-        <span id="pontos1" onclick="incrementarTouch('time1')" oncontextmenu="event.preventDefault(); decrementarTouch('time1')">0</span>
+        <span
+          id="pontos1"
+          onmousedown="pontoMouseDown(event, 'time1')"
+          oncontextmenu="event.preventDefault();"
+        >0</span>
       </div>
 
       <span class="versus">X</span>
 
       <div class="pontuacao">
-        <span id="pontos2" onclick="incrementarTouch('time2')" oncontextmenu="event.preventDefault(); decrementarTouch('time2')">0</span>
+        <span
+          id="pontos2"
+          onmousedown="pontoMouseDown(event, 'time2')"
+          oncontextmenu="event.preventDefault();"
+        >0</span>
       </div>
     </div>
 
     <div class="botoes">
-      <button onclick="iniciarPartida()">START</button>
-      <button onclick="resetarPontos()">ZERAR PONTOS</button>
-      <button onclick="desfazerPonto()">DESFAZER PONTO</button>
-      <button onclick="alternarTelaCheia()">TELA CHEIA</button>
-      <button onclick="girarTela()">GIRAR TELA</button>
-      <button onclick="resetarPartida()">RESET GERAL</button>
+      <button onclick="iniciarPartida()">▶️ START</button>
+      <button onclick="resetarPontos()">🧹 ZERAR</button>
+      <button onclick="desfazerPonto()">❌ PONTO</button>
+	  <button onclick="resetarPartida()">🔄 RESET</button>
+      <button onclick="alternarTelaCheia()">🖥️ CHEIA</button>
     </div>
 
     <div class="creditos">
@@ -58,9 +75,39 @@
     </div>
   </div>
 
-  <audio id="somApito" src="mp3/apito.mp3" preload="auto"></audio>
+  <audio id="somApito" src="mp3/ponto.mp3" preload="auto"></audio>
 
   <script src="js/placar.js"></script>
+
+  <script>
+    // Gira tela ao clicar no ícone no topo
+    document.querySelector('.icone-girar').addEventListener('click', () => {
+      document.body.classList.toggle('girado');
+    });
+
+    // Tratamento para pontos (rodadas) - clique esquerdo + direito
+    function pontoMouseDown(event, time) {
+      event.preventDefault();
+      if (event.button === 0) {
+        // clique esquerdo: incrementa
+        incrementarTouch(time);
+      } else if (event.button === 2) {
+        // clique direito: decrementa
+        decrementarTouch(time);
+      }
+    }
+
+    // Tratamento para sets - clique esquerdo + direito
+    function setMouseDown(event, setId) {
+      event.preventDefault();
+      if (event.button === 0) {
+        alterarSet(setId, 1);
+      } else if (event.button === 2) {
+        alterarSet(setId, -1);
+      }
+    }
+  </script>
+
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('js/service-worker.js')

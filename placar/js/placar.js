@@ -55,23 +55,39 @@ function alterarPonto(time, valor) {
     somApito.play();
   }
 
-  historicoPontos.push({ time, valor: -valor }); // Para desfazer
+  // Salva histórico invertido para desfazer
+  historicoPontos.push({ tipo: 'ponto', time, valor: -valor });
   salvarEstado();
-}
-
-function desfazerPonto() {
-  const ultimo = historicoPontos.pop();
-  if (ultimo) {
-    alterarPonto(ultimo.time, ultimo.valor);
-    historicoPontos.pop(); // Remove registro duplicado
-  }
 }
 
 function alterarSet(setId, valor) {
   const elemento = document.getElementById(setId);
-  let atual = parseInt(elemento.innerText);
+  let atual = parseInt(elemento.textContent);
   atual = Math.max(0, atual + valor);
-  elemento.innerText = atual;
+  elemento.textContent = atual;
+
+  // Salva histórico invertido para desfazer
+  historicoPontos.push({ tipo: 'set', setId, valor: -valor });
+  salvarEstado();
+}
+
+function desfazerPonto() {
+  if (historicoPontos.length === 0) return;
+
+  const ultimo = historicoPontos.pop();
+  if (ultimo.tipo === 'ponto') {
+    const id = ultimo.time === 'time1' ? 'pontos1' : 'pontos2';
+    const elemento = document.getElementById(id);
+    let atual = parseInt(elemento.textContent);
+    atual = Math.max(0, atual + ultimo.valor);
+    elemento.textContent = atual;
+  } else if (ultimo.tipo === 'set') {
+    const elemento = document.getElementById(ultimo.setId);
+    let atual = parseInt(elemento.textContent);
+    atual = Math.max(0, atual + ultimo.valor);
+    elemento.textContent = atual;
+  }
+
   salvarEstado();
 }
 
@@ -86,19 +102,16 @@ function alternarTelaCheia() {
   }
 }
 
-function girarTela() {
-  document.body.classList.toggle('girado');
-}
-
 function atualizarDataHora() {
   const dataHora = new Date().toLocaleString('pt-BR', {
     timeZone: 'America/Sao_Paulo',
-    hour12: false
+    hour12: false,
   });
   document.getElementById('dataHora').textContent = dataHora;
 }
 
 setInterval(atualizarDataHora, 1000);
+
 window.onload = () => {
   atualizarDataHora();
   carregarEstado();
@@ -111,7 +124,8 @@ function salvarEstado() {
     pontos2: document.getElementById('pontos2').textContent,
     set1: document.getElementById('set1').textContent,
     set2: document.getElementById('set2').textContent,
-    cronometro: document.getElementById('cronometro').textContent
+    cronometro: document.getElementById('cronometro').textContent,
+    historicoPontos,
   };
   localStorage.setItem('placarEstado', JSON.stringify(estado));
 }
@@ -125,6 +139,7 @@ function carregarEstado() {
     document.getElementById('set1').textContent = estado.set1;
     document.getElementById('set2').textContent = estado.set2;
     document.getElementById('cronometro').textContent = estado.cronometro;
+    historicoPontos = estado.historicoPontos || [];
   }
 }
 

@@ -3,10 +3,11 @@
   .cronometro { font-size: 8vw; }
   .time-nome-input { font-size: 5vw; width: 80%; }
   .set-info { font-size: 5vw; }
-  .pontuacoes { font-size: 16vw; gap: 10px; }
-  .pontuacao span { font-size: 16vw; }
-  .versus { font-size: 8vw; }
-  .botoes button { font-size: 5vw; padding: 8px 15px; }
+  .set-control span { font-size: 10vw; min-width: 60px; }
+  .pontuacoes { font-size: 18vw; gap: 10px; }
+  .pontuacao span { font-size: 18vw; min-width: 80px; }
+  .versus { font-size: 10vw; }
+  .botoes button { font-size: 5vw; padding: 8px 15px; min-width: 120px; }
   .creditos { font-size: 3vw; }
 }
 
@@ -14,11 +15,12 @@
   .times { flex-direction: row; justify-content: space-around; }
   .time-nome-input { font-size: 3vw; }
   .set-info { font-size: 3vw; }
+  .set-control span { font-size: 6vw; min-width: 40px; }
   .data-hora { font-size: 3vw; }
   .cronometro { font-size: 5vw; }
   .pontuacoes { font-size: 12vw; }
   .pontuacao span { font-size: 12vw; }
   .versus { font-size: 7vw; }
-  .botoes button { font-size: 3vw; }
+  .botoes button { font-size: 3vw; min-width: 120px; }
   .creditos { font-size: 2vw; }
 }
