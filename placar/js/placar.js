@@ -55,7 +55,6 @@ function alterarPonto(time, valor) {
     somApito.play();
   }
 
-  // Salva histórico invertido para desfazer
   historicoPontos.push({ tipo: 'ponto', time, valor: -valor });
   salvarEstado();
 }
@@ -66,7 +65,6 @@ function alterarSet(setId, valor) {
   atual = Math.max(0, atual + valor);
   elemento.textContent = atual;
 
-  // Salva histórico invertido para desfazer
   historicoPontos.push({ tipo: 'set', setId, valor: -valor });
   salvarEstado();
 }
@@ -99,6 +97,19 @@ function alternarTelaCheia() {
     });
   } else {
     document.exitFullscreen();
+  }
+}
+
+function girarTela() {
+  document.body.classList.toggle('girado');
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock('landscape').catch(() => {});
+  }
+
+  // Para tentar forçar modo desktop em Android/iPhone (experimental)
+  if (navigator.userAgent.includes("Android") || navigator.userAgent.includes("iPhone")) {
+    const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true, view: window });
+    document.dispatchEvent(event);
   }
 }
 

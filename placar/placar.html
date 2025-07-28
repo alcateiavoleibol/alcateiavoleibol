@@ -10,14 +10,13 @@
   <link rel="icon" href="imagens/icone.png" type="image/png" />
 </head>
 <body>
-  <div class="icone-girar" title="Girar tela (90°)">⤵️</div>
 
   <div class="placar-container">
     <div class="cronometro" id="cronometro">00:00</div>
 
     <div class="times">
       <div class="time-bloco">
-        <input class="time-nome-input" id="time1-nome" value="ALCATEIA A1" />
+        <input class="time-nome-input" id="time1-nome" value="ALCATEIA #1" />
         <div class="set-control">
           <span
             id="set1"
@@ -30,7 +29,7 @@
       <div class="set-info">SETS</div>
 
       <div class="time-bloco">
-        <input class="time-nome-input" id="time2-nome" value="ALCATEIA A2" />
+        <input class="time-nome-input" id="time2-nome" value="ALCATEIA #2" />
         <div class="set-control">
           <span
             id="set2"
@@ -60,19 +59,22 @@
         >0</span>
       </div>
     </div>
+  </div>
 
-    <div class="botoes">
-      <button onclick="iniciarPartida()">▶️ START</button>
-      <button onclick="resetarPontos()">🧹 ZERAR</button>
-      <button onclick="desfazerPonto()">❌ PONTO</button>
-      <button onclick="resetarPartida()">🔄 RESET</button>
-      <button onclick="alternarTelaCheia()">🖥️ CHEIA</button>
-    </div>
+  <!-- Menu fixo embaixo -->
+  <div class="botoes">
+    <button onclick="iniciarPartida()">▶️ START</button>
+    <button onclick="resetarPontos()">🧹 ZERAR</button>
+    <button onclick="desfazerPonto()">❌ PONTO</button>
+    <button onclick="resetarPartida()">🔄 RESET</button>
+    <button onclick="alternarTelaCheia()">🖥️ CHEIA</button>
+    <button onclick="girarTela()">⤵️ GIRAR</button>
+  </div>
 
-    <div class="creditos">
-      Desenvolvido por Alcateia Voleibol
-      <div class="data-hora" id="dataHora">00/00/0000 | 00:00:00</div>
-    </div>
+  <!-- Créditos e data/hora abaixo do menu -->
+  <div class="creditos-container">
+    Desenvolvido por Alcateia Voleibol
+    <div class="data-hora" id="dataHora">00/00/0000 | 00:00:00</div>
   </div>
 
   <audio id="somApito" src="mp3/ponto.mp3" preload="auto"></audio>
@@ -80,13 +82,6 @@
   <script src="js/placar.js"></script>
 
   <script>
-    document.querySelector('.icone-girar').addEventListener('click', () => {
-      document.body.classList.toggle('girado');
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(() => {});
-      }
-    });
-
     function pontoMouseDown(event, time) {
       event.preventDefault();
       if (event.button === 0) {
@@ -104,6 +99,17 @@
         alterarSet(setId, -1);
       }
     }
+
+    function girarTela() {
+      document.body.classList.toggle('girado');
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(() => {});
+      }
+      if (navigator.userAgent.includes("Android") || navigator.userAgent.includes("iPhone")) {
+        const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true, view: window });
+        document.dispatchEvent(event);
+      }
+    }
   </script>
 
   <script>
@@ -113,5 +119,6 @@
         .catch((error) => console.error('Erro ao registrar Service Worker:', error));
     }
   </script>
+
 </body>
 </html>

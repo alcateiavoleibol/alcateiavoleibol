@@ -166,7 +166,18 @@
     min-width: 100px;
   }
 
-  .creditos {
-    font-size: 2vw;
+@media (max-width: 768px) {
+  .time-nome-input {
+    font-size: 1.2em;
+    width: 100%;
   }
-}
+
+  .pontuacao span {
+    font-size: 4em;
+  }
+
+  .creditos {
+    font-size: 0.8em;
+    margin-bottom: 60px;
+  }
+}  
