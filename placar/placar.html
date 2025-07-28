@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Placar Alcateia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link rel="manifest" href="js/manifest.json" />
   <link rel="stylesheet" href="css/placar.css" />
   <link rel="stylesheet" href="css/responsivo-placar.css" />
   <link rel="icon" href="imagens/icone.png" type="image/png" />
@@ -59,9 +58,15 @@
         >0</span>
       </div>
     </div>
+
+    <!-- Créditos e Data/Hora abaixo dos pontos -->
+    <div class="creditos-container">
+      Desenvolvido por Alcateia Voleibol<br />
+      <span id="dataHora">00/00/0000 | 00:00:00</span>
+    </div>
   </div>
 
-  <!-- Menu fixo embaixo -->
+  <!-- Menu fixo com botões -->
   <div class="botoes">
     <button onclick="iniciarPartida()">▶️ START</button>
     <button onclick="resetarPontos()">🧹 ZERAR</button>
@@ -69,12 +74,6 @@
     <button onclick="resetarPartida()">🔄 RESET</button>
     <button onclick="alternarTelaCheia()">🖥️ CHEIA</button>
     <button onclick="girarTela()">⤵️ GIRAR</button>
-  </div>
-
-  <!-- Créditos e data/hora abaixo do menu -->
-  <div class="creditos-container">
-    Desenvolvido por Alcateia Voleibol
-    <div class="data-hora" id="dataHora">00/00/0000 | 00:00:00</div>
   </div>
 
   <audio id="somApito" src="mp3/ponto.mp3" preload="auto"></audio>
@@ -100,6 +99,7 @@
       }
     }
 
+    // Função girar tela (a adicionar em placar.js se preferir)
     function girarTela() {
       document.body.classList.toggle('girado');
       if (screen.orientation && screen.orientation.lock) {
@@ -111,14 +111,5 @@
       }
     }
   </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('js/service-worker.js')
-        .then(() => console.log('Service Worker registrado!'))
-        .catch((error) => console.error('Erro ao registrar Service Worker:', error));
-    }
-  </script>
-
 </body>
 </html>
