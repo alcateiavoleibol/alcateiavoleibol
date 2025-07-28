@@ -1,36 +1,36 @@
 /* ===== Estilos Responsivos para o placar ===== */
 
-/* Base para telas até 768px: aumenta textos e botões */
+/* Telas até 768px: textos e botões maiores */
 @media (max-width: 768px) {
   .cronometro {
-    font-size: 2.5rem; /* cronômetro maior em telas menores */
+    font-size: 2.5rem;
   }
 
   .pontuacao span {
-    font-size: 4.5rem; /* pontuação bem visível */
+    font-size: 4.5rem;
     padding: 15px 25px;
   }
 
   .botoes button {
-    font-size: 0.9rem; /* botões legíveis e confortáveis */
+    font-size: 0.9rem;
     padding: 8px 12px;
   }
 
   .time-nome-input {
     width: 100px;
-    font-size: 0.9rem; /* nomes de equipes reduzidos */
+    font-size: 0.9rem;
   }
 
   .set-control span {
-    font-size: 1.8rem; /* controle de sets maior */
+    font-size: 1.8rem;
   }
 
   .versus {
-    font-size: 1.5rem; /* "vs" menor, mas legível */
+    font-size: 1.5rem;
   }
 }
 
-/* Layout para orientação em paisagem: placa lado a lado com menu/control */
+/* Layout paisagem: placar lado a lado */
 @media (orientation: landscape) {
   .placar-container {
     flex-direction: row;
@@ -57,7 +57,7 @@
   }
 }
 
-/* Ajustes extra para telas muito pequenas (até 480px) */
+/* Telas muito pequenas (até 480px) */
 @media (max-width: 480px) {
   .pontuacao span {
     font-size: 3.5rem;
@@ -78,31 +78,71 @@
   }
 }
 
-/* Ajustes específicos para modo retrato + tela cheia com altura limitada */
-@media screen and (orientation: portrait) and (max-height: 700px) {
-  .menu {
-    padding: 4px;
-    font-size: 0.8rem; /* diminui menu em tela cheia retrato */
-  }
-
-  .placar-container {
-    margin-top: 0 !important; /* remove espaço superior */
-    padding-top: 4px;
-  }
-
-  /* Prevenir que o placar suba e sobreponha o menu */
-  .placar-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* garante o placar no topo, menu abaixo */
-  }
-
+/* ===== CORREÇÃO - Modo Retrato Tela Cheia ===== */
+@media screen and (orientation: portrait) {
   .menu {
     position: fixed;
     bottom: 0;
-    width: 100%; /* fixa o menu na base da tela inteira */
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
-    background-color: #003566; /* ou a cor do seu tema */
-    z-index: 100; /* garante estar acima do placar */
+    left: 0;
+    width: 100%;
+    background-color: #003566;
+    padding: 6px 0;
+    display: flex;
+    justify-content: space-around;
+    z-index: 100;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.4);
+  }
+
+  .placar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha no topo */
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 80px; /* Espaço reservado para o menu fixo */
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  .times {
+    margin: 10px 0;
+  }
+
+  .pontuacoes {
+    margin: 10px 0;
+  }
+
+  .set-control {
+    margin: 10px 0;
+  }
+
+  .creditos-container {
+    margin-bottom: 70px; /* Não deixar colar no menu fixo */
+  }
+
+  /* Redução de elementos para telas menores que 700px */
+  @media (max-height: 700px) {
+    .cronometro {
+      font-size: 2rem;
+    }
+
+    .pontuacao span {
+      font-size: 3.5rem;
+      padding: 10px 20px;
+    }
+
+    .botoes button {
+      font-size: 0.8rem;
+      padding: 6px 10px;
+    }
+
+    .time-nome-input {
+      font-size: 0.8rem;
+      width: 90px;
+    }
+
+    .set-control span {
+      font-size: 1.5rem;
+    }
   }
 }
