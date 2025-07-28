@@ -146,3 +146,36 @@
     }
   }
 }
+
+/* Fixar menu e créditos juntos no rodapé */
+.botoes {
+  position: fixed;
+  bottom: 25px; /* espaço para os créditos abaixo */
+  left: 0;
+  width: 100%;
+  background-color: #003566;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 6px 0;
+  z-index: 100;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.4);
+}
+
+.creditos-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #001d3d;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #ccc;
+  padding: 4px 0;
+  z-index: 99;
+}
+
+/* Espaço inferior no conteúdo para não sobrepor o footer fixo */
+.placar-container {
+  padding-bottom: 100px; /* ajuste conforme a altura real do menu+créditos */
+}
