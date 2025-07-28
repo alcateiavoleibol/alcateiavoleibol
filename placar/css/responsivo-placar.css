@@ -1,34 +1,36 @@
-/* responsivo-placar.css - Estilos para responsividade do placar */
+/* ===== Estilos Responsivos para o placar ===== */
 
+/* Base para telas até 768px: aumenta textos e botões */
 @media (max-width: 768px) {
   .cronometro {
-    font-size: 2.5rem;
+    font-size: 2.5rem; /* cronômetro maior em telas menores */
   }
 
   .pontuacao span {
-    font-size: 4.5rem;
+    font-size: 4.5rem; /* pontuação bem visível */
     padding: 15px 25px;
   }
 
   .botoes button {
-    font-size: 0.9rem;
+    font-size: 0.9rem; /* botões legíveis e confortáveis */
     padding: 8px 12px;
   }
 
   .time-nome-input {
     width: 100px;
-    font-size: 0.9rem;
+    font-size: 0.9rem; /* nomes de equipes reduzidos */
   }
 
   .set-control span {
-    font-size: 1.8rem;
+    font-size: 1.8rem; /* controle de sets maior */
   }
 
   .versus {
-    font-size: 1.5rem;
+    font-size: 1.5rem; /* "vs" menor, mas legível */
   }
 }
 
+/* Layout para orientação em paisagem: placa lado a lado com menu/control */
 @media (orientation: landscape) {
   .placar-container {
     flex-direction: row;
@@ -55,6 +57,7 @@
   }
 }
 
+/* Ajustes extra para telas muito pequenas (até 480px) */
 @media (max-width: 480px) {
   .pontuacao span {
     font-size: 3.5rem;
@@ -75,15 +78,31 @@
   }
 }
 
-/* Ajuste para modo retrato e tela cheia */
+/* Ajustes específicos para modo retrato + tela cheia com altura limitada */
 @media screen and (orientation: portrait) and (max-height: 700px) {
   .menu {
     padding: 4px;
-    font-size: 0.8rem;
+    font-size: 0.8rem; /* diminui menu em tela cheia retrato */
   }
 
   .placar-container {
-    margin-top: 0 !important;
+    margin-top: 0 !important; /* remove espaço superior */
     padding-top: 4px;
+  }
+
+  /* Prevenir que o placar suba e sobreponha o menu */
+  .placar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* garante o placar no topo, menu abaixo */
+  }
+
+  .menu {
+    position: fixed;
+    bottom: 0;
+    width: 100%; /* fixa o menu na base da tela inteira */
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+    background-color: #003566; /* ou a cor do seu tema */
+    z-index: 100; /* garante estar acima do placar */
   }
 }
