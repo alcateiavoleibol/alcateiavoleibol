@@ -7,12 +7,27 @@
   .pontuacoes { font-size: 18vw; gap: 10px; }
   .pontuacao span { font-size: 18vw; min-width: 80px; }
   .versus { font-size: 10vw; }
-  .botoes button { font-size: 5vw; padding: 8px 15px; min-width: 120px; }
+  .botoes button {
+    font-size: 4vw;
+    padding: 6px 10px;
+    min-width: 90px;
+    margin: 5px;
+  }
+  .botoes {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   .creditos { font-size: 3vw; }
+  .times {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 @media (orientation: landscape) {
-  .times { flex-direction: row; justify-content: space-around; }
+  .times { flex-direction: row; justify-content: space-around; flex-wrap: wrap; }
   .time-nome-input { font-size: 3vw; }
   .set-info { font-size: 3vw; }
   .set-control span { font-size: 6vw; min-width: 40px; }
@@ -21,6 +36,15 @@
   .pontuacoes { font-size: 12vw; }
   .pontuacao span { font-size: 12vw; }
   .versus { font-size: 7vw; }
-  .botoes button { font-size: 3vw; min-width: 120px; }
+  .botoes button {
+    font-size: 2vw;
+    padding: 5px 8px;
+    min-width: 100px;
+  }
+  .botoes {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   .creditos { font-size: 2vw; }
 }
