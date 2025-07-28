@@ -11,8 +11,14 @@
 <body>
 
   <div class="placar-container">
+    
+    <!-- Data e Hora -->
+    <div class="data-hora" id="dataHora">00/00/0000 | 00:00:00</div>
+
+    <!-- Cronômetro -->
     <div class="cronometro" id="cronometro">00:00</div>
 
+    <!-- Nomes dos Times e Sets -->
     <div class="times">
       <div class="time-bloco">
         <input class="time-nome-input" id="time1-nome" value="ALCATEIA #1" />
@@ -39,6 +45,7 @@
       </div>
     </div>
 
+    <!-- Pontuação -->
     <div class="pontuacoes">
       <div class="pontuacao">
         <span
@@ -59,10 +66,9 @@
       </div>
     </div>
 
-    <!-- Créditos e Data/Hora abaixo dos pontos -->
+    <!-- Créditos -->
     <div class="creditos-container">
-      Desenvolvido por Alcateia Voleibol<br />
-      <span id="dataHora">00/00/0000 | 00:00:00</span>
+      Desenvolvido por Alcateia Voleibol
     </div>
   </div>
 
@@ -99,7 +105,6 @@
       }
     }
 
-    // Função girar tela (a adicionar em placar.js se preferir)
     function girarTela() {
       document.body.classList.toggle('girado');
       if (screen.orientation && screen.orientation.lock) {
@@ -110,6 +115,16 @@
         document.dispatchEvent(event);
       }
     }
+
+    // Atualizar Data e Hora
+    function atualizarDataHora() {
+      const agora = new Date();
+      const data = agora.toLocaleDateString('pt-BR');
+      const hora = agora.toLocaleTimeString('pt-BR');
+      document.getElementById('dataHora').textContent = `${data} | ${hora}`;
+    }
+    setInterval(atualizarDataHora, 1000);
+    atualizarDataHora();
   </script>
 </body>
 </html>

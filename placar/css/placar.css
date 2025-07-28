@@ -13,6 +13,7 @@ body {
   font-size: 2.5rem;
   transform-origin: center center;
   transition: transform 0.3s ease;
+  flex-direction: column;
 }
 
 body.girado {
@@ -23,57 +24,56 @@ body.girado {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* centraliza verticalmente */
+  justify-content: space-between;
   height: 100vh;
-  padding: 10px 20px;
+  width: 100vw;
+  padding: 10px 10px 100px;
   box-sizing: border-box;
   user-select: none;
+  overflow: hidden;
 }
 
 /* Cronômetro */
 .cronometro {
-  font-size: 4rem;
-  margin-bottom: 20px;
+  font-size: 3.5rem;
   color: white;
 }
 
 /* Times */
 .times {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
   max-width: 700px;
-  padding: 0 10px;
-  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 .time-bloco {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .time-nome-input {
-  width: 180px;
+  width: 160px;
   font-size: 2rem;
   background: transparent;
   border: none;
   color: white;
   text-align: center;
   font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   user-select: text;
+  white-space: nowrap;
+  overflow: visible;
+  padding: 1vh 1vw;
 }
 
+/* Sets */
 .set-control span {
   cursor: pointer;
   font-size: 3rem;
   margin-top: 5px;
-  min-width: 40px;
   display: inline-block;
   user-select: none;
 }
@@ -82,7 +82,6 @@ body.girado {
   font-size: 2rem;
   color: white;
   margin: 0 10px;
-  align-self: center;
   user-select: none;
 }
 
@@ -91,11 +90,12 @@ body.girado {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 8rem;
-  gap: 50px;
-  margin-bottom: 20px;
+  font-size: 7rem;
+  gap: 40px;
+  margin: 20px 0;
   width: 100%;
-  max-width: 700px;
+  max-width: 800px;
+  flex-shrink: 0;
 }
 
 .pontuacao span {
@@ -112,23 +112,34 @@ body.girado {
   user-select: none;
 }
 
-/* Créditos e Data/Hora - ficam logo abaixo dos pontos */
+/* Créditos e Data/Hora */
 .creditos-container {
   text-align: center;
   color: #888;
-  font-size: 1.3rem;
-  margin-bottom: 80px; /* espaço para menu fixo */
+  font-size: 1.2rem;
+  margin-top: 2vh;
+  padding: 0 10px;
+  user-select: none;
+  line-height: 1.4;
+  position: relative;
+  bottom: -3vh;
+}
+
+.data-hora {
+  font-size: 2rem;
+  color: #00bfff;
+  margin-bottom: 5px;
   user-select: none;
 }
 
-/* Menu fixo com botões */
+/* Menu fixo */
 .botoes {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   background: black;
-  padding: 10px 5px;
+  padding: 10px 5px 15px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -157,44 +168,41 @@ body.girado {
 /* Responsivo geral */
 @media (max-width: 768px) {
   body {
-    font-size: 3vw;
+    font-size: 3.5vw;
   }
 
   .cronometro {
-    font-size: 7vw;
-    margin-bottom: 15px;
+    font-size: 6vw;
   }
 
   .times {
     max-width: 100%;
     padding: 0 5vw;
-    margin-bottom: 15px;
   }
 
   .time-nome-input {
     width: 45vw;
-    font-size: 5vw;
+    font-size: 4.5vw;
   }
 
   .set-control span {
     font-size: 5vw;
-    min-width: 30vw;
   }
 
   .set-info {
     font-size: 4vw;
-    margin: 0 5vw;
   }
 
   .pontuacoes {
-    font-size: 15vw;
+    font-size: 14vw;
     gap: 8vw;
-    margin-bottom: 15px;
+    margin: 10px 0;
     max-width: 100%;
   }
 
   .pontuacao span {
-    min-width: 40vw;
+    min-width: 35vw;
+    font-size: 15vw;
   }
 
   .versus {
@@ -202,13 +210,8 @@ body.girado {
   }
 
   .creditos-container {
-    font-size: 4vw;
-    margin-bottom: 70px;
-    padding: 0 10px;
-  }
-
-  .botoes {
-    padding: 10px 10px 15px;
+    font-size: 1.5vw;
+    bottom: -2vh;
   }
 
   .botoes button {
@@ -218,12 +221,7 @@ body.girado {
   }
 }
 
-/* Ajuste para girar tela no celular em retrato */
-body.girado {
-  transform-origin: center center;
-  transition: transform 0.3s ease;
-}
-
+/* Modo retrato com rotação */
 @media (max-width: 768px) and (orientation: portrait) {
   body.girado {
     font-size: 2.5vw;
@@ -239,17 +237,16 @@ body.girado {
   }
 
   .time-nome-input {
-    font-size: 3.5vw !important;
+    font-size: 4vw !important;
     width: 50vw !important;
   }
 
   .set-control span {
     font-size: 4vw !important;
-    min-width: 25vw !important;
   }
 
   .set-info {
-    font-size: 3vw !important;
+    font-size: 3.5vw !important;
   }
 
   .botoes button {
@@ -258,7 +255,7 @@ body.girado {
   }
 }
 
-/* Ajustes para telas maiores */
+/* Ajustes para telas grandes */
 @media (min-width: 1024px) {
   body {
     font-size: 2rem;
@@ -274,8 +271,9 @@ body.girado {
   }
 
   .time-nome-input {
-    width: 200px;
-    font-size: 2.5rem;
+    font-size: 2.9vw;
+    width: 100%;
+    padding: 3vh 5vw;
   }
 
   .set-control span {
@@ -287,10 +285,10 @@ body.girado {
   }
 
   .pontuacoes {
-    font-size: 6rem;
+    font-size: 6.5rem;
     max-width: 600px;
     gap: 40px;
-    margin-bottom: 15px;
+    margin: 20px 0;
   }
 
   .pontuacao span {
@@ -302,12 +300,8 @@ body.girado {
   }
 
   .creditos-container {
-    font-size: 1.2rem;
-    margin-bottom: 70px;
-  }
-
-  .botoes {
-    padding: 10px 20px;
+    font-size: 1.9vw;
+    bottom: -4.3vh;
   }
 
   .botoes button {
