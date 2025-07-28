@@ -1,7 +1,9 @@
-
 let tempo = 0;
 let intervalo = null;
 let partidaIniciada = false;
+let historicoPontos = [];
+
+const somApito = document.getElementById('somApito');
 
 function atualizarCronometro() {
   const minutos = String(Math.floor(tempo / 60)).padStart(2, '0');
@@ -28,23 +30,41 @@ function resetarPartida() {
   document.getElementById('pontos2').textContent = '0';
   document.getElementById('set1').textContent = '0';
   document.getElementById('set2').textContent = '0';
+  historicoPontos = [];
   salvarEstado();
 }
 
 function resetarPontos() {
   document.getElementById('pontos1').textContent = '0';
   document.getElementById('pontos2').textContent = '0';
+  historicoPontos = [];
   salvarEstado();
 }
 
 function alterarPonto(time, valor) {
   if (!partidaIniciada) return;
+
   const id = time === 'time1' ? 'pontos1' : 'pontos2';
   const elemento = document.getElementById(id);
   let atual = parseInt(elemento.textContent);
   atual = Math.max(0, atual + valor);
   elemento.textContent = atual;
+
+  if (valor > 0) {
+    somApito.currentTime = 0;
+    somApito.play();
+  }
+
+  historicoPontos.push({ time, valor: -valor }); // Para desfazer
   salvarEstado();
+}
+
+function desfazerPonto() {
+  const ultimo = historicoPontos.pop();
+  if (ultimo) {
+    alterarPonto(ultimo.time, ultimo.valor);
+    historicoPontos.pop(); // Remove registro duplicado
+  }
 }
 
 function alterarSet(setId, valor) {
@@ -84,7 +104,6 @@ window.onload = () => {
   carregarEstado();
 };
 
-// Salvar e carregar estado com localStorage
 function salvarEstado() {
   const estado = {
     tempo,
