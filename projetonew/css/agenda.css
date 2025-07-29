@@ -17,22 +17,21 @@
     transform: scale(1.02);
 }
 
-/* Destaque para o jogo do dia */
+/* Destaque para o próximo jogo */
 .jogo.destaque {
-    background-color: #FFD700;
+    background-color: #FFD700; /* Fundo dourado */
     color: #000;
-    border: 3px solid #FF8C00;
-    animation: pulse 1.5s infinite;
+    border: 3px solid #FFFF00; /* Borda amarela */
+    animation: pulseBlue 1.5s infinite;
 }
 
-/* Animação de pulsar */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0px rgba(255, 140, 0, 0.7); }
-    50% { box-shadow: 0 0 20px rgba(255, 140, 0, 1); }
-    100% { box-shadow: 0 0 0px rgba(255, 140, 0, 0.7); }
+/* Animação de brilho azul pulsante */
+@keyframes pulseBlue {
+    0% { box-shadow: 0 0 0px rgba(4, 109, 214, 0.7); }
+    50% { box-shadow: 0 0 20px rgba(4, 109, 214, 1); }
+    100% { box-shadow: 0 0 0px rgba(4, 109, 214, 0.7); }
 }
 
-/* Animação geral do bloco ao carregar */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px);}
     to { opacity: 1; transform: translateY(0);}
