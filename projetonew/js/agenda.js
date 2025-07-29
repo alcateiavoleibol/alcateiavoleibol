@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("json/agenda.json")
         .then(response => response.json())
         .then(jogos => {
-            // Ordenar jogos por ano, mês e dia
+            // Ordenar jogos por data
             jogos.sort((a, b) => {
                 const dataA = new Date(a.ano, a.mes - 1, a.dia);
                 const dataB = new Date(b.ano, b.mes - 1, b.dia);
@@ -17,14 +17,25 @@ document.addEventListener("DOMContentLoaded", function () {
             const anoAtual = hoje.getFullYear();
 
             // Filtrar jogos do mês atual
-            const jogosMesAtual = jogos.filter(jogo => jogo.mes === mesAtual && jogo.ano === anoAtual);
+            let jogosExibidos = jogos.filter(jogo => jogo.mes === mesAtual && jogo.ano === anoAtual);
 
-            exibirJogos(jogosMesAtual);
+            // Se não houver jogos no mês atual, buscar os 3 próximos jogos futuros
+            if (jogosExibidos.length === 0) {
+                const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+                const proximosJogos = jogos.filter(jogo => {
+                    const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
+                    return dataJogo >= dataHoje;
+                }).slice(0, 3); // Pega os 3 próximos jogos
+
+                jogosExibidos = proximosJogos;
+            }
+
+            exibirJogos(jogosExibidos);
 
             if (calendarioInput) {
                 calendarioInput.addEventListener("change", function () {
                     if (!this.value) {
-                        exibirJogos(jogosMesAtual); // Voltar a exibir jogos do mês atual
+                        exibirJogos(jogosExibidos); // Retorna para a exibição padrão (mês atual ou próximos jogos)
                         return;
                     }
 
@@ -49,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         agendaDiv.innerHTML = "";
 
         if (jogosParaExibir.length === 0) {
-            agendaDiv.innerHTML = "<p>Nenhum jogo encontrado para a data selecionada.</p>";
+            agendaDiv.innerHTML = "<p>Nenhum jogo encontrado.</p>";
             return;
         }
 
@@ -64,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const jogoDiv = document.createElement("div");
             jogoDiv.className = "jogo";
 
-            // Formatando dia e mês com dois dígitos
             const diaFormatado = jogo.dia.toString().padStart(2, '0');
             const mesFormatado = jogo.mes.toString().padStart(2, '0');
 
@@ -78,14 +88,13 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
 
             if (dataJogoString === hojeString) {
-                jogoDiv.classList.add("destaque"); // Adiciona destaque ao jogo do dia
-                jogoDoDia = jogoDiv; // Armazena para exibir no topo depois
+                jogoDiv.classList.add("destaque");
+                jogoDoDia = jogoDiv;
             } else {
                 agendaDiv.appendChild(jogoDiv);
             }
         });
 
-        // Se existir jogo do dia, coloca no topo
         if (jogoDoDia) {
             agendaDiv.prepend(jogoDoDia);
         }
