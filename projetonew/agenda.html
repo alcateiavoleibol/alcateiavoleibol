@@ -12,15 +12,15 @@
 </head>
 <body>
 <header>
-    <header class="top-banner">
-  <img src="imagens/banner.png" alt="Banner" class="banner">
-</header>
+    <div class="top-banner">
+        <img src="imagens/banner.png" alt="Banner" class="banner">
+    </div>
     <nav id="menu">
         <button id="menu-toggle">☰ MENU</button>
         <ul id="menu-list">
             <li><a href="index.html">INÍCIO</a></li>
-			<li><a href="agenda.html">AGENDA</a></li>
-			<li><a href="placar/placar.html">PLACAR</a></li>
+            <li><a href="agenda.html">AGENDA</a></li>
+            <li><a href="placar/placar.html">PLACAR</a></li>
             <li><a href="galeria.html">GALERIA</a></li>
             <li><a href="sobre.html">SOBRE</a></li>
             <li><a href="contato.html">CONTATO</a></li>
@@ -37,7 +37,9 @@
         </div>
         <div>
             <label for="mesSelecionado">Pesquisar Mês:</label><br>
-            <input type="month" id="mesSelecionado" style="padding: 5px;">
+            <select id="mesSelecionado" style="padding: 5px;">
+                <option value="">Selecione o Mês</option>
+            </select>
         </div>
     </div>
 
