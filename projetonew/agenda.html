@@ -30,9 +30,17 @@
 
 <main>
     <h1>Cronograma</h1>
-    <div style="display:flex; justify-content: flex-end; margin-bottom: 20px;">
-        <input type="date" id="calendario" style="padding: 5px;">
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 20px; gap: 20px; flex-wrap: wrap;">
+        <div>
+            <label for="calendario">Pesquisar Data:</label><br>
+            <input type="date" id="calendario" style="padding: 5px;">
+        </div>
+        <div>
+            <label for="mesSelecionado">Pesquisar Mês:</label><br>
+            <input type="month" id="mesSelecionado" style="padding: 5px;">
+        </div>
     </div>
+
     <div id="agenda"></div>
 </main>
 
