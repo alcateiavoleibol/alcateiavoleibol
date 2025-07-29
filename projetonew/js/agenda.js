@@ -5,12 +5,26 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("json/agenda.json")
         .then(response => response.json())
         .then(jogos => {
-            exibirJogos(jogos);
+            // Ordenar jogos por ano, mês e dia
+            jogos.sort((a, b) => {
+                const dataA = new Date(a.ano, a.mes - 1, a.dia);
+                const dataB = new Date(b.ano, b.mes - 1, b.dia);
+                return dataA - dataB;
+            });
+
+            const hoje = new Date();
+            const mesAtual = hoje.getMonth() + 1;
+            const anoAtual = hoje.getFullYear();
+
+            // Filtrar jogos do mês atual
+            const jogosMesAtual = jogos.filter(jogo => jogo.mes === mesAtual && jogo.ano === anoAtual);
+
+            exibirJogos(jogosMesAtual);
 
             if (calendarioInput) {
                 calendarioInput.addEventListener("change", function () {
                     if (!this.value) {
-                        exibirJogos(jogos); // Mostrar todos os jogos se o campo for limpo
+                        exibirJogos(jogosMesAtual); // Voltar a exibir jogos do mês atual
                         return;
                     }
 
@@ -39,7 +53,14 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        const hoje = new Date();
+        const hojeString = hoje.toDateString();
+        let jogoDoDia = null;
+
         jogosParaExibir.forEach(jogo => {
+            const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
+            const dataJogoString = dataJogo.toDateString();
+
             const jogoDiv = document.createElement("div");
             jogoDiv.className = "jogo";
 
@@ -49,13 +70,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
             jogoDiv.innerHTML = `
                 <h2>${jogo.local}</h2>
-                <p><em>${jogo.observacao}</em></p> <!-- Observação abaixo do local -->
+                <p><em>${jogo.observacao}</em></p>
                 <p><strong>Data:</strong> ${diaFormatado}/${mesFormatado}/${jogo.ano}</p>
                 <p><strong>Horário:</strong> ${jogo.hora_inicio}:${jogo.minuto_inicio} às ${jogo.hora_fim}:${jogo.minuto_fim}</p>
                 <p><strong>Taxa:</strong> R$ ${jogo.taxa}</p>
                 <p><strong>Endereço:</strong> ${jogo.endereco}</p>
             `;
-            agendaDiv.appendChild(jogoDiv);
+
+            if (dataJogoString === hojeString) {
+                jogoDiv.classList.add("destaque"); // Adiciona destaque ao jogo do dia
+                jogoDoDia = jogoDiv; // Armazena para exibir no topo depois
+            } else {
+                agendaDiv.appendChild(jogoDiv);
+            }
         });
+
+        // Se existir jogo do dia, coloca no topo
+        if (jogoDoDia) {
+            agendaDiv.prepend(jogoDoDia);
+        }
     }
 });
