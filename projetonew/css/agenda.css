@@ -14,12 +14,19 @@
 .jogo:hover {
     transform: scale(1.02);
 }
-
+/* off no momento
 .jogo.destaque {
     border-color: #ff0400;
     background-color: rgba(0, 255, 170, 0.1);
-}
+} */ 
 
+.jogo.destaque {
+    background-color: #FFD700;
+    color: #000;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px);}
