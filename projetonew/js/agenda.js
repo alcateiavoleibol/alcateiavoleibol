@@ -2,36 +2,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const agendaDiv = document.getElementById("agenda");
     const calendarioInput = document.getElementById("calendario");
     const mesSelect = document.getElementById("mesSelecionado");
+    const limparFiltroBtn = document.getElementById("limparFiltro");
+
+    let jogos = [];
 
     fetch("json/agenda.json")
         .then(response => response.json())
-        .then(jogos => {
-            jogos.sort((a, b) => {
+        .then(data => {
+            jogos = data.sort((a, b) => {
                 const dataA = new Date(a.ano, a.mes - 1, a.dia);
                 const dataB = new Date(b.ano, b.mes - 1, b.dia);
                 return dataA - dataB;
             });
 
-            // Preencher o SELECT com meses disponíveis
-            preencherSelectMeses(jogos);
-
-            const hoje = new Date();
-            const mesAtual = hoje.getMonth() + 1;
-            const anoAtual = hoje.getFullYear();
-
-            let jogosExibidos = jogos.filter(jogo => jogo.mes === mesAtual && jogo.ano === anoAtual);
-
-            if (jogosExibidos.length === 0) {
-                const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-                const proximosJogos = jogos.filter(jogo => {
-                    const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
-                    return dataJogo >= dataHoje;
-                }).slice(0, 3);
-
-                jogosExibidos = proximosJogos;
-            }
-
-            exibirJogos(jogosExibidos, true);
+            mostrarAgendaPadrao();
 
             calendarioInput.addEventListener("change", function () {
                 if (!this.value) return;
@@ -52,42 +36,39 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             mesSelect.addEventListener("change", function () {
-                const valor = this.value;
-                if (!valor) return;
+                const mesSelecionado = Number(this.value);
+                if (!mesSelecionado) return;
 
-                const partes = valor.split("-");
-                const anoSelecionado = Number(partes[0]);
-                const mesSelecionado = Number(partes[1]);
-
-                const jogosDoMes = jogos.filter(jogo => jogo.mes === mesSelecionado && jogo.ano === anoSelecionado);
+                const jogosDoMes = jogos.filter(jogo => jogo.mes === mesSelecionado);
 
                 exibirJogos(jogosDoMes, false);
             });
+
+            limparFiltroBtn.addEventListener("click", function () {
+                calendarioInput.value = "";
+                mesSelect.value = "";
+                mostrarAgendaPadrao();
+            });
         });
 
-    function preencherSelectMeses(jogos) {
-        const mesesUnicos = new Set();
+    function mostrarAgendaPadrao() {
+        const hoje = new Date();
+        const mesAtual = hoje.getMonth() + 1;
+        const anoAtual = hoje.getFullYear();
 
-        jogos.forEach(jogo => {
-            const mesAno = `${jogo.ano}-${String(jogo.mes).padStart(2, '0')}`;
-            mesesUnicos.add(mesAno);
-        });
+        let jogosExibidos = jogos.filter(jogo => jogo.mes === mesAtual && jogo.ano === anoAtual);
 
-        const mesesArray = Array.from(mesesUnicos).sort();
+        if (jogosExibidos.length === 0) {
+            const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+            const proximosJogos = jogos.filter(jogo => {
+                const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
+                return dataJogo >= dataHoje;
+            }).slice(0, 3);
 
-        mesesArray.forEach(mesAno => {
-            const partes = mesAno.split("-");
-            const ano = partes[0];
-            const mes = partes[1];
+            jogosExibidos = proximosJogos;
+        }
 
-            const nomeMes = new Date(ano, mes - 1).toLocaleString('pt-BR', { month: 'long' });
-
-            const option = document.createElement("option");
-            option.value = `${ano}-${mes}`;
-            option.textContent = `${nomeMes.charAt(0).toUpperCase() + nomeMes.slice(1)} / ${ano}`;
-
-            mesSelect.appendChild(option);
-        });
+        exibirJogos(jogosExibidos, true);
     }
 
     function exibirJogos(jogosParaExibir, destacarProximo) {
