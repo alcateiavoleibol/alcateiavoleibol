@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const agendaDiv = document.getElementById("agenda");
     const calendarioInput = document.getElementById("calendario");
-    const mesInput = document.getElementById("mesSelecionado");
+    const mesSelect = document.getElementById("mesSelecionado");
 
     fetch("json/agenda.json")
         .then(response => response.json())
@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 const dataB = new Date(b.ano, b.mes - 1, b.dia);
                 return dataA - dataB;
             });
+
+            // Preencher o SELECT com meses disponíveis
+            preencherSelectMeses(jogos);
 
             const hoje = new Date();
             const mesAtual = hoje.getMonth() + 1;
@@ -28,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 jogosExibidos = proximosJogos;
             }
 
-            exibirJogos(jogosExibidos, true); // Destaque habilitado
+            exibirJogos(jogosExibidos, true);
 
             calendarioInput.addEventListener("change", function () {
                 if (!this.value) return;
@@ -48,10 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 exibirJogos(jogosNoDia, false);
             });
 
-            mesInput.addEventListener("change", function () {
-                if (!this.value) return;
+            mesSelect.addEventListener("change", function () {
+                const valor = this.value;
+                if (!valor) return;
 
-                const partes = this.value.split("-");
+                const partes = valor.split("-");
                 const anoSelecionado = Number(partes[0]);
                 const mesSelecionado = Number(partes[1]);
 
@@ -60,6 +64,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 exibirJogos(jogosDoMes, false);
             });
         });
+
+    function preencherSelectMeses(jogos) {
+        const mesesUnicos = new Set();
+
+        jogos.forEach(jogo => {
+            const mesAno = `${jogo.ano}-${String(jogo.mes).padStart(2, '0')}`;
+            mesesUnicos.add(mesAno);
+        });
+
+        const mesesArray = Array.from(mesesUnicos).sort();
+
+        mesesArray.forEach(mesAno => {
+            const partes = mesAno.split("-");
+            const ano = partes[0];
+            const mes = partes[1];
+
+            const nomeMes = new Date(ano, mes - 1).toLocaleString('pt-BR', { month: 'long' });
+
+            const option = document.createElement("option");
+            option.value = `${ano}-${mes}`;
+            option.textContent = `${nomeMes.charAt(0).toUpperCase() + nomeMes.slice(1)} / ${ano}`;
+
+            mesSelect.appendChild(option);
+        });
+    }
 
     function exibirJogos(jogosParaExibir, destacarProximo) {
         agendaDiv.innerHTML = "";
@@ -85,8 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         jogosParaExibir.forEach(jogo => {
-            const diaFormatado = jogo.dia.toString().padStart(2, '0');
-            const mesFormatado = jogo.mes.toString().padStart(2, '0');
+            const diaFormatado = String(jogo.dia).padStart(2, '0');
+            const mesFormatado = String(jogo.mes).padStart(2, '0');
 
             const jogoDiv = document.createElement("div");
             jogoDiv.className = "jogo";
