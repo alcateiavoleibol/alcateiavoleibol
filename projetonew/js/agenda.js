@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const proximosJogos = jogos.filter(jogo => {
                     const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
                     return dataJogo >= dataHoje;
-                }).slice(0, 3); // Pega os 3 próximos jogos
+                }).slice(0, 3);
 
                 jogosExibidos = proximosJogos;
             }
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (calendarioInput) {
                 calendarioInput.addEventListener("change", function () {
                     if (!this.value) {
-                        exibirJogos(jogosExibidos); // Retorna para a exibição padrão (mês atual ou próximos jogos)
+                        exibirJogos(jogosExibidos);
                         return;
                     }
 
@@ -65,12 +65,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const hoje = new Date();
-        const hojeString = hoje.toDateString();
-        let jogoDoDia = null;
+        const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+        // Encontrar o próximo jogo futuro (ou de hoje)
+        let proximoJogo = null;
+        for (let jogo of jogosParaExibir) {
+            const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
+            if (dataJogo >= dataHoje) {
+                proximoJogo = jogo;
+                break;
+            }
+        }
 
         jogosParaExibir.forEach(jogo => {
             const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
-            const dataJogoString = dataJogo.toDateString();
 
             const jogoDiv = document.createElement("div");
             jogoDiv.className = "jogo";
@@ -87,16 +95,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p><strong>Endereço:</strong> ${jogo.endereco}</p>
             `;
 
-            if (dataJogoString === hojeString) {
+            // Se for o próximo jogo, destacar
+            if (proximoJogo && jogo === proximoJogo) {
                 jogoDiv.classList.add("destaque");
-                jogoDoDia = jogoDiv;
-            } else {
-                agendaDiv.appendChild(jogoDiv);
             }
-        });
 
-        if (jogoDoDia) {
-            agendaDiv.prepend(jogoDoDia);
-        }
+            agendaDiv.appendChild(jogoDiv);
+        });
     }
 });
