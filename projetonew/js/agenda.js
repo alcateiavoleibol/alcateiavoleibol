@@ -16,10 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const mesAtual = hoje.getMonth() + 1;
             const anoAtual = hoje.getFullYear();
 
-            // Filtrar jogos do mês atual
             let jogosExibidos = jogos.filter(jogo => jogo.mes === mesAtual && jogo.ano === anoAtual);
 
-            // Se não houver jogos no mês atual, buscar os 3 próximos jogos futuros
             if (jogosExibidos.length === 0) {
                 const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
                 const proximosJogos = jogos.filter(jogo => {
@@ -30,33 +28,39 @@ document.addEventListener("DOMContentLoaded", function () {
                 jogosExibidos = proximosJogos;
             }
 
-            exibirJogos(jogosExibidos);
+            exibirJogos(jogosExibidos, true); // Destaque habilitado na carga inicial
 
             if (calendarioInput) {
                 calendarioInput.addEventListener("change", function () {
                     if (!this.value) {
-                        exibirJogos(jogosExibidos);
+                        exibirJogos(jogosExibidos, true); // Voltar a exibir jogos do mês atual com destaque
                         return;
                     }
 
                     const partes = this.value.split("-");
-                    const dataSelecionada = new Date(
-                        Number(partes[0]),
-                        Number(partes[1]) - 1,
-                        Number(partes[2])
-                    );
+                    const anoSelecionado = Number(partes[0]);
+                    const mesSelecionado = Number(partes[1]);
+                    const diaSelecionado = Number(partes[2]);
 
-                    const jogosFiltrados = jogos.filter(jogo => {
+                    const dataSelecionada = new Date(anoSelecionado, mesSelecionado - 1, diaSelecionado);
+
+                    const jogosNoDia = jogos.filter(jogo => {
                         const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
                         return dataJogo.toDateString() === dataSelecionada.toDateString();
                     });
 
-                    exibirJogos(jogosFiltrados);
+                    if (jogosNoDia.length > 0) {
+                        exibirJogos(jogosNoDia, false); // Exibir apenas o jogo do dia (sem destaque)
+                    } else {
+                        // Não tem jogo no dia exato? Mostrar todos os jogos do mês selecionado
+                        const jogosDoMes = jogos.filter(jogo => jogo.mes === mesSelecionado && jogo.ano === anoSelecionado);
+                        exibirJogos(jogosDoMes, false); // Sem destaque
+                    }
                 });
             }
         });
 
-    function exibirJogos(jogosParaExibir) {
+    function exibirJogos(jogosParaExibir, destacarProximo) {
         agendaDiv.innerHTML = "";
 
         if (jogosParaExibir.length === 0) {
@@ -64,27 +68,28 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const hoje = new Date();
-        const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-
-        // Encontrar o próximo jogo futuro (ou de hoje)
         let proximoJogo = null;
-        for (let jogo of jogosParaExibir) {
-            const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
-            if (dataJogo >= dataHoje) {
-                proximoJogo = jogo;
-                break;
+
+        if (destacarProximo) {
+            const hoje = new Date();
+            const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+            // Encontrar o próximo jogo (hoje ou futuro)
+            for (let jogo of jogosParaExibir) {
+                const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
+                if (dataJogo >= dataHoje) {
+                    proximoJogo = jogo;
+                    break;
+                }
             }
         }
 
         jogosParaExibir.forEach(jogo => {
-            const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
+            const diaFormatado = jogo.dia.toString().padStart(2, '0');
+            const mesFormatado = jogo.mes.toString().padStart(2, '0');
 
             const jogoDiv = document.createElement("div");
             jogoDiv.className = "jogo";
-
-            const diaFormatado = jogo.dia.toString().padStart(2, '0');
-            const mesFormatado = jogo.mes.toString().padStart(2, '0');
 
             jogoDiv.innerHTML = `
                 <h2>${jogo.local}</h2>
@@ -95,8 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p><strong>Endereço:</strong> ${jogo.endereco}</p>
             `;
 
-            // Se for o próximo jogo, destacar
-            if (proximoJogo && jogo === proximoJogo) {
+            if (destacarProximo && proximoJogo && jogo === proximoJogo) {
                 jogoDiv.classList.add("destaque");
             }
 
