@@ -12,6 +12,19 @@
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
         "observacao": "Levar carteirinha obrigatória"
     },
+        {
+        "dia": 12,
+        "mes": 12,
+        "ano": 2025,
+        "hora_inicio": "12",
+        "minuto_inicio": "00h",
+        "hora_fim": "15",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Centro Esportivo (Acesso restrito a quem possui cadastro e carteirinha do local)",
+        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
+        "observacao": "Levar carteirinha obrigatória"
+    },
     {
         "dia": 29,
         "mes": 7,
