@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
     const agendaDiv = document.getElementById("agenda");
     const calendarioInput = document.getElementById("calendario");
+    const mesInput = document.getElementById("mesSelecionado");
 
     fetch("json/agenda.json")
         .then(response => response.json())
         .then(jogos => {
-            // Ordenar jogos por data
             jogos.sort((a, b) => {
                 const dataA = new Date(a.ano, a.mes - 1, a.dia);
                 const dataB = new Date(b.ano, b.mes - 1, b.dia);
@@ -28,36 +28,37 @@ document.addEventListener("DOMContentLoaded", function () {
                 jogosExibidos = proximosJogos;
             }
 
-            exibirJogos(jogosExibidos, true); // Destaque habilitado na carga inicial
+            exibirJogos(jogosExibidos, true); // Destaque habilitado
 
-            if (calendarioInput) {
-                calendarioInput.addEventListener("change", function () {
-                    if (!this.value) {
-                        exibirJogos(jogosExibidos, true); // Voltar a exibir jogos do mês atual com destaque
-                        return;
-                    }
+            calendarioInput.addEventListener("change", function () {
+                if (!this.value) return;
 
-                    const partes = this.value.split("-");
-                    const anoSelecionado = Number(partes[0]);
-                    const mesSelecionado = Number(partes[1]);
-                    const diaSelecionado = Number(partes[2]);
+                const partes = this.value.split("-");
+                const anoSelecionado = Number(partes[0]);
+                const mesSelecionado = Number(partes[1]);
+                const diaSelecionado = Number(partes[2]);
 
-                    const dataSelecionada = new Date(anoSelecionado, mesSelecionado - 1, diaSelecionado);
+                const dataSelecionada = new Date(anoSelecionado, mesSelecionado - 1, diaSelecionado);
 
-                    const jogosNoDia = jogos.filter(jogo => {
-                        const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
-                        return dataJogo.toDateString() === dataSelecionada.toDateString();
-                    });
-
-                    if (jogosNoDia.length > 0) {
-                        exibirJogos(jogosNoDia, false); // Exibir apenas o jogo do dia (sem destaque)
-                    } else {
-                        // Não tem jogo no dia exato? Mostrar todos os jogos do mês selecionado
-                        const jogosDoMes = jogos.filter(jogo => jogo.mes === mesSelecionado && jogo.ano === anoSelecionado);
-                        exibirJogos(jogosDoMes, false); // Sem destaque
-                    }
+                const jogosNoDia = jogos.filter(jogo => {
+                    const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
+                    return dataJogo.toDateString() === dataSelecionada.toDateString();
                 });
-            }
+
+                exibirJogos(jogosNoDia, false);
+            });
+
+            mesInput.addEventListener("change", function () {
+                if (!this.value) return;
+
+                const partes = this.value.split("-");
+                const anoSelecionado = Number(partes[0]);
+                const mesSelecionado = Number(partes[1]);
+
+                const jogosDoMes = jogos.filter(jogo => jogo.mes === mesSelecionado && jogo.ano === anoSelecionado);
+
+                exibirJogos(jogosDoMes, false);
+            });
         });
 
     function exibirJogos(jogosParaExibir, destacarProximo) {
@@ -74,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const hoje = new Date();
             const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
 
-            // Encontrar o próximo jogo (hoje ou futuro)
             for (let jogo of jogosParaExibir) {
                 const dataJogo = new Date(jogo.ano, jogo.mes - 1, jogo.dia);
                 if (dataJogo >= dataHoje) {
