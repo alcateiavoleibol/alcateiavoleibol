@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const agendaDiv = document.getElementById("agenda");
     const calendarioInput = document.getElementById("calendario");
 
-    fetch("json/agenda.json") /*ALTEREI O CAMINHO PARA TESTE */
+    fetch("json/agenda.json")
         .then(response => response.json())
         .then(jogos => {
             exibirJogos(jogos);
@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function exibirJogos(jogosParaExibir) {
         agendaDiv.innerHTML = "";
+
         if (jogosParaExibir.length === 0) {
             agendaDiv.innerHTML = "<p>Nenhum jogo encontrado para a data selecionada.</p>";
             return;
@@ -41,9 +42,15 @@ document.addEventListener("DOMContentLoaded", function () {
         jogosParaExibir.forEach(jogo => {
             const jogoDiv = document.createElement("div");
             jogoDiv.className = "jogo";
+
+            // Formatando dia e mês com dois dígitos
+            const diaFormatado = jogo.dia.toString().padStart(2, '0');
+            const mesFormatado = jogo.mes.toString().padStart(2, '0');
+
             jogoDiv.innerHTML = `
                 <h2>${jogo.local}</h2>
-                <p><strong>Data:</strong> ${jogo.dia}/${jogo.mes}/${jogo.ano}</p>
+                <p><em>${jogo.observacao}</em></p> <!-- Observação abaixo do local -->
+                <p><strong>Data:</strong> ${diaFormatado}/${mesFormatado}/${jogo.ano}</p>
                 <p><strong>Horário:</strong> ${jogo.hora_inicio}:${jogo.minuto_inicio} às ${jogo.hora_fim}:${jogo.minuto_fim}</p>
                 <p><strong>Taxa:</strong> R$ ${jogo.taxa}</p>
                 <p><strong>Endereço:</strong> ${jogo.endereco}</p>
