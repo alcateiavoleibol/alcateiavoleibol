@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const agendaDiv = document.getElementById("agenda");
     const calendarioInput = document.getElementById("calendario");
 
-    fetch("./json/agenda.json") /*ALTEREI O CAMINHO PARA TESTE */
+    fetch("../json/agenda.json") /*ALTEREI O CAMINHO PARA TESTE */
         .then(response => response.json())
         .then(jogos => {
             exibirJogos(jogos);
