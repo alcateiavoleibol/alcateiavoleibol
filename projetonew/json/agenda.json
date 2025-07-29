@@ -13,6 +13,33 @@
         "observacao": "Levar carteirinha obrigatória"
     },
     {
+        "dia": 30,
+        "mes": 7,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "00h",
+        "hora_fim": "10",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Centro Esportivo (Acesso restrito)",
+        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
+        "observacao": "Levar carteirinha obrigatória"
+    },
+        {
+        "dia": 31,
+        "mes": 7,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "00h",
+        "hora_fim": "10",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Centro Esportivo",
+        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
+        "observacao": "Levar carteirinha obrigatória"
+    },
+    
+    {
         "dia": 8,
         "mes": 8,
         "ano": 2025,
