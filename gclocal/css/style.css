@@ -1,0 +1,66 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fefefe;
+  margin: 0;
+  padding: 0;
+}
+
+header, footer {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+.banner {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+main {
+  padding: 20px;
+}
+
+.titulo {
+  color: red;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-align: center;
+}
+
+th {
+  background-color: #002139;
+  color: white;
+}
+
+td[contenteditable] {
+  background-color: #fff8dc;
+}
+
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.botoes {
+  text-align: center;
+  margin: 15px 0;
+}
+
+input[type=\"file\"] {
+  margin-left: 10px;
+}
