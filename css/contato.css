@@ -271,7 +271,7 @@ label {
   }
 
   .range-wrapper input[type="range"] {
-    max-width: 100%;
+    max-width: 100%; /* TAMANHO DA PROBABILIDADE | BARRA 📱 */ 
     height: 4px;
   }
 
