@@ -8,8 +8,7 @@
   <link rel="stylesheet" href="css/responsivo.css" />
   <link rel="stylesheet" href="css/contato.css" />
   <script src="js/script.js" defer></script>
-  <script src="js/recaptcha.js" defer></script>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LeTME4rAAAAAAAORlAzu67I3RVQ3R6_eTC6x0QC"></script>
   <script>
     function updateCharCount() {
       const textarea = document.getElementById("mensagem");
@@ -26,15 +25,17 @@
     function handleSubmit(event) {
       event.preventDefault();
       const form = event.target;
+
+      grecaptcha.ready(function() {
+        grecaptcha.execute('6LeTME4rAAAAAAAORlAzu67I3RVQ3R6_eTC6x0QC', {action: 'submit'}).then(function(token) {
+          enviarFormulario(form, token);
+        });
+      });
+    }
+
+    function enviarFormulario(form, token) {
       const formData = new FormData(form);
-      const recaptchaResponse = grecaptcha.getResponse();
-
-      if (!recaptchaResponse) {
-        alert("Por favor, confirme o reCAPTCHA.");
-        return;
-      }
-
-      formData.append("g-recaptcha-response", recaptchaResponse);
+      formData.append("g-recaptcha-response", token);
 
       fetch("https://formsubmit.co/alcateiavoleibol2023@gmail.com", {
         method: "POST",
@@ -45,7 +46,6 @@
         if (response.ok) {
           document.getElementById("successMessage").style.display = "block";
           form.reset();
-          grecaptcha.reset();
           updateCharCount();
           toggleOutroCampo({value: ""});
         } else {
@@ -86,8 +86,9 @@
       <p>Tem interesse em conhecer melhor a Alcateia Voleibol?</p>
 	  <p>Preencha o formulário e nossa equipe entrará em contato com você para esclarecer todas as dúvidas e apoiar você no próximo passo dessa jornada conosco.</p>
 
-      <form class="fade-in">
+      <form onsubmit="handleSubmit(event)">
         <input type="hidden" name="_captcha" value="false"/>
+        <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response"/>
 
         <label for="nome">Nome <font color="#F02030">*</font></label>
         <input type="text" id="nome" name="Nome" required />
@@ -139,12 +140,9 @@
   <output for="indicacao" id="range-bolha">5</output>
 </div>
 
-
         <label for="mensagem">Mensagem (máx. 600 caracteres)</label>
         <textarea id="mensagem" name="Mensagem" maxlength="600" rows="5" oninput="updateCharCount()"></textarea>
         <div id="charCount">Restam 600 caracteres</div>
-
-        <div class="g-recaptcha" data-sitekey="6LeTME4rAAAAAAAORlAzu67I3RVQ3R6_eTC6x0QC" style="margin: 20px 0;"></div>
 
         <button type="submit">Enviar</button>
 
@@ -197,7 +195,6 @@
   range.addEventListener('input', atualizarBolha);
   window.addEventListener('load', atualizarBolha); // Inicializa na carga
 </script>
-
 
 </body>
 </html>
