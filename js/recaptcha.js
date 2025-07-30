@@ -11,8 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Corrigir URL do fetch
-        fetch('https://alcateiavoleibol.vercel.app/api/verify', {
+        fetch('/api/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token: recaptchaResponse })
