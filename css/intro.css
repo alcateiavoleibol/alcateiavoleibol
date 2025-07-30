@@ -1,0 +1,77 @@
+/* intro.css - Estilos da Introdução Alcateia Voleibol */
+
+.intro-section {
+    background: linear-gradient(145deg, #001226, #002139);
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+    margin: 0 auto 40px auto;
+    animation: fadeUp 1s ease-out;
+    max-width: 900px;
+}
+
+.intro-section h1 {
+    font-size: 1.8rem;
+    color: #FBEA80;
+    margin-bottom: 40px;
+}
+
+.intro-section .slogan {
+    font-size: 1.3rem;
+    font-weight: bold;
+	text-align: center;
+    color: #ffffff;
+}
+
+.intro-section p {
+    color: #dddddd;
+    line-height: 1.7; /* ESPAÇAMENTO ENTRE LINHAS */
+	font-size: 1.3rem;
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+.cta-buttons {
+    margin-top: 30px;
+}
+
+.cta-buttons .button {
+    display: inline-block;
+    background: #FBEA80;
+    color: #001226;
+    font-weight: bold;
+    padding: 12px 20px;
+    margin: 10px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.cta-buttons .button:hover {
+    transform: scale(1.05);
+    background: #FFD700;
+}
+
+.cta-buttons .highlight {
+    background: #FF4500;
+    color: #fff;
+}
+
+.cta-buttons .highlight:hover {
+    background: #FF6347;
+}
+
+/* Fade-in effect */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 1.2s forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

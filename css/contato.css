@@ -1,0 +1,283 @@
+/* ---------------------------- */
+/* 📦 CONTAINER PRINCIPAL      */
+/* ---------------------------- */
+.contato-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 20px;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* ---------------------------- */
+/* 🧾 TÍTULO E PARÁGRAFO       */
+/* ---------------------------- */
+.contato-container h1 {
+  font-size: 2rem;
+  color: #F0F0D0;
+  text-align: center;
+  text-shadow: 1px 1px 2px #000;
+  margin-bottom: 30px;
+}
+
+.contato-container p {
+  font-size: 1.6rem;
+  color: #FFF;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+/* ---------------------------- */
+/* 📝 FORMULÁRIO               */
+/* ---------------------------- */
+.contato-container form {
+  background: #01213a;
+  padding: 40px;
+  border-radius: 9px;
+  max-width: 800px;
+  margin: 30px auto;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+  font-size: 1.2em;
+  animation: fadeInUp 1s ease;
+}
+
+/* Rótulos */
+label {
+  display: block;
+  margin: 12px 0 6px;
+  color: #FFF;
+}
+
+/* Campos de entrada */
+.contato-container input,
+.contato-container select,
+.contato-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 2px solid #204050;
+  background: #000;
+  color: #FFF;
+  box-sizing: border-box;
+}
+
+/* Foco nos campos */
+.contato-container input:focus,
+.contato-container textarea:focus,
+.contato-container select:focus {
+  outline: none;
+  border-color: #50C080;
+  box-shadow: 0 0 8px rgba(80, 192, 128, 0.6);
+  transition: 0.3s ease;
+}
+
+/* Botão */
+.contato-container button {
+  width: 30%;
+  background: #003366;
+  color: white;
+  font-size: 1.2em;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contato-container button:hover {
+  background: #0055aa;
+}
+
+/* Contador de caracteres */
+#charCount {
+  text-align: right;
+  font-size: 0.85em;
+  color: #50C080;
+}
+
+/* ---------------------------- */
+/* 🎯 ENCONTROS / AGENDA       */
+/* ---------------------------- */
+.titulo-encontro {
+  text-align: center;
+  color: #E0FFFF;
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.encontro {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.encontro .data {
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.encontro .local {
+  font-size: 1.3rem;
+  color: #FBEA80;
+}
+
+/* ---------------------------- */
+/* 📊 RANGE (PROBABILIDADE)    */
+/* ---------------------------- */
+.range-numbers,
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1em;
+  margin-bottom: 7px;
+}
+
+.range-numbers {
+  color: #FFFF00;
+}
+
+.range-labels {
+  color: #50C080;
+}
+
+/* Estilização do range input com bolha */
+.range-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 795px; /* TAMANHO DA PROBABILIDADE | BARRA */
+  margin: 30px auto;
+}
+
+.range-wrapper input[type="range"] {
+  width: 100%;
+  background: transparent;
+  appearance: none;
+  height: 15px;
+}
+
+.range-wrapper input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: linear-gradient(to right, #50C080, #0055aa);
+  border-radius: 5px;
+}
+
+.range-wrapper input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: linear-gradient(to right, #50C080, #0055aa);
+  border-radius: 5px;
+}
+
+.range-wrapper input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #FBEA80;
+  border: 2px solid #003;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -7px;
+  transition: transform 0.2s;
+}
+
+.range-wrapper input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #FBEA80;
+  border: 2px solid #003;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.range-wrapper input[type="range"]::-webkit-slider-thumb:hover,
+.range-wrapper input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+.range-wrapper output {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0055aa;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: left 0.1s ease-out;
+}
+
+/* ---------------------------- */
+/* 🌐 ÍCONES SOCIAIS           */
+/* ---------------------------- */
+.contato-container .social-icon {
+  width: 30px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+/* ---------------------------- */
+/* 🎞️ ANIMAÇÕES               */
+/* ---------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------------------- */
+/* 📱 MEDIA QUERIES           */
+/* ---------------------------- */
+@media (max-width: 768px) {
+  .contato-container {
+    padding: 15px 5%;
+    width: 90%;
+  }
+
+  .contato-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .contato-container p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .contato-container form {
+    padding: 15px;
+    font-size: 1em;
+  }
+
+  .encontro .data,
+  .encontro .local {
+    font-size: 1.1rem;
+  }
+
+  .contato-container button {
+    width: 100%;
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .g-recaptcha {
+    transform: scale(0.85);
+    transform-origin: 0 0;
+  }
+
+  .range-wrapper input[type="range"] {
+    max-width: 80%;
+    height: 4px;
+  }
+
+  .range-wrapper input[type="range"]::-webkit-slider-thumb,
+  .range-wrapper input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+  }
+}

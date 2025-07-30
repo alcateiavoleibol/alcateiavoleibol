@@ -1,0 +1,53 @@
+
+/* Animação de fade-in ao rolar */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards;
+  }
+
+.slide-container { 
+  max-width: 100%; 
+  position: relative; 
+  overflow: hidden;
+  margin-bottom: 30px;
+     flex: 1;
+      min-width: 300px;  
+  }
+  
+.slide img { 
+  width: 100%;
+  display: none;
+  }
+  
+.slide img.active {
+  display: block;
+  }
+  
+.about-section {
+  margin-bottom: 30px;
+  }
+  
+  .contact-section {
+  margin-bottom: 30px;
+  }
+  
+      .flex-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .games-section {
+		margin-bottom: 30px;
+      flex: 1;
+      min-width: 300px;
+    }
+ 
+ @keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
