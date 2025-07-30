@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/responsivo.css" />
   <link rel="stylesheet" href="css/contato.css" />
   <script src="js/script.js" defer></script>
-  <script src="https://www.google.com/recaptcha/api.js?render=6LeTME4rAAAAAAAORlAzu67I3RVQ3R6_eTC6x0QC"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lcb75QrAAAAAPq50kTgIltQFzyuL8tn5Tz34Qdt"></script>
   <script>
     function updateCharCount() {
       const textarea = document.getElementById("mensagem");
@@ -27,7 +27,7 @@
       const form = event.target;
 
       grecaptcha.ready(function() {
-        grecaptcha.execute('6LeTME4rAAAAAAAORlAzu67I3RVQ3R6_eTC6x0QC', {action: 'submit'}).then(function(token) {
+        grecaptcha.execute('6Lcb75QrAAAAAPq50kTgIltQFzyuL8tn5Tz34Qdt', {action: 'submit'}).then(function(token) {
           enviarFormulario(form, token);
         });
       });
