@@ -3,32 +3,45 @@ export default async function handler(req, res) {
         return res.status(405).json({ success: false, message: 'Método não permitido' });
     }
 
-    const secretKey = "6Lcb75QrAAAAADd1MLKIUxZI8LM6ZUqDl12E2vno";
-    const token = req.body['g-recaptcha-response'];
+    const secretKey = "6Lcb75QrAAAAADd1MLKIUxZI8LM6ZUqDl12E2vno"; // Chave secreta reCAPTCHA v3
+    const resendAPIKey = "re_Ar4ZQzJk_3TninL9ia2ajxa8aUxT6wSs8";    // API Key Resend
 
+    const token = req.body['g-recaptcha-response'];
     if (!token) {
-        return res.status(400).json({ success: false, message: "Token não enviado." });
+        return res.status(400).json({ success: false, message: "Token reCAPTCHA não enviado." });
     }
 
-    // Validação do reCAPTCHA
-    const recaptchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+    // Verificar reCAPTCHA
+    const recaptchaRes = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: `secret=${secretKey}&response=${token}`
     });
 
-    const recaptchaData = await recaptchaResponse.json();
-    if (!recaptchaData.success) {
-        return res.status(400).json({ success: false, message: 'Falha no reCAPTCHA', errors: recaptchaData['error-codes'] });
+    const recaptchaData = await recaptchaRes.json();
+    if (!recaptchaData.success || recaptchaData.score < 0.5) {
+        return res.status(400).json({ success: false, message: 'Falha na validação reCAPTCHA', score: recaptchaData.score });
     }
 
-    // Envio de e-mail via Resend
-    const { Nome, Telefone, Email, Sexo, Mensagem } = req.body;
+    // Dados do formulário
+    const {
+        Nome,
+        Telefone,
+        Email,
+        Sexo,
+        Mensagem,
+        "Como conheceu?": Origem,
+        "Outro (especifique)": Outro,
+        "Probabilidade de Indicação": Indicacao
+    } = req.body;
 
-    const response = await fetch('https://api.resend.com/emails', {
+    const origemFinal = Origem === "Outros" ? `Outros - ${Outro}` : Origem;
+
+    // Enviar e-mail via Resend API
+    const emailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer SUA_API_KEY_RESEND`,
+            'Authorization': `Bearer ${resendAPIKey}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -36,19 +49,22 @@ export default async function handler(req, res) {
             to: ['alcateiavoleibol2023@gmail.com'],
             subject: `Novo contato de ${Nome}`,
             html: `
+                <h2>Novo contato através do site</h2>
                 <p><strong>Nome:</strong> ${Nome}</p>
                 <p><strong>Telefone:</strong> ${Telefone}</p>
                 <p><strong>Email:</strong> ${Email}</p>
                 <p><strong>Sexo:</strong> ${Sexo}</p>
+                <p><strong>Origem:</strong> ${origemFinal}</p>
+                <p><strong>Probabilidade de Indicação:</strong> ${Indicacao}</p>
                 <p><strong>Mensagem:</strong> ${Mensagem}</p>
             `
         })
     });
 
-    if (response.ok) {
-        return res.status(200).json({ success: true });
+    if (emailRes.ok) {
+        return res.status(200).json({ success: true, message: 'E-mail enviado com sucesso' });
     } else {
-        const errorData = await response.json();
-        return res.status(500).json({ success: false, message: 'Falha ao enviar e-mail', error: errorData });
+        const errorData = await emailRes.json();
+        return res.status(500).json({ success: false, message: 'Erro ao enviar e-mail', error: errorData });
     }
 }
