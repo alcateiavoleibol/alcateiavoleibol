@@ -1,20 +1,19 @@
 [
-    { "comentario": "====== JANEIRO 2026 ======" },
-    {
-        "dia": 6,
-        "mes": 1,
-        "ano": 2026,
-        "hora_inicio": "07",
-        "minuto_inicio": "00h",
-        "hora_fim": "10",
-        "minuto_fim": "00h",
-        "taxa": "0,00",
-        "local": "Centro Esportivo (Acesso restrito a quem possui cadastro e carteirinha do local)",
-        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "Levar carteirinha obrigatória"
-    },
+    { "comentario": "====== 2026 | JANEIRO    ======" },
+	{ "comentario": "====== 2026 | FEVEREIRO  ======" },
+	{ "comentario": "====== 2026 | MARÇO      ======" },
+	{ "comentario": "====== 2026 | ABRIL      ======" },
+	{ "comentario": "====== 2026 | MAIO       ======" },
+	{ "comentario": "====== 2026 | JUNHO      ======" },
+	{ "comentario": "====== 2026 | JULHO      ======" },
+	{ "comentario": "====== 2026 | AGOSTO     ======" },
+	{ "comentario": "====== 2026 | SETEMBRO   ======" },
+	{ "comentario": "====== 2026 | OUTUBRO    ======" },	
+	{ "comentario": "====== 2026 | NOVEMBRO   ======" },
+	{ "comentario": "====== 2026 | DEZEMBRO   ======" },
 
-    { "comentario": "====== JULHO 2025 ======" },
+
+	{ "comentario": "====== 2025 | JULHO      ======" },
     {
         "dia": 29,
         "mes": 7,
@@ -42,7 +41,20 @@
         "observacao": "Levar carteirinha obrigatória"
     },
 
-    { "comentario": "====== AGOSTO 2025 ======" },
+	{ "comentario": "====== 2025 | AGOSTO     ======" },
+    {
+        "dia": 6,
+        "mes": 8,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "00h",
+        "hora_fim": "10",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Centro Esportivo",
+        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
+    },
     {
         "dia": 8,
         "mes": 8,
@@ -52,22 +64,9 @@
         "hora_fim": "10",
         "minuto_fim": "00h",
         "taxa": "0,00",
-        "local": "Centro Esportivo (Acesso restrito a quem possui cadastro e carteirinha do local)",
+        "local": "Centro Esportivo",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "Levar documento de identificação"
-    },
-    {
-        "dia": 9,
-        "mes": 8,
-        "ano": 2025,
-        "hora_inicio": "10",
-        "minuto_inicio": "00h",
-        "hora_fim": "13",
-        "minuto_fim": "00h",
-        "taxa": "12,00",
-        "local": "RJ Beach Arena",
-        "endereco": "R. Catiara, 58 - Campo Grande, Rio de Janeiro - RJ, 23045-140",
-        "observacao": "Valor da taxa por pessoa"
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
     {
         "dia": 13,
@@ -78,9 +77,22 @@
         "hora_fim": "10",
         "minuto_fim": "00h",
         "taxa": "0,00",
-        "local": "Centro Esportivo (Acesso restrito a quem possui cadastro e carteirinha do local)",
+        "local": "Centro Esportivo",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "Levar documento de identificação"
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
+    },
+    {
+        "dia": 15,
+        "mes": 8,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "00h",
+        "hora_fim": "10",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Centro Esportivo",
+        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
     {
         "dia": 20,
@@ -91,38 +103,65 @@
         "hora_fim": "10",
         "minuto_fim": "00h",
         "taxa": "0,00",
-        "local": "Centro Esportivo (Acesso restrito a quem possui cadastro e carteirinha do local)",
+        "local": "Centro Esportivo",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "Chegar 15 min antes do horário"
-    },
-
-    { "comentario": "====== SETEMBRO 2025 ======" },
-    {
-        "dia": 15,
-        "mes": 9,
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
+    },	
+	    {
+        "dia": 22,
+        "mes": 8,
         "ano": 2025,
         "hora_inicio": "07",
         "minuto_inicio": "00h",
         "hora_fim": "10",
         "minuto_fim": "00h",
         "taxa": "0,00",
-        "local": "Centro Esportivo (Acesso restrito a quem possui cadastro e carteirinha do local)",
+        "local": "Centro Esportivo",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "Levar carteirinha obrigatória"
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
-
-    { "comentario": "====== DEZEMBRO 2025 ======" },
-    {
-        "dia": 12,
-        "mes": 12,
+	    {
+        "dia": 27,
+        "mes": 8,
         "ano": 2025,
-        "hora_inicio": "12",
+        "hora_inicio": "07",
         "minuto_inicio": "00h",
-        "hora_fim": "15",
+        "hora_fim": "10",
         "minuto_fim": "00h",
         "taxa": "0,00",
-        "local": "Centro Esportivo (Acesso restrito a quem possui cadastro e carteirinha do local)",
+        "local": "Centro Esportivo",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "Levar carteirinha obrigatória"
-    }
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
+    },
+	    {
+        "dia": 29,
+        "mes": 8,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "00h",
+        "hora_fim": "10",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Centro Esportivo",
+        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
+    },
+		    {
+        "dia": 2,
+        "mes": 8,
+        "ano": 2025,
+        "hora_inicio": "10",
+        "minuto_inicio": "00h",
+        "hora_fim": "13",
+        "minuto_fim": "00h",
+        "taxa": "12,00",
+        "local": "RJ Beach Arena",
+        "endereco": "Rua Catiara, 58 - Campo Grande, Rio de Janeiro - RJ, 23045-140",
+        "observacao": "Vôlei de Areia"
+    },
+
+ 	{ "comentario": "====== 2025 | SETEMBRO   ======" },
+	{ "comentario": "====== 2025 | OUTUBRO    ======" },
+	{ "comentario": "====== 2025 | NOVEMBRO   ======" },
+	{ "comentario": "====== 2025 | DEZEMBRO   ======" }	
 ]
