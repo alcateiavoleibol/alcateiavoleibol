@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        fetch('fetch('https://alcateiavoleibol-jracsjo73-alcateia-voleibols-projects.vercel.app/api/verify', {
-', {
+        // Corrigir URL do fetch
+        fetch('https://alcateiavoleibol.vercel.app/api/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token: recaptchaResponse })
