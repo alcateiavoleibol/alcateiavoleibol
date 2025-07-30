@@ -35,12 +35,13 @@
 
     function enviarFormulario(form, token) {
       const formData = new FormData(form);
-      formData.append("g-recaptcha-response", token);
+      const data = Object.fromEntries(formData.entries());
+      data['g-recaptcha-response'] = token;
 
-      fetch("https://formsubmit.co/alcateiavoleibol2023@gmail.com", {
+      fetch("/api/contact", {
         method: "POST",
-        body: formData,
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       })
       .then(response => {
         if (response.ok) {
@@ -70,8 +71,8 @@
         <button id="menu-toggle">☰ MENU</button>
         <ul id="menu-list">
             <li><a href="index.html">INÍCIO</a></li>
-			<li><a href="agenda.html">AGENDA</a></li>
-			<li><a href="placar/placar.html">PLACAR</a></li>
+            <li><a href="agenda.html">AGENDA</a></li>
+            <li><a href="placar/placar.html">PLACAR</a></li>
             <li><a href="galeria.html">GALERIA</a></li>
             <li><a href="sobre.html">SOBRE</a></li>
             <li><a href="contato.html">CONTATO</a></li>
@@ -84,7 +85,7 @@
     <div class="contato-container">
       <h1>Fale Conosco</h1>
       <p>Tem interesse em conhecer melhor a Alcateia Voleibol?</p>
-	  <p>Preencha o formulário e nossa equipe entrará em contato com você para esclarecer todas as dúvidas e apoiar você no próximo passo dessa jornada conosco.</p>
+      <p>Preencha o formulário e nossa equipe entrará em contato com você para esclarecer todas as dúvidas e apoiar você no próximo passo dessa jornada conosco.</p>
 
       <form onsubmit="handleSubmit(event)">
         <input type="hidden" name="_captcha" value="false"/>
@@ -130,7 +131,7 @@
             <img src="imagens/gif/morto.gif" alt="target" width="45" style="float: left;"/>
            <br><br><br><font color="#F02030">Nada provável</font>
           </span>
-		   <span>
+           <span>
             <img src="imagens/gif/campeao.gif" alt="target" width="45" style="float: right;"/>
             <br><br>Extremamente provável
           </span>
