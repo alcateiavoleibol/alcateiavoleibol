@@ -23,9 +23,9 @@
         "hora_fim": "10",
         "minuto_fim": "00h",
         "taxa": "0,00",
-        "local": "Centro Esportivo (Acesso restrito)",
+        "local": "Centro Esportivo = TESTE",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "Levar carteirinha obrigatória"
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
     {
         "dia": 31,
@@ -36,9 +36,9 @@
         "hora_fim": "10",
         "minuto_fim": "00h",
         "taxa": "0,00",
-        "local": "Centro Esportivo",
+        "local": "Centro Esportivo = TESTE",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "Levar carteirinha obrigatória"
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
 
 	{ "comentario": "====== 2025 | AGOSTO     ======" },
@@ -146,19 +146,61 @@
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
-		    {
-        "dia": 2,
+		{
+        "dia": 9,
         "mes": 8,
         "ano": 2025,
-        "hora_inicio": "10",
+        "hora_inicio": "00",
         "minuto_inicio": "00h",
-        "hora_fim": "13",
+        "hora_fim": "00",
         "minuto_fim": "00h",
-        "taxa": "12,00",
-        "local": "RJ Beach Arena",
-        "endereco": "Rua Catiara, 58 - Campo Grande, Rio de Janeiro - RJ, 23045-140",
-        "observacao": "Vôlei de Areia"
+        "taxa": "00,00",
+        "local": "LOCAL A DEFINIR",
+        "endereco": "LOCAL A DEFINIR",
+        "observacao": "Vôlei de Praia ou Vôlei de Quadra"
     },
+			{
+        "dia": 16,
+        "mes": 8,
+        "ano": 2025,
+        "hora_inicio": "00",
+        "minuto_inicio": "00h",
+        "hora_fim": "00",
+        "minuto_fim": "00h",
+        "taxa": "00,00",
+        "local": "LOCAL A DEFINIR",
+        "endereco": "LOCAL A DEFINIR",
+        "observacao": "Vôlei de Praia ou Vôlei de Quadra"
+    },
+			{
+        "dia": 24,
+        "mes": 8,
+        "ano": 2025,
+        "hora_inicio": "00",
+        "minuto_inicio": "00h",
+        "hora_fim": "00",
+        "minuto_fim": "00h",
+        "taxa": "00,00",
+        "local": "LOCAL A DEFINIR",
+        "endereco": "LOCAL A DEFINIR",
+        "observacao": "Vôlei de Praia ou Vôlei de Quadra"
+    },
+			{
+        "dia": 30,
+        "mes": 8,
+        "ano": 2025,
+        "hora_inicio": "00",
+        "minuto_inicio": "00h",
+        "hora_fim": "00",
+        "minuto_fim": "00h",
+        "taxa": "00,00",
+        "local": "LOCAL A DEFINIR",
+        "endereco": "LOCAL A DEFINIR",
+        "observacao": "Vôlei de Praia ou Vôlei de Quadra"
+    },
+
+
+
 
  	{ "comentario": "====== 2025 | SETEMBRO   ======" },
 	{ "comentario": "====== 2025 | OUTUBRO    ======" },
