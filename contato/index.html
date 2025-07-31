@@ -114,11 +114,12 @@
         formData.forEach((value, key) => { data[key] = value });
         data['g-recaptcha-response'] = token;
 
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+const response = await fetch('https://alcateiavoleibol.vercel.app/api/contact', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data)
+});
+
 
         if (response.ok) {
           document.getElementById("successMessage").style.display = "block";
