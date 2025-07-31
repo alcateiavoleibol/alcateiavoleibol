@@ -66,17 +66,25 @@
       </select>
       <input type="text" name="Outro (especifique)" id="outroInput" style="display:none;" placeholder="Especifique como conheceu"/>
 
-      <label for="indicacao">Qual a probabilidade de você indicar a Alcateia para um amigo ou colega?</label>
-	  <div class="range-numbers">
-	  <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
-     <div class="range-labels">
-     <span><img src="../imagens/gif/morto.gif" style="float: left;" alt="target" width="45" style="vertical-align:middle;"><br><br>
-	  <font color="#F02030"><br>Nada provável</font></span>
-      <span><img src="../imagens/gif/campeao.gif" style="float: right;" alt="target" width="45" style="vertical-align:middle;"><br><br><br>Extremamente provável</span>
-    </div>
-	  	  
-      <input type="range" id="indicacao" name="Probabilidade de Indicação" min="0" max="10" value="5" />
-      <output for="indicacao" id="range-bolha">5</output>
+       <label for="indicacao">Qual a probabilidade de você indicar a Alcateia para um amigo ou colega?</label>
+        <div class="range-numbers">
+          <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span>
+          <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        </div>
+        <div class="range-labels">
+          <span>
+            <img src="imagens/gif/morto.gif" alt="target" width="45" style="float: left;"/>
+           <br><br><br><font color="#F02030">Nada provável</font>
+          </span>
+		   <span>
+            <img src="imagens/gif/campeao.gif" alt="target" width="45" style="float: right;"/>
+            <br><br>Extremamente provável
+          </span>
+        </div>
+<div class="range-wrapper">
+  <input type="range" id="indicacao" name="Probabilidade de Indicação" min="0" max="10" value="5" />
+  <output for="indicacao" id="range-bolha">5</output>
+</div>
 
       <label for="mensagem">Mensagem (máx. 600 caracteres)</label>
       <textarea id="mensagem" name="Mensagem" maxlength="600" rows="5" oninput="updateCharCount()"></textarea>
