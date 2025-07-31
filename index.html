@@ -14,24 +14,12 @@
 	<script src="js/aniversario.js" defer></script>
 	<script src="js/bday.js" defer></script>
     <script src="js/confetti.js" defer></script>
-		
-	<!-- Favicon -->
-    <link rel="icon" href="/imagens/ico/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/imagens/ico/favicon.png" type="image/png">
-
-    <!-- Manifest JSON -->
-    <link rel="manifest" href="/json/manifest.json">
-    <meta name="theme-color" content="#001226">
-
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="/imagens/ico/icon-192.png">
-
-    <!-- Web App Capable -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-	
+    <script>
+      fetch('/partials/head.html')
+        .then(response => response.text())
+        .then(data => document.head.insertAdjacentHTML('beforeend', data));
+    </script>
 </head>
-
 <body>
 <header>
     <header class="top-banner">
