@@ -182,26 +182,5 @@
 	<br>
     <p1>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p1>
 </footer>
-
-
-  <!-- TESTE DE script -->
-<script>
-  const range = document.getElementById('indicacao');
-  const bolha = document.getElementById('range-bolha');
-
-  function atualizarBolha() {
-    const val = range.value;
-    const min = range.min ? parseFloat(range.min) : 0;
-    const max = range.max ? parseFloat(range.max) : 100;
-    const percentual = ((val - min) / (max - min)) * 100;
-
-    bolha.textContent = val;
-    bolha.style.left = `calc(${percentual}% - 20px)`; // Ajuste fino
-  }
-
-  range.addEventListener('input', atualizarBolha);
-  window.addEventListener('load', atualizarBolha); // Inicializa na carga
-</script>
-
 </body>
 </html>
