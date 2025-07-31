@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contato</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsivo.css" />
+  <link rel="stylesheet" href="../css/contato.css" />
+  <script src="./js/script.js" defer></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lcb75QrAAAAAPq50kTgIltQFzyuL8tn5Tz34Qdt"></script>
+</head>
+<body>
+
+<header>
+  <div class="top-banner">
+    <img src="imagens/banner.png" alt="Banner" class="banner">
+  </div>
+  <nav id="menu">
+    <button id="menu-toggle">☰ MENU</button>
+    <ul id="menu-list">
+      <li><a href="index.html">INÍCIO</a></li>
+      <li><a href="agenda.html">AGENDA</a></li>
+      <li><a href="placar/placar.html">PLACAR</a></li>
+      <li><a href="galeria.html">GALERIA</a></li>
+      <li><a href="sobre.html">SOBRE</a></li>
+      <li><a href="contato.html">CONTATO</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="contato-container">
+    <h1>Fale Conosco</h1>
+    <p>Tem interesse em conhecer melhor a Alcateia Voleibol?</p>
+    <p>Preencha o formulário e nossa equipe entrará em contato com você.</p>
+
+    <form id="contatoForm">
+      <label for="nome">Nome *</label>
+      <input type="text" id="nome" name="Nome" required />
+
+      <label for="telefone">Telefone *</label>
+      <input type="tel" id="telefone" name="Telefone" required />
+
+      <label for="email">E-mail *</label>
+      <input type="email" id="email" name="Email" required />
+
+      <label for="sexo">Sexo *</label>
+      <select id="sexo" name="Sexo" required>
+        <option value="">Selecione</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Feminino">Feminino</option>
+        <option value="Prefiro não informar">Prefiro não informar</option>
+      </select>
+
+      <label for="origem">Como conheceu a ALCATEIA VOLEIBOL?</label>
+      <select id="origem" name="Como conheceu?" onchange="toggleOutroCampo(this)">
+        <option value="">Selecione</option>
+        <option value="Google">Google</option>
+        <option value="Instagram">Instagram</option>
+        <option value="TikTok">TikTok</option>
+        <option value="YouTube">YouTube</option>
+        <option value="Facebook">Facebook</option>
+        <option value="Amigo/Colega">Amigo/Colega</option>
+        <option value="Outros">Outros</option>
+      </select>
+      <input type="text" name="Outro (especifique)" id="outroInput" style="display:none;" placeholder="Especifique como conheceu"/>
+
+      <label for="indicacao">Qual a probabilidade de você indicar a Alcateia para um amigo ou colega?</label>
+      <input type="range" id="indicacao" name="Probabilidade de Indicação" min="0" max="10" value="5" />
+      <output for="indicacao" id="range-bolha">5</output>
+
+      <label for="mensagem">Mensagem (máx. 600 caracteres)</label>
+      <textarea id="mensagem" name="Mensagem" maxlength="600" rows="5" oninput="updateCharCount()"></textarea>
+      <div id="charCount">Restam 600 caracteres</div>
+
+      <button type="submit">Enviar</button>
+
+      <p id="successMessage" style="display:none; text-align:center; margin-top:20px; color:#00ff88;">
+        Ticket gerado e mensagem enviada com sucesso. Obrigado!
+      </p>
+    </form>
+  </div>
+</main>
+
+<script>
+  function updateCharCount() {
+    const textarea = document.getElementById("mensagem");
+    const counter = document.getElementById("charCount");
+    const remaining = 600 - textarea.value.length;
+    counter.textContent = `Restam ${remaining} caracteres`;
+  }
+
+  function toggleOutroCampo(select) {
+    const outroInput = document.getElementById("outroInput");
+    outroInput.style.display = select.value === "Outros" ? "block" : "none";
+  }
+
+  const form = document.getElementById('contatoForm');
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    grecaptcha.ready(function() {
+      grecaptcha.execute('6Lcb75QrAAAAAPq50kTgIltQFzyuL8tn5Tz34Qdt', {action: 'submit'}).then(async function(token) {
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => { data[key] = value });
+        data['g-recaptcha-response'] = token;
+
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          document.getElementById("successMessage").style.display = "block";
+          form.reset();
+          updateCharCount();
+          toggleOutroCampo({value: ""});
+        } else {
+          alert("Erro ao enviar o formulário. Tente novamente mais tarde.");
+        }
+      });
+    });
+  });
+
+  const range = document.getElementById('indicacao');
+  const bolha = document.getElementById('range-bolha');
+  range.addEventListener('input', () => {
+    bolha.textContent = range.value;
+    bolha.style.left = `calc(${(range.value/10)*100}% - 20px)`;
+  });
+  window.addEventListener('load', () => bolha.textContent = range.value);
+</script>
+
+</body>
+</html>
