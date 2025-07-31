@@ -9,6 +9,11 @@
 	<link rel="stylesheet" href="../css/galeria.css">
 	<link rel="stylesheet" href="../css/slide.css">
 	<script src="../js/script.js" defer></script>
+	    <script>
+      fetch('/partials/head.html')
+        .then(response => response.text())
+        .then(data => document.head.insertAdjacentHTML('beforeend', data));
+    </script>
 </head>
 <body>
 <header>
