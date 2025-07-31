@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Placar Alcateia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="css/placar.css" />
+  <link rel="stylesheet" href="css/responsivo-placar.css" />
+  <link rel="icon" href="imagens/icone.png" type="image/png" />
+</head>
+<body>
+  <div class="placar-container">
+    <!-- Data e Hora -->
+    <div class="data-hora" id="dataHora">00/00/0000 | 00:00:00</div>
+
+    <!-- Cronômetro -->
+    <div class="cronometro" id="cronometro">00:00</div>
+
+    <!-- Nomes dos Times e Sets -->
+    <div class="times">
+      <div class="time-bloco">
+        <input class="time-nome-input" id="time1-nome" value="ALCATEIA #1" />
+        <div class="set-control">
+          <span id="set1" onmousedown="setMouseDown(event, 'set1')" oncontextmenu="event.preventDefault();">0</span>
+        </div>
+      </div>
+      <div class="set-info">SETS</div>
+      <div class="time-bloco">
+        <input class="time-nome-input" id="time2-nome" value="ALCATEIA #2" />
+        <div class="set-control">
+          <span id="set2" onmousedown="setMouseDown(event, 'set2')" oncontextmenu="event.preventDefault();">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pontuação -->
+    <div class="pontuacoes">
+      <div class="pontuacao">
+        <span id="pontos1" onmousedown="pontoMouseDown(event, 'time1')" oncontextmenu="event.preventDefault();">0</span>
+      </div>
+      <span class="versus">X</span>
+      <div class="pontuacao">
+        <span id="pontos2" onmousedown="pontoMouseDown(event, 'time2')" oncontextmenu="event.preventDefault();">0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu fixo com botões -->
+  <div class="botoes">
+    <button onclick="iniciarPartida()">▶️ START</button>
+    <button onclick="resetarPontos()">🧹 ZERAR</button>
+    <button onclick="desfazerPonto()">❌ PONTO</button>
+    <button onclick="resetarPartida()">🔄 RESET</button>
+    <button onclick="alternarTelaCheia()">🖥️ CHEIA</button>
+    <button onclick="girarTela()">⤵️ GIRAR</button>
+  </div>
+
+  <!-- Rodapé fixo abaixo dos botões -->
+  <div class="creditos-container">
+    Desenvolvido por Alcateia Voleibol
+  </div>
+
+  <audio id="somApito" src="mp3/ponto.mp3" preload="auto"></audio>
+
+  <script src="js/placar.js"></script>
+
+  <script>
+    // Função para adicionar/remover ponto com clique
+    function pontoMouseDown(event, time) {
+      event.preventDefault();
+      if (event.button === 0) {
+        incrementarTouch(time);
+      } else if (event.button === 2) {
+        decrementarTouch(time);
+      }
+    }
+
+    // Função para adicionar/remover set com clique
+    function setMouseDown(event, setId) {
+      event.preventDefault();
+      if (event.button === 0) {
+        alterarSet(setId, 1);
+      } else if (event.button === 2) {
+        alterarSet(setId, -1);
+      }
+    }
+
+    // Gira a tela para modo paisagem
+    function girarTela() {
+      document.body.classList.toggle('girado');
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(() => {});
+      }
+    }
+
+    // Atualiza a data e hora em tempo real
+    function atualizarDataHora() {
+      const agora = new Date();
+      const data = agora.toLocaleDateString('pt-BR');
+      const hora = agora.toLocaleTimeString('pt-BR');
+      document.getElementById('dataHora').textContent = `${data} | ${hora}`;
+    }
+    setInterval(atualizarDataHora, 1000);
+    atualizarDataHora();
+  </script>
+</body>
+</html>
