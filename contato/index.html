@@ -114,7 +114,7 @@
         formData.forEach((value, key) => { data[key] = value });
         data['g-recaptcha-response'] = token;
 
-const response = await fetch('https://alcateiavoleibol.vercel.app/api/contact', {
+const response = await fetch('https://alcateiavoleibol.vercel.app/contato/', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(data)
