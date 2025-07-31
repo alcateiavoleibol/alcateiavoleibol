@@ -24,7 +24,7 @@
       <li><a href="placar/placar.html">PLACAR</a></li>
       <li><a href="galeria.html">GALERIA</a></li>
       <li><a href="sobre.html">SOBRE</a></li>
-      <li><a href="https://alcateiavoleibol.vercel.app/contato/">CONTATO</a></li>
+      <li><a href="/contato/">CONTATO</a></li>
     </ul>
   </nav>
 </header>
@@ -114,7 +114,7 @@
         formData.forEach((value, key) => { data[key] = value });
         data['g-recaptcha-response'] = token;
 
-        const response = await fetch('/api/contact', {
+        const response = await fetch("https://alcateiavoleibol.vercel.app/api/contact", {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
