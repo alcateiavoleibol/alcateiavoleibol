@@ -1,6 +1,6 @@
 // Função para carregar os álbuns da galeria a partir do JSON
 function carregarGaleria() {
-    fetch("json/galeria.json") 
+    fetch("/json/galeria.json") /* / PARA INDIACAR CAMINHO ABSOLUTO */ 
         .then(response => response.json())
         .then(data => {
             const galeria = document.getElementById("galeria");

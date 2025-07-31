@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let jogos = [];
 
-    fetch("json/agenda.json")
+    fetch("/json/agenda.json") /* / PARA INDIACAR CAMINHO ABSOLUTO */
         .then(response => response.json())
         .then(data => {
             jogos = data.sort((a, b) => {
