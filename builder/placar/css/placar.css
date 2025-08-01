@@ -1,0 +1,163 @@
+/* placar.css - Estilos principais do placar */
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #000814;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.placar-container {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.data-hora {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+.cronometro {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ffd60a;
+  margin-bottom: 20px;
+}
+
+.times {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.time-bloco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time-nome-input {
+  background: #001d3d;
+  color: #fff;
+  border: 2px solid #003566;
+  font-size: 1rem;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+  width: 130px;
+  margin-bottom: 5px;
+}
+
+.set-info {
+  font-weight: bold;
+  color: #ffc300;
+}
+
+.set-control span {
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pontuacoes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.pontuacao span {
+  font-size: 6rem;
+  font-weight: bold;
+  background: #001d3d;
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.versus {
+  font-size: 2rem;
+  margin: 0 10px;
+  color: #ffc300;
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px;
+  background: #000814;
+  position: sticky;
+  bottom: 50px;
+  z-index: 10;
+}
+
+.botoes button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #003566;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botoes button:hover {
+  background-color: #00509d;
+}
+
+.creditos-container {
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 8px;
+  background-color: #000814;
+  color: #ccc;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 5;
+}
+
+.girado {
+  transform: rotate(90deg);
+  transform-origin: center;
+  width: 100vh;
+  height: 100vw;
+  overflow: hidden;
+}
+
+.botao-voltar {
+  display: flex;
+  align-items: center;
+  background-color: #003566;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.botao-voltar:hover {
+  background-color: #00509d;
+}
+
+.icone-lobo {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}

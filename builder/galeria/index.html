@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria</title>
+	<link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsivo.css">
+	<link rel="stylesheet" href="../css/galeria.css">
+	<link rel="stylesheet" href="../css/slide.css">
+	<script src="../js/script.js" defer></script>
+	    <script>
+      fetch('/partials/head.html')
+        .then(response => response.text())
+        .then(data => document.head.insertAdjacentHTML('beforeend', data));
+    </script>
+</head>
+<body>
+<header>
+    <header class="top-banner">
+  <img src="../imagens/banner.png" alt="Banner" class="banner">
+</header>
+    <nav id="menu">
+        <button id="menu-toggle">☰ MENU</button>
+        <ul id="menu-list">
+            <li><a href="/">INÍCIO</a></li>
+			<li><a href="/agenda/">AGENDA</a></li>
+			<li><a href="/placar/">PLACAR</a></li>
+            <li><a href="/galeria/">GALERIA</a></li>
+            <li><a href="/sobre/">SOBRE</a></li>
+            <li><a href="/contato/">CONTATO</a></li>
+        </ul>
+    </nav>
+</header>
+		
+  <div class="login" id="login">
+    <h2>🔒 Senha Mensal</h2>
+    <input type="password" id="senha" placeholder="Senha"> 
+	<br>
+	<br>
+    <button onclick="verificarSenha()">Entrar</button>
+  </div>
+  <div class="galeria" id="galeria" style="display:none;"></div>
+  <script src="../js/galeria.js"></script>
+  <br>
+  <br>
+<footer>
+  <div class="social-icons" style="text-align:center; margin-top: 20px;">
+    <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank"><img alt="TikTok" src="../imagens/tiktok.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://www.instagram.com/alcateiavoleibol.oficial" target="_blank"><img alt="Instagram" src="../imagens/instagram.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://api.whatsapp.com/send?l=pt&phone=5521967248256" target="_blank"><img alt="WhatsApp" src="../imagens/whatsapp.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://alcateiavoleibol.github.io/alcateiavoleibol/" target="_blank"><img alt="Facebook" src="../imagens/facebook.png" style="width:30px; margin: 0 10px;"/></a>
+    <a href="https://www.youtube.com/@AlcateiaVoleibol" target="_blank"><img alt="YouTube" src="../imagens/youtube.png" style="width:30px; margin: 0 10px;"/></a>
+  </div>
+	<br>
+	<br>
+    <p1>&copy; 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p1>
+</footer>
+</body>
+</html>

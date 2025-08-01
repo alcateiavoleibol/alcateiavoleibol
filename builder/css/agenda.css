@@ -1,0 +1,38 @@
+#agenda {
+    padding: 20px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.jogo {
+    border: 2px solid #046dd6;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s, background-color 0.3s;
+    background-color: #001226;
+    color: #FFF;
+}
+
+.jogo:hover {
+    transform: scale(1.02);
+}
+
+/* Destaque para o próximo jogo */
+.jogo.destaque {
+    background-color: #FFD700; /* Fundo dourado */
+    color: #000;
+    border: 3px solid #FFFF00; /* Borda amarela */
+    animation: pulseBlue 1.5s infinite;
+}
+
+/* Animação de brilho azul pulsante */
+@keyframes pulseBlue {
+    0% { box-shadow: 0 0 0px rgba(4, 109, 214, 0.7); }
+    50% { box-shadow: 0 0 20px rgba(4, 109, 214, 1); }
+    100% { box-shadow: 0 0 0px rgba(4, 109, 214, 0.7); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
