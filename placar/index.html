@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="css/placar.css" />
   <link rel="stylesheet" href="css/responsivo-placar.css" />
   <link rel="icon" href="imagens/icone.png" type="image/png" />
+  	    <script>
+      fetch('/partials/head.html')
+        .then(response => response.text())
+        .then(data => document.head.insertAdjacentHTML('beforeend', data));
+    </script>
 </head>
 <body>
   <div class="placar-container">
@@ -52,7 +57,9 @@
     <button onclick="desfazerPonto()">❌ PONTO</button>
     <button onclick="resetarPartida()">🔄 RESET</button>
     <button onclick="alternarTelaCheia()">🖥️ CHEIA</button>
-    <button onclick="girarTela()">⤵️ GIRAR</button>
+	<a href="https://www.alcateiavoleibol.com.br" class="botao-voltar">
+    <img src="imagens/alcateia.png" alt="Logo Alcateia" class="icone-lobo" /> Alcateia Voleibol </a>
+   <!-- <button onclick="girarTela()">⤵️ GIRAR</button> --> <!-- BOTÃO DE GIRAR TELA -->
   </div>
 
   <!-- Rodapé fixo abaixo dos botões -->
