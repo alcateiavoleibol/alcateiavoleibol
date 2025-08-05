@@ -1,111 +1,96 @@
-/* RESPONSIVO para telas menores (ex: smartphones) */
+/* === RESPONSIVO GERAL PARA TELAS PEQUENAS (MOBILE) === */
 @media (max-width: 768px) {
-  body, html {
+  html, body {
     font-size: 0.95rem;
+    overflow-x: hidden;
   }
 
   header {
-    font-size: 1.2rem;
-    padding: 8px 0;
+    font-size: 1.1rem;
+    padding: 10px 0;
   }
 
   .banner-container {
-    height: 180px;
+    height: 160px;
   }
 
   .banner {
-    max-height: 180px;
+    width: 100%;
+    max-height: 160px;
     object-fit: cover;
   }
 
+  /* Corrige menu colapsado e melhora espaçamento */
   nav.menu ul,
   .menu ul {
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     align-items: center;
+    width: 100%;
+    padding: 0;
+  }
+
+  nav.menu li,
+  .menu li {
+    width: 100%;
+    text-align: center;
   }
 
   nav.menu li a,
   .menu a {
-    padding: 6px 10px;
+    display: block;
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
     font-size: 0.95rem;
-    width: 80%;
-    text-align: center;
+    padding: 10px;
   }
 
   .controls {
     flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
+    gap: 8px;
+    width: 100%;
   }
 
+  /* Scroll lateral funcionando no mobile */
   .scroll-container {
-    height: 500px;
+    overflow-x: auto !important; /* Força scroll lateral */
+    -webkit-overflow-scrolling: touch; /* Suaviza no iOS e Android */
+    white-space: nowrap;
+    height: auto;
+    max-height: 550px;
   }
 
-  .avatar {
-    width: 30px;
-    height: 30px;
-  }
-
-  .nome-personagem {
-    font-size: 0.85rem;
+  .scrollbar-top {
+    display: none; /* Oculta barra duplicada em mobile */
   }
 
   table {
+    font-size: 0.78rem;
+    min-width: 900px; /* Faz a tabela ficar maior que a tela */
+  }
+
+  th, td {
+    padding: 4px;
+    word-break: keep-all;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nome-personagem {
     font-size: 0.8rem;
   }
 
-  th, td {
-    padding: 4px 6px;
-  }
-
   select {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
+    padding: 2px;
   }
 
   footer {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     padding: 8px;
-  }
-}
-
-/* RESPONSIVO para telas grandes (monitores wide ou ultra-wide) */
-@media (min-width: 1600px) {
-  .scroll-container {
-    height: 1000px;
-  }
-
-  table {
-    font-size: 1rem;
-  }
-
-  th, td {
-    padding: 10px 12px;
-  }
-
-  select {
-    font-size: 1rem;
-  }
-
-  .avatar {
-    width: 50px;
-    height: 50px;
-  }
-
-  .nome-personagem {
-    font-size: 1rem;
-  }
-
-  .banner-container {
-    height: 400px;
-  }
-
-  .banner {
-    max-height: 400px;
-  }
-
-  footer {
-    font-size: 1rem;
   }
 }
