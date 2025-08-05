@@ -1,0 +1,12 @@
+<main>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <!-- cabeçalho -->
+      </thead>
+      <tbody id="tabela-corpo">
+        <!-- linhas geradas -->
+      </tbody>
+    </table>
+  </div>
+</main>

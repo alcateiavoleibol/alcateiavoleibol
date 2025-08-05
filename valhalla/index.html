@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ValhallaBR</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/dados.js" defer></script>
+</head>
+<body>
+  <header>
+    <img src="imagens/banner.png" alt="Banner ValhallaBR" class="banner" />
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">INÍCIO</a></li>
+        <li><a href="missoes/index.html">MISSÕES</a></li>
+        <li><a href="#">INVENTÁRIO</a></li>
+       <li><a href="#" id="btnSalvarArquivo">SALVAR ARQUIVO</a></li>
+        <li>
+          <label for="importarJSON" class="upload-label">CARREGAR ARQUIVO</label>
+          <input type="file" id="importarJSON" accept=".json" hidden />
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="controls">
+      <label for="selectColunas">Selecionar coluna:</label>
+      <select id="selectColunas" aria-label="Selecionar coluna para mostrar"></select>
+      <button id="btnMostrarColuna" type="button">Mostrar Coluna</button>
+      <button id="btnMostrarTudo" type="button">Mostrar Todas</button>
+    </section>
+
+<section>
+  <div id="scrollContainer" class="scroll-container">
+     
+        <table>
+          <thead>
+            <tr>
+              <th data-col="birth">/</th>
+              <th data-col="charNome">PERSONAGEM</th>
+              <th class="toggle-col" data-col="power">POWER</th>
+              <th class="toggle-col" data-col="classe">CLASSE</th>
+              <th class="toggle-col" data-col="level">LEVEL</th>
+              <th class="toggle-col" data-col="tower">TOWER</th>
+              <th class="toggle-col" data-col="berkas">BERKAS</th>
+              <th class="toggle-col" data-col="vazio">VAZIO</th>
+              <th class="toggle-col" data-col="sr">SR</th>
+              <th class="toggle-col" data-col="visualChase">VISUAL CHASE</th>
+              <th class="toggle-col" data-col="anel">ANEL</th>
+              <th class="toggle-col" data-col="brinco">BRINCO</th>
+              <th class="toggle-col" data-col="piercing">PIERCING</th>
+              <th class="toggle-col" data-col="atkTotal">ATAQUE TOTAL</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-corpo"></tbody>
+        </table>
+		     </div>
+  <div id="scrollbarTop" class="scrollbar-top"></div>
+</section>
+  </main>
+
+  <footer>
+    <p>© 2025 VALHALLA. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
