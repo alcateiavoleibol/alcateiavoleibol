@@ -1,12 +1,111 @@
-<main>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <!-- cabeçalho -->
-      </thead>
-      <tbody id="tabela-corpo">
-        <!-- linhas geradas -->
-      </tbody>
-    </table>
-  </div>
-</main>
+/* RESPONSIVO para telas menores (ex: smartphones) */
+@media (max-width: 768px) {
+  body, html {
+    font-size: 0.95rem;
+  }
+
+  header {
+    font-size: 1.2rem;
+    padding: 8px 0;
+  }
+
+  .banner-container {
+    height: 180px;
+  }
+
+  .banner {
+    max-height: 180px;
+    object-fit: cover;
+  }
+
+  nav.menu ul,
+  .menu ul {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  nav.menu li a,
+  .menu a {
+    padding: 6px 10px;
+    font-size: 0.95rem;
+    width: 80%;
+    text-align: center;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .scroll-container {
+    height: 500px;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nome-personagem {
+    font-size: 0.85rem;
+  }
+
+  table {
+    font-size: 0.8rem;
+  }
+
+  th, td {
+    padding: 4px 6px;
+  }
+
+  select {
+    font-size: 0.85rem;
+  }
+
+  footer {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+}
+
+/* RESPONSIVO para telas grandes (monitores wide ou ultra-wide) */
+@media (min-width: 1600px) {
+  .scroll-container {
+    height: 1000px;
+  }
+
+  table {
+    font-size: 1rem;
+  }
+
+  th, td {
+    padding: 10px 12px;
+  }
+
+  select {
+    font-size: 1rem;
+  }
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .nome-personagem {
+    font-size: 1rem;
+  }
+
+  .banner-container {
+    height: 400px;
+  }
+
+  .banner {
+    max-height: 400px;
+  }
+
+  footer {
+    font-size: 1rem;
+  }
+}
