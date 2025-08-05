@@ -49,10 +49,24 @@ const dadosIniciais = [
   { birth: 20, char: "decane", nome: "DECANE", power: "AMP" },
   { birth: 21, char: "ai", nome: "AI", power: "AMP" },
   { birth: 22, char: "kallia", nome: "KALLIA", power: "AMP" },
-  { birth: 23, char: "uno", nome: "UNO", power: "AMP" }
+  { birth: 23, char: "uno", nome: "UNO", power: "AMP" },
+  { birth: 24, char: "harpe", nome: "HARPE", power: "AMP" }
 ];
 
 let dadosCarregados = null;
+
+function getOpcoesClassePorPersonagem(birth) {
+  if ([16, 17, 18, 20, 21, 22, 23].includes(Number(birth))) {
+    return ['1ª Classe', '2ª Classe', 'Despertar'];
+  /* } else if (Number(birth) === 19) { */ /* APENAS O 19 */
+  } else if ([19, 24].includes(Number(birth))) {
+    return ['1ª Classe', 'Despertar'];
+  } else {
+    return ['1ª Classe', '2ª Classe', '3ª Classe', '4ª Classe', 'Despertar'];
+  }
+}
+
+
 
 // Retorna os dados atuais completos, priorizando os carregados ou dadosIniciais
 function carregarDados() {
@@ -149,7 +163,9 @@ document.getElementById('btnSalvarArquivo')?.addEventListener('click', (e) => {
 // Garante que todos os campos obrigatórios existam, preenche acessórios com "Nenhum" se vazio,
 // e faz validação básica para evitar valores inválidos que possam quebrar a tabela
 function completarDados(lista) {
-  return lista.map((item, index) => {
+  return lista
+    .filter((item, index) => index < 24 && item && item.char) // ← GARANTE que só os 24 primeiros personagens com "char" definido sejam usados
+    .map((item, index) => {
     for (const campo of colunasEditaveis) {
       if (!(campo in item)) item[campo] = '';
     }
@@ -314,7 +330,13 @@ function criarTabela() {
         td.style.textAlign = 'center';
       }
 
-      if (key === 'classe') td.appendChild(criarSelect(opcoesClasse, item[key]));
+if (key === 'classe') {
+  const opcoesClasseCustom = getOpcoesClassePorPersonagem(item.birth);
+  td.appendChild(criarSelect(opcoesClasseCustom, item[key]));
+}
+
+
+
       else if (key === 'level') td.appendChild(criarSelect(opcoesLevel, item[key]));
       else if (key === 'tower') td.appendChild(criarSelect(opcoesTower, item[key]));
       else if (['berkas', 'vazio', 'sr'].includes(key)) td.appendChild(criarSelect(gerarOpcoesAcessorio(index), item[key]));
@@ -434,9 +456,31 @@ function configurarDropdownColunas() {
       if (colName && colName !== 'charNome' && colName !== 'birth') {
         const option = document.createElement('option');
         option.value = colName;
-        option.textContent = colName
+      /*  option.textContent = colName
           .replace(/([A-Z])/g, ' $1')
-          .replace(/^./, str => str.toUpperCase());
+          .replace(/^./, str => str.toUpperCase()); */
+		  
+		  const nomesAmigaveis = {
+  power: 'MP/AP/AMP',
+  classe: 'CLASSE',
+  level: 'NÍVEL',
+  tower: 'NÍVEL TORRE',
+  berkas: 'BERKAS',
+  vazio: 'VAZIO',
+  sr: 'SR',
+  visualChase: 'VISUAL CHASE',
+  anel: 'ANEL',
+  brinco: 'BRINCO',
+  piercing: 'PIERCING',
+  atkTotal: 'ATAQUE TOTAL',
+};
+
+option.textContent = nomesAmigaveis[colName] || colName;
+
+		  
+		  
+		  
+		  
         selectColunas.appendChild(option);
       }
     });
