@@ -1,13 +1,19 @@
-/* Menu Responsivo */
+/* --- MENU RESPONSIVO --- */
 @media (max-width: 768px) {
     nav#menu {
+        display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
     }
 
     .banner {
         max-height: 115px;
         object-fit: cover;
+        width: 100%;
+        animation: bannerEntrance 1.5s ease forwards;
+        opacity: 0;
+        transform: scale(0.95);
     }
 
     #menu-toggle {
@@ -16,19 +22,28 @@
         color: white;
         font-size: 1.5rem;
         border: none;
-        margin: 10px;
+        margin: 10px auto;
         padding: 10px 20px;
         cursor: pointer;
+        text-align: center;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        transition: background-color 0.3s ease;
+    }
+
+    #menu-toggle:hover {
+        background-color: #004080;
     }
 
     #menu-list {
         display: none;
         flex-direction: column;
         text-align: center;
-        background-color: #002139;
+        background-color: #001a33;
         width: 100%;
         padding: 0;
         margin: 0;
+        border-radius: 0 0 8px 8px;
     }
 
     #menu-list.show {
@@ -36,19 +51,56 @@
     }
 
     #menu-list li {
-        margin: 5px 0;
-        width: 100%;
-    }
-
-    #menu-list li a {
-        padding: 12px 0;
-        display: block;
+        margin: 0;
         width: 100%;
         border-top: 1px solid #003;
     }
+
+    #menu-list li:first-child {
+        border-top: none;
+    }
+
+    #menu-list li a {
+        padding: 15px 0;
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0;
+    }
+
+    #menu-list li a:hover {
+        background-color: #004466;
+        color: #FBEA80;
+        transform: scale(1.03);
+    }
+
+    /* Mantendo o underline animado no hover para mobile */
+    #menu-list li a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 5px;
+        width: 100%;
+        height: 3px;
+        background: #FBEA80;
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 4px;
+        pointer-events: none;
+    }
+
+    #menu-list li a:hover::after {
+        transform: translateX(0);
+    }
 }
 
-/* Ajustes Responsivos para Intro Section */
+/* --- AJUSTES RESPONSIVOS PARA A SEÇÃO DE INTRODUÇÃO --- */
 @media (max-width: 768px) {
     .intro-section {
         padding: 30px 15px;
@@ -72,31 +124,46 @@
     .cta-buttons .button {
         display: block;
         margin: 10px auto;
-        width: 70%; /*TAMANHO DO BOTÃO DA INTRO */
+        width: 70%;
         font-size: 1rem;
     }
 }
 
-
-/* Lobogif Responsivo em Todas as Telas */
+/* --- LOGO ANIMADO RESPONSIVO --- */
 .responsive-lobo-gif {
     width: 100%;
-    max-width: 460px; /* Desktop */
+    max-width: 460px;
     height: auto;
     display: block;
     margin: 0 auto;
+    animation: fadeZoomIn 1.5s ease forwards;
+    opacity: 0;
+    transform: scale(0.9);
 }
 
-/* Telas até 768px (Tablets) */
 @media (max-width: 768px) {
     .responsive-lobo-gif {
-        max-width: 400px; /* Aumentado de 300px para 350px */
+        max-width: 400px;
     }
 }
 
-/* Telas até 480px (Celulares) */
 @media (max-width: 480px) {
     .responsive-lobo-gif {
-        max-width: 300px; /* Aumentado de 200px para 280px */
+        max-width: 300px;
+    }
+}
+
+/* --- ANIMAÇÕES --- */
+@keyframes bannerEntrance {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeZoomIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }

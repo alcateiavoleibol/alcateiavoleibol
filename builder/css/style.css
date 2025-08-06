@@ -1,134 +1,248 @@
 /* --- ESTILO GERAL --- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #001226;
-    color: #FFF;
+  font-family: Arial, sans-serif;
+  background-color: #001226;
+  color: #FFF;
 }
 
 p {
-    text-align: justify;
-    line-height: 1.5;
+  text-align: justify;
+  line-height: 1.5;
 }
 
 p1 {
-    text-align: center;
-    line-height: 1.5;
+  text-align: center;
+  line-height: 1.5;
 }
 
 header {
-    background-color: #002139;
-    color: white;
+  background-color: #002139;
+  color: white;
 }
 
 .banner {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: bannerEntrance 1.5s ease forwards;
+  opacity: 0;
+  transform: scale(0.95);
 }
 
 .top-banner {
-    width: 100%;
-    overflow: hidden;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Animação do banner topo */
+@keyframes bannerEntrance {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* --- MENU --- */
+
 nav {
-    background-color: #002139;
+  background-color: #002139;
+  overflow-x: auto;
+}
+
+nav#menu {
+  background-color: #001a33;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
 }
 
 #menu-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1000px;
+  white-space: normal;
+  gap: 15px;
 }
 
 #menu-list li {
-    margin: 0 15px;
+  margin: 0 5px;
+  position: relative;
 }
 
+/* Links do menu com animação underline moderna */
 #menu-list a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    line-height: 2.5;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease;
+  display: inline-block;
 }
 
+/* Linha de underline que vai animar */
+#menu-list a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  width: 100%;
+  height: 3px;
+  background: #FBEA80;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Ao hover, underline desliza da esquerda para direita */
+#menu-list a:hover::after {
+  transform: translateX(0);
+}
+
+/* Cor do texto ao passar o mouse */
+#menu-list a:hover {
+  color: #FBEA80;
+}
+
+/* Botão menu toggle para mobile */
 #menu-toggle {
-    display: none;
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  margin: 0 10px;
+}
+
+/* --- BOTÕES PRINCIPAIS --- */
+
+.cta-buttons {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.cta-buttons .button {
+  background-color: #003366;
+  color: #fff;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 10px;
+  transition: background 0.3s, transform 0.3s;
+  display: inline-block;
+}
+
+.cta-buttons .button:hover {
+  background-color: #0055aa;
+  transform: scale(1.05);
+}
+
+.cta-buttons .button.highlight {
+  background-color: #ff6600;
+  color: #000;
+}
+
+.cta-buttons .button.highlight:hover {
+  background-color: #ffaa33;
 }
 
 /* --- MAIN CONTENT --- */
+
 main {
-    padding: 40px 5%;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-sizing: border-box;
+  padding: 40px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 section {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
-/* --- FLEX CONTAINER (Typing + Slide side by side) --- */
+/* --- FLEX CONTAINER --- */
+
 .flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .typing-section {
-    flex: 1;
-    min-width: 300px;
-    max-width: 600px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
 }
 
 .slide-container {
-    flex: 1;
-    min-width: 300px;
-    max-width: 600px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
 }
 
 /* --- TYPING EFFECT --- */
+
 .typing-animation {
-    font-size: 1.2rem;
-    color: #FBEA80;
-    font-family: 'Courier New', monospace;
-    white-space: normal;
-    overflow: hidden;
-    display: inline-block;
-    border-right: 2px solid #FBEA80;
-    word-break: break-word;
+  font-size: 1.2rem;
+  color: #FBEA80;
+  font-family: 'Courier New', monospace;
+  white-space: normal;
+  overflow: hidden;
+  display: inline-block;
+  border-right: 2px solid #FBEA80;
+  word-break: break-word;
 }
 
 .author-line {
-    font-size: 1rem;
-    color: #FBEA80;
-    margin-top: 10px;
-    font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: #FBEA80;
+  margin-top: 10px;
+  font-family: 'Courier New', monospace;
 }
 
-/* Cursor Blink Animation */
 @keyframes blinkCursor {
-    from { border-right-color: #FBEA80; }
-    to { border-right-color: transparent; }
+  from {
+    border-right-color: #FBEA80;
+  }
+  to {
+    border-right-color: transparent;
+  }
 }
 
+/* --- BIRTHDAY CAROUSEL --- */
 
-/* --- BIRTHDAY CAROUSEL SECTION --- */
 .birthday-carousel-section {
-    position: relative;
-    background: linear-gradient(145deg, #001226, #002139);
-    padding: 30px 20px;
-    border-radius: 20px;
-    overflow: hidden;
-    text-align: center;
-    flex: 1;
-    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+  position: relative;
+  background: linear-gradient(145deg, #001226, #002139);
+  padding: 30px 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  text-align: center;
+  flex: 1;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
 }
 
 .birthday-card {
@@ -143,11 +257,10 @@ section {
   min-width: 180px;
 }
 
-
 .birthday-card p {
   margin: 0;
   padding: 0;
-  font-size: 24px; /* Aumentado */
+  font-size: 24px;
   line-height: 1.5;
   font-weight: bold;
   color: #fff;
@@ -164,10 +277,9 @@ section {
   margin-bottom: 5px;
 }
 
-/* Destaque para aniversariantes do dia */
 .birthday-card.highlight {
   background: linear-gradient(135deg, #4e4eff, #4207a1);
-  animation: brilho 2s infinite alternate; /* TEMPO DA ANIMAÇÃO DA SOMBRA */
+  animation: brilho 2s infinite alternate;
   box-shadow: 0 0 15px rgba(144, 238, 144, 0.7);
 }
 
@@ -176,138 +288,156 @@ section {
     box-shadow: 0 0 10px rgba(50, 5, 10, 0.6);
   }
   to {
-    box-shadow: 0 0 25px rgba(25, 74, 51, 1); /* COR DA SOMBRA DO CARD */
+    box-shadow: 0 0 25px rgba(25, 74, 51, 1);
   }
 }
 
-
-
-
-
-
-
 #confetti-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .birthday-carousel-section h2 {
-    position: relative;
-    z-index: 2;
-    color: #FFF; /* COR DO TEXTO | HAPPY BIRTHDAT! */
-    font-size: 1.8rem;
-    margin-bottom: 50px;
+  position: relative;
+  z-index: 2;
+  color: #FFF;
+  font-size: 1.8rem;
+  margin-bottom: 50px;
 }
 
-/* --- CAROUSEL TRACK --- */
 .carousel-track {
-    display: flex;
-    width: max-content;
-    animation: scrollCarousel 20s linear infinite;
-    position: relative;
-    z-index: 2;
+  display: flex;
+  width: max-content;
+  animation: scrollCarousel 20s linear infinite;
+  position: relative;
+  z-index: 2;
 }
 
 @keyframes scrollCarousel {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
-/* --- BIRTHDAY CARD --- */
 .birthday-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid #6c97ba; /* COR DO CARTÃO DE ANIVERSÁRIO */
-    border-radius: 20px;
-    padding: 15px 20px;
-    width: 160px;
-    margin: 0 10px;
-    text-align: center;
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #6c97ba;
+  border-radius: 20px;
+  padding: 15px 20px;
+  width: 160px;
+  margin: 0 10px;
+  text-align: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
 }
 
 .birthday-card:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .birthday-card img {
-    width: 40px;
-    margin-bottom: 10px;
+  width: 40px;
+  margin-bottom: 10px;
 }
 
 .birthday-card p {
-    color: #FFF;
-    font-size: 1rem;
-    margin: 0;
+  color: #FFF;
+  font-size: 1rem;
+  margin: 0;
 }
 
 .birthday-card span {
-    color: #FBEA80;
-    font-size: 0.9rem;
+  color: #FBEA80;
+  font-size: 0.9rem;
 }
 
 .birthday-card.highlight {
-    background: #5e0117 !important; /* COR DO ANIVERSARIANTE DO DIA */
-    color: #000 !important;
-    transform: scale(1.2);
-    z-index: 5;
+  background: #5e0117 !important;
+  color: #000 !important;
+  transform: scale(1.2);
+  z-index: 5;
 }
 
 .birthday-card.highlight span {
-    color: #000;
-}
-
-/* --- RESPONSIVO --- */
-@media (max-width: 768px) {
-    .birthday-card {
-        width: 120px;
-        padding: 10px;
-    }
-    .typing-section, .slide-container {
-        flex: 1 1 100%;
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .birthday-card {
-        width: 90px;
-        padding: 8px;
-    }
-    .typing-animation {
-        font-size: 1rem;
-    }
+  color: #000;
 }
 
 /* --- FOOTER --- */
+
 footer {
-    background-color: #011a36;
-    color: #FFF;
-    text-align: center;
-    padding: 40px 15px;
-    font-size: 1rem;
-    border-top: 2px solid #FBEA80;
+  background-color: #011a36;
+  color: #FFF;
+  text-align: center;
+  padding: 40px 15px;
+  font-size: 1rem;
+  border-top: 2px solid #FBEA80;
 }
 
 footer a {
-    color: #ccc;
-    text-decoration: none;
-    transition: color 0.3s ease;
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 footer a:hover {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 footer .social-icons img {
-    transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 footer .social-icons img:hover {
-    transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+/* --- RESPONSIVO --- */
+
+@media (max-width: 768px) {
+
+  /* Botão menu visível em telas pequenas */
+  #menu-toggle {
+    display: block;
+  }
+
+  #menu-list {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: #001a33;
+    margin-top: 10px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  #menu-list.show {
+    display: flex;
+  }
+
+  #menu-list li {
+    width: 100%;
+    margin: 0;
+  }
+
+  #menu-list a {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    border-top: 1px solid #002139;
+    border-radius: 0;
+  }
+
+  #menu-list a:hover {
+    background-color: #004080;
+    color: #FBEA80;
+    transform: scale(1.05);
+  }
 }
