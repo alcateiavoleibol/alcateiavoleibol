@@ -1,0 +1,96 @@
+/* === RESPONSIVO GERAL PARA TELAS PEQUENAS (MOBILE) === */
+@media (max-width: 768px) {
+  html, body {
+    font-size: 0.95rem;
+    overflow-x: hidden;
+  }
+
+  header {
+    font-size: 1.1rem;
+    padding: 10px 0;
+  }
+
+  .banner-container {
+    height: 160px;
+  }
+
+  .banner {
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+  }
+
+  /* Corrige menu colapsado e melhora espaçamento */
+  nav.menu ul,
+  .menu ul {
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+  }
+
+  nav.menu li,
+  .menu li {
+    width: 100%;
+    text-align: center;
+  }
+
+  nav.menu li a,
+  .menu a {
+    display: block;
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  /* Scroll lateral funcionando no mobile */
+  .scroll-container {
+    overflow-x: auto !important; /* Força scroll lateral */
+    -webkit-overflow-scrolling: touch; /* Suaviza no iOS e Android */
+    white-space: nowrap;
+    height: auto;
+    max-height: 550px;
+  }
+
+  .scrollbar-top {
+    display: none; /* Oculta barra duplicada em mobile */
+  }
+
+  table {
+    font-size: 0.78rem;
+    min-width: 900px; /* Faz a tabela ficar maior que a tela */
+  }
+
+  th, td {
+    padding: 4px;
+    word-break: keep-all;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nome-personagem {
+    font-size: 0.8rem;
+  }
+
+  select {
+    font-size: 0.78rem;
+    padding: 2px;
+  }
+
+  footer {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+}
