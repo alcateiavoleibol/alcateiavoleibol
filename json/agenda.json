@@ -131,19 +131,7 @@
         "endereco": "LOCAL A DEFINIR",
         "observacao": "Vôlei de Praia ou Vôlei de Quadra"
     },
-			{
-        "dia": 16,
-        "mes": 8,
-        "ano": 2025,
-        "hora_inicio": "00",
-        "minuto_inicio": "00h",
-        "hora_fim": "00",
-        "minuto_fim": "00h",
-        "taxa": "00,00",
-        "local": "LOCAL A DEFINIR",
-        "endereco": "LOCAL A DEFINIR",
-        "observacao": "Vôlei de Praia ou Vôlei de Quadra"
-    },
+
 			{
         "dia": 24,
         "mes": 8,
@@ -193,7 +181,7 @@
         "minuto_inicio": "00h",
         "hora_fim": "10",
         "minuto_fim": "00h",
-        "taxa": "50,00",
+        "taxa": "20,00",
         "local": "Evento Teste = TESTE",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
