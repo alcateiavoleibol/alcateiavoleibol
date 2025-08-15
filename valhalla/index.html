@@ -1,69 +1,242 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ValhallaBR</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/responsivo.css" />
-  <script src="js/dados.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ValhallaBR - Boas Vindas</title>
+  <link rel="icon" type="image/png" href="imagens/favicon/favicon.png">
+  <link rel="shortcut icon" href="imagens/favicon/favicon.ico">
+  <style>
+    :root {
+      --background-style: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: var(--background-style), url('imagens/fundo.jpg') no-repeat center center/cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .welcome-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 10px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+	
+  
+    #banner img {
+      max-width: 145vh;
+      height: auto;
+      border-radius: 80px;
+      box-shadow: 0 0 20px #00bfff88;
+      margin-bottom: 20px;
+	  animation: fadeInZoom 1.2s ease forwards;
+    }
+	
+	  @keyframes fadeInZoom {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+ h1 {
+    font-size: 2.5em;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #fff;
+    animation: typing 3s steps(40, end), blink 0.8s infinite;
+  }
+	@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  @keyframes blink {
+    50% { border-color: transparent }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+		
+    .btn-entrar {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background: linear-gradient(90deg, #1e3c72, #2a5298);
+      border: none;
+      color: white;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+    .btn-entrar:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #2a5298, #1e3c72);
+    }
+    .audio-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    canvas#particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer {
+      margin-top: 30px;
+      padding: 25px;
+      text-align: center;
+      background: rgba(31, 31, 31, 0.8);
+      color: #b52643;
+      font-size: clamp(18px, 1.5vw, 14px);
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.9);
+      border-top: 1px solid #444;
+      border-radius: 8px 8px 0 0;
+      width: 145vh;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <img src="imagens/banner.png" alt="Banner ValhallaBR" class="banner" />
-    <nav class="menu">
-      <ul>
-        <li><a href="/">INÍCIO</a></li>
-        <li><a href="#">MISSÕES</a></li>
-        <li><a href="#">INVENTÁRIO</a></li>
-       <li><a href="#" id="btnSalvarArquivo">SALVAR ARQUIVO</a></li>
-        <li>
-          <label for="importarJSON" class="upload-label">CARREGAR ARQUIVO</label>
-          <input type="file" id="importarJSON" accept=".json" hidden />
-        </li>
-      </ul>
-    </nav>
-  </header>
+  <canvas id="particles"></canvas>
 
-  <main>
-    <section class="controls">
-      <label for="selectColunas"></label>
-      <select id="selectColunas" aria-label="Selecionar coluna para mostrar"></select>
-      <button id="btnMostrarColuna" type="button">Mostrar Coluna</button>
-      <button id="btnMostrarTudo" type="button">Mostrar Todas</button>
-    </section>
+  <div class="welcome-container">
+    <div id="banner">
+      <img src="imagens/banner.png" alt="Banner ValhallaBR"/>
+    </div>
 
-<section>
-  <div id="scrollContainer" class="scroll-container">
-     
-        <table>
-          <thead>
-            <tr>
-              <th data-col="birth">/</th>
-              <th data-col="charNome">PERSONAGEM</th>
-              <th class="toggle-col" data-col="power">POWER</th>
-              <th class="toggle-col" data-col="classe">CLASSE</th>
-              <th class="toggle-col" data-col="level">LEVEL</th>
-              <th class="toggle-col" data-col="tower">TOWER</th>
-              <th class="toggle-col" data-col="berkas">BERKAS</th>
-              <th class="toggle-col" data-col="vazio">VAZIO</th>
-              <th class="toggle-col" data-col="sr">SR</th>
-              <th class="toggle-col" data-col="visualChase">VISUAL CHASE</th>
-              <th class="toggle-col" data-col="anel">ANEL</th>
-              <th class="toggle-col" data-col="brinco">BRINCO</th>
-              <th class="toggle-col" data-col="piercing">PIERCING</th>
-              <th class="toggle-col" data-col="atkTotal">ATAQUE TOTAL</th>
-            </tr>
-          </thead>
-          <tbody id="tabela-corpo"></tbody>
-        </table>
-		     </div>
-  <div id="scrollbarTop" class="scrollbar-top"></div>
-</section>
-  </main>
+    <h1>Bem-vindo à ValhallaBR!</h1>
 
-  <footer>
-    <p>© 2025 VALHALLA. Todos os direitos reservados.</p>
-  </footer>
+    <a href="perfil/index.html" class="btn-entrar" id="btn-play">▶ Entrar no Perfil</a>
+
+    <audio id="bg-music" src="mp3/hope-ptbr.mp3" preload="auto" loop></audio>
+
+    <div class="audio-controls">
+      <button id="play-pause">▶ Play</button>
+      <button id="volume-up">🔊 +</button>
+      <button id="volume-down">🔉 -</button>
+    </div>
+  </div>
+
+  <footer>© 2025 VALHALLA. Todos os direitos reservados.</footer>
+
+  <script>
+    // Partículas
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray = [];
+    class Particle {
+      constructor(){
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 1;
+        this.speedY = (Math.random() - 0.5) * 1;
+      }
+      update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw(){
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    function initParticles(){
+      particlesArray = [];
+      for(let i = 0; i < 80; i++){
+        particlesArray.push(new Particle());
+      }
+    }
+    function animateParticles(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particlesArray.forEach(p=>{
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    initParticles();
+    animateParticles();
+    window.addEventListener('resize', ()=>{
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    });
+
+    // Player
+    const audio = document.getElementById('bg-music');
+    const playPauseBtn = document.getElementById('play-pause');
+    const volumeUpBtn = document.getElementById('volume-up');
+    const volumeDownBtn = document.getElementById('volume-down');
+
+    let isPlaying = false;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      audio.volume = 0.3;
+      const savedTime = sessionStorage.getItem('audioTime');
+      if (savedTime) {
+        audio.currentTime = parseFloat(savedTime);
+      }
+      audio.play().then(() => {
+        isPlaying = true;
+        playPauseBtn.textContent = '⏸ Pause';
+      }).catch(err => {
+        console.log('Autoplay bloqueado:', err);
+        playPauseBtn.textContent = '▶ Play';
+      });
+    });
+
+    playPauseBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        playPauseBtn.textContent = '▶ Play';
+      } else {
+        audio.play().catch(err => console.log('Erro ao tocar:', err));
+        playPauseBtn.textContent = '⏸ Pause';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    volumeUpBtn.addEventListener('click', () => {
+      audio.volume = Math.min(audio.volume + 0.1, 1);
+    });
+
+    volumeDownBtn.addEventListener('click', () => {
+      audio.volume = Math.max(audio.volume - 0.1, 0);
+    });
+
+    // Salva tempo da música ao entrar no perfil
+    document.getElementById('btn-play').addEventListener('click', () => {
+      sessionStorage.setItem('audioTime', audio.currentTime);
+    });
+  </script>
 </body>
 </html>
