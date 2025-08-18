@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Maps</title>
+  <link rel="stylesheet" href="css/maps.css">
+  <link rel="stylesheet" href="css/responsivo-maps.css">
+  	    <script>
+      fetch('/partials/head.html')
+        .then(response => response.text())
+        .then(data => document.head.insertAdjacentHTML('beforeend', data));
+    </script>
+</head>
+<body>
+<header>
+  <h1>Localização Alcateia Voleibol</h1>
+</header>
+
+  <main>
+    <div class="map-container">
+      <iframe 
+        src="https://www.google.com/maps/d/u/0/embed?mid=1ZblUu70GKhVinuoZx_uU8qDnoHA32Uc" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  </main>
+
+<footer>
+  <p>&copy; 2025 Alcateia Voleibol</p>
+</footer>
+
+  <script src="js/maps.js"></script>
+  <a href="https://www.alcateiavoleibol.com.br" target="_blank" class="floating-button">⬅ Início 🏠</a>
+</body>
+</html>
