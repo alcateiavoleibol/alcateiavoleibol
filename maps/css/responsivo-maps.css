@@ -1,35 +1,55 @@
 @media (max-width: 768px) {
   header h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
-  .map-container {
-    height: 70vh;
+  iframe {
+    height: 400px;
   }
 
-  footer {
-    font-size: 0.8rem;
+  .filter-bar {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
 @media (max-width: 480px) {
-  header h1 {
-    font-size: 1.2rem;
+  iframe {
+    height: 300px;
   }
 
-  .map-container {
-    height: 60vh;
+  .floating-button,
+  .toggle-theme {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
   }
-
-  iframe:hover {
-    transform: none;
-  }
-}
-@media (max-width: 480px) {
-  .floating-button {
-    padding: 8px 12px;
+    .botao-voltar {
+    padding: 0.5rem 0.8rem;
     font-size: 0.9rem;
-    bottom: 15px;
-    right: 15px;
+  }
+
+  .icone-lobo {
+    width: 24px;
+    height: 24px;
   }
 }
+
+@media (max-width: 600px) {
+  .banner-topo {
+    border-radius: 0;
+  }
+
+  .topo-site, .rodape-site {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+    .imagem-banner {
+    object-fit: contain;
+  }
+
+  
+}
+
+
+

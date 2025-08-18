@@ -1,10 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Mapa Alcateia Voleibol carregado com estilo.");
+  // Alternar tema escuro
+  window.toggleDarkMode = () => {
+    document.body.classList.toggle('dark-mode');
+  };
 
-  // Efeito de entrada suave
-  document.body.style.opacity = 0;
-  setTimeout(() => {
-    document.body.style.transition = "opacity 1s ease-in-out";
-    document.body.style.opacity = 1;
-  }, 100);
+  // Filtro (exemplo básico)
+  document.getElementById("bairro").addEventListener("change", (e) => {
+    console.log("Bairro selecionado:", e.target.value);
+  });
+
+  document.getElementById("tipo").addEventListener("change", (e) => {
+    console.log("Tipo de quadra:", e.target.value);
+  });
 });

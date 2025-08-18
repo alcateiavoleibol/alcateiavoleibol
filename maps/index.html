@@ -2,34 +2,40 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Maps</title>
+  <title>Mapa | Alcateia Voleibol</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/maps.css">
   <link rel="stylesheet" href="css/responsivo-maps.css">
-  	    <script>
-      fetch('/partials/head.html')
-        .then(response => response.text())
-        .then(data => document.head.insertAdjacentHTML('beforeend', data));
-    </script>
 </head>
 <body>
-<header>
-  <h1>Localização Alcateia Voleibol</h1>
+
+<header class="banner-topo">
+  <img src="imagens/banner.png" alt="Banner Alcateia" class="imagem-banner" />
 </header>
 
+
+  <!-- Botões flutuantes -->
+<a href="https://www.alcateiavoleibol.com.br" class="botao-voltar">
+  <img src="imagens/alcateia.png" alt="Logo Alcateia" class="icone-lobo" />
+  Alcateia Voleibol
+</a>
+  <button class="toggle-theme" onclick="toggleDarkMode()">🌓</button>
   <main>
-    <div class="map-container">
+    <div class="map-wrapper fade-in">
       <iframe 
-        src="https://www.google.com/maps/d/u/0/embed?mid=1ZblUu70GKhVinuoZx_uU8qDnoHA32Uc" 
-        allowfullscreen>
+        src="https://www.google.com/maps/d/embed?mid=1ZblUu70GKhVinuoZx_uU8qDnoHA32Uc&ehbc=2E312F" 
+        allowfullscreen 
+        loading="lazy">
       </iframe>
     </div>
   </main>
 
-<footer>
-  <p>&copy; 2025 Alcateia Voleibol</p>
+<!-- RODAPÉ -->
+<footer class="rodape-site">
+  <p>© 2025 Alcateia Voleibol. Todos os direitos reservados.</p>
 </footer>
 
+
   <script src="js/maps.js"></script>
-  <a href="https://www.alcateiavoleibol.com.br" target="_blank" class="floating-button">⬅ Início 🏠</a>
 </body>
 </html>
