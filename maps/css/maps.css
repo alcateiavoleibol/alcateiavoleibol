@@ -11,115 +11,37 @@ body {
   background-color: #f4f4f4;
   color: #222;
   transition: background-color 0.3s, color 0.3s;
+  overflow-x: hidden;
 }
 
-/* Banner full topo */
+/* Banner topo */
 .banner-topo {
   width: 100vw;
-  height: auto;
-  margin: 0;
-  padding: 0;
   overflow: hidden;
 }
-
 .imagem-banner {
   width: 100vw;
   height: auto;
   display: block;
   object-fit: cover;
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
-/* Rodapé estilizado */
-.rodape-site {
-  background-color: #001226;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-}
-
-/* Cabeçalho interno (se usado abaixo do banner) */
-header {
-  background-color: #2E312F;
-  color: white;
-  padding: 1.2rem;
-  text-align: center;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-}
-header p {
-  font-size: 1rem;
-  opacity: 0.8;
-}
-
-/* Filtro */
-.filter-bar {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-  flex-wrap: wrap;
-}
-.filter-bar select {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
 }
 
 /* Mapa */
 .map-wrapper {
-  width: 100%;
-  max-width: 1000px;
-  margin: 1.5rem auto;
-  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 iframe {
-  width: 100%;
+  width: 90%;
+  max-width: 960px;
   height: 500px;
   border: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  position: relative;
-  z-index: 1;
-  border-radius: 8px;
 }
 
-/* Botões flutuantes */
-.floating-button,
-.toggle-theme {
-  position: fixed;
-  width: 48px;
-  height: 48px;
-  font-size: 20px;
-  border: none;
-  border-radius: 50%;
-  color: white;
-  background-color: #2E312F;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  cursor: pointer;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
 
-.floating-button {
-  bottom: 20px;
-  left: 20px;
-}
-.toggle-theme {
-  bottom: 20px;
-  right: 20px;
-}
-
-.floating-button:hover,
-.toggle-theme:hover {
-  background-color: #444;
-  transform: scale(1.1);
-}
-
-/* Botão voltar personalizado */
+/* Botão Alcateia */
 .botao-voltar {
   position: fixed;
   bottom: 20px;
@@ -137,23 +59,43 @@ iframe {
   z-index: 9999;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
 .botao-voltar:hover {
   background-color: #444;
   transform: scale(1.05);
 }
-
 .icone-lobo {
   width: 28px;
   height: 28px;
   object-fit: contain;
 }
 
-/* Rodapé padrão */
-footer {
+/* Botão tema escuro */
+.toggle-theme {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2E312F;
+  color: white;
+  border: none;
+  padding: 0.6rem 0.8rem;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 9999;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.toggle-theme:hover {
+  background-color: #444;
+  transform: scale(1.1);
+}
+
+/* Rodapé */
+.rodape-site {
+  background-color: #001226;
+  color: white;
   text-align: center;
   padding: 1rem;
-  background-color: #001226;
 }
 
 /* Animação */
@@ -174,13 +116,15 @@ body.dark-mode {
   background-color: #1e1e1e;
   color: #eee;
 }
-body.dark-mode header {
+body.dark-mode .rodape-site {
   background-color: #111;
 }
-body.dark-mode footer {
-  background-color: #333;
-}
-body.dark-mode .floating-button,
+body.dark-mode .botao-voltar,
 body.dark-mode .toggle-theme {
   background-color: #555;
+}
+
+.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
