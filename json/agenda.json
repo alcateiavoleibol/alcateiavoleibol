@@ -14,59 +14,7 @@
 
 
 	{ "comentario": "====== 2025 | AGOSTO     ======" },
-    {
-        "dia": 6,
-        "mes": 8,
-        "ano": 2025,
-        "hora_inicio": "07",
-        "minuto_inicio": "00h",
-        "hora_fim": "10",
-        "minuto_fim": "00h",
-        "taxa": "0,00",
-        "local": "Centro Esportivo",
-        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
-    },
-    {
-        "dia": 8,
-        "mes": 8,
-        "ano": 2025,
-        "hora_inicio": "07",
-        "minuto_inicio": "00h",
-        "hora_fim": "10",
-        "minuto_fim": "00h",
-        "taxa": "0,00",
-        "local": "Centro Esportivo",
-        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
-    },
-    {
-        "dia": 13,
-        "mes": 8,
-        "ano": 2025,
-        "hora_inicio": "07",
-        "minuto_inicio": "00h",
-        "hora_fim": "10",
-        "minuto_fim": "00h",
-        "taxa": "0,00",
-        "local": "Centro Esportivo",
-        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
-    },
-    {
-        "dia": 15,
-        "mes": 8,
-        "ano": 2025,
-        "hora_inicio": "07",
-        "minuto_inicio": "00h",
-        "hora_fim": "10",
-        "minuto_fim": "00h",
-        "taxa": "0,00",
-        "local": "Centro Esportivo",
-        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
-        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
-    },
-    {
+	{
         "dia": 20,
         "mes": 8,
         "ano": 2025,
@@ -92,6 +40,21 @@
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
+
+	{
+        "dia": 23,
+        "mes": 8,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "30h",
+        "hora_fim": "12",
+        "minuto_fim": "00h",
+        "taxa": "00,00",
+        "local": "Praça Soldado José de Souza",
+        "endereco": "R. Sd. José de Souza - Campo Grande, Rio de Janeiro - RJ, 23042-080",
+        "observacao": "Vôlei de Quadra"
+    },
+	
 	    {
         "dia": 27,
         "mes": 8,
@@ -118,34 +81,8 @@
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
-		{
-        "dia": 9,
-        "mes": 8,
-        "ano": 2025,
-        "hora_inicio": "00",
-        "minuto_inicio": "00h",
-        "hora_fim": "00",
-        "minuto_fim": "00h",
-        "taxa": "00,00",
-        "local": "LOCAL A DEFINIR",
-        "endereco": "LOCAL A DEFINIR",
-        "observacao": "Vôlei de Praia ou Vôlei de Quadra"
-    },
 
-			{
-        "dia": 24,
-        "mes": 8,
-        "ano": 2025,
-        "hora_inicio": "00",
-        "minuto_inicio": "00h",
-        "hora_fim": "00",
-        "minuto_fim": "00h",
-        "taxa": "00,00",
-        "local": "LOCAL A DEFINIR",
-        "endereco": "LOCAL A DEFINIR",
-        "observacao": "Vôlei de Praia ou Vôlei de Quadra"
-    },
-			{
+	{
         "dia": 30,
         "mes": 8,
         "ano": 2025,
@@ -181,7 +118,7 @@
         "minuto_inicio": "00h",
         "hora_fim": "10",
         "minuto_fim": "00h",
-        "taxa": "20,00",
+        "taxa": "16,00",
         "local": "Evento Teste = TESTE",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
