@@ -9,7 +9,8 @@
   <link rel="stylesheet" href="../css/contato.css" />
   <script src="../js/script.js" defer></script>
   <script src="https://www.google.com/recaptcha/api.js?render=6Lcb75QrAAAAAPq50kTgIltQFzyuL8tn5Tz34Qdt"></script>
-    <script>
+  <script src="../js/location-handler.js"></script>  
+	<script>
       fetch('/partials/head.html')
         .then(response => response.text())
         .then(data => document.head.insertAdjacentHTML('beforeend', data));
