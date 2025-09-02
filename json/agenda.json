@@ -13,10 +13,12 @@
 	{ "comentario": "====== 2026 | DEZEMBRO   ======" },
 
 
-	{ "comentario": "====== 2025 | AGOSTO     ======" },
+
+	
+	{ "comentario": "====== 2025 | SETEMBRO     ======" },
 	{
-        "dia": 20,
-        "mes": 8,
+        "dia": 3,
+        "mes": 9,
         "ano": 2025,
         "hora_inicio": "07",
         "minuto_inicio": "00h",
@@ -28,8 +30,8 @@
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },	
 	    {
-        "dia": 22,
-        "mes": 8,
+        "dia": 5,
+        "mes": 9,
         "ano": 2025,
         "hora_inicio": "07",
         "minuto_inicio": "00h",
@@ -42,8 +44,8 @@
     },
 
 	{
-        "dia": 23,
-        "mes": 8,
+        "dia": 6,
+        "mes": 9,
         "ano": 2025,
         "hora_inicio": "07",
         "minuto_inicio": "30h",
@@ -56,8 +58,8 @@
     },
 	
 	    {
-        "dia": 27,
-        "mes": 8,
+        "dia": 10,
+        "mes": 9,
         "ano": 2025,
         "hora_inicio": "07",
         "minuto_inicio": "00h",
@@ -69,8 +71,8 @@
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
 	    {
-        "dia": 29,
-        "mes": 8,
+        "dia": 12,
+        "mes": 9,
         "ano": 2025,
         "hora_inicio": "07",
         "minuto_inicio": "00h",
@@ -82,23 +84,8 @@
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
 
-	{
-        "dia": 30,
-        "mes": 8,
-        "ano": 2025,
-        "hora_inicio": "00",
-        "minuto_inicio": "00h",
-        "hora_fim": "00",
-        "minuto_fim": "00h",
-        "taxa": "00,00",
-        "local": "LOCAL A DEFINIR",
-        "endereco": "LOCAL A DEFINIR",
-        "observacao": "Vôlei de Praia ou Vôlei de Quadra"
-    },
-
-	{ "comentario": "====== 2025 | SETEMBRO TESTE      ======" },
-    {
-        "dia": 3,
+	    {
+        "dia": 17,
         "mes": 9,
         "ano": 2025,
         "hora_inicio": "07",
@@ -106,26 +93,56 @@
         "hora_fim": "10",
         "minuto_fim": "00h",
         "taxa": "0,00",
-        "local": "Centro Esportivo = TESTE",
+        "local": "Centro Esportivo",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
-    {
-        "dia": 7,
+	
+	    {
+        "dia": 19,
         "mes": 9,
         "ano": 2025,
         "hora_inicio": "07",
         "minuto_inicio": "00h",
         "hora_fim": "10",
         "minuto_fim": "00h",
-        "taxa": "16,00",
-        "local": "Evento Teste = TESTE",
+        "taxa": "0,00",
+        "local": "Centro Esportivo",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
+	    {
+        "dia": 24,
+        "mes": 9,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "00h",
+        "hora_fim": "10",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Centro Esportivo",
+        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
+    },
+
+		    {
+        "dia": 26,
+        "mes": 9,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "00h",
+        "hora_fim": "10",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Centro Esportivo",
+        "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
+        "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
+    },
+
+
 	
 
- 	{ "comentario": "====== 2025 | SETEMBRO   ======" },
+ 	
 	{ "comentario": "====== 2025 | OUTUBRO    ======" },
 	{ "comentario": "====== 2025 | NOVEMBRO   ======" },
 	{ "comentario": "====== 2025 | DEZEMBRO   ======" }	
