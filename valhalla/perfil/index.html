@@ -347,6 +347,14 @@ function criarMenuColunas(){
   };
   menu.appendChild(document.createElement("br"));
   menu.appendChild(btnAll);
+  
+    // Botão Menu (voltar para tela inicial)
+const btnMenu = document.createElement("button");
+btnMenu.textContent = "🏠 Menu";
+btnMenu.onclick = () => {
+  window.location.href = "../index.html";
+};
+menu.appendChild(btnMenu);
 
   // Botão Salvar Perfil
   const btnSave=document.createElement("button");
@@ -376,6 +384,7 @@ function criarMenuColunas(){
     input.click();
   };
   menu.appendChild(btnLoad);
+  
 }
 
 function salvarPerfil(){

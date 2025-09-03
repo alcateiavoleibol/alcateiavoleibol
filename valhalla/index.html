@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ValhallaBR - Boas Vindas</title>
-  <link rel="icon" type="image/png" href="imagens/favicon/favicon.png">
-  <link rel="shortcut icon" href="imagens/favicon/favicon.ico">
+  <link rel="icon" href="imagens/favicon/favicon.png" />
   <style>
     :root {
       --background-style: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
@@ -16,86 +15,138 @@
       font-family: Arial, sans-serif;
       background: var(--background-style), url('imagens/fundo.jpg') no-repeat center center/cover;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
       color: #fff;
     }
-    .welcome-container {
+
+    #intro-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(5,30,50,0.85);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 10px 10px;
+      z-index: 999;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    #typed-title {
+      font-size: 4.8em;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #fff;
+      margin-bottom: 30px;
+      max-width: fit-content;
+    }
+
+    #typed-title::after {
+      content: "|";
+      animation: blinkCursor 0.8s infinite;
+      margin-left: 5px;
+    }
+
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    #start-btn {
+      padding: 15px 30px;
+      font-size: 3.2em;
+      background: linear-gradient(90deg, #1e3c72, #2a5298);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s ease;
+      opacity: 0;
+      display: none;
+    }
+
+    #start-btn.show {
+      display: inline-block;
+      opacity: 1;
+    }
+
+    #start-btn:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0 }
+      to { opacity: 1 }
+    }
+
+    @keyframes fadeInZoom {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .welcome-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeInContent 1s ease forwards;
       max-width: 800px;
-      width: 100%;
+      margin: auto;
       text-align: center;
     }
-	
-  
+
+    @keyframes fadeInContent {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     #banner img {
-      max-width: 145vh;
+      max-width: 90vw;
       height: auto;
-      border-radius: 80px;
+      border-radius: 40px;
       box-shadow: 0 0 20px #00bfff88;
       margin-bottom: 20px;
-	  animation: fadeInZoom 1.2s ease forwards;
+      animation: fadeInZoom 1.2s ease forwards;
     }
-	
-	  @keyframes fadeInZoom {
-    0% { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
-  }
- h1 {
-    font-size: 2.5em;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 3px solid #fff;
-    animation: typing 3s steps(40, end), blink 0.8s infinite;
-  }
-	@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-  }
-  @keyframes blink {
-    50% { border-color: transparent }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-		
+
     .btn-entrar {
-      display: inline-block;
-      margin-top: 20px;
+      margin: 20px 10px;
       padding: 12px 25px;
       background: linear-gradient(90deg, #1e3c72, #2a5298);
-      border: none;
       color: white;
       font-size: 1.2em;
       font-weight: bold;
       border-radius: 8px;
-      cursor: pointer;
       text-decoration: none;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      transition: transform 0.2s ease, background 0.3s ease;
+      transition: transform 0.2s ease;
     }
+
     .btn-entrar:hover {
       transform: scale(1.05);
-      background: linear-gradient(90deg, #2a5298, #1e3c72);
     }
+
+    .botoes-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
     .audio-controls {
       display: flex;
       gap: 10px;
       margin-top: 20px;
     }
+
     button {
       padding: 10px 15px;
       font-size: 14px;
       cursor: pointer;
     }
+
     canvas#particles {
       position: fixed;
       top: 0; left: 0;
@@ -103,6 +154,7 @@
       pointer-events: none;
       z-index: -1;
     }
+
     footer {
       margin-top: 30px;
       padding: 25px;
@@ -113,21 +165,29 @@
       box-shadow: 0 -2px 8px rgba(0,0,0,0.9);
       border-top: 1px solid #444;
       border-radius: 8px 8px 0 0;
-      width: 145vh;
+      width: 100%;
     }
   </style>
 </head>
 <body>
   <canvas id="particles"></canvas>
 
-  <div class="welcome-container">
+  <div id="intro-screen">
+    <h1 id="typed-title"></h1>
+    <button id="start-btn">🎮 Iniciar Experiência</button>
+  </div>
+
+  <audio id="type-sound" src="mp3/typewriter.mp3" preload="auto"></audio>
+
+  <div class="welcome-container" id="main-content">
     <div id="banner">
-      <img src="imagens/banner.png" alt="Banner ValhallaBR"/>
+      <img src="imagens/banner.png" alt="Banner ValhallaBR" />
     </div>
 
-    <h1>Bem-vindo à ValhallaBR!</h1>
-
-    <a href="perfil/index.html" class="btn-entrar" id="btn-play">▶ Entrar no Perfil</a>
+    <div class="botoes-container">
+      <a href="perfil/index.html" class="btn-entrar" id="btn-perfil">▶ ENTRAR NO PERFIL</a>
+      <a href="#" class="btn-entrar">❌ INVENTÁRIO 🚧</a>
+    </div>
 
     <audio id="bg-music" src="mp3/hope-ptbr.mp3" preload="auto" loop></audio>
 
@@ -136,9 +196,9 @@
       <button id="volume-up">🔊 +</button>
       <button id="volume-down">🔉 -</button>
     </div>
-  </div>
 
-  <footer>© 2025 VALHALLA. Todos os direitos reservados.</footer>
+    <footer>© 2025 VALHALLA. Todos os direitos reservados.</footer>
+  </div>
 
   <script>
     // Partículas
@@ -191,52 +251,75 @@
       initParticles();
     });
 
-    // Player
-    const audio = document.getElementById('bg-music');
-    const playPauseBtn = document.getElementById('play-pause');
-    const volumeUpBtn = document.getElementById('volume-up');
-    const volumeDownBtn = document.getElementById('volume-down');
+    // Digitação com som
+    const text = "Bem-vindo à ValhallaBR!";
+    const titleEl = document.getElementById("typed-title");
+    const typeSound = document.getElementById("type-sound");
+    const startBtn = document.getElementById("start-btn");
 
-    let isPlaying = false;
+    let i = 0;
+function typeLetter() {
+  if (i < text.length) {
+    titleEl.textContent += text.charAt(i);
+    typeSound.currentTime = 0;
+    typeSound.play();
+    i++;
+    setTimeout(typeLetter, 100); // velocidade da digitação
+  } else {
+    startBtn.classList.add("show");
+  }
+}
+window.addEventListener("DOMContentLoaded", typeLetter);
 
-    window.addEventListener('DOMContentLoaded', () => {
-      audio.volume = 0.3;
-      const savedTime = sessionStorage.getItem('audioTime');
-      if (savedTime) {
-        audio.currentTime = parseFloat(savedTime);
-      }
-      audio.play().then(() => {
-        isPlaying = true;
-        playPauseBtn.textContent = '⏸ Pause';
-      }).catch(err => {
-        console.log('Autoplay bloqueado:', err);
-        playPauseBtn.textContent = '▶ Play';
-      });
-    });
+// Áudio ambiente
+const audio = document.getElementById('bg-music');
+const playPauseBtn = document.getElementById('play-pause');
+const volumeUpBtn = document.getElementById('volume-up');
+const volumeDownBtn = document.getElementById('volume-down');
+let isPlaying = false;
 
-    playPauseBtn.addEventListener('click', () => {
-      if (isPlaying) {
-        audio.pause();
-        playPauseBtn.textContent = '▶ Play';
-      } else {
-        audio.play().catch(err => console.log('Erro ao tocar:', err));
-        playPauseBtn.textContent = '⏸ Pause';
-      }
-      isPlaying = !isPlaying;
-    });
+// Botão de entrada
+startBtn.addEventListener('click', () => {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('main-content').style.display = 'flex';
 
-    volumeUpBtn.addEventListener('click', () => {
-      audio.volume = Math.min(audio.volume + 0.1, 1);
-    });
+  audio.volume = 0.3;
+  audio.muted = false;
+  audio.play().then(() => {
+    isPlaying = true;
+    playPauseBtn.textContent = '⏸ Pause';
+  }).catch(err => {
+    console.log('Autoplay bloqueado:', err);
+    playPauseBtn.textContent = '▶ Play';
+  });
+});
 
-    volumeDownBtn.addEventListener('click', () => {
-      audio.volume = Math.max(audio.volume - 0.1, 0);
-    });
+// Botão play/pause
+playPauseBtn.addEventListener('click', () => {
+  if (isPlaying) {
+    audio.pause();
+    playPauseBtn.textContent = '▶ Play';
+  } else {
+    audio.play().catch(err => console.log('Erro ao tocar:', err));
+    playPauseBtn.textContent = '⏸ Pause';
+  }
+  isPlaying = !isPlaying;
+});
 
-    // Salva tempo da música ao entrar no perfil
-    document.getElementById('btn-play').addEventListener('click', () => {
-      sessionStorage.setItem('audioTime', audio.currentTime);
-    });
+// Volume +
+volumeUpBtn.addEventListener('click', () => {
+  audio.volume = Math.min(audio.volume + 0.1, 1);
+});
+
+// Volume -
+volumeDownBtn.addEventListener('click', () => {
+  audio.volume = Math.max(audio.volume - 0.1, 0);
+});
+
+// Salvar tempo da música ao entrar no perfil
+document.getElementById('btn-perfil').addEventListener('click', () => {
+  sessionStorage.setItem('audioTime', audio.currentTime);
+});
   </script>
 </body>
 </html>
