@@ -203,9 +203,9 @@ const colunasEditaveis = ['classe','level','tower','berkas','vazio','sr','visual
 const opcoesClasse = ['1ª Classe','2ª Classe','3ª Classe','4ª Classe','Despertar'];
 const opcoesLevel = Array.from({length:85},(_,i)=> (i+1).toString());
 const opcoesTower = Array.from({length:30},(_,i)=> (i+1).toString());
-const opcoesAnel = ['Nenhum','Harkyon','Dimensão Brilhante I','Dimensão Brilhante II','Dimensão Brilhante III','Infinito Brilhante I','Infinito Brilhante II','Infinito Brilhante III','Promessa Incumprível I','Promessa Incumprível II','Promessa Incumprível III'];
-const opcoesBrinco = ['Nenhum','Chamas','Gnosis','Guardiões Dimensionais I','Guardiões Dimensionais II','Guardiões Dimensionais III','Outro Mundo da Ordem','Outro Mundo do Caos'];
-const opcoesPiercing = ['Nenhum','Guardiões Dimensionais I','Guardiões Dimensionais II','Guardiões Dimensionais III','Outro Mundo da Ordem','Outro Mundo do Caos'];
+const opcoesAnel = ['Nenhum','Harkyon','Dimensão BI','Dimensão BII','Dimensão BIII','Infinito BI','Infinito BII','Infinito BIII','Incumprível III','Ciclo Infinito'];
+const opcoesBrinco = ['Nenhum','Chamas','Gnosis','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
+const opcoesPiercing = ['Nenhum','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
 
 const dadosIniciais = [
   {birth:1,char:"elesis",nome:"ELESIS",power:"MP"},
@@ -231,7 +231,7 @@ const dadosIniciais = [
   {birth:21,char:"ai",nome:"AI",power:"AMP"},
   {birth:22,char:"kallia",nome:"KALLIA",power:"AMP"},
   {birth:23,char:"uno",nome:"UNO",power:"AMP"},
-  {birth:24,char:"harpe",nome:"HARPE",power:"AMP"}
+  {birth:24,char:"iris",nome:"IRIS",power:"AMP"}
 ];
 
 function criarSelect(opcoes, valorSel){
@@ -246,9 +246,9 @@ function criarSelect(opcoes, valorSel){
 }
 
 function getOpcoesClassePorPersonagem(birth){
-  if([16,17,18,20,21,22,23].includes(Number(birth))){
+  if([16,17,18,20,21,22,23,24].includes(Number(birth))){
     return ['1ª Classe','2ª Classe','Despertar'];
-  } else if([19,24].includes(Number(birth))){
+  } else if([19].includes(Number(birth))){
     return ['1ª Classe','Despertar'];
   } else {
     return opcoesClasse;
@@ -292,8 +292,15 @@ function criarLinhas(){
           el=criarSelect(Array.from({length:maxValor},(_,i)=>(i+1).toString()),"1");
           break;
         case "visualChase":
-          let maxVC = p.birth <= 15 ? 5 : 3;
-          el=criarSelect(Array.from({length:maxVC},(_,i)=>(i+1).toString()),"1");
+          let maxVC;
+          if (p.birth <= 15) {
+              maxVC = 5;
+           } else if (p.birth === 19) {
+              maxVC = 2;
+           } else {
+              maxVC = 3;
+           }
+              el = criarSelect(Array.from({ length: maxVC }, (_, i) => (i + 1).toString()), "1");
           break;
         case "anel":
           el=criarSelect(opcoesAnel,"Nenhum");
