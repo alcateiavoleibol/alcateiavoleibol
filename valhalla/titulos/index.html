@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
+  <link rel="shortcut icon" href="../imagens/favicon/favicon.ico">
+  <title>TÍTULOS</title>
+  <style>
+    :root {
+      --background-style: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background-style);
+      background-size: cover;
+      background-attachment: fixed;
+      color: #eee;
+      padding: 10px;
+      margin: 0;
+    }
+    #banner { text-align: center; margin-bottom: 15px; animation: fadeInZoom 1.2s ease forwards; }
+    #banner img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 20px #00bfff88; }
+    @keyframes fadeInZoom { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+    .menu { display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: #1a1a1a; border-radius: 8px; margin-bottom: 20px; }
+    .menu button { background-color: #333; color: #eee; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+    .menu button:hover { background-color: #555; }
+    .personagem { display: flex; align-items: center; background-color: #1e1e1e; margin: 10px 20px; padding: 10px; border-radius: 8px; box-shadow: 0 0 8px #000; }
+    .avatar { width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; object-fit: cover; border: 2px solid #666; box-shadow: 0 0 8px #00bfff88; transition: transform 0.3s ease; }
+    .avatar:hover { transform: scale(1.5); }
+    .info { flex: 1; }
+    .birth { font-size: 0.9em; color: #aaa; }
+    .nome { font-size: 1.2em; font-weight: bold; color: #f0f0f0; }
+    .titulos { display: flex; gap: 10px; flex-wrap: wrap; }
+    .titulo { width: 40px; height: 40px; opacity: 0.3; cursor: pointer; transition: opacity 0.3s ease, transform 0.2s ease; border-radius: 6px; box-shadow: 0 0 5px #000; }
+    .titulo.obtido { opacity: 1; transform: scale(1.1); box-shadow: 0 0 12px #0f0; }
+    footer { margin: 30px auto 0 auto; padding: 20px; text-align: center; background: rgba(31, 31, 31, 0.9); color: #b52643; font-size: clamp(12px, 1.5vw, 14px); border-top: 1px solid #444; border-radius: 8px 8px 0 0; max-width: 100%; }
+  </style>
+</head>
+<body>
+
+<div id="banner">
+  <img src="../imagens/banner.png" alt="Banner ValhallaBR"/>
+</div>
+
+<div class="menu" id="menu"></div>
+
+<h1 style="text-align:center;">🏆 TÍTULOS | ALFA-TESTE</h1>
+
+<div id="lista-personagens"></div>
+
+<footer>© 2025 VALHALLA. Todos os direitos reservados.</footer>
+
+<script>
+  const menu = document.getElementById("menu");
+
+  const btnMenu = document.createElement("button");
+  btnMenu.textContent = "🏠 MENU";
+  btnMenu.onclick = () => window.location.href = "../index.html";
+  menu.appendChild(btnMenu);
+
+  const btnPerfil = document.createElement("button");
+  btnPerfil.textContent = "👤 PERFIL";
+  btnPerfil.onclick = () => window.location.href = "../perfil/index.html";
+  menu.appendChild(btnPerfil);
+
+  const btnSave = document.createElement("button");
+  btnSave.textContent = "💾 SALVAR TÍTULOS";
+  btnSave.onclick = salvarTitulos;
+  menu.appendChild(btnSave);
+
+  const btnLoad = document.createElement("button");
+  btnLoad.textContent = "📂 CARREGAR TÍTULOS";
+  btnLoad.onclick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const dados = JSON.parse(reader.result);
+          carregarTitulos(dados);
+          alert(`Títulos carregados!\nÚltimo salvamento: ${dados.meta.dataHora}`);
+        };
+        reader.readAsText(file);
+      }
+    };
+    input.click();
+  };
+  menu.appendChild(btnLoad);
+
+  const dadosIniciais = [
+    {birth:1,char:"elesis",nome:"ELESIS"},
+    {birth:2,char:"lire",nome:"LIRE"},
+    {birth:3,char:"arme",nome:"ARME"},
+    {birth:4,char:"lass",nome:"LASS"},
+    {birth:5,char:"ryan",nome:"RYAN"},
+    {birth:6,char:"ronan",nome:"RONAN"},
+    {birth:7,char:"amy",nome:"AMY"},
+    {birth:8,char:"jin",nome:"JIN"},
+    {birth:9,char:"sieghart",nome:"SIEGHART"},
+    {birth:10,char:"mari",nome:"MARI"},
+    {birth:11,char:"dio",nome:"DIO"},
+    {birth:12,char:"zero",nome:"ZERO"},
+    {birth:13,char:"rey",nome:"REY"},
+    {birth:14,char:"lupus",nome:"LUPUS"},
+    {birth:15,char:"lin",nome:"LIN"},
+    {birth:16,char:"azin",nome:"AZIN"},
+    {birth:17,char:"holy",nome:"HOLY"},
+    {birth:18,char:"edel",nome:"EDEL"},
+    {birth:19,char:"veigas",nome:"VEIGAS"},
+    {birth:20,char:"decane",nome:"DECANE"},
+    {birth:21,char:"ai",nome:"AI"},
+    {birth:22,char:"kallia",nome:"KALLIA"},
+    {birth:23,char:"uno",nome:"UNO"},
+    {birth:24,char:"iris",nome:"IRIS"}
+  ];
+
+  const titulos = [
+    "portador-da-enorme-coragem.png",
+    "maquinista-infernal.png",
+    "dia-do-julgamento.png",
+    "conquistador-do-continente-harrier.png",
+    "rebeliao-das-mascotes.png",
+    "tirano-do-deserto.png",
+    "retorno-a-calnat.png",
+    "aquele-que-consome-o-caos.png",
+    "aquele-que-superou-a-morte.png",
+    "iluminador-abissal.png",
+    "iluminador-abissal-ancestral.png",
+    "apocalipse-do-mundo.png",
+    "aniquilador-do-vazio.png",
+    "aniquilador-do-vazio-ancestral.png",
+    "inicio-do-caos.png",
+    "sacrificio-dos-12-discipulos-escolhidos.png"
+  ];
+
+  const container = document.getElementById("lista-personagens");
+
+  // Função para formatar o nome do título
+  function formatarTituloDoSlug(slug) {
+    const minusculas = new Set([
+      "da","de","do","das","dos","e","a","o","as","os","em","no","na","nos","nas",
+      "para","por","com","sem","um","uma","uns","umas","ao","à","às","aos"
+    ]);
+    const palavras = slug.split("-");
+    return palavras.map((p, i) => {
+      const palavra = p.toLowerCase();
+      if (i > 0 && minusculas.has(palavra)) return palavra;
+      return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+    }).join(" ");
+  }
+
+    dadosIniciais.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "personagem";
+
+    const avatar = document.createElement("img");
+    avatar.src = `../imagens/personagens/${p.char}.png`;
+    avatar.className = "avatar";
+    avatar.title = p.nome;
+
+    const info = document.createElement("div");
+    info.className = "info";
+    info.innerHTML = `<div class="birth">#${p.birth}</div><div class="nome">${p.nome}</div>`;
+
+    const titulosDiv = document.createElement("div");
+    titulosDiv.className = "titulos";
+
+    criarTitulos(titulos, titulosDiv);
+
+    div.appendChild(avatar);
+    div.appendChild(info);
+    div.appendChild(titulosDiv);
+    container.appendChild(div);
+  });
+
+     function criarTitulos(lista, container) {
+      const imagens = Array.from(container.querySelectorAll("img"));
+      const estado = {};
+       imagens.forEach(img => {
+      const slug = img.dataset.slug;
+       estado[slug] = img.classList.contains("obtido");
+  });
+
+  container.innerHTML = "";
+
+  // Agora ordena pelo nome formatado
+  const ordenados = [...lista].sort((a, b) => {
+    const nomeA = formatarTituloDoSlug(a.replace(".png", ""));
+    const nomeB = formatarTituloDoSlug(b.replace(".png", ""));
+    return nomeA.localeCompare(nomeB, "pt-BR");
+  });
+
+  const obtidos = [];
+  const naoObtidos = [];
+
+  ordenados.forEach(t => {
+    const slug = t.replace(".png", "");
+    const img = document.createElement("img");
+    img.src = `../imagens/titulos/${t}`;
+    img.className = "titulo";
+    img.dataset.slug = slug;
+    img.title = formatarTituloDoSlug(slug);
+
+    if (estado[slug]) {
+      img.classList.add("obtido");
+      obtidos.push(img);
+    } else {
+      naoObtidos.push(img);
+    }
+
+    img.onclick = () => {
+      img.classList.toggle("obtido");
+      criarTitulos(lista, container);
+    };
+  });
+
+  [...obtidos, ...naoObtidos].forEach(img => container.appendChild(img));
+}
+
+  function salvarTitulos() {
+    const perfilTitulos = [];
+
+    document.querySelectorAll(".personagem").forEach(div => {
+      const nome = div.querySelector(".nome").textContent;
+      const birth = parseInt(div.querySelector(".birth").textContent.replace("#", ""));
+      const titulosObtidos = Array.from(div.querySelectorAll(".titulo.obtido"))
+        .map(img => img.dataset.slug);
+
+      perfilTitulos.push({ birth, nome, titulos: titulosObtidos });
+    });
+
+    const dadosExportar = {
+      meta: { dataHora: new Date().toLocaleString() },
+      perfilTitulos
+    };
+
+    const blob = new Blob([JSON.stringify(dadosExportar, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "titulos.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function carregarTitulos(dados) {
+    dados.perfilTitulos.forEach(p => {
+      const personagemDiv = [...document.querySelectorAll(".personagem")].find(div => {
+        const birth = parseInt(div.querySelector(".birth").textContent.replace("#", ""));
+        return birth === p.birth;
+      });
+
+      if (personagemDiv) {
+        const tituloImgs = personagemDiv.querySelectorAll(".titulo");
+        tituloImgs.forEach(img => {
+          const slug = img.dataset.slug;
+          if (p.titulos.includes(slug)) {
+            img.classList.add("obtido");
+          } else {
+            img.classList.remove("obtido");
+          }
+        });
+
+        const titulosDiv = personagemDiv.querySelector(".titulos");
+        const listaTitulos = Array.from(tituloImgs).map(img => `${img.dataset.slug}.png`);
+        criarTitulos(listaTitulos, titulosDiv);
+      }
+    });
+  }
+</script>
+</body>
+</html>

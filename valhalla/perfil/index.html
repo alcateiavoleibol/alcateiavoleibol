@@ -1,489 +1,517 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<!-- Favicon em formato PNG -->
-<link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
-<!-- Favicon em formato ICO (fallback para navegadores mais antigos) -->
-<link rel="shortcut icon" href="../imagens/favicon/favicon.ico">
-<title>VALHALLA</title>
-<style>
-  :root {
-    --background-style: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-  }
-  body {
-    font-family: Arial, sans-serif;
-    background: var(--background-style);
-    background-size: cover;
-    background-attachment: fixed;
-    color: #eee;
-    padding: 10px;
-    margin: 0;
-  }
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
+  <link rel="shortcut icon" href="../imagens/favicon/favicon.ico">
+  <title>VALHALLA</title>
+  <style>
+    :root {
+      --background-style: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background-style);
+      background-size: cover;
+      background-attachment: fixed;
+      color: #eee;
+      padding: 10px;
+      margin: 0;
+    }
 
-  #banner {
-    text-align: center;
-    margin-bottom: 15px;
-    animation: fadeInZoom 1.2s ease forwards;
-  }
-  #banner img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #00bfff88;
-  }
-  @keyframes fadeInZoom {
-    0% { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
-  }
+    #banner {
+      text-align: center;
+      margin-bottom: 15px;
+      animation: fadeInZoom 1.2s ease forwards;
+    }
+    #banner img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00bfff88;
+    }
+    @keyframes fadeInZoom {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
 
-  #menu-colunas {
-    margin-bottom: 15px;
-    text-align: center;
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: center;
-  }
-  #menu-colunas button {
-    margin: 3px;
-    padding: 6px 10px;
-    cursor: pointer;
-    background: #333;
-    border: none;
-    border-radius: 6px;
-    color: #eee;
-    font-weight: bold;
-    transition: background 0.3s;
-    flex-shrink: 0;
-  }
-  #menu-colunas button:hover { background: #555; }
+    /* Menu principal separado */
+    .menu {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px;
+      background-color: #1a1a1a;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .menu button {
+      background-color: #333;
+      color: #eee;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .menu button:hover {
+      background-color: #555;
+    }
 
-  .table-container {
-    overflow-x: auto;
-    max-width: 100%;
-    cursor: grab;
-  }
-  .table-container:active {
-    cursor: grabbing;
-  }
+    /* Menu de colunas (ocultar/mostrar) */
+    #menu-colunas {
+      margin-bottom: 15px;
+      text-align: center;
+      flex-wrap: wrap;
+      display: flex;
+      justify-content: center;
+    }
+    #menu-colunas button {
+      margin: 3px;
+      padding: 6px 10px;
+      cursor: pointer;
+      background: #333;
+      border: none;
+      border-radius: 6px;
+      color: #eee;
+      font-weight: bold;
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+    #menu-colunas button:hover { background: #555; }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #222;
-    border-radius: 10px;
-    overflow: hidden;
-    font-size: clamp(10px, 2vw, 14px);
-    min-width: 1000px;
-  }
-  thead tr { background: #333; }
-  thead th {
-    padding: 10px;
-    border-bottom: 2px solid #444;
-    user-select: none;
-    cursor: pointer;
-  }
-  tbody td {
-    padding: 8px;
-    border-bottom: 1px solid #444;
-    text-align: center;
-    vertical-align: middle;
-  }
+    .table-container {
+      overflow-x: auto;
+      max-width: 100%;
+      cursor: grab;
+    }
+    .table-container:active { cursor: grabbing; }
 
-  tbody tr {
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  tbody tr:hover {
-    background: linear-gradient(90deg, rgba(0,191,255,0.1), rgba(0,191,255,0.3));
-    transform: scale(1.01);
-  }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: clamp(10px, 2vw, 14px);
+      min-width: 1000px;
+    }
+    thead tr { background: #333; }
+    thead th {
+      padding: 10px;
+      border-bottom: 2px solid #444;
+      user-select: none;
+      cursor: pointer;
+    }
+    tbody td {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      text-align: center;
+      vertical-align: middle;
+    }
+    tbody tr {
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    tbody tr:hover {
+      background: linear-gradient(90deg, rgba(0,191,255,0.1), rgba(0,191,255,0.3));
+      transform: scale(1.01);
+    }
 
-  .char-cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-  .char-cell img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid #666;
-    object-fit: cover;
-    box-shadow: 0 0 8px #00bfff88;
-    transition: transform 0.3s ease;
-  }
-  .char-cell img:hover {
-    transform: scale(1.5);
-  }
+    .char-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .char-cell img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #666;
+      object-fit: cover;
+      box-shadow: 0 0 8px #00bfff88;
+      transition: transform 0.3s ease;
+    }
+    .char-cell img:hover { transform: scale(1.5); }
 
-  select, input[type="text"] {
-    width: 90px;
-    padding: 3px 5px;
-    background: #111;
-    color: #eee;
-    border: 1px solid #555;
-    border-radius: 4px;
-    text-align: center;
-  }
+    select, input[type="text"] {
+      width: 90px;
+      padding: 3px 5px;
+      background: #111;
+      color: #eee;
+      border: 1px solid #555;
+      border-radius: 4px;
+      text-align: center;
+    }
+    td:nth-child(11) select,
+    td:nth-child(12) select,
+    td:nth-child(13) select {
+      width: 120px;
+    }
 
-  td:nth-child(11) select,
-  td:nth-child(12) select,
-  td:nth-child(13) select {
-    width: 120px;
-  }
+    .highlight-max { background-color: #d4edda !important; color: #155724 !important; font-weight: bold; }
+    .highlight-min { background-color: #f8d7da !important; color: #721c24 !important; font-weight: bold; }
 
-  .highlight-max { background-color: #d4edda !important; color: #155724 !important; font-weight: bold; }
-  .highlight-min { background-color: #f8d7da !important; color: #721c24 !important; font-weight: bold; }
+    .power-cell {
+      font-weight: bold;
+      color: white;
+      padding: 4px;
+      border-radius: 4px;
+    }
+    .power-MP { background: linear-gradient(90deg, #1e3c72, #2a5298); }
+    .power-AP { background: linear-gradient(90deg, #4b0000, #8b0000); }
+    .power-AMP { background: linear-gradient(90deg, #88018c, #88018c); }
 
-  .power-cell { 
-    font-weight: bold; 
-    color: white; 
-    padding: 4px; 
-    border-radius: 4px; 
-  }
-  .power-MP { background: linear-gradient(90deg, #1e3c72, #2a5298); }
-  .power-AP { background: linear-gradient(90deg, #4b0000, #8b0000); }
-  .power-AMP { background: linear-gradient(90deg, #88018c, #88018c); }
+    .sorted-asc::after { content: " ↑"; color: #0f0; }
+    .sorted-desc::after { content: " ↓"; color: #f00; }
 
-  .sorted-asc::after { content: " ↑"; color: #0f0; }
-  .sorted-desc::after { content: " ↓"; color: #f00; }
-
-  footer {
-    margin: 20px auto 0 auto;
-    padding: 25px;
-    text-align: center;
-    background: rgba(31, 31, 31, 2.8);
-    color: #b52643;
-    font-size: clamp(12px, 1.5vw, 14px);
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.9);
-    border-top: 1px solid #444;
-    border-radius: 8px 8px 0 0;
-    max-width: 100%;
-  }
-</style>
+    footer {
+      margin: 20px auto 0 auto;
+      padding: 25px;
+      text-align: center;
+      background: rgba(31, 31, 31, 2.8);
+      color: #b52643;
+      font-size: clamp(12px, 1.5vw, 14px);
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.9);
+      border-top: 1px solid #444;
+      border-radius: 8px 8px 0 0;
+      max-width: 100%;
+    }
+  </style>
 </head>
 <body>
-<div id="banner">
-  <img src="../imagens/banner.png" alt="Banner ValhallaBR"/>
-</div>
+  <div id="banner">
+    <img src="../imagens/banner.png" alt="Banner ValhallaBR"/>
+  </div>
 
-<h1 style="text-align:center;">PERFIL | BETA-TESTE</h1>
-<div id="menu-colunas"></div>
+  <!-- MENU PRINCIPAL SEPARADO -->
+  <div class="menu" id="menu"></div>
 
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>Birth</th>
-<th>Personagem</th>
-<th>Power</th>
-<th>Classe</th>
-<th>Level</th>
-<th>Tower</th>
-<th>Berkas</th>
-<th>Vazio</th>
-<th>SR</th>
-<th>Visual Chase</th>
-<th>Anel</th>
-<th>Brinco</th>
-<th>Piercing</th>
-<th>Atk Total</th>
-</tr>
-</thead>
-<tbody id="tbody-personagens"></tbody>
-</table>
-</div>
+  <h1 style="text-align:center;">👤 PERFIL | BETA-TESTE</h1>
+  <div id="menu-colunas"></div>
 
-<footer>© 2025 VALHALLA. Todos os direitos reservados.</footer>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Birth</th>
+          <th>Personagem</th>
+          <th>Power</th>
+          <th>Classe</th>
+          <th>Level</th>
+          <th>Tower</th>
+          <th>Berkas</th>
+          <th>Vazio</th>
+          <th>SR</th>
+          <th>Visual Chase</th>
+          <th>Anel</th>
+          <th>Brinco</th>
+          <th>Piercing</th>
+          <th>Atk Total</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-personagens"></tbody>
+    </table>
+  </div>
 
-<script>
-const colunasEditaveis = ['classe','level','tower','berkas','vazio','sr','visualChase','anel','brinco','piercing','atkTotal'];
-const opcoesClasse = ['1ª Classe','2ª Classe','3ª Classe','4ª Classe','Despertar'];
-const opcoesLevel = Array.from({length:85},(_,i)=> (i+1).toString());
-const opcoesTower = Array.from({length:30},(_,i)=> (i+1).toString());
-const opcoesAnel = ['Nenhum','Harkyon','Dimensão BI','Dimensão BII','Dimensão BIII','Infinito BI','Infinito BII','Infinito BIII','Incumprível III','Ciclo Infinito'];
-const opcoesBrinco = ['Nenhum','Chamas','Gnosis','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
-const opcoesPiercing = ['Nenhum','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
+  <footer>© 2025 VALHALLA. Todos os direitos reservados.</footer>
 
-const dadosIniciais = [
-  {birth:1,char:"elesis",nome:"ELESIS",power:"MP"},
-  {birth:2,char:"lire",nome:"LIRE",power:"MP"},
-  {birth:3,char:"arme",nome:"ARME",power:"MP"},
-  {birth:4,char:"lass",nome:"LASS",power:"MP"},
-  {birth:5,char:"ryan",nome:"RYAN",power:"MP"},
-  {birth:6,char:"ronan",nome:"RONAN",power:"MP"},
-  {birth:7,char:"amy",nome:"AMY",power:"MP"},
-  {birth:8,char:"jin",nome:"JIN",power:"MP"},
-  {birth:9,char:"sieghart",nome:"SIEGHART",power:"MP"},
-  {birth:10,char:"mari",nome:"MARI",power:"MP"},
-  {birth:11,char:"dio",nome:"DIO",power:"AP"},
-  {birth:12,char:"zero",nome:"ZERO",power:"AP"},
-  {birth:13,char:"rey",nome:"REY",power:"AP"},
-  {birth:14,char:"lupus",nome:"LUPUS",power:"AP"},
-  {birth:15,char:"lin",nome:"LIN",power:"AMP"},
-  {birth:16,char:"azin",nome:"AZIN",power:"AMP"},
-  {birth:17,char:"holy",nome:"HOLY",power:"AMP"},
-  {birth:18,char:"edel",nome:"EDEL",power:"AMP"},
-  {birth:19,char:"veigas",nome:"VEIGAS",power:"AMP"},
-  {birth:20,char:"decane",nome:"DECANE",power:"AMP"},
-  {birth:21,char:"ai",nome:"AI",power:"AMP"},
-  {birth:22,char:"kallia",nome:"KALLIA",power:"AMP"},
-  {birth:23,char:"uno",nome:"UNO",power:"AMP"},
-  {birth:24,char:"iris",nome:"IRIS",power:"AMP"}
-];
+  <script>
+    // Dados e opções
+    const colunasEditaveis = ['classe','level','tower','berkas','vazio','sr','visualChase','anel','brinco','piercing','atkTotal'];
+    const opcoesClasse = ['1ª Classe','2ª Classe','3ª Classe','4ª Classe','Despertar'];
+    const opcoesLevel = Array.from({length:85},(_,i)=> (i+1).toString());
+    const opcoesTower = Array.from({length:30},(_,i)=> (i+1).toString());
+    const opcoesAnel = ['Nenhum','Harkyon','Dimensão BI','Dimensão BII','Dimensão BIII','Infinito BI','Infinito BII','Infinito BIII','Incumprível III','Ciclo Infinito'];
+    const opcoesBrinco = ['Nenhum','Chamas','Gnosis','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
+    const opcoesPiercing = ['Nenhum','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
 
-function criarSelect(opcoes, valorSel){
-  const s=document.createElement("select");
-  opcoes.forEach(o=>{
-    const opt=document.createElement("option");
-    opt.value=opt.textContent=o;
-    if(o===valorSel) opt.selected=true;
-    s.appendChild(opt);
-  });
-  return s;
-}
+    const dadosIniciais = [
+      {birth:1,char:"elesis",nome:"ELESIS",power:"MP"},
+      {birth:2,char:"lire",nome:"LIRE",power:"MP"},
+      {birth:3,char:"arme",nome:"ARME",power:"MP"},
+      {birth:4,char:"lass",nome:"LASS",power:"MP"},
+      {birth:5,char:"ryan",nome:"RYAN",power:"MP"},
+      {birth:6,char:"ronan",nome:"RONAN",power:"MP"},
+      {birth:7,char:"amy",nome:"AMY",power:"MP"},
+      {birth:8,char:"jin",nome:"JIN",power:"MP"},
+      {birth:9,char:"sieghart",nome:"SIEGHART",power:"MP"},
+      {birth:10,char:"mari",nome:"MARI",power:"MP"},
+      {birth:11,char:"dio",nome:"DIO",power:"AP"},
+      {birth:12,char:"zero",nome:"ZERO",power:"AP"},
+      {birth:13,char:"rey",nome:"REY",power:"AP"},
+      {birth:14,char:"lupus",nome:"LUPUS",power:"AP"},
+      {birth:15,char:"lin",nome:"LIN",power:"AMP"},
+      {birth:16,char:"azin",nome:"AZIN",power:"AMP"},
+      {birth:17,char:"holy",nome:"HOLY",power:"AMP"},
+      {birth:18,char:"edel",nome:"EDEL",power:"AMP"},
+      {birth:19,char:"veigas",nome:"VEIGAS",power:"AMP"},
+      {birth:20,char:"decane",nome:"DECANE",power:"AMP"},
+      {birth:21,char:"ai",nome:"AI",power:"AMP"},
+      {birth:22,char:"kallia",nome:"KALLIA",power:"AMP"},
+      {birth:23,char:"uno",nome:"UNO",power:"AMP"},
+      {birth:24,char:"iris",nome:"IRIS",power:"AMP"}
+    ];
 
-function getOpcoesClassePorPersonagem(birth){
-  if([16,17,18,20,21,22,23,24].includes(Number(birth))){
-    return ['1ª Classe','2ª Classe','Despertar'];
-  } else if([19].includes(Number(birth))){
-    return ['1ª Classe','Despertar'];
-  } else {
-    return opcoesClasse;
-  }
-}
-
-function criarLinhas(){
-  const tb=document.getElementById("tbody-personagens");
-  tb.innerHTML="";
-  dadosIniciais.forEach(p=>{
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${p.birth}</td>`;
-    
-    const tdChar=document.createElement("td");
-    tdChar.className="char-cell";
-    tdChar.innerHTML=`<img src="../imagens/personagens/${p.char}.png" alt="${p.nome}" onerror="this.style.display='none'"><span>${p.nome}</span>`;
-    tr.appendChild(tdChar);
-    
-    const tdPower=document.createElement("td");
-    tdPower.className=`power-cell power-${p.power}`;
-    tdPower.textContent=p.power;
-    tr.appendChild(tdPower);
-    
-    colunasEditaveis.forEach(c=>{
-      const td=document.createElement("td");
-      let el;
-      switch(c){
-        case "classe":
-          el=criarSelect(getOpcoesClassePorPersonagem(p.birth),"1ª Classe");
-          break;
-        case "level":
-          el=criarSelect(opcoesLevel,"1");
-          break;
-        case "tower":
-          el=criarSelect(opcoesTower,"1");
-          break;
-        case "berkas":
-        case "vazio":
-        case "sr":
-          let maxValor = p.birth <= 10 ? 15 : 12;
-          el=criarSelect(Array.from({length:maxValor},(_,i)=>(i+1).toString()),"1");
-          break;
-        case "visualChase":
-          let maxVC;
-          if (p.birth <= 15) {
-              maxVC = 5;
-           } else if (p.birth === 19) {
-              maxVC = 2;
-           } else {
-              maxVC = 3;
-           }
-              el = criarSelect(Array.from({ length: maxVC }, (_, i) => (i + 1).toString()), "1");
-          break;
-        case "anel":
-          el=criarSelect(opcoesAnel,"Nenhum");
-          break;
-        case "brinco":
-          el=criarSelect(opcoesBrinco,"Nenhum");
-          break;
-        case "piercing":
-          el=criarSelect(opcoesPiercing,"Nenhum");
-          break;
-        default:
-          el=document.createElement("input");
-          el.type="text";
-          el.value="0";
-      }
-      td.appendChild(el);
-      tr.appendChild(td);
-    });
-    tb.appendChild(tr);
-  });
-}
-
-function criarMenuColunas(){
-  const table=document.querySelector("table"),
-        headers=table.querySelectorAll("thead th"),
-        menu=document.getElementById("menu-colunas");
-  headers.forEach((th,i)=>{
-    const btn=document.createElement("button");
-    btn.textContent=`✅ ${th.innerText}`;
-    btn.onclick=()=>{
-      const hidden=th.style.display==="none";
-      table.querySelectorAll("tr").forEach(row=>{
-        if(row.children[i]) row.children[i].style.display=hidden?"":"none";
+    // Utilitários
+    function criarSelect(opcoes, valorSel){
+      const s=document.createElement("select");
+      opcoes.forEach(o=>{
+        const opt=document.createElement("option");
+        opt.value=opt.textContent=o;
+        if(o===valorSel) opt.selected=true;
+        s.appendChild(opt);
       });
-      btn.textContent=hidden?`✅ ${th.innerText}`:`❌ ${th.innerText}`;
-    };
-    menu.appendChild(btn);
-  });
-  const btnAll=document.createElement("button");
-  btnAll.textContent="🔄 Mostrar Todas";
-  btnAll.onclick=()=>{
-    table.querySelectorAll("th,td").forEach(c=>c.style.display="");
-    document.querySelectorAll("#menu-colunas button").forEach(b=>b.textContent=`✅ ${b.textContent.replace(/(✅ |❌ )/,"")}`);
-  };
-  menu.appendChild(document.createElement("br"));
-  menu.appendChild(btnAll);
-  
-    // Botão Menu (voltar para tela inicial)
-const btnMenu = document.createElement("button");
-btnMenu.textContent = "🏠 Menu";
-btnMenu.onclick = () => {
-  window.location.href = "../index.html";
-};
-menu.appendChild(btnMenu);
+      return s;
+    }
 
-  // Botão Salvar Perfil
-  const btnSave=document.createElement("button");
-  btnSave.textContent="💾 Salvar Perfil";
-  btnSave.onclick=salvarPerfil;
-  menu.appendChild(btnSave);
-
-  // Botão Carregar Perfil
-  const btnLoad=document.createElement("button");
-  btnLoad.textContent="📂 Carregar Perfil";
-  btnLoad.onclick=()=>{
-    const input=document.createElement("input");
-    input.type="file";
-    input.accept=".json";
-    input.onchange=(e)=>{
-      const file=e.target.files[0];
-      if(file){
-        const reader=new FileReader();
-        reader.onload=()=>{
-          const dados=JSON.parse(reader.result);
-          aplicarPerfil(dados);
-          alert(`Perfil carregado!\nÚltimo salvamento: ${dados.meta.dataHora}`);
-        };
-        reader.readAsText(file);
+    function getOpcoesClassePorPersonagem(birth){
+      if([16,17,18,20,21,22,23,24].includes(Number(birth))){
+        return ['1ª Classe','2ª Classe','Despertar'];
+      } else if([19].includes(Number(birth))){
+        return ['1ª Classe','Despertar'];
+      } else {
+        return opcoesClasse;
       }
-    };
-    input.click();
-  };
-  menu.appendChild(btnLoad);
-  
-}
+    }
 
-function salvarPerfil(){
-  const linhas=document.querySelectorAll("#tbody-personagens tr");
-  const perfil=[];
-  linhas.forEach(l=>{
-    const birth=parseInt(l.children[0].innerText);
-    const nome=l.children[1].innerText;
-    const power=l.children[2].innerText;
-    const valores={};
-    colunasEditaveis.forEach((c,i)=>{
-      const cell=l.children[i+3];
-      const input=cell.querySelector("input,select");
-      valores[c]=input.value;
-    });
-    perfil.push({birth,nome,power,...valores});
-  });
-  const dadosExportar={
-    meta:{dataHora:new Date().toLocaleString()},
-    perfil
-  };
-  const blob=new Blob([JSON.stringify(dadosExportar,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;
-  a.download="perfil.json";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
+    // Construção da tabela
+    function criarLinhas(){
+      const tb=document.getElementById("tbody-personagens");
+      tb.innerHTML="";
+      dadosIniciais.forEach(p=>{
+        const tr=document.createElement("tr");
+        tr.innerHTML=`<td>${p.birth}</td>`;
 
-function aplicarPerfil(dados){
-  dados.perfil.forEach(p=>{
-    const linha=[...document.querySelectorAll("#tbody-personagens tr")].find(tr=>parseInt(tr.children[0].innerText)===p.birth);
-    if(linha){
-      colunasEditaveis.forEach((c,i)=>{
-        const cell=linha.children[i+3];
-        const input=cell.querySelector("input,select");
-        if(input) input.value=p[c];
+        const tdChar=document.createElement("td");
+        tdChar.className="char-cell";
+        tdChar.innerHTML=`<img src="../imagens/personagens/${p.char}.png" alt="${p.nome}" onerror="this.style.display='none'"><span>${p.nome}</span>`;
+        tr.appendChild(tdChar);
+
+        const tdPower=document.createElement("td");
+        tdPower.className=`power-cell power-${p.power}`;
+        tdPower.textContent=p.power;
+        tr.appendChild(tdPower);
+
+        colunasEditaveis.forEach(c=>{
+          const td=document.createElement("td");
+          let el;
+          switch(c){
+            case "classe":
+              el=criarSelect(getOpcoesClassePorPersonagem(p.birth),"1ª Classe");
+              break;
+            case "level":
+              el=criarSelect(opcoesLevel,"1");
+              break;
+            case "tower":
+              el=criarSelect(opcoesTower,"1");
+              break;
+            case "berkas":
+            case "vazio":
+            case "sr":
+              {
+                let maxValor = p.birth <= 10 ? 15 : 12;
+                el=criarSelect(Array.from({length:maxValor},(_,i)=>(i+1).toString()),"1");
+              }
+              break;
+            case "visualChase":
+              {
+                let maxVC = p.birth <= 15 ? 5 : (p.birth === 19 ? 2 : 3);
+                el = criarSelect(Array.from({ length: maxVC }, (_, i) => (i + 1).toString()), "1");
+              }
+              break;
+            case "anel":
+              el=criarSelect(opcoesAnel,"Nenhum");
+              break;
+            case "brinco":
+              el=criarSelect(opcoesBrinco,"Nenhum");
+              break;
+            case "piercing":
+              el=criarSelect(opcoesPiercing,"Nenhum");
+              break;
+            default:
+              el=document.createElement("input");
+              el.type="text";
+              el.value="0";
+          }
+          td.appendChild(el);
+          tr.appendChild(td);
+        });
+        tb.appendChild(tr);
       });
     }
-  });
-}
 
-function ativarOrdenacao(){
-  document.querySelectorAll("thead th").forEach((th,index)=>{
-    let asc=true;
-    th.onclick=()=>{
-      const tb=th.closest("table").querySelector("tbody");
-      const rows=Array.from(tb.querySelectorAll("tr"));
-      rows.sort((a,b)=>{
-        const aVal=getCellValue(a.children[index]);
-        const bVal=getCellValue(b.children[index]);
-        if(typeof aVal==="number" && typeof bVal==="number") return asc?aVal-bVal:bVal-aVal;
-        return asc?String(aVal).localeCompare(String(bVal)):String(bVal).localeCompare(String(aVal));
+    // Menu de colunas (apenas ocultar/mostrar colunas)
+    function criarMenuColunas(){
+      const table=document.querySelector("table"),
+            headers=table.querySelectorAll("thead th"),
+            menu=document.getElementById("menu-colunas");
+      menu.innerHTML = ""; // evita duplicação
+      headers.forEach((th,i)=>{
+        const btn=document.createElement("button");
+        btn.textContent=`✅ ${th.innerText}`;
+        btn.onclick=()=>{
+          const hidden=th.style.display==="none";
+          table.querySelectorAll("tr").forEach(row=>{
+            if(row.children[i]) row.children[i].style.display=hidden?"":"none";
+          });
+          btn.textContent=hidden?`✅ ${th.innerText}`:`❌ ${th.innerText}`;
+        };
+        menu.appendChild(btn);
       });
-      tb.innerHTML="";
-      rows.forEach(r=>tb.appendChild(r));
-      document.querySelectorAll("thead th").forEach(el=>el.classList.remove("sorted-asc","sorted-desc"));
-      th.classList.add(asc?"sorted-asc":"sorted-desc");
-      asc=!asc;
-    };
-  });
-}
+      const btnAll=document.createElement("button");
+      btnAll.textContent="🔄 Mostrar Todas";
+      btnAll.onclick=()=>{
+        table.querySelectorAll("th,td").forEach(c=>c.style.display="");
+        document.querySelectorAll("#menu-colunas button").forEach(b=>b.textContent=`✅ ${b.textContent.replace(/(✅ |❌ )/,"")}`);
+      };
+      menu.appendChild(document.createElement("br"));
+      menu.appendChild(btnAll);
+    }
 
-function getCellValue(cell){
-  if(!cell) return "";
-  const input=cell.querySelector("input,select");
-  if(input) return isNaN(input.value)?input.value:parseFloat(input.value)||0;
-  const txt=cell.innerText.trim();
-  return isNaN(txt)?txt:parseFloat(txt)||0;
-}
+    // Salvar/Carregar
+    function salvarPerfil(){
+      const linhas=document.querySelectorAll("#tbody-personagens tr");
+      const perfil=[];
+      linhas.forEach(l=>{
+        const birth=parseInt(l.children[0].innerText);
+        const nome=l.children[1].innerText;
+        const power=l.children[2].innerText;
+        const valores={};
+        colunasEditaveis.forEach((c,i)=>{
+          const cell=l.children[i+3];
+          const input=cell.querySelector("input,select");
+          valores[c]=input.value;
+        });
+        perfil.push({birth,nome,power,...valores});
+      });
+      const dadosExportar={
+        meta:{dataHora:new Date().toLocaleString()},
+        perfil
+      };
+      const blob=new Blob([JSON.stringify(dadosExportar,null,2)],{type:"application/json"});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");
+      a.href=url;
+      a.download="perfil.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
 
-document.addEventListener("DOMContentLoaded",()=>{
-  criarLinhas();
-  criarMenuColunas();
-  ativarOrdenacao();
+    function aplicarPerfil(dados){
+      dados.perfil.forEach(p=>{
+        const linha=[...document.querySelectorAll("#tbody-personagens tr")].find(tr=>parseInt(tr.children[0].innerText)===p.birth);
+        if(linha){
+          colunasEditaveis.forEach((c,i)=>{
+            const cell=linha.children[i+3];
+            const input=cell.querySelector("input,select");
+            if(input) input.value=p[c];
+          });
+        }
+      });
+    }
 
-  const tableContainer = document.querySelector('.table-container');
-  let isDown = false;
-  let startX;
-  let scrollLeft;
+    // Ordenação
+    function ativarOrdenacao(){
+      document.querySelectorAll("thead th").forEach((th,index)=>{
+        let asc=true;
+        th.onclick=()=>{
+          const tb=th.closest("table").querySelector("tbody");
+          const rows=Array.from(tb.querySelectorAll("tr"));
+          rows.sort((a,b)=>{
+            const aVal=getCellValue(a.children[index]);
+            const bVal=getCellValue(b.children[index]);
+            if(typeof aVal==="number" && typeof bVal==="number") return asc?aVal-bVal:bVal-aVal;
+            return asc?String(aVal).localeCompare(String(bVal)):String(bVal).localeCompare(String(aVal));
+          });
+          tb.innerHTML="";
+          rows.forEach(r=>tb.appendChild(r));
+          document.querySelectorAll("thead th").forEach(el=>el.classList.remove("sorted-asc","sorted-desc"));
+          th.classList.add(asc?"sorted-asc":"sorted-desc");
+          asc=!asc;
+        };
+      });
+    }
 
-  tableContainer.addEventListener('mousedown', (e) => {
-    isDown = true;
-    startX = e.pageX - tableContainer.offsetLeft;
-    scrollLeft = tableContainer.scrollLeft;
-  });
+    function getCellValue(cell){
+      if(!cell) return "";
+      const input=cell.querySelector("input,select");
+      if(input) return isNaN(input.value)?input.value:parseFloat(input.value)||0;
+      const txt=cell.innerText.trim();
+      return isNaN(txt)?txt:parseFloat(txt)||0;
+    }
 
-  tableContainer.addEventListener('mouseleave', () => { isDown = false; });
-  tableContainer.addEventListener('mouseup', () => { isDown = false; });
-  tableContainer.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - tableContainer.offsetLeft;
-    const walk = (x - startX) * 1;
-    tableContainer.scrollLeft = scrollLeft - walk;
-  });
-});
-</script>
+    // Inicialização
+    document.addEventListener("DOMContentLoaded", () => {
+      // Monta menu principal
+      const menu = document.getElementById("menu");
+
+      const btnMenu = document.createElement("button");
+      btnMenu.textContent = "🏠 MENU";
+      btnMenu.onclick = () => window.location.href = "../index.html";
+      menu.appendChild(btnMenu);
+	  
+	  const btnTitulo = document.createElement("button");
+      btnTitulo.textContent = "🏆 TÍTULOS";
+      btnTitulo.onclick = () => window.location.href = "../titulos/index.html";
+      menu.appendChild(btnTitulo);
+
+      const btnSave = document.createElement("button");
+      btnSave.textContent = "💾 SALVAR PERFIL";
+      btnSave.onclick = salvarPerfil;
+      menu.appendChild(btnSave);
+
+      const btnLoad = document.createElement("button");
+      btnLoad.textContent = "📂 CARREGAR PERFIL";
+      btnLoad.onclick = () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".json";
+        input.onchange = (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const dados = JSON.parse(reader.result);
+              aplicarPerfil(dados);
+              alert(`Perfil carregado!\nÚltimo salvamento: ${dados.meta.dataHora}`);
+            };
+            reader.readAsText(file);
+          }
+        };
+        input.click();
+      };
+      menu.appendChild(btnLoad);
+
+      // Monta tabela e interações
+      criarLinhas();
+      criarMenuColunas();
+      ativarOrdenacao();
+
+      // Scroll horizontal por arraste
+      const tableContainer = document.querySelector('.table-container');
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+      tableContainer.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - tableContainer.offsetLeft;
+        scrollLeft = tableContainer.scrollLeft;
+      });
+      tableContainer.addEventListener('mouseleave', () => { isDown = false; });
+      tableContainer.addEventListener('mouseup', () => { isDown = false; });
+      tableContainer.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - tableContainer.offsetLeft;
+        const walk = (x - startX) * 1;
+        tableContainer.scrollLeft = scrollLeft - walk;
+      });
+    });
+  </script>
 </body>
 </html>
