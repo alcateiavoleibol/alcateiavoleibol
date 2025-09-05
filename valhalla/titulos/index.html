@@ -35,14 +35,8 @@
   }
 
   @keyframes fadeInZoom {
-    0% {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
   }
 
   .menu {
@@ -66,9 +60,7 @@
     transition: background 0.3s;
   }
 
-  .menu button:hover {
-    background-color: #555;
-  }
+  .menu button:hover { background-color: #555; }
 
   .personagem {
     display: flex;
@@ -91,24 +83,11 @@
     transition: transform 0.3s ease;
   }
 
-  .avatar:hover {
-    transform: scale(1.5);
-  }
+  .avatar:hover { transform: scale(1.5); }
 
-  .info {
-    flex: 1;
-  }
-
-  .birth {
-    font-size: 0.9em;
-    color: #aaa;
-  }
-
-  .nome {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #f0f0f0;
-  }
+  .info { flex: 1; }
+  .birth { font-size: 0.9em; color: #aaa; }
+  .nome { font-size: 1.2em; font-weight: bold; color: #f0f0f0; }
 
   .titulos {
     display: flex;
@@ -117,11 +96,11 @@
   }
 
   .titulo {
-    width: 90px; /* TAMANHO */
-    height: 90px; /* TAMANHO */
+    width: 90px;
+    height: 90px;
     opacity: 0.3;
     cursor: pointer;
-    transition: opacity 06s ease, transform 0.2s ease;
+    transition: opacity 0.6s ease, transform 0.2s ease;
     border-radius: 6px;
     box-shadow: 0 0 5px #000;
   }
@@ -129,7 +108,34 @@
   .titulo.obtido {
     opacity: 1;
     transform: scale(1.1);
-    box-shadow: 0 0 8px #0f0; /* COR DA SOMBRA */
+    box-shadow: 0 0 8px #0f0;
+  }
+
+  .titulo-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip-card {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #111;
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #000;
+    display: none;
+    z-index: 100;
+  }
+
+  .tooltip-card img {
+    max-width: 300px;
+    border-radius: 8px;
+  }
+
+  .titulo-wrapper:hover .tooltip-card {
+    display: block;
   }
 
   footer {
@@ -241,13 +247,12 @@
     "apocalipse-do-mundo.png",
     "aniquilador-do-vazio.png",
     "aniquilador-do-vazio-ancestral.png",
-    "inicio-do-caos.png",
+        "inicio-do-caos.png",
     "sacrificio-dos-12-discipulos-escolhidos.png"
   ];
 
   const container = document.getElementById("lista-personagens");
 
-  // Função para formatar o nome do título
   function formatarTituloDoSlug(slug) {
     const minusculas = new Set([
       "da","de","do","das","dos","e","a","o","as","os","em","no","na","nos","nas",
@@ -261,7 +266,7 @@
     }).join(" ");
   }
 
-    dadosIniciais.forEach(p => {
+  dadosIniciais.forEach(p => {
     const div = document.createElement("div");
     div.className = "personagem";
 
@@ -285,49 +290,67 @@
     container.appendChild(div);
   });
 
-     function criarTitulos(lista, container) {
-      const imagens = Array.from(container.querySelectorAll("img"));
-      const estado = {};
-       imagens.forEach(img => {
+  function criarTitulos(lista, container) {
+    const imagens = Array.from(container.querySelectorAll("img"));
+    const estado = {};
+    imagens.forEach(img => {
       const slug = img.dataset.slug;
-       estado[slug] = img.classList.contains("obtido");
-  });
+      estado[slug] = img.classList.contains("obtido");
+    });
 
-  container.innerHTML = "";
+    container.innerHTML = "";
 
-  // Agora ordena pelo nome formatado
-  const ordenados = [...lista].sort((a, b) => {
-    const nomeA = formatarTituloDoSlug(a.replace(".png", ""));
-    const nomeB = formatarTituloDoSlug(b.replace(".png", ""));
-    return nomeA.localeCompare(nomeB, "pt-BR");
-  });
+    const ordenados = [...lista].sort((a, b) => {
+      const nomeA = formatarTituloDoSlug(a.replace(".png", ""));
+      const nomeB = formatarTituloDoSlug(b.replace(".png", ""));
+      return nomeA.localeCompare(nomeB, "pt-BR");
+    });
 
-  const obtidos = [];
-  const naoObtidos = [];
+    const obtidos = [];
+    const naoObtidos = [];
 
-  ordenados.forEach(t => {
-    const slug = t.replace(".png", "");
-    const img = document.createElement("img");
-    img.src = `../imagens/titulos/${t}`;
-    img.className = "titulo";
-    img.dataset.slug = slug;
-    img.title = formatarTituloDoSlug(slug);
+    ordenados.forEach(t => {
+      const slug = t.replace(".png", "");
 
-    if (estado[slug]) {
-      img.classList.add("obtido");
-      obtidos.push(img);
-    } else {
-      naoObtidos.push(img);
-    }
+      // Wrapper para título + tooltip
+      const wrapper = document.createElement("div");
+      wrapper.className = "titulo-wrapper";
 
-    img.onclick = () => {
-      img.classList.toggle("obtido");
-      criarTitulos(lista, container);
-    };
-  });
+      const img = document.createElement("img");
+      img.src = `../imagens/titulos/${t}`;
+      img.className = "titulo";
+      img.dataset.slug = slug;
+      img.title = formatarTituloDoSlug(slug);
 
-  [...obtidos, ...naoObtidos].forEach(img => container.appendChild(img));
-}
+      // Tooltip (card de descrição)
+      const tooltip = document.createElement("div");
+      tooltip.className = "tooltip-card";
+
+      const descImg = document.createElement("img");
+      descImg.src = `../imagens/titulos-descricao/${slug}.png`;
+      descImg.alt = formatarTituloDoSlug(slug);
+
+      tooltip.appendChild(descImg);
+
+      // Clique para marcar obtido
+      img.onclick = () => {
+        img.classList.toggle("obtido");
+        criarTitulos(lista, container);
+      };
+
+      wrapper.appendChild(img);
+      wrapper.appendChild(tooltip);
+
+      if (estado[slug]) {
+        img.classList.add("obtido");
+        obtidos.push(wrapper);
+      } else {
+        naoObtidos.push(wrapper);
+      }
+    });
+
+    [...obtidos, ...naoObtidos].forEach(el => container.appendChild(el));
+  }
 
   function salvarTitulos() {
     const perfilTitulos = [];
