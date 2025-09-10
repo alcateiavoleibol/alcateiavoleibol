@@ -2,409 +2,671 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
-  <link rel="shortcut icon" href="../imagens/favicon/favicon.ico">
-  <title>TÍTULOS</title>
-<style>
-  :root {
-    --background-style: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>TÍTULOS | ALFA-TESTE</title>
+  <style>
+    :root {
+      --bg: linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+      --blue: #00aaff;
+      --highlight: #ffcc00;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg) fixed;
+      color: #eee;
+      overflow-x: hidden;
+      padding: 10px;
+    }
+    @keyframes fadeInZoom {
+      from { opacity: 0; transform: scale(.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    #banner {
+      text-align: center;
+      margin-bottom: 15px;
+      animation: fadeInZoom 1.2s both;
+    }
+    #banner img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,191,255,0.5);
+    }
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px;
+      background: #1a1a1a;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .menu button {
+      background: #333;
+      color: #eee;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background .3s, transform .15s;
+    }
+    .menu button:hover {
+      background: #555;
+      transform: translateY(-1px);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .selector-bar {
+      max-width: 900px;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid #2d2d2d;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      animation: fadeInZoom .6s both;
+    }
+    .selector-bar .label {
+      color: #c7d5e0;
+      font-size: .95em;
+      font-weight: 700;
+    }
+    .selector-bar select {
+      appearance: none;
+      background: #101418;
+      color: #eaeaea;
+      padding: 10px 36px 10px 12px;
+      border: 1px solid #3a3f44;
+      border-radius: 8px;
+      outline: none;
+      min-width: 180px;
+      font-weight: 600;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+    }
+    .selector-bar select:hover {
+      border-color: #59636d;
+      transform: translateY(-1px);
+    }
+    .selector-bar select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,170,255,0.25);
+    }
+    .selector-bar .btn-limpar {
+      background: #2b2b2b;
+      color: #eee;
+      border: 1px solid #3a3a3a;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .15s, border-color .2s;
+    }
+    .selector-bar .btn-limpar:hover {
+      background: #3a3a3a;
+      border-color: #5a5a5a;
+      transform: translateY(-1px);
+    }
+    #lista-personagens {
+      max-width: 90vw;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .personagem {
+      position: relative;
+      width: 100%;
+      background: #1e1e1e;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 0 8px #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .equipado {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 5px;
+    }
+    .equipado-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid var(--highlight);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .equipado-img:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 12px var(--highlight);
+    }
+    .equipado-nome {
+      font-weight: bold;
+      color: var(--highlight);
+      text-align: center;
+    }
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #666;
+      box-shadow: 0 0 8px rgba(0,191,255,0.5);
+      transition: transform .3s;
+      margin-bottom: 8px;
+    }
+    .avatar:hover {
+      transform: scale(1.1);
+    }
+    .info {
+      text-align: center;
+      font-size: .9em;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    .info .nome {
+      display: block;
+      font-size: 1.1em;
+      color: #f0f0f0;
+    }
+    .titulos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 5px;
+      position: relative;
+    }
+    .titulo-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    /* aumentados para 120x120 */
+    .titulo {
+      width: 125px;
+      height: 125px;
+      border-radius: 15px;
+      cursor: pointer;
+      opacity: .3;
+      transition: transform .2s, box-shadow .2s, opacity .3s;
+    }
+    .titulo.obtido {
+      opacity: 1;
+      box-shadow: 0 0 6px var(--blue);
+	  
+    }
+      .titulo.equipado-titulo {
+        width: 145px !important;    /* aumenta para 160px */
+        height: 145px !important;
+        transform: none !important;  /* zera qualquer scale anterior */
+   }
+    /* hover maiores */
+    .titulo:hover {
+      transform: scale(1.2);
+    }
+
+     .titulo.equipado-titulo:hover {
+        transform: scale(0.9) !important;  /* de 1.3 para 1.4 se quiser mais */
+        box-shadow: 0 0 15px var(--highlight) !important;
   }
+    .equipar-btn {
+      display: none;
+      margin-top: 6px;
+      background: var(--highlight);
+      color: #000;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: .9em;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .equipar-btn:hover {
+      background: #ffe759;
+      transform: translateY(-1px);
+    }
+    .titulo.obtido ~ .equipar-btn,
+    .titulo.equipado-titulo ~ .equipar-btn {
+      display: block;
+    }
+    /* Tooltip maior dentro da borda */
+    .personagem .tooltip-global {
+      position: absolute;
+      top: -240px;
+      right: 1050px;
+      display: none;
+      max-width: 1000px;
+      padding: 2px;
+      background: rgba(17,17,17,0.95);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5);
+      border: 3px solid transparent;
+      border-image: conic-gradient(
+        #ff0048,#ff9a00,#ffe600,#5bff00,#00ffd5,
+        #0091ff,#8c00ff,#ff00b3,#ff0048
+      ) 1;
+      z-index: 20;
+    }
+	
+	/* Aumenta o ícone do título equipado acima do personagem */
+.personagem .equipado-img {
+  width: 135px !important;
+  height: 135px !important;
+}
 
-  body {
-    font-family: Arial, sans-serif;
-    background: var(--background-style);
-    background-size: cover;
-    background-attachment: fixed;
-    color: #eee;
-    padding: 10px;
-    margin: 0;
-  }
-
-  #banner {
-    text-align: center;
-    margin-bottom: 15px;
-    animation: fadeInZoom 1.2s ease forwards;
-  }
-
-  #banner img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #00bfff88;
-  }
-
-  @keyframes fadeInZoom {
-    0% { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-
-  .menu {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 15px;
-    background-color: #1a1a1a;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-
-  .menu button {
-    background-color: #333;
-    color: #eee;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
-  }
-
-  .menu button:hover { background-color: #555; }
-
-  .personagem {
-    display: flex;
-    align-items: center;
-    background-color: #1e1e1e;
-    margin: 10px 20px;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 8px #000;
-  }
-
-  .avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-    object-fit: cover;
-    border: 2px solid #666;
-    box-shadow: 0 0 8px #00bfff88;
-    transition: transform 0.3s ease;
-  }
-
-  .avatar:hover { transform: scale(1.5); }
-
-  .info { flex: 1; }
-  .birth { font-size: 0.9em; color: #aaa; }
-  .nome { font-size: 1.2em; font-weight: bold; color: #f0f0f0; }
-
-  .titulos {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .titulo {
-    width: 80px;
-    height: 80px;
-    opacity: 0.3;
-    cursor: pointer;
-    transition: opacity 0.6s ease, transform 0.2s ease;
-    border-radius: 6px;
-    box-shadow: 0 0 5px #000;
-  }
-
-  .titulo.obtido {
-    opacity: 1;
-    transform: scale(1.1);
-    box-shadow: 0 0 8px #0f0;
-  }
-
-  .titulo-wrapper {
-    position: relative;
-    display: inline-block;
-  }
-
-  .tooltip-card {
-    position: absolute;
-    left: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #111;
-    padding: 5px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #000;
-    display: none;
-    z-index: 100;
-  }
-
-  .tooltip-card img {
-    max-width: 300px;
-    border-radius: 8px;
-  }
-
-  .titulo-wrapper:hover .tooltip-card {
-    display: block;
-  }
-
-  footer {
-    margin: 30px auto 0 auto;
-    padding: 20px;
-    text-align: center;
-    background: rgba(31, 31, 31, 0.9);
-    color: #b52643;
-    font-size: clamp(12px, 1.5vw, 14px);
-    border-top: 1px solid #444;
-    border-radius: 8px 8px 0 0;
-    max-width: 100%;
-  }
-</style>
+/* Aumenta o texto do nome do título equipado */
+.personagem .equipado-nome {
+  font-size: 1.4em !important;
+  line-height: 1.2;
+}	
+    .personagem .tooltip-global img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+    footer {
+      margin: 30px auto 0;
+      padding: 20px;
+      text-align: center;
+      background: rgba(31,31,31,0.9);
+      color: #b52643;
+      font-size: clamp(12px,1.5vw,14px);
+      border-top: 1px solid #444;
+      border-radius: 8px 8px 0 0;
+      max-width: 100%;
+    }
+    @media (max-width: 768px) {
+      .avatar,
+      .equipado-img {
+        width: 60px;
+        height: 60px;
+      }
+      .titulo {
+        width: 100px;
+        height: 100px;
+      }
+      .titulo:hover {
+        transform: scale(1.2);
+      }
+      .titulo.equipado-titulo:hover {
+        transform: scale(1.25);
+      }
+      .personagem .tooltip-global {
+        max-width: 260px;
+        top: 8px;
+        right: 8px;
+        padding: 6px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div id="banner">
+    <img src="../imagens/banner.png" alt="Banner ValhallaBR"/>
+  </div>
 
-<div id="banner">
-  <img src="../imagens/banner.png" alt="Banner ValhallaBR"/>
-</div>
+  <div class="menu" id="menu"></div>
+  <h1>🏆 TÍTULOS | ALFA-TESTE</h1>
 
-<div class="menu" id="menu"></div>
+  <div class="selector-bar">
+    <span class="label">Personagem:</span>
+    <select id="seletor-personagem">
+      <option value="">Todos os personagens</option>
+    </select>
+    <button id="btn-limpar" class="btn-limpar">Limpar</button>
+  </div>
 
-<h1 style="text-align:center;">🏆 TÍTULOS | ALFA-TESTE</h1>
+  <div id="lista-personagens"></div>
 
-<div id="lista-personagens"></div>
+  <footer>© 2025 VALHALLA. Todos os direitos reservados.</footer>
 
-<footer>© 2025 VALHALLA. Todos os direitos reservados.</footer>
+  <script>
+    // Menu e Load/Save
+    const menu = document.getElementById('menu');
+    function criaBtn(txt, fn) {
+      const b = document.createElement('button');
+      b.textContent = txt;
+      b.onclick = fn;
+      return b;
+    }
+    menu.appendChild(criaBtn('🏠 MENU', () => location.href = '../index.html'));
+    menu.appendChild(criaBtn('👤 PERFIL', () => location.href = '../perfil/index.html'));
+    menu.appendChild(criaBtn('💾 SALVAR TÍTULOS', salvarTitulos));
+    menu.appendChild(criaBtn('📂 CARREGAR TÍTULOS', carregarArquivo));
 
-<script>
-  const menu = document.getElementById("menu");
-
-  const btnMenu = document.createElement("button");
-  btnMenu.textContent = "🏠 MENU";
-  btnMenu.onclick = () => window.location.href = "../index.html";
-  menu.appendChild(btnMenu);
-
-  const btnPerfil = document.createElement("button");
-  btnPerfil.textContent = "👤 PERFIL";
-  btnPerfil.onclick = () => window.location.href = "../perfil/index.html";
-  menu.appendChild(btnPerfil);
-
-  const btnSave = document.createElement("button");
-  btnSave.textContent = "💾 SALVAR TÍTULOS";
-  btnSave.onclick = salvarTitulos;
-  menu.appendChild(btnSave);
-
-  const btnLoad = document.createElement("button");
-  btnLoad.textContent = "📂 CARREGAR TÍTULOS";
-  btnLoad.onclick = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".json";
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const dados = JSON.parse(reader.result);
-          carregarTitulos(dados);
-          alert(`Títulos carregados!\nÚltimo salvamento: ${dados.meta.dataHora}`);
+    function carregarArquivo() {
+      const inp = document.createElement('input');
+      inp.type = 'file'; inp.accept = '.json';
+      inp.onchange = e => {
+        const f = e.target.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = () => {
+          try {
+            const d = JSON.parse(r.result);
+            carregarTitulos(d);
+            alert(`Títulos carregados!\nÚltimo: ${d.meta.dataHora}`);
+          } catch {
+            alert('Arquivo inválido');
+          }
         };
-        reader.readAsText(file);
-      }
-    };
-    input.click();
-  };
-  menu.appendChild(btnLoad);
-
-  const dadosIniciais = [
-    {birth:1,char:"elesis",nome:"ELESIS"},
-    {birth:2,char:"lire",nome:"LIRE"},
-    {birth:3,char:"arme",nome:"ARME"},
-    {birth:4,char:"lass",nome:"LASS"},
-    {birth:5,char:"ryan",nome:"RYAN"},
-    {birth:6,char:"ronan",nome:"RONAN"},
-    {birth:7,char:"amy",nome:"AMY"},
-    {birth:8,char:"jin",nome:"JIN"},
-    {birth:9,char:"sieghart",nome:"SIEGHART"},
-    {birth:10,char:"mari",nome:"MARI"},
-    {birth:11,char:"dio",nome:"DIO"},
-    {birth:12,char:"zero",nome:"ZERO"},
-    {birth:13,char:"rey",nome:"REY"},
-    {birth:14,char:"lupus",nome:"LUPUS"},
-    {birth:15,char:"lin",nome:"LIN"},
-    {birth:16,char:"azin",nome:"AZIN"},
-    {birth:17,char:"holy",nome:"HOLY"},
-    {birth:18,char:"edel",nome:"EDEL"},
-    {birth:19,char:"veigas",nome:"VEIGAS"},
-    {birth:20,char:"decane",nome:"DECANE"},
-    {birth:21,char:"ai",nome:"AI"},
-    {birth:22,char:"kallia",nome:"KALLIA"},
-    {birth:23,char:"uno",nome:"UNO"},
-    {birth:24,char:"iris",nome:"IRIS"}
-  ];
-
-  const titulos = [
-    "portador-da-enorme-coragem.png",
-    "maquinista-infernal.png",
-    "dia-do-julgamento.png",
-    "conquistador-do-continente-harrier.png",
-    "rebeliao-das-mascotes.png",
-    "tirano-do-deserto.png",
-    "retorno-a-calnat.png",
-    "aquele-que-consome-o-caos.png",
-    "aquele-que-superou-a-morte.png",
-    "iluminador-abissal.png",
-    "iluminador-abissal-ancestral.png",
-    "apocalipse-do-mundo.png",
-    "aniquilador-do-vazio.png",
-    "aniquilador-do-vazio-ancestral.png",
-    "inicio-do-caos.png",
-    "sacrificio-dos-12-discipulos-escolhidos.png",
-	"origem-do-caos-ancestral.png",
-	"apocalipse-do-mundo-ancestral.png"
-  ];
-
-  const container = document.getElementById("lista-personagens");
-
-  function formatarTituloDoSlug(slug) {
-    const minusculas = new Set([
-      "da","de","do","das","dos","e","a","o","as","os","em","no","na","nos","nas",
-      "para","por","com","sem","um","uma","uns","umas","ao","à","às","aos"
-    ]);
-    const palavras = slug.split("-");
-    return palavras.map((p, i) => {
-      const palavra = p.toLowerCase();
-      if (i > 0 && minusculas.has(palavra)) return palavra;
-      return palavra.charAt(0).toUpperCase() + palavra.slice(1);
-    }).join(" ");
-  }
-
-  dadosIniciais.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "personagem";
-
-    const avatar = document.createElement("img");
-    avatar.src = `../imagens/personagens/${p.char}.png`;
-    avatar.className = "avatar";
-    avatar.title = p.nome;
-
-    const info = document.createElement("div");
-    info.className = "info";
-    info.innerHTML = `<div class="birth">#${p.birth}</div><div class="nome">${p.nome}</div>`;
-
-    const titulosDiv = document.createElement("div");
-    titulosDiv.className = "titulos";
-
-    criarTitulos(titulos, titulosDiv);
-
-    div.appendChild(avatar);
-    div.appendChild(info);
-    div.appendChild(titulosDiv);
-    container.appendChild(div);
-  });
-
-  function criarTitulos(lista, container) {
-    const imagens = Array.from(container.querySelectorAll("img"));
-    const estado = {};
-    imagens.forEach(img => {
-      const slug = img.dataset.slug;
-      estado[slug] = img.classList.contains("obtido");
-    });
-
-    container.innerHTML = "";
-
-    const ordenados = [...lista].sort((a, b) => {
-      const nomeA = formatarTituloDoSlug(a.replace(".png", ""));
-      const nomeB = formatarTituloDoSlug(b.replace(".png", ""));
-      return nomeA.localeCompare(nomeB, "pt-BR");
-    });
-
-    const obtidos = [];
-    const naoObtidos = [];
-
-    ordenados.forEach(t => {
-      const slug = t.replace(".png", "");
-
-      // Wrapper para título + tooltip
-      const wrapper = document.createElement("div");
-      wrapper.className = "titulo-wrapper";
-
-      const img = document.createElement("img");
-      img.src = `../imagens/titulos/${t}`;
-      img.className = "titulo";
-      img.dataset.slug = slug;
-      img.title = formatarTituloDoSlug(slug);
-
-      // Tooltip (card de descrição)
-      const tooltip = document.createElement("div");
-      tooltip.className = "tooltip-card";
-
-      const descImg = document.createElement("img");
-      descImg.src = `../imagens/titulos-descricao/${slug}.png`;
-      descImg.alt = formatarTituloDoSlug(slug);
-
-      tooltip.appendChild(descImg);
-
-      // Clique para marcar obtido
-      img.onclick = () => {
-        img.classList.toggle("obtido");
-        criarTitulos(lista, container);
+        r.readAsText(f);
       };
+      inp.click();
+    }
 
-      wrapper.appendChild(img);
-      wrapper.appendChild(tooltip);
+    // Dados Iniciais
+    const dadosIniciais = [
+      { birth:1, char:'elesis', nome:'ELESIS' },
+      { birth:2, char:'lire', nome:'LIRE' },
+      { birth:3, char:'arme', nome:'ARME' },
+      { birth:4, char:'lass', nome:'LASS' },
+      { birth:5, char:'ryan', nome:'RYAN' },
+      { birth:6, char:'ronan', nome:'RONAN' },
+      { birth:7, char:'amy', nome:'AMY' },
+      { birth:8, char:'jin', nome:'JIN' },
+      { birth:9, char:'sieghart', nome:'SIEGHART' },
+      { birth:10, char:'mari', nome:'MARI' },
+      { birth:11, char:'dio', nome:'DIO' },
+      { birth:12, char:'zero', nome:'ZERO' },
+      { birth:13, char:'rey', nome:'REY' },
+      { birth:14, char:'lupus', nome:'LUPUS' },
+      { birth:15, char:'lin', nome:'LIN' },
+      { birth:16, char:'azin', nome:'AZIN' },
+      { birth:17, char:'holy', nome:'HOLY' },
+      { birth:18, char:'edel', nome:'EDEL' },
+      { birth:19, char:'veigas', nome:'VEIGAS' },
+      { birth:20, char:'decane', nome:'DECANE' },
+      { birth:21, char:'ai', nome:'AI' },
+      { birth:22, char:'kallia', nome:'KALLIA' },
+      { birth:23, char:'uno', nome:'UNO' },
+      { birth:24, char:'iris', nome:'IRIS' }
+    ];
 
-      if (estado[slug]) {
-        img.classList.add("obtido");
-        obtidos.push(wrapper);
-      } else {
-        naoObtidos.push(wrapper);
+    const titulos = [
+      'portador-da-enorme-coragem.png',
+      'maquinista-infernal.png',
+      'dia-do-julgamento.png',
+      'conquistador-do-continente-harrier.png',
+      'rebeliao-das-mascotes.png',
+      'tirano-do-deserto.png',
+      'retorno-a-calnat.png',
+      'aquele-que-consome-o-caos.png',
+      'aquele-que-superou-a-morte.png',
+      'iluminador-abissal.png',
+      'iluminador-abissal-ancestral.png',
+      'apocalipse-do-mundo.png',
+      'aniquilador-do-vazio.png',
+      'aniquilador-do-vazio-ancestral.png',
+      'inicio-do-caos.png',
+      'sacrificio-dos-12-discipulos-escolhidos.png',
+      'origem-do-caos-ancestral.png',
+      'apocalipse-do-mundo-ancestral.png'
+    ];
+
+    function formatarSlug(slug) {
+      const overrides = {
+        'sacrificio-dos-12-discipulos-escolhidos':
+          'Sacrifício dos 12 Discípulos Escolhidos'
+      };
+      if (overrides[slug]) return overrides[slug];
+      const min = new Set(['da','de','do','das','dos','e','a','o','as','os',
+        'em','no','na','nos','nas','para','por','com','sem','um','uma',
+        'uns','umas','ao','à','às','aos']);
+      return slug.split('-').map((p,i)=>{
+        p = p.toLowerCase();
+        if (i>0 && min.has(p)) return p;
+        return p.charAt(0).toUpperCase()+p.slice(1);
+      }).join(' ');
+    }
+
+    // Filtro de Personagem
+    const seletor = document.getElementById('seletor-personagem');
+    dadosIniciais.forEach(p => {
+      const o = document.createElement('option');
+      o.value = p.birth;
+      o.textContent = p.nome;
+      seletor.appendChild(o);
+    });
+    seletor.onchange = () => {
+      const v = seletor.value;
+      document.querySelectorAll('.personagem').forEach(per => {
+        per.style.display = !v ||
+          per.querySelector('.birth').textContent.slice(1) === v
+          ? '' : 'none';
+      });
+      if (v) {
+        document.querySelector(`.personagem:nth-child(${v})`)
+          .scrollIntoView({behavior:'smooth',block:'start'});
       }
-    });
-
-    [...obtidos, ...naoObtidos].forEach(el => container.appendChild(el));
-  }
-
-  function salvarTitulos() {
-    const perfilTitulos = [];
-
-    document.querySelectorAll(".personagem").forEach(div => {
-      const nome = div.querySelector(".nome").textContent;
-      const birth = parseInt(div.querySelector(".birth").textContent.replace("#", ""));
-      const titulosObtidos = Array.from(div.querySelectorAll(".titulo.obtido"))
-        .map(img => img.dataset.slug);
-
-      perfilTitulos.push({ birth, nome, titulos: titulosObtidos });
-    });
-
-    const dadosExportar = {
-      meta: { dataHora: new Date().toLocaleString() },
-      perfilTitulos
+    };
+    document.getElementById('btn-limpar').onclick = () => {
+      seletor.value = '';
+      document.querySelectorAll('.personagem')
+        .forEach(per=> per.style.display = '');
     };
 
-    const blob = new Blob([JSON.stringify(dadosExportar, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "titulos.json";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
+    // Montagem dos Personagens
+    const container = document.getElementById('lista-personagens');
+    dadosIniciais.forEach(p => {
+      const per = document.createElement('div');
+      per.className = 'personagem';
 
-  function carregarTitulos(dados) {
-    dados.perfilTitulos.forEach(p => {
-      const personagemDiv = [...document.querySelectorAll(".personagem")].find(div => {
-        const birth = parseInt(div.querySelector(".birth").textContent.replace("#", ""));
-        return birth === p.birth;
+      const eqDiv = document.createElement('div');
+      eqDiv.className = 'equipado';
+      per.appendChild(eqDiv);
+
+      const av = document.createElement('img');
+      av.className = 'avatar';
+      av.src = `../imagens/personagens/${p.char}.png`;
+      per.appendChild(av);
+
+      const info = document.createElement('div');
+      info.className = 'info';
+      info.innerHTML = `<div class="birth">#${p.birth}</div>
+                        <div class="nome">${p.nome}</div>`;
+      per.appendChild(info);
+
+      const titDiv = document.createElement('div');
+      titDiv.className = 'titulos';
+      per.appendChild(titDiv);
+
+      // Tooltip no canto superior direito
+      const tooltip = document.createElement('div');
+      tooltip.className = 'tooltip-global';
+      tooltip.innerHTML = `<img src="" alt="Descrição do título">`;
+      per.appendChild(tooltip);
+
+      criarTitulos(titulos, titDiv);
+      container.appendChild(per);
+    });
+
+    // Função principal de criação de títulos
+    function criarTitulos(list, container) {
+      const per = container.closest('.personagem');
+      const eqDiv = per.querySelector('.equipado');
+      const tooltip = per.querySelector('.tooltip-global');
+
+      // coleta obtidos e equipado
+      const obtidos = new Set();
+      let equipSlug = null;
+      per.querySelectorAll('.titulo').forEach(img => {
+        if (img.classList.contains('obtido')) obtidos.add(img.dataset.slug);
+        if (img.classList.contains('equipado-titulo')) equipSlug = img.dataset.slug;
       });
 
-      if (personagemDiv) {
-        const tituloImgs = personagemDiv.querySelectorAll(".titulo");
-        tituloImgs.forEach(img => {
-          const slug = img.dataset.slug;
-          if (p.titulos.includes(slug)) {
-            img.classList.add("obtido");
-          } else {
-            img.classList.remove("obtido");
-          }
-        });
+      // ordena
+      const sortFn = arr => arr.sort((a,b) =>
+        formatarSlug(a.replace('.png',''))
+          .localeCompare(formatarSlug(b.replace('.png','')),'pt-BR')
+      );
+      const obtArr = sortFn(list.filter(f=>{
+        const s = f.replace('.png','');
+        return obtidos.has(s) && s!==equipSlug;
+      }));
+      const naoArr = sortFn(list.filter(f=>!obtidos.has(f.replace('.png',''))));
+      const finalArr = [...(equipSlug?[`${equipSlug}.png`]:[]),...obtArr,...naoArr];
 
-        const titulosDiv = personagemDiv.querySelector(".titulos");
-        const listaTitulos = Array.from(tituloImgs).map(img => `${img.dataset.slug}.png`);
-        criarTitulos(listaTitulos, titulosDiv);
+      container.innerHTML = '';
+      finalArr.forEach(file => {
+        const slug = file.replace('.png','');
+        const wrap = document.createElement('div');
+        wrap.className = 'titulo-wrapper';
+
+        const img = document.createElement('img');
+        img.src = `../imagens/titulos/${file}`;
+        img.className = 'titulo';
+        img.dataset.slug = slug;
+        if (obtidos.has(slug)) img.classList.add('obtido');
+        if (equipSlug===slug) img.classList.add('equipado-titulo');
+
+        // hover: mostra tooltip
+        img.onmouseenter = () => {
+          tooltip.querySelector('img').src =
+            `../imagens/titulos-descricao/${slug}.png`;
+          tooltip.style.display = 'block';
+        };
+        img.onmouseleave = () => {
+          tooltip.style.display = 'none';
+        };
+
+        // click: toggle obtido
+        img.onclick = () => {
+          const wasEq = img.classList.contains('equipado-titulo');
+          img.classList.toggle('obtido');
+          if (wasEq && !img.classList.contains('obtido')) {
+            img.classList.remove('equipado-titulo');
+            equipSlug = null;
+            eqDiv.innerHTML = '';
+          }
+          criarTitulos(list, container);
+        };
+        wrap.appendChild(img);
+
+        // botão equipar
+        if (img.classList.contains('obtido')) {
+          const btn = document.createElement('button');
+          btn.className = 'equipar-btn';
+          btn.textContent = equipSlug===slug ? 'Desequipar' : 'Equipar';
+          btn.onclick = e => {
+            e.stopPropagation();
+            if (!img.classList.contains('obtido')) img.classList.add('obtido');
+            per.querySelectorAll('.titulo.equipado-titulo')
+               .forEach(t=>t.classList.remove('equipado-titulo'));
+            eqDiv.innerHTML = '';
+            if (equipSlug===slug) {
+              equipSlug = null;
+              criarTitulos(list, container);
+              return;
+            }
+            img.classList.add('equipado-titulo');
+            equipSlug = slug;
+            eqDiv.innerHTML = `
+              <img class="equipado-img"
+                   src="../imagens/titulos/${slug}.png"
+                   alt=""/>
+              <div class="equipado-nome">
+                ${formatarSlug(slug)}
+              </div>`;
+            criarTitulos(list, container);
+          };
+          wrap.appendChild(btn);
+        }
+        container.appendChild(wrap);
+      });
+
+      // hover título equipado
+      eqDiv.querySelectorAll('.equipado-img').forEach(eqImg => {
+        eqImg.onmouseenter = () => {
+          if (!equipSlug) return;
+          tooltip.querySelector('img').src =
+            `../imagens/titulos-descricao/${equipSlug}.png`;
+          tooltip.style.display = 'block';
+        };
+        eqImg.onmouseleave = () => {
+          tooltip.style.display = 'none';
+        };
+      });
+    }
+
+    function salvarTitulos() {
+      const perfil = [];
+      document.querySelectorAll('.personagem').forEach(per => {
+        const birth = +per.querySelector('.birth').textContent.slice(1);
+        const nome  = per.querySelector('.nome').textContent;
+        const titulos = Array.from(
+          per.querySelectorAll('.titulo.obtido')
+        ).map(i=>i.dataset.slug);
+        const equipado = per.querySelector('.titulo.equipado-titulo')
+                          ?.dataset.slug||null;
+        perfil.push({ birth, nome, titulos, equipado });
+      });
+      const dados = {
+        meta: { dataHora: new Date().toLocaleString('pt-BR') },
+        perfil
+      };
+      const blob = new Blob([JSON.stringify(dados,null,2)],{type:'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'titulos.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    function carregarTitulos(dados) {
+      if (!dados||!Array.isArray(dados.perfil)) {
+        alert('Arquivo inválido');
+        return;
       }
-    });
-  }
-</script>
+      dados.perfil.forEach(p => {
+        const per = Array.from(document.querySelectorAll('.personagem'))
+          .find(d=>+d.querySelector('.birth').textContent.slice(1)===p.birth);
+        if (!per) return;
+        const eqDiv = per.querySelector('.equipado');
+        const titDiv = per.querySelector('.titulos');
+        eqDiv.innerHTML = '';
+        per.querySelectorAll('.titulo')
+          .forEach(i=>i.classList.remove('obtido','equipado-titulo'));
+        p.titulos.forEach(slug=> {
+          const el = per.querySelector(`.titulo[data-slug="${slug}"]`);
+          if (el) el.classList.add('obtido');
+        });
+        if (p.equipado) {
+          const el = per.querySelector(`.titulo[data-slug="${p.equipado}"]`);
+          if (el) el.classList.add('equipado-titulo');
+          eqDiv.innerHTML = `
+            <img class="equipado-img"
+                 src="../imagens/titulos/${p.equipado}.png"
+                 alt=""/>
+            <div class="equipado-nome">
+              ${formatarSlug(p.equipado)}
+            </div>`;
+        }
+        criarTitulos(titulos, titDiv);
+      });
+    }
+  </script>
 </body>
 </html>
