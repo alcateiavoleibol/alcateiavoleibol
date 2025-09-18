@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IMAGINISTA — Convites Criativos</title>
+  <link rel="icon" href="imagens/favicon.ico" type="image/x-icon"/>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* RESET & BASE */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; overflow-x: hidden; }
+    body {
+      min-height: 100vh;
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background .3s, color .3s;
+    }
+
+    /* TEMAS */
+    :root {
+      --gap: clamp(0.5rem,1vw,1rem);
+      --bg: #f0f8ff;
+      --text: #3e2f1c;
+      --accent: #e67e22;
+      --highlight: #f1c40f;
+      --card-bg: #ffffff;
+      --muted: #2c3e50;
+      --panel-bg: rgba(255,255,255,0.9);
+      --slide-w: clamp(250px,90vw,430px);
+      --slide-h: clamp(300px,90vh,520px);
+    }
+    html[data-theme="dark"] {
+      --bg: #1e1e2f;
+      --text: #e8e8e8;
+      --accent: #f39c12;
+      --highlight: #f1c40f;
+      --card-bg: #2c2b3a;
+      --muted: #000000;    /* <-- antes era #a5a5a5, agora preto */
+      --panel-bg: rgba(40,40,50,0.9);
+}
+
+
+    /* INTRO SCREEN (6s) */
+    #intro-screen {
+      position: fixed; inset: 0;
+      background: rgba(5,30,50,0.9);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 9999;
+      animation: fadeIntro 1s ease 6s forwards;
+    }
+    #intro-screen img.logo {
+      width: 140px;
+      animation: pulse 1s ease-in-out infinite alternate;
+    }
+    #intro-screen img.mascot {
+      width: clamp(100px,15vw,150px);
+      margin-top: var(--gap);
+      animation: pulse 1s ease-in-out infinite alternate 0.5s;
+    }
+    #intro-screen .loader {
+      margin-top: var(--gap);
+      width: 80px; height: 8px;
+      background: var(--highlight);
+      border-radius: 4px;
+      animation: loaderBar 1s infinite ease-in-out;
+    }
+    @keyframes pulse       { to { transform: scale(1.1); } }
+    @keyframes loaderBar   { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(0.4); } }
+    @keyframes fadeIntro   { to { opacity: 0; visibility: hidden; } }
+
+    /* PAINEL FLUTUANTE */
+    .float-panel {
+      position: fixed; bottom: var(--gap); left: var(--gap);
+      background: var(--panel-bg); backdrop-filter: blur(8px);
+      padding: var(--gap); border-radius: 8px;
+      display: flex; align-items: center; gap: var(--gap);
+      z-index: 1000;
+    }
+    .float-panel button {
+      background: none; border: none;
+      font-size: 1.2rem; cursor: pointer;
+      color: var(--accent); transition: transform .2s;
+    }
+    .float-panel button:hover { transform: scale(1.1); }
+
+    /* MENU */
+    .container {
+      max-width: 1400px; margin: 0 auto; padding: var(--gap);
+    }
+    nav.menu {
+      background: var(--muted); border-radius: 6px; margin-bottom: var(--gap);
+    }
+    nav.menu ul {
+      display: flex; justify-content: center; gap: var(--gap);
+      list-style: none; padding: var(--gap) 0;
+    }
+    nav.menu a {
+      color: #fff; font-weight: 600;
+      font-size: clamp(0.9rem,1.2vw,1.1rem);
+      text-decoration: none; transition: color .3s;
+    }
+    nav.menu a:hover { color: var(--highlight); }
+
+    /* BANNER */
+    header {
+      height: 20vh;
+      background: var(--muted) url('imagens/imaginista.png') no-repeat center/cover;
+      border-radius: 8px; margin-bottom: var(--gap);
+      animation: bannerIn 2s ease-out forwards;
+      position: relative;
+    }
+    @keyframes bannerIn { from { background-size: 0% auto; } to { background-size: 50% auto; } }
+    .logo-icon {
+      position: absolute; top: var(--gap); left: var(--gap);
+      width: clamp(160px,6vw,10px); height: clamp(160px,6vw,60px);
+      background: url('imagens/construtores.png') center/contain no-repeat;
+    }
+
+    /* HOME LAYOUT */
+    .home {
+      display: flex; flex-wrap: wrap;
+      gap: var(--gap); align-items: flex-start;
+      margin-bottom: var(--gap);
+    }
+    @media(max-width:800px) { .home { flex-direction: column; } }
+
+    /* TEXTO */
+    .home-info {
+      flex: 1 1 400px;
+      display: flex; flex-direction: column;
+      gap: var(--gap);
+    }
+    .home-info h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem,6vw,2.8rem);
+      color: var(--accent); margin-bottom: var(--gap);
+    }
+    .home-info p {
+      font-size: clamp(1rem,1.2vw,1.2rem);
+      line-height: 1.6; color: var(--text);
+      max-width: 650px; text-align: justify;
+    }
+    .home-info .slogan {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem,3vw,1.5rem);
+      text-align: center; color: var(--highlight);
+      margin-top: var(--gap);
+      opacity: 0; animation: fadeInText 1.5s ease 2s forwards;
+    }
+    @keyframes fadeInText { to { opacity: 1; } }
+
+    /* CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: var(--gap); margin-top: var(--gap);
+    }
+    @media(max-width:600px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--card-bg); padding: var(--gap);
+      border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      opacity: 0; transform: translateY(20px);
+      animation: cardIn 0.5s ease forwards;
+      cursor: pointer; transition: transform .3s;
+    }
+    .card:nth-child(1){ animation-delay: 0.4s; }
+    .card:nth-child(2){ animation-delay: 0.6s; }
+    .card:nth-child(3){ animation-delay: 0.8s; }
+    .card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    @keyframes cardIn { to { opacity:1; transform: translateY(0); } }
+
+    /* MÍDIA */
+    .home-media {
+      flex: 0 0 var(--slide-w);
+      display: flex; flex-direction: column; gap: var(--gap);
+    }
+
+    /* VÍDEO */
+    .video-container {
+      width: 100%; aspect-ratio: 16/9;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .video-container video {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+
+    /* SLIDE ABAIXO DO VÍDEO */
+    .home-slide {
+      position: relative; width: 100%; height: var(--slide-h);
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .fade-container {
+      width: 100%; height: 100%; position: relative;
+    }
+    .fade-item {
+      position: absolute; inset: 0; opacity: 0;
+      transition: opacity 1s ease-in-out;
+      object-fit: cover; width: 100%; height: 100%;
+    }
+    .fade-item.active { opacity: 1; z-index: 1; }
+    .carousel-button {
+      position: absolute; top: 50%;
+      transform: translateY(-50%);
+      background: var(--panel-bg); border: none;
+      border-radius: 50%; width: clamp(30px,4vw,36px);
+      height: clamp(30px,4vw,36px); cursor: pointer;
+      z-index: 2; transition: background .3s;
+    }
+    .carousel-button.prev { left: 8px; }
+    .carousel-button.next { right: 8px; }
+    .carousel-button:hover { background: var(--highlight); }
+
+    /* MASCOTE FIXO */
+    .mascot.fixed {
+      position: fixed; bottom: var(--gap); right: var(--gap);
+      width: clamp(90px,10vw,140px);
+      z-index: 1002; cursor: pointer; transition: transform .3s;
+    }
+    .mascot.fixed:hover { transform: translateY(-6px); }
+    @media(max-width:600px){
+      .mascot.fixed { left:50%; right:auto; transform: translateX(-50%); }
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: var(--gap) 0;
+      background: var(--muted); color: #fff;
+      border-radius: 4px; margin-top: var(--gap);
+    }
+    .footer-social {
+      display: flex; justify-content: center; gap: var(--gap);
+      margin-top: var(--gap);
+    }
+    .footer-social img {
+      width: clamp(24px,4vw,32px);
+      filter: brightness(0) invert(1);
+      transition: transform .3s;
+    }
+    .footer-social a:hover img { transform: scale(1.1); }
+  </style>
+</head>
+
+<body>
+  <!-- INTRO SCREEN -->
+  <div id="intro-screen" role="status" aria-live="polite">
+    <img src="imagens/imaginista.png" alt="Logo IMAGINISTA" class="logo"/>
+    <img src="imagens/mascote.png" alt="" class="mascot"/>
+    <div class="loader" aria-hidden="true"></div>
+  </div>
+
+  <!-- PAINEL FLUTUANTE -->
+  <div class="float-panel" role="region" aria-label="Controles de tema e áudio">
+    <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
+    <button id="play-pause" aria-label="Play/Pause">▶️</button>
+    <button id="vol-up" aria-label="Aumentar volume">🔊+</button>
+    <button id="vol-down" aria-label="Diminuir volume">🔊−</button>
+  </div>
+
+  <audio id="bg-music" src="mp3/hope.mp3" loop preload="auto"></audio>
+  <img src="imagens/mascote.png" alt="" class="mascot fixed"/>
+
+  <div class="container">
+    <header role="banner">
+      <div class="logo-icon" aria-hidden="true"></div>
+    </header>
+
+    <nav class="menu" role="navigation" aria-label="Menu principal">
+      <ul>
+        <li><a href="#">INÍCIO</a></li>
+        <li><a href="#">CONVITES</a></li>
+        <li><a href="#">CONTATO</a></li>
+      </ul>
+    </nav>
+
+    <section class="home" role="main">
+      <!-- TEXTO -->
+      <div class="home-info">
+        <h2>Convites Virtuais com Magia</h2>
+        <p>
+          Cada detalhe do seu convite virtual é pensado para emocionar. O design criativo,
+          as animações envolventes e a trilha musical cuidadosamente escolhida se entrelaçam
+          para criar experiências interativas que contam histórias únicas. Cada convite é
+          uma jornada sensorial, perfeita para festas de 15 anos, casamentos, aniversários e
+          outras celebrações especiais. Aqui, o seu momento ganha vida com arte, som e emoção.
+        </p>
+        <p>
+          Diversos formatos e estilos de convites, desde os mais clássicos
+          até os mais modernos e ousados. Também oferecemos convites em formato de página,
+          com todas as informações organizadas e acessíveis até o dia do seu evento.
+        </p>
+        <div class="slogan">∴ IMAGINISTA onde a imaginação vira arte</div>
+
+        <div class="cards">
+          <div class="card">
+            <h3>Festa de 15</h3>
+            <p>Animações elegantes e música sob medida.</p>
+          </div>
+          <div class="card">
+            <h3>Casamento Vintage</h3>
+            <p>Texturas artesanais e detalhes envelhecidos.</p>
+          </div>
+          <div class="card">
+            <h3>Infantil Temático</h3>
+            <p>Personagens animados que encantam os pequenos.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÍDIA -->
+      <div class="home-media">
+        <!-- VÍDEO -->
+        <div class="video-container" aria-label="Vídeo de introdução">
+          <video src="video/intro.mp4" muted autoplay loop playsinline></video>
+        </div>
+
+        <!-- SLIDE ABAIXO DO VÍDEO -->
+        <div class="home-slide" aria-label="Galeria de convites">
+          <div class="fade-container">
+            <img src="imagens/convites/convite1.png" class="fade-item active" alt="Modelo 1"/>
+            <img src="imagens/convites/convite2.png" class="fade-item" alt="Modelo 2"/>
+            <img src="imagens/convites/convite3.png" class="fade-item" alt="Modelo 3"/>
+          </div>
+          <button class="carousel-button prev" aria-label="Anterior">‹</button>
+          <button class="carousel-button next" aria-label="Próximo">›</button>
+        </div>
+      </div>
+    </section>
+
+    <footer role="contentinfo">
+      &copy; 2025 IMAGINISTA. Todos os direitos reservados.
+      <div class="footer-social" role="navigation" aria-label="Redes sociais">
+        <a href="#" aria-label="WhatsApp"><img src="imagens/whatsapp.png" alt="WhatsApp"/></a>
+        <a href="#" aria-label="Instagram"><img src="imagens/instagram.png" alt="Instagram"/></a>
+        <a href="#" aria-label="YouTube"><img src="imagens/youtube.png" alt="YouTube"/></a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Intro screen & autoplay de áudio
+    const intro = document.getElementById('intro-screen');
+    const audio = document.getElementById('bg-music');
+    window.addEventListener('load', () => {
+      audio.volume = 0.5;
+      audio.play().catch(() => {});
+    });
+    intro.addEventListener('animationend', () => intro.remove());
+
+    // Toggle tema
+    document.querySelector('.theme-toggle').addEventListener('click', () => {
+      const html = document.documentElement;
+      html.setAttribute(
+        'data-theme',
+        html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+      );
+    });
+
+    // Carrossel
+    (function () {
+      const slides = document.querySelectorAll('.fade-item');
+      const prev   = document.querySelector('.carousel-button.prev');
+      const next   = document.querySelector('.carousel-button.next');
+      let idx = 0;
+      const show = i => slides.forEach((s,j) => s.classList.toggle('active', j === i));
+      prev.addEventListener('click', () => { idx = (idx - 1 + slides.length) % slides.length; show(idx); });
+      next.addEventListener('click', () => { idx = (idx + 1) % slides.length; show(idx); });
+      let auto = setInterval(() => { idx = (idx + 1) % slides.length; show(idx); }, 3000);
+      const cont = document.querySelector('.fade-container');
+      cont.addEventListener('mouseenter', () => clearInterval(auto));
+      cont.addEventListener('mouseleave', () => {
+        auto = setInterval(() => { idx = (idx + 1) % slides.length; show(idx); }, 3000);
+      });
+    })();
+
+    // Controles de áudio
+    (function () {
+      const btnPlay = document.getElementById('play-pause');
+      const btnUp   = document.getElementById('vol-up');
+      const btnDown = document.getElementById('vol-down');
+      btnPlay.addEventListener('click', () => {
+        if (audio.paused) { audio.play(); btnPlay.textContent = '⏸️'; }
+        else              { audio.pause(); btnPlay.textContent = '▶️'; }
+      });
+      btnUp.addEventListener('click', () => { audio.volume = Math.min(audio.volume + 0.1, 1); });
+      btnDown.addEventListener('click', () => { audio.volume = Math.max(audio.volume - 0.1, 0); });
+    })();
+  </script>
+</body>
+</html>
