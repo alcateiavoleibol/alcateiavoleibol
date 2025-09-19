@@ -84,6 +84,20 @@
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
     },
 
+		{
+        "dia": 13,
+        "mes": 9,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "30h",
+        "hora_fim": "12",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Praça Soldado José de Souza",
+        "endereco": "R. Sd. José de Souza - Campo Grande, Rio de Janeiro - RJ, 23042-080",
+        "observacao": "Vôlei de Quadra"
+    },
+
 	    {
         "dia": 17,
         "mes": 9,
@@ -110,6 +124,20 @@
         "local": "Centro Esportivo",
         "endereco": "Rua Olinda Ellis, 470 - Campo Grande, Rio de Janeiro - RJ, 23045-160",
         "observacao": "(Acesso restrito a quem possui cadastro e carteirinha do local)"
+    },
+
+		{
+        "dia": 20,
+        "mes": 9,
+        "ano": 2025,
+        "hora_inicio": "07",
+        "minuto_inicio": "30h",
+        "hora_fim": "12",
+        "minuto_fim": "00h",
+        "taxa": "0,00",
+        "local": "Praça Soldado José de Souza",
+        "endereco": "Estrada Cabuçu de Baixo, 435 - Guaratiba, Rio de Janeiro - RJ, 23036-060",
+        "observacao": "Vôlei de Areia | Condomínio Olympia Park Clube"
     },
 	    {
         "dia": 24,
