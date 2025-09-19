@@ -599,7 +599,7 @@
   }
   
   @media (max-width: 768px) {
-  /* 1) Toggle no canto inferior direito */
+  /* 1) Toggle no rodapé/canto inferior direito */
   .mobile-menu-toggle {
     display: block !important;
     position: fixed;
@@ -611,47 +611,49 @@
     background: var(--accent);
     color: #fff;
     font-size: 1.2rem;
-    z-index: 1001;
     line-height: 2.5rem;
     text-align: center;
+    z-index: 1001;
   }
 
-  /* 2) Drawer lateral */
+  /* 2) Bottom-sheet full-width: nav parte de height 0 e expande */
   nav.menu {
     position: fixed;
-    top: 0;
     bottom: 0;
-    right: -80vw;
-    width: 80vw;
+    left: 0;
+    width: 100vw;
+    max-height: 0;
     background: var(--muted);
-    overflow-y: auto;
-    transition: right 0.3s ease;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    border-radius: 8px 8px 0 0;
     z-index: 1000;
   }
   nav.menu.open {
-    right: 0;
+    /* ajusta essa altura ao seu conteúdo; 40vh costuma ser confortável */
+    max-height: 40vh;
   }
 
-  /* 3) Links empilhados, full-width, sem cortes */
+  /* 3) Itens empilhados e legíveis */
   nav.menu ul {
     display: flex;
     flex-direction: column;
-    padding: calc(var(--gap)*2) var(--gap);
+    padding: var(--gap);
     margin: 0;
-    list-style: none;
     gap: var(--gap);
+    list-style: none;
   }
   nav.menu a {
     display: block;
     width: 100%;
-    padding: var(--gap) 0;
+    padding: calc(var(--gap) * 0.75) 0;
     font-size: 1.2rem;
-    text-align: left;
-    white-space: normal;
     color: #fff;
+    text-align: center;
+    white-space: normal;
   }
 
-  /* 4) Slogan em duas linhas */
+  /* 4) Slogan – dois spans e sem cortes */
   .slogan {
     display: flex;
     flex-direction: column;
@@ -663,8 +665,8 @@
     padding: 0 var(--gap);
     gap: .3rem;
   }
-
 }
+
 
 </style>
 
@@ -729,10 +731,7 @@
           organizadas e acessíveis até o dia do seu evento.
         </p>
 		<br>
-             <div class="slogan">
-       <span>∴ IMAGINISTA</span>
-       <span>onde a imaginação vira arte ☁️</span>
-     </div>
+        <div class="slogan">∴ IMAGINISTA onde a imaginação vira arte</div>
 		
 
         <div class="video-wrap">
