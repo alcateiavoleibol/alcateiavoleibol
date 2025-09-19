@@ -8,7 +8,7 @@
   <link rel="icon" href="imagens/favicon/favicon.png" type="image/png"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
 
- <style>
+<style>
   /* RESET & BASE */
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { height: 100%; overflow-x: hidden; }
@@ -73,10 +73,12 @@
     z-index: 9999;
     animation: fadeIntro 1s ease 1s forwards;
   }
+  @keyframes fadeIntro { to { opacity: 0; visibility: hidden; } }
   #intro-screen img.logo {
     width: 540px;
     animation: pulse 1s ease-in-out infinite alternate;
   }
+  @keyframes pulse { to { transform: scale(1.1); } }
   #intro-screen img.mascot {
     width: clamp(100px, 15vw, 150px);
     margin-top: var(--gap);
@@ -90,9 +92,7 @@
     border-radius: 4px;
     animation: loaderBar 1s infinite ease-in-out;
   }
-  @keyframes pulse     { to { transform: scale(1.1); } }
   @keyframes loaderBar { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(.4); } }
-  @keyframes fadeIntro { to { opacity: 0; visibility: hidden; } }
 
   /* FLOAT PANEL */
   .float-panel {
@@ -116,8 +116,8 @@
     border: none;
     width: 2.5rem;
     height: 2.5rem;
-    cursor: pointer;
     font-size: 1.2rem;
+    cursor: pointer;
   }
   .controls {
     display: flex;
@@ -129,8 +129,8 @@
     background: none;
     border: none;
     font-size: 1.2rem;
-    cursor: pointer;
     color: var(--accent);
+    cursor: pointer;
     transition: transform .2s;
   }
   .controls button:hover { transform: scale(1.1); }
@@ -162,7 +162,6 @@
     background: var(--muted);
     border-radius: 6px;
     margin-bottom: var(--gap);
-    transition: width .3s ease;
   }
   nav.menu ul {
     display: flex;
@@ -199,21 +198,17 @@
   }
   .banner-slider img {
     position: absolute;
-    top: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 1s ease-in-out;
+    object-fit: contain;
     max-width: clamp(250px, 40vw, 800px);
     max-height: clamp(300px, 40vh, 250px);
   }
   .banner-slider img.active { opacity: 1; }
-  .banner-slider img.banner-item:nth-child(1) {
-    left: 15%;
-    animation: floatSide 4s ease-in-out infinite alternate;
-  }
-  .banner-slider img.banner-item:nth-child(2) { left: 50%; }
+  .banner-slider img.banner-item:nth-child(1),
   .banner-slider img.banner-item:nth-child(3) {
-    left: 85%;
     animation: floatSide 4s ease-in-out infinite alternate;
   }
   @keyframes floatSide {
@@ -221,10 +216,10 @@
   }
 
   /* HOME GRID */
-  @media(min-width: 800px) {
+  @media (min-width: 800px) {
     .home { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--gap); }
   }
-  @media(max-width: 799px) {
+  @media (max-width: 799px) {
     .home { display: flex; flex-direction: column; gap: var(--gap); }
   }
 
@@ -236,72 +231,34 @@
     margin-bottom: var(--gap);
     text-align: center;
   }
-  .home-info h2 span {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: letterIn 0.5s ease forwards;
-  }
-  @keyframes letterIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .home-info h2:hover {
-    animation: glowTitle 1.5s ease-in-out infinite alternate;
-  }
-  @keyframes glowTitle {
-    from { text-shadow: 0 0 4px var(--highlight); }
-    to   { text-shadow: 0 0 16px var(--accent); }
-  }
   .home-info p {
     font-size: clamp(1rem, 1.2vw, 1.2rem);
     line-height: 1.6;
     color: var(--text);
     text-align: justify;
+    padding: 0 1rem;
   }
-
   .slogan {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+    margin: var(--gap) 0;
+    font-family: 'Playfair Display', serif;
     opacity: 0;
     transform: translateY(20px);
-    cursor: pointer;
     animation: fadeInUp 1s ease-out forwards;
+  }
+  .slogan span:first-child {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--accent);
+  }
+  .slogan span:last-child {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    color: var(--text);
   }
   @keyframes fadeInUp {
     to { opacity: 1; transform: translateY(0); }
-  }
-
-  .slogan-word {
-    display: inline-block;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 1.5rem);
-    background: linear-gradient(
-      90deg,
-      var(--highlight),
-      var(--accent),
-      var(--highlight)
-    );
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: gradientShift 4s ease infinite;
-  }
-  @keyframes gradientShift {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  .slogan.explode .slogan-word {
-    animation:
-      explode 0.6s ease-out forwards,
-      reconstruct 0.6s ease-in-out forwards 0.6s;
-  }
-  @keyframes explode {
-    from { transform: translate(0,0) scale(1); opacity: 1; }
-    to   { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
-  }
-  @keyframes reconstruct {
-    from { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
-    to   { transform: translate(0,0) scale(1); opacity: 1; }
   }
 
   /* VIDEO + CHARACTER */
@@ -312,7 +269,7 @@
     justify-content: center;
     margin-top: var(--gap);
   }
-  .video-wrap .video-container {
+  .video-container {
     width: clamp(320px, 50vw, 480px);
     aspect-ratio: 16/9;
     border-radius: 12px;
@@ -327,7 +284,6 @@
   .video-char {
     cursor: pointer;
     width: clamp(300px, 25vw, 250px);
-    height: auto;
     animation-fill-mode: both;
   }
   @keyframes bounce {
@@ -338,7 +294,7 @@
     animation: bounce 0.6s ease-in-out;
   }
 
-  /* SLIDER VERTICAL (convites) */
+  /* INVITES CAROUSEL */
   .home-media .home-slide {
     position: relative;
     width: var(--slide-w);
@@ -389,7 +345,7 @@
   .home-cards .card {
     background: var(--card-bg);
     padding: var(--gap);
-    border-radius: 1px;
+    border-radius: 4px;
     box-shadow: 0 4px 1px rgba(241,196,15,0.5);
     width: clamp(180px, 100%, 240px);
     transition: transform .3s, box-shadow .3s;
@@ -411,7 +367,10 @@
     cursor: pointer;
     z-index: 1002;
   }
-  .mascot.visible { opacity: 1; pointer-events: auto; }
+  .mascot.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   /* FOOTER */
   footer {
@@ -433,7 +392,9 @@
     filter: brightness(0) invert(1);
     transition: transform .3s;
   }
-  .footer-social a:hover img { transform: scale(1.1); }
+  .footer-social a:hover img {
+    transform: scale(1.1);
+  }
 
   /* BLOCK IMAGE DRAG/SELECT */
   img {
@@ -443,64 +404,87 @@
     user-select: none;
   }
 
-  /* MOBILE IMPROVEMENTS */
+  /* MOBILE ONLY (<768px) */
   @media (max-width: 768px) {
-    /* Toggle sempre visível e discreto */
+    /* 1) Toggle no canto inferior direito */
     .mobile-menu-toggle {
       display: block !important;
       position: fixed;
-      top: var(--gap);
+      bottom: var(--gap);
       right: var(--gap);
+      top: auto;
       background: var(--accent);
       color: #fff;
-      border: none;
-      padding: 0.5rem;
+      padding: .5rem;
       font-size: 1.2rem;
       border-radius: 4px;
       z-index: 1001;
       cursor: pointer;
     }
 
-    /* Menu drawer fino na lateral direita */
+    /* 2) Drawer do menu na base lateral */
     nav.menu {
       position: fixed;
-      top: 0;
+      bottom: 0;
       right: 0;
-      width: 0;
-      height: 100vh;
+      width: clamp(60px, 15vw, 80px);
+      height: 0;
       background: var(--muted);
       overflow: hidden;
-      transition: width 0.3s ease;
-      border-radius: 0 0 0 6px;
+      transition: height 0.3s ease;
+      border-radius: 6px 6px 0 0;
       z-index: 1000;
     }
     nav.menu.open {
-      width: clamp(60px, 15vw, 80px);
+      height: clamp(200px, 60vh, 300px);
     }
-
-    /* Itens centralizados e sem quebra de texto */
     nav.menu ul {
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin: 0;
       padding: 1rem 0;
+      list-style: none;
       gap: calc(var(--gap) / 2);
     }
-    nav.menu li {
-      width: 100%;
-    }
+    nav.menu li { width: 100%; }
     nav.menu a {
       display: block;
       width: 100%;
-      padding: 0.5rem 0;
+      padding: .5rem 0;
       font-size: 1rem;
       text-align: center;
+      color: #fff;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* Ajustes gerais para mobile */
+    /* 3) Slogan em duas linhas */
+    .slogan {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .3rem;
+      text-align: center;
+    }
+
+    /* 4) Banner e personagens sem corte */
+    .banner-slider {
+      padding: 0 var(--gap);
+    }
+    .banner-slider img,
+    .banner-item.aprendiz,
+    .banner-item.mestre {
+      position: static !important;
+      transform: none !important;
+      object-fit: contain;
+      max-width: clamp(150px, 50vw, 300px);
+      max-height: clamp(150px, 50vh, 200px);
+      margin: 0 auto;
+    }
+
+    /* 5) Vídeo e personagem em coluna */
     .video-wrap {
       flex-direction: column;
       align-items: center;
@@ -516,12 +500,15 @@
       width: 60vw;
       margin-top: 1rem;
     }
+
+    /* 6) Convites em slide vertical */
     .home-media .home-slide {
       width: 90vw;
       aspect-ratio: 9/16;
       margin: 1rem auto;
     }
-    .fade-container, .fade-item {
+    .fade-container,
+    .fade-item {
       width: 100%;
       height: 100%;
       object-fit: contain;
@@ -531,6 +518,8 @@
       height: 2rem;
       font-size: 1.2rem;
     }
+
+    /* 7) Cards empilhados */
     .home-cards {
       flex-direction: column;
       align-items: center;
@@ -539,10 +528,16 @@
     }
     .home-cards .card {
       width: 90%;
+      padding: 1rem;
       font-size: 1rem;
       text-align: center;
-      padding: 1rem;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* 8) Ajustes textuais e espaçamentos */
+    .home-info h2 {
+      font-size: clamp(1.6rem, 6vw, 2.2rem);
+      padding: 0 1rem;
     }
     .home-info p {
       font-size: 1rem;
@@ -551,36 +546,21 @@
     }
     .slogan {
       font-size: 1.2rem;
-      text-align: center;
       margin: 1rem 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100vw;
-      display: flex;
-      justify-content: center;
-      gap: 0.3rem;
     }
-    .slogan-word {
-      font-size: clamp(1.4rem, 5vw, 2rem);
-    }
-    .home-info h2 {
-      font-size: clamp(1.6rem, 6vw, 2.2rem);
-      padding: 0 1rem;
-    }
-    .container {
-      padding: 0.5rem;
-    }
-    .menu-divider {
-      margin: 1rem 0;
-    }
+    .container { padding: 0.5rem; }
+    .menu-divider { margin: 1rem 0; }
     footer {
       padding: 1rem;
       font-size: 0.9rem;
     }
-    .footer-social img {
-      width: 28px;
-    }
+    .footer-social img { width: 28px; }
+
+    /* 9) Mascote centralizado na base */
     .mascot {
       left: 50%;
       right: auto;
@@ -588,16 +568,9 @@
       bottom: 1rem;
       width: 100px;
     }
-    img.aprendiz,
-    img.mestre {
-      max-width: 90vw;
-      height: auto;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
   }
 </style>
+
 
 </head>
 
@@ -624,7 +597,7 @@
   <img src="imagens/mascote.png" alt="Mascote" class="mascot"/>
 
   <div class="container">
-    <button class="mobile-menu-toggle" aria-label="Abrir menu">MENU</button> 
+    <button class="mobile-menu-toggle" aria-label="Abrir menu">MENU</button>
 
     <header role="banner">
       <div class="banner-slider">
@@ -653,15 +626,17 @@
           uma jornada sensorial, perfeita para festas de 15 anos, casamentos, aniversários e
           outras celebrações especiais. Aqui, o seu momento ganha vida com arte, som e emoção.
         </p>
-		<br>
         <p>
           Diversos formatos e estilos de convites, desde os mais clássicos até os mais modernos
           e ousados. Também oferecemos convites em formato de página, com todas as informações
           organizadas e acessíveis até o dia do seu evento.
         </p>
-		<br>
-        <div class="slogan">∴ IMAGINISTA onde a imaginação vira arte</div>
-		
+
+        <div class="slogan">
+          <span>∴ </span>
+		  <span>IMAGINISTA</span>
+          <span>☁️ onde a imaginação vira arte</span>
+        </div>
 
         <div class="video-wrap">
           <div class="video-container">
@@ -741,7 +716,7 @@
     });
     intro?.addEventListener('animationend', () => intro.remove());
 
-    // PAINEL FLOUTANTE
+    // FLOAT PANEL
     document.querySelector('.panel-toggle')?.addEventListener('click', () => {
       document.querySelector('.float-panel')?.classList.toggle('collapsed');
     });
@@ -845,25 +820,6 @@
     }
     for (let i = 0; i < 8; i++) spawnCloud();
     setInterval(spawnCloud, 10000);
-
-    // SLOGAN WORD ANIMATION
-    document.addEventListener('DOMContentLoaded', () => {
-      const slogan = document.querySelector('.slogan');
-      const text   = slogan.textContent.trim();
-      slogan.innerHTML = text.split(' ')
-        .map(w => `<span class="slogan-word">${w}</span>`)
-        .join(' ');
-      slogan.addEventListener('click', () => {
-        slogan.querySelectorAll('.slogan-word').forEach(span => {
-          const x = (Math.random() - 0.5) * 200 + 'px';
-          const y = (Math.random() - 0.5) * 200 + 'px';
-          span.style.setProperty('--tx', x);
-          span.style.setProperty('--ty', y);
-        });
-        slogan.classList.add('explode');
-        setTimeout(() => slogan.classList.remove('explode'), 1400);
-      });
-    });
   </script>
 </body>
 </html>
