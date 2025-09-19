@@ -478,14 +478,28 @@
     user-select: none;
   }
 
- @media (max-width: 768px) {
-  /* 1) Toggle no rodapé‐esquerdo */
+/* 1) ESTILO BASE (desktop & tablets >768px): slogan SEM quebras */
+.slogan {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+  text-align: center;
+}
+.slogan span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* 2) MOBILE (≤768px): ajustes gerais + menu lateral esquerdo + slogan em 2 linhas */
+@media (max-width: 768px) {
+  /* 2.1) Toggle no canto inferior esquerdo */
   .mobile-menu-toggle {
     display: block !important;
     position: fixed;
     bottom: var(--gap);
     left: var(--gap);
-    top: auto;
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
@@ -498,13 +512,13 @@
     cursor: pointer;
   }
 
-  /* 2) Drawer abre da esquerda, do rodapé para cima */
+  /* 2.2) Drawer lateral esquerdo */
   nav.menu {
     position: fixed;
     bottom: 0;
     left: 0;
-    top: auto;
     width: 0;
+    height: 100vh;
     background: var(--muted);
     overflow-y: auto;
     transition: width 0.3s ease;
@@ -514,11 +528,11 @@
     width: clamp(200px, 70vw, 250px);
   }
 
-  /* 3) Links empilhados e legíveis */
+  /* 2.3) Links empilhados e legíveis */
   nav.menu ul {
     display: flex;
     flex-direction: column;
-    padding: calc(var(--gap)*2) var(--gap);
+    padding: calc(var(--gap) * 2) var(--gap);
     margin: 0;
     gap: var(--gap);
     list-style: none;
@@ -534,9 +548,9 @@
     overflow-wrap: break-word;
   }
 
-  /* 4) Slogan quebra em 2 linhas no mobile */
+  /* 2.4) Slogan quebra em 2 linhas: span1 + span2 */
   .slogan {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -550,21 +564,91 @@
     display: block;
     width: 100%;
   }
+
+  /* 2.5) Outros ajustes de mobile (vídeos, cards, etc.) */
+  .video-wrap {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+  }
+  .video-container {
+    width: 100vw;
+    aspect-ratio: 16/9;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .video-char {
+    width: 60vw;
+    margin-top: 1rem;
+  }
+  .home-media .home-slide {
+    width: 90vw;
+    aspect-ratio: 9/16;
+    margin: 1rem auto;
+  }
+  .fade-container,
+  .fade-item {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .carousel-button {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+  }
+  .home-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .home-cards .card {
+    width: 90%;
+    font-size: 1rem;
+    text-align: center;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .home-info h2 {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    padding: 0 1rem;
+  }
+  .home-info p {
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+  .container {
+    padding: 0.5rem;
+  }
+  .menu-divider {
+    margin: 1rem 0;
+  }
+  footer {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+  .footer-social img {
+    width: 28px;
+  }
+  .mascot {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: 1rem;
+    width: 100px;
+  }
+  img.aprendiz,
+  img.mestre {
+    max-width: 90vw;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
 }
 
-/* --- MANTÉM desktop intacto --- */
-@media (min-width: 769px) {
-  .slogan {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    white-space: nowrap;
-  }
-  .slogan span {
-    display: inline-block;
-    white-space: nowrap;
-  }
-}
 
 
 </style>
@@ -630,12 +714,15 @@
           organizadas e acessíveis até o dia do seu evento.
         </p>
 		<br>
+<!-- HTML da SLOGAN -->
 <div class="slogan">
-  <span>∴ IMAGINISTA</span>
-  <span>☁️ onde a imaginação vira arte</span>
+<span class="slogan-word slogan-symbol">∴</span>
+  <span class="slogan-word slogan-title">IMAGINISTA</span>
+  
+  <span class="slogan-word slogan-subtitle">
+    <span class="cloud-emoji">☁️</span>&nbsp;onde a imaginação vira arte
+  </span>
 </div>
-
-
 
 
         <div class="video-wrap">
