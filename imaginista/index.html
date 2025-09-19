@@ -259,50 +259,85 @@
     text-align: justify;
   }
 
-  .slogan {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(20px);
-    cursor: pointer;
-    animation: fadeInUp 1s ease-out forwards;
-  }
-  @keyframes fadeInUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* Container e entrada */
+.slogan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  cursor: pointer;
+  animation: fadeInUp 1s ease-out forwards;
+}
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .slogan-word {
-    display: inline-block;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 1.5rem);
-    background: linear-gradient(
-      90deg,
-      var(--highlight),
-      var(--accent),
-      var(--highlight)
-    );
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: gradientShift 4s ease infinite;
-  }
-  @keyframes gradientShift {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  .slogan.explode .slogan-word {
-    animation:
-      explode 0.6s ease-out forwards,
-      reconstruct 0.6s ease-in-out forwards 0.6s;
-  }
-  @keyframes explode {
-    from { transform: translate(0,0) scale(1); opacity: 1; }
-    to   { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
-  }
-  @keyframes reconstruct {
-    from { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
-    to   { transform: translate(0,0) scale(1); opacity: 1; }
-  }
+/* Texto com gradiente e loop */
+.slogan-word {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 1.5rem);
+  background: linear-gradient(
+    90deg,
+    var(--highlight),
+    var(--accent),
+    var(--highlight)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientShift 4s ease infinite;
+}
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Explosão e reconstrução no click */
+.slogan.explode .slogan-word {
+  animation:
+    explode 0.6s ease-out forwards,
+    reconstruct 0.6s ease-in-out forwards 0.6s;
+}
+
+@keyframes explode {
+  from { transform: translate(0,0) scale(1); opacity:1; }
+  to   { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity:0; }
+}
+
+@keyframes reconstruct {
+  from { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity:0; }
+  to   { transform: translate(0,0) scale(1); opacity:1; }
+}
+
+
+/* Estilos específicos por linha */
+.slogan-title {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+}
+.slogan-symbol {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  color: var(--highlight);
+}
+.slogan-subtitle {
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  color: var(--text);
+}
+
+/* Emoji NUVEM flutuante */
+.cloud-emoji {
+  display: inline-block;
+  animation: floatCloud 3s ease-in-out infinite;
+}
+@keyframes floatCloud {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-6px); }
+}
+
 
   /* VIDEO + CHARACTER */
   .video-wrap {
@@ -443,163 +478,8 @@
     user-select: none;
   }
 
-  /* MOBILE IMPROVEMENTS */
-  @media (max-width: 768px) {
-    /* Toggle sempre visível e discreto */
-    .mobile-menu-toggle {
-      display: block !important;
-      position: fixed;
-      top: var(--gap);
-      right: var(--gap);
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 0.5rem;
-      font-size: 1.2rem;
-      border-radius: 4px;
-      z-index: 1001;
-      cursor: pointer;
-    }
-
-    /* Menu drawer fino na lateral direita */
-    nav.menu {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 0;
-      height: 100vh;
-      background: var(--muted);
-      overflow: hidden;
-      transition: width 0.3s ease;
-      border-radius: 0 0 0 6px;
-      z-index: 1000;
-    }
-    nav.menu.open {
-      width: clamp(60px, 15vw, 80px);
-    }
-
-    /* Itens centralizados e sem quebra de texto */
-    nav.menu ul {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem 0;
-      gap: calc(var(--gap) / 2);
-    }
-    nav.menu li {
-      width: 100%;
-    }
-    nav.menu a {
-      display: block;
-      width: 100%;
-      padding: 0.5rem 0;
-      font-size: 1rem;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Ajustes gerais para mobile */
-    .video-wrap {
-      flex-direction: column;
-      align-items: center;
-      margin-top: 0;
-    }
-    .video-container {
-      width: 100vw;
-      aspect-ratio: 16/9;
-      border-radius: 0;
-      box-shadow: none;
-    }
-    .video-char {
-      width: 60vw;
-      margin-top: 1rem;
-    }
-    .home-media .home-slide {
-      width: 90vw;
-      aspect-ratio: 9/16;
-      margin: 1rem auto;
-    }
-    .fade-container, .fade-item {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .carousel-button {
-      width: 2rem;
-      height: 2rem;
-      font-size: 1.2rem;
-    }
-    .home-cards {
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .home-cards .card {
-      width: 90%;
-      font-size: 1rem;
-      text-align: center;
-      padding: 1rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .home-info p {
-      font-size: 1rem;
-      line-height: 1.6;
-      padding: 0 1rem;
-    }
-    .slogan {
-      font-size: 1.2rem;
-      text-align: center;
-      margin: 1rem 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100vw;
-      display: flex;
-      justify-content: center;
-      gap: 0.3rem;
-    }
-    .slogan-word {
-      font-size: clamp(1.4rem, 5vw, 2rem);
-    }
-    .home-info h2 {
-      font-size: clamp(1.6rem, 6vw, 2.2rem);
-      padding: 0 1rem;
-    }
-    .container {
-      padding: 0.5rem;
-    }
-    .menu-divider {
-      margin: 1rem 0;
-    }
-    footer {
-      padding: 1rem;
-      font-size: 0.9rem;
-    }
-    .footer-social img {
-      width: 28px;
-    }
-    .mascot {
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
-      bottom: 1rem;
-      width: 100px;
-    }
-    img.aprendiz,
-    img.mestre {
-      max-width: 90vw;
-      height: auto;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-  }
-  
-  @media (max-width: 768px) {
-  /* 1) Toggle no rodapé/canto inferior direito */
+ @media (max-width: 768px) {
+  /* 1) Toggle sempre no rodapé/canto direito */
   .mobile-menu-toggle {
     display: block !important;
     position: fixed;
@@ -613,32 +493,31 @@
     font-size: 1.2rem;
     line-height: 2.5rem;
     text-align: center;
-    z-index: 1001;
+    z-index: 1002;
+    cursor: pointer;
   }
 
-  /* 2) Bottom-sheet full-width: nav parte de height 0 e expande */
+  /* 2) Nav abre como drawer lateral */
   nav.menu {
     position: fixed;
+    top: 0;
+    right: 0;
     bottom: 0;
-    left: 0;
-    width: 100vw;
-    max-height: 0;
+    width: 0;
     background: var(--muted);
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    border-radius: 8px 8px 0 0;
-    z-index: 1000;
+    overflow-y: auto;
+    transition: width 0.3s ease;
+    z-index: 1001;
   }
   nav.menu.open {
-    /* ajusta essa altura ao seu conteúdo; 40vh costuma ser confortável */
-    max-height: 40vh;
+    width: clamp(200px, 70vw, 250px);
   }
 
-  /* 3) Itens empilhados e legíveis */
+  /* 3) Links empilhados e legíveis */
   nav.menu ul {
     display: flex;
     flex-direction: column;
-    padding: var(--gap);
+    padding: calc(var(--gap) * 2) var(--gap);
     margin: 0;
     gap: var(--gap);
     list-style: none;
@@ -646,24 +525,112 @@
   nav.menu a {
     display: block;
     width: 100%;
-    padding: calc(var(--gap) * 0.75) 0;
+    padding: 0.75rem 1rem;
     font-size: 1.2rem;
     color: #fff;
-    text-align: center;
+    text-align: left;
     white-space: normal;
+    overflow-wrap: break-word;
   }
 
-  /* 4) Slogan – dois spans e sem cortes */
+  /* 4) Slogan em 3 linhas: símbolo, IMAGINISTA e subtítulo com nuvem */
   .slogan {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    white-space: normal !important;
+    gap: 0.3rem;
+    padding: 0 var(--gap);
     font-size: clamp(1rem, 4vw, 1.4rem);
     line-height: 1.2;
-    padding: 0 var(--gap);
-    gap: .3rem;
+    white-space: normal !important;
+  }
+  /* Cada <span> vira uma linha */
+  .slogan span {
+    display: block;
+  }
+
+  /* 5) Correções gerais de mobile (vídeo, cards, etc) */
+  .video-wrap {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+  }
+  .video-container {
+    width: 100vw;
+    aspect-ratio: 16/9;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .video-char {
+    width: 60vw;
+    margin-top: 1rem;
+  }
+  .home-media .home-slide {
+    width: 90vw;
+    aspect-ratio: 9/16;
+    margin: 1rem auto;
+  }
+  .fade-container,
+  .fade-item {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .carousel-button {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+  }
+  .home-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .home-cards .card {
+    width: 90%;
+    font-size: 1rem;
+    text-align: center;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .home-info h2 {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    padding: 0 1rem;
+  }
+  .home-info p {
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+  .container {
+    padding: 0.5rem;
+  }
+  .menu-divider {
+    margin: 1rem 0;
+  }
+  footer {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+  .footer-social img {
+    width: 28px;
+  }
+  .mascot {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: 1rem;
+    width: 100px;
+  }
+  img.aprendiz,
+  img.mestre {
+    max-width: 90vw;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
   }
 }
 
@@ -731,8 +698,16 @@
           organizadas e acessíveis até o dia do seu evento.
         </p>
 		<br>
-        <div class="slogan">∴ IMAGINISTA onde a imaginação vira arte</div>
-		
+<!-- HTML da SLOGAN -->
+<div class="slogan">
+<span class="slogan-word slogan-symbol">∴</span>
+  <span class="slogan-word slogan-title">IMAGINISTA</span>
+  
+  <span class="slogan-word slogan-subtitle">
+    <span class="cloud-emoji">☁️</span>&nbsp;onde a imaginação vira arte
+  </span>
+</div>
+
 
         <div class="video-wrap">
           <div class="video-container">
@@ -918,23 +893,43 @@
     setInterval(spawnCloud, 10000);
 
     // SLOGAN WORD ANIMATION
-    document.addEventListener('DOMContentLoaded', () => {
-      const slogan = document.querySelector('.slogan');
-      const text   = slogan.textContent.trim();
-      slogan.innerHTML = text.split(' ')
-        .map(w => `<span class="slogan-word">${w}</span>`)
-        .join(' ');
-      slogan.addEventListener('click', () => {
-        slogan.querySelectorAll('.slogan-word').forEach(span => {
-          const x = (Math.random() - 0.5) * 200 + 'px';
-          const y = (Math.random() - 0.5) * 200 + 'px';
-          span.style.setProperty('--tx', x);
-          span.style.setProperty('--ty', y);
-        });
-        slogan.classList.add('explode');
-        setTimeout(() => slogan.classList.remove('explode'), 1400);
-      });
+    
+ document.addEventListener('DOMContentLoaded', () => {
+    const sloganEl = document.querySelector('.slogan');
+    if (!sloganEl) return;
+
+    // 1) separa texto em spans
+    const words = sloganEl.textContent.trim().split(' ');
+    sloganEl.innerHTML = '';
+    words.forEach((w, i) => {
+      const span = document.createElement('span');
+      span.className = 'slogan-word';
+      span.textContent = w;
+      sloganEl.appendChild(span);
+      // adiciona espaço exceto depois do último
+      if (i < words.length - 1) sloganEl.appendChild(document.createTextNode(' '));
     });
+
+    // 2) explode + reconstrói em cada click
+    sloganEl.addEventListener('click', () => {
+      const spans = sloganEl.querySelectorAll('.slogan-word');
+      spans.forEach(span => {
+        const x = `${(Math.random() - 0.5) * 200}px`;
+        const y = `${(Math.random() - 0.5) * 200}px`;
+        span.style.setProperty('--tx', x);
+        span.style.setProperty('--ty', y);
+      });
+      sloganEl.classList.add('explode');
+      setTimeout(() => {
+        sloganEl.classList.remove('explode');
+        // opcional: limpa posições customizadas
+        spans.forEach(span => {
+          span.style.removeProperty('--tx');
+          span.style.removeProperty('--ty');
+        });
+      }, 1200);
+    });
+  });
   </script>
 </body>
 </html>
