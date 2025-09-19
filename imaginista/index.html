@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>IMAGINISTA — Convites Criativos</title>
-  <link rel="icon" href="imagens/favicon.ico" type="image/x-icon"/>
-
-  <!-- Google Fonts -->
+  <link rel="icon" href="imagens/favicon/favicon.ico" type="image/x-icon"/>
+  <link rel="icon" href="imagens/favicon/favicon.png" type="image/png"/>
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap"
     rel="stylesheet"
@@ -22,9 +21,12 @@
       background: var(--bg);
       color: var(--text);
       transition: background .3s, color .3s;
+      cursor: default;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    /* TEMAS */
+    /* THEMES */
     :root {
       --gap: clamp(0.5rem,1vw,1rem);
       --bg: #f0f8ff;
@@ -34,8 +36,8 @@
       --card-bg: #ffffff;
       --muted: #2c3e50;
       --panel-bg: rgba(255,255,255,0.9);
-      --slide-w: clamp(250px,90vw,430px);
-      --slide-h: clamp(300px,90vh,520px);
+      --slide-w: clamp(200px,40vw,300px);
+      --slide-h: clamp(400px,70vh,600px);
     }
     html[data-theme="dark"] {
       --bg: #1e1e2f;
@@ -43,207 +45,461 @@
       --accent: #f39c12;
       --highlight: #f1c40f;
       --card-bg: #2c2b3a;
-      --muted: #000000;    /* <-- antes era #a5a5a5, agora preto */
+      --muted: #000000;
       --panel-bg: rgba(40,40,50,0.9);
-}
+    }
 
+    /* CLOUDS (top only) */
+    .cloud {
+      position: absolute;
+      top: 0;
+      background: url('imagens/clouds.png') no-repeat center/contain;
+      opacity: .7;
+      animation: fly linear infinite;
+      pointer-events: auto;
+      z-index: 1;
+    }
+    @keyframes fly {
+      from { transform: translateX(100vw); }
+      to   { transform: translateX(-200px); }
+    }
 
-    /* INTRO SCREEN (6s) */
+    /* INTRO SCREEN */
     #intro-screen {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: rgba(5,30,50,0.9);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       z-index: 9999;
-      animation: fadeIntro 1s ease 6s forwards;
+      animation: fadeIntro 1s ease 1s forwards;
     }
     #intro-screen img.logo {
-      width: 140px;
+      width: 540px;
       animation: pulse 1s ease-in-out infinite alternate;
     }
     #intro-screen img.mascot {
       width: clamp(100px,15vw,150px);
       margin-top: var(--gap);
-      animation: pulse 1s ease-in-out infinite alternate 0.5s;
+      animation: pulse 1s ease-in-out infinite alternate .5s;
     }
     #intro-screen .loader {
       margin-top: var(--gap);
-      width: 80px; height: 8px;
+      width: 120px; height: 8px;
       background: var(--highlight);
       border-radius: 4px;
       animation: loaderBar 1s infinite ease-in-out;
     }
-    @keyframes pulse       { to { transform: scale(1.1); } }
-    @keyframes loaderBar   { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(0.4); } }
-    @keyframes fadeIntro   { to { opacity: 0; visibility: hidden; } }
+    @keyframes pulse     { to { transform: scale(1.1); } }
+    @keyframes loaderBar { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(.4); } }
+    @keyframes fadeIntro { to { opacity: 0; visibility: hidden; } }
 
-    /* PAINEL FLUTUANTE */
+    /* FLOAT PANEL */
     .float-panel {
-      position: fixed; bottom: var(--gap); left: var(--gap);
-      background: var(--panel-bg); backdrop-filter: blur(8px);
-      padding: var(--gap); border-radius: 8px;
-      display: flex; align-items: center; gap: var(--gap);
+      position: fixed;
+      bottom: var(--gap);
+      left: var(--gap);
+      background: var(--panel-bg);
+      backdrop-filter: blur(8px);
+      padding: var(--gap);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      transition: width .3s ease;
+      overflow: hidden;
       z-index: 1000;
     }
-    .float-panel button {
-      background: none; border: none;
-      font-size: 1.2rem; cursor: pointer;
-      color: var(--accent); transition: transform .2s;
+    .float-panel.collapsed { width: 2.5rem; }
+    .panel-toggle {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      width: 2.5rem;
+      height: 2.5rem;
+      cursor: pointer;
+      font-size: 1.2rem;
     }
-    .float-panel button:hover { transform: scale(1.1); }
+    .controls {
+      display: flex;
+      gap: var(--gap);
+      padding-left: var(--gap);
+    }
+    .float-panel.collapsed .controls { display: none; }
+    .controls button {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--accent);
+      transition: transform .2s;
+    }
+    .controls button:hover { transform: scale(1.1); }
 
-    /* MENU */
+    /* MOBILE MENU */
+    .mobile-menu-toggle {
+      display: none;
+      position: fixed;
+      top: var(--gap);
+      right: var(--gap);
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: .5rem;
+      font-size: 1.5rem;
+      z-index: 1001;
+      cursor: pointer;
+    }
+
+    /* NAV & DIVIDER */
     .container {
-      max-width: 1400px; margin: 0 auto; padding: var(--gap);
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--gap);
+      position: relative;
+      z-index: 1;
     }
     nav.menu {
-      background: var(--muted); border-radius: 6px; margin-bottom: var(--gap);
+      background: var(--muted);
+      border-radius: 6px;
+      margin-bottom: var(--gap);
+      transition: width .3s ease;
     }
     nav.menu ul {
-      display: flex; justify-content: center; gap: var(--gap);
-      list-style: none; padding: var(--gap) 0;
+      display: flex;
+      justify-content: center;
+      gap: var(--gap);
+      list-style: none;
+      padding: var(--gap) 0;
     }
     nav.menu a {
-      color: #fff; font-weight: 600;
-      font-size: clamp(0.9rem,1.2vw,1.1rem);
-      text-decoration: none; transition: color .3s;
+      color: #fff;
+      font-weight: 600;
+      font-size: clamp(.9rem,1.2vw,1.1rem);
+      text-decoration: none;
+      transition: color .3s;
     }
     nav.menu a:hover { color: var(--highlight); }
+    .menu-divider {
+      width: 100%;
+      height: 4px;
+      margin: var(--gap) 0;
+      background: linear-gradient(90deg,var(--accent),var(--highlight));
+      border: none;
+    }
+    @media(max-width:768px) {
+      .mobile-menu-toggle { display: block; }
+      nav.menu {
+        position: fixed;
+        top: 0; right: 0;
+        height: 100vh;
+        width: 0;
+        overflow: hidden;
+        z-index: 1000;
+      }
+      nav.menu.open { width: 200px; }
+      nav.menu ul {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 1rem;
+      }
+      nav.menu a { display: block; margin-bottom: var(--gap); }
+    }
 
-    /* BANNER */
-    header {
-      height: 20vh;
-      background: var(--muted) url('imagens/imaginista.png') no-repeat center/cover;
-      border-radius: 8px; margin-bottom: var(--gap);
-      animation: bannerIn 2s ease-out forwards;
+    /* BANNER SLIDER – tamanhos maiores e centralização */
+    .banner-slider {
       position: relative;
-    }
-    @keyframes bannerIn { from { background-size: 0% auto; } to { background-size: 50% auto; } }
-    .logo-icon {
-      position: absolute; top: var(--gap); left: var(--gap);
-      width: clamp(160px,6vw,10px); height: clamp(160px,6vw,60px);
-      background: url('imagens/construtores.png') center/contain no-repeat;
-    }
-
-    /* HOME LAYOUT */
-    .home {
-      display: flex; flex-wrap: wrap;
-      gap: var(--gap); align-items: flex-start;
+      width: 100%;
+      height: clamp(300px,40vh,300px);
+      background: var(--muted);
+      border-radius: 8px;
+      overflow: hidden;
       margin-bottom: var(--gap);
     }
-    @media(max-width:800px) { .home { flex-direction: column; } }
-
-    /* TEXTO */
-    .home-info {
-      flex: 1 1 400px;
-      display: flex; flex-direction: column;
-      gap: var(--gap);
+    .banner-slider img {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      max-width: clamp(250px,40vw,800px);
+      max-height: clamp(300px,40vh,250px);
     }
+    .banner-slider img.active { opacity: 1; }
+
+    /* Personagens laterais flutuando */
+    .banner-slider img.banner-item:nth-child(1) {
+      left: 15%;
+      animation: floatSide 4s ease-in-out infinite alternate;
+    }
+    .banner-slider img.banner-item:nth-child(2) {
+      left: 50%;
+    }
+    .banner-slider img.banner-item:nth-child(3) {
+      left: 85%;
+      animation: floatSide 4s ease-in-out infinite alternate;
+    }
+    @keyframes floatSide {
+      to { transform: translate(-50%, -50%) translateY(-20px); }
+    }
+
+    /* HOME GRID */
+    @media(min-width:800px) {
+      .home { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--gap); }
+    }
+    @media(max-width:799px) {
+      .home { display: flex; flex-direction: column; gap: var(--gap); }
+    }
+    .home-info { grid-column: 1; }
+    .home-media { grid-column: 2; }
+    .home-cards { grid-column: 3; }
+
+    /* TEXT */
     .home-info h2 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2rem,6vw,2.8rem);
-      color: var(--accent); margin-bottom: var(--gap);
+      color: var(--accent);
+      margin-bottom: var(--gap);
+      text-align: center;
     }
     .home-info p {
       font-size: clamp(1rem,1.2vw,1.2rem);
-      line-height: 1.6; color: var(--text);
-      max-width: 650px; text-align: justify;
+      line-height: 1.6;
+      color: var(--text);
+      text-align: justify;
     }
-    .home-info .slogan {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.2rem,3vw,1.5rem);
-      text-align: center; color: var(--highlight);
+	
+	/* prepara cada letra para animar */
+.home-info h2 span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: letterIn 0.5s ease forwards;
+}
+
+/* animação principal: entra de baixo pra cima e dá fade-in */
+@keyframes letterIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* no hover, faz um glow suave */
+.home-info h2:hover {
+  animation: glowTitle 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glowTitle {
+  from {
+    text-shadow: 0 0 4px var(--highlight);
+  }
+  to {
+    text-shadow: 0 0 16px var(--accent);
+  }
+}
+
+
+
+/* SLOGAN */
+
+.slogan {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  cursor: pointer;
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 2) cada palavra recebe o gradiente animado */
+
+.slogan-word {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 1.5rem);
+  background: linear-gradient(
+    90deg,
+    var(--highlight),
+    var(--accent),
+    var(--highlight)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 3) explode & reconstrução no clique */
+
+.slogan.explode .slogan-word {
+  animation:
+    explode 0.6s ease-out forwards,
+    reconstruct 0.6s ease-in-out forwards 0.6s;
+}
+
+@keyframes explode {
+  from {
+    transform: translate(0,0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(var(--tx), var(--ty)) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes reconstruct {
+  from {
+    transform: translate(var(--tx), var(--ty)) scale(0.3);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0,0) scale(1);
+    opacity: 1;
+  }
+}
+
+
+
+    /* VIDEO + CHARACTER */
+    .video-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--gap);
+      justify-content: center;
       margin-top: var(--gap);
-      opacity: 0; animation: fadeInText 1.5s ease 2s forwards;
     }
-    @keyframes fadeInText { to { opacity: 1; } }
-
-    /* CARDS */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: var(--gap); margin-top: var(--gap);
-    }
-    @media(max-width:600px) { .cards { grid-template-columns: 1fr; } }
-    .card {
-      background: var(--card-bg); padding: var(--gap);
-      border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      opacity: 0; transform: translateY(20px);
-      animation: cardIn 0.5s ease forwards;
-      cursor: pointer; transition: transform .3s;
-    }
-    .card:nth-child(1){ animation-delay: 0.4s; }
-    .card:nth-child(2){ animation-delay: 0.6s; }
-    .card:nth-child(3){ animation-delay: 0.8s; }
-    .card:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    }
-    @keyframes cardIn { to { opacity:1; transform: translateY(0); } }
-
-    /* MÍDIA */
-    .home-media {
-      flex: 0 0 var(--slide-w);
-      display: flex; flex-direction: column; gap: var(--gap);
-    }
-
-    /* VÍDEO */
-    .video-container {
-      width: 100%; aspect-ratio: 16/9;
-      border-radius: 12px; overflow: hidden;
+    .video-wrap .video-container {
+      width: clamp(320px,50vw,480px);
+      aspect-ratio: 16/9;
+      border-radius: 12px;
+      overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    .video-container video {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
+    .video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-char {
+      cursor: pointer;
+      width: clamp(300px,25vw,250px);
+      height: auto;
+      animation-fill-mode: both;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-20px); }
+    }
+    .video-char.animate {
+      animation: bounce 0.6s ease-in-out;
     }
 
-    /* SLIDE ABAIXO DO VÍDEO */
-    .home-slide {
-      position: relative; width: 100%; height: var(--slide-h);
-      border-radius: 12px; overflow: hidden;
+    /* SLIDER VERTICAL (convites) */
+    .home-media .home-slide {
+      position: relative;
+      width: var(--slide-w);
+      height: var(--slide-h);
+      border-radius: 12px;
+      overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .fade-container {
-      width: 100%; height: 100%; position: relative;
+      position: relative;
+      width: 100%;
+      height: 100%;
     }
     .fade-item {
-      position: absolute; inset: 0; opacity: 0;
-      transition: opacity 1s ease-in-out;
-      object-fit: cover; width: 100%; height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+      transition: opacity 1s;
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
     }
     .fade-item.active { opacity: 1; z-index: 1; }
     .carousel-button {
-      position: absolute; top: 50%;
+      position: absolute;
+      top: 50%;
       transform: translateY(-50%);
-      background: var(--panel-bg); border: none;
-      border-radius: 50%; width: clamp(30px,4vw,36px);
-      height: clamp(30px,4vw,36px); cursor: pointer;
-      z-index: 2; transition: background .3s;
+      background: var(--panel-bg);
+      border: none;
+      border-radius: 50%;
+      width: clamp(30px,4vw,36px);
+      height: clamp(30px,4vw,36px);
+      cursor: pointer;
+      z-index: 2;
+      transition: background .3s;
     }
-    .carousel-button.prev { left: 8px; }
-    .carousel-button.next { right: 8px; }
+    .prev { left: 8px; }
+    .next { right: 8px; }
     .carousel-button:hover { background: var(--highlight); }
 
-    /* MASCOTE FIXO */
-    .mascot.fixed {
-      position: fixed; bottom: var(--gap); right: var(--gap);
-      width: clamp(90px,10vw,140px);
-      z-index: 1002; cursor: pointer; transition: transform .3s;
+    /* CARDS LAYOUT */
+    .home-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap);
+      justify-content: center;
     }
-    .mascot.fixed:hover { transform: translateY(-6px); }
+    .home-cards .card {
+      background: var(--card-bg);
+      padding: var(--gap);
+      border-radius: 1px;
+      box-shadow: 0 4px 1px rgba(241,196,15,0.5);
+      width: clamp(180px,100%,240px);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .home-cards .card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 1px 10px rgba(241,196,15,0.7);
+    }
+
+    /* MASCOT */
+    .mascot {
+      position: fixed;
+      bottom: var(--gap);
+      right: var(--gap);
+      width: clamp(90px,10vw,140px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+      cursor: pointer;
+      z-index: 1002;
+    }
+    .mascot.visible { opacity: 1; pointer-events: auto; }
     @media(max-width:600px){
-      .mascot.fixed { left:50%; right:auto; transform: translateX(-50%); }
+      .mascot { left:50%; right:auto; transform: translateX(-50%); }
     }
 
     /* FOOTER */
     footer {
-      text-align: center; padding: var(--gap) 0;
-      background: var(--muted); color: #fff;
-      border-radius: 4px; margin-top: var(--gap);
+      text-align: center;
+      padding: var(--gap) 0;
+      background: var(--muted);
+      color: #fff;
+      border-radius: 4px;
+      margin-top: var(--gap);
     }
     .footer-social {
-      display: flex; justify-content: center; gap: var(--gap);
+      display: flex;
+      justify-content: center;
+      gap: var(--gap);
       margin-top: var(--gap);
     }
     .footer-social img {
@@ -252,6 +508,14 @@
       transition: transform .3s;
     }
     .footer-social a:hover img { transform: scale(1.1); }
+
+    /* BLOCK IMAGE DRAG/SELECT */
+    img {
+      -webkit-user-drag: none;
+      user-drag: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
   </style>
 </head>
 
@@ -263,20 +527,29 @@
     <div class="loader" aria-hidden="true"></div>
   </div>
 
-  <!-- PAINEL FLUTUANTE -->
-  <div class="float-panel" role="region" aria-label="Controles de tema e áudio">
-    <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
-    <button id="play-pause" aria-label="Play/Pause">▶️</button>
-    <button id="vol-up" aria-label="Aumentar volume">🔊+</button>
-    <button id="vol-down" aria-label="Diminuir volume">🔊−</button>
+  <!-- FLOAT PANEL -->
+  <div class="float-panel collapsed" role="region" aria-label="Controles de tema e áudio">
+    <button class="panel-toggle" aria-label="Abrir controles">☰</button>
+    <div class="controls">
+      <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
+      <button id="play-pause" aria-label="Play/Pause">▶️</button>
+      <button id="vol-up" aria-label="Aumentar volume">🔊+</button>
+      <button id="vol-down" aria-label="Diminuir volume">🔊−</button>
+    </div>
   </div>
 
   <audio id="bg-music" src="mp3/hope.mp3" loop preload="auto"></audio>
-  <img src="imagens/mascote.png" alt="" class="mascot fixed"/>
+  <img src="imagens/mascote.png" alt="Mascote" class="mascot"/>
 
   <div class="container">
+    <button class="mobile-menu-toggle" aria-label="Abrir menu">☰</button>
+
     <header role="banner">
-      <div class="logo-icon" aria-hidden="true"></div>
+      <div class="banner-slider">
+        <img src="imagens/aprendiz-3.png" alt="Aprendiz" class="banner-item"/>
+        <img src="imagens/imaginista.png" alt="IMAGINISTA" class="banner-item active"/>
+        <img src="imagens/mestre.png" alt="Mestre" class="banner-item"/>
+      </div>
     </header>
 
     <nav class="menu" role="navigation" aria-label="Menu principal">
@@ -286,9 +559,9 @@
         <li><a href="#">CONTATO</a></li>
       </ul>
     </nav>
+    <hr class="menu-divider"/>
 
     <section class="home" role="main">
-      <!-- TEXTO -->
       <div class="home-info">
         <h2>Convites Virtuais com Magia</h2>
         <p>
@@ -298,37 +571,24 @@
           uma jornada sensorial, perfeita para festas de 15 anos, casamentos, aniversários e
           outras celebrações especiais. Aqui, o seu momento ganha vida com arte, som e emoção.
         </p>
+		<br>
         <p>
-          Diversos formatos e estilos de convites, desde os mais clássicos
-          até os mais modernos e ousados. Também oferecemos convites em formato de página,
-          com todas as informações organizadas e acessíveis até o dia do seu evento.
+          Diversos formatos e estilos de convites, desde os mais clássicos até os mais modernos
+          e ousados. Também oferecemos convites em formato de página, com todas as informações
+          organizadas e acessíveis até o dia do seu evento.
         </p>
+		<br>
         <div class="slogan">∴ IMAGINISTA onde a imaginação vira arte</div>
 
-        <div class="cards">
-          <div class="card">
-            <h3>Festa de 15</h3>
-            <p>Animações elegantes e música sob medida.</p>
+        <div class="video-wrap">
+          <div class="video-container">
+            <video src="video/intro.mp4" muted autoplay loop playsinline></video>
           </div>
-          <div class="card">
-            <h3>Casamento Vintage</h3>
-            <p>Texturas artesanais e detalhes envelhecidos.</p>
-          </div>
-          <div class="card">
-            <h3>Infantil Temático</h3>
-            <p>Personagens animados que encantam os pequenos.</p>
-          </div>
+          <img src="imagens/novato.png" alt="Personagem Novato" class="video-char"/>
         </div>
       </div>
 
-      <!-- MÍDIA -->
       <div class="home-media">
-        <!-- VÍDEO -->
-        <div class="video-container" aria-label="Vídeo de introdução">
-          <video src="video/intro.mp4" muted autoplay loop playsinline></video>
-        </div>
-
-        <!-- SLIDE ABAIXO DO VÍDEO -->
         <div class="home-slide" aria-label="Galeria de convites">
           <div class="fade-container">
             <img src="imagens/convites/convite1.png" class="fade-item active" alt="Modelo 1"/>
@@ -337,6 +597,37 @@
           </div>
           <button class="carousel-button prev" aria-label="Anterior">‹</button>
           <button class="carousel-button next" aria-label="Próximo">›</button>
+        </div>
+      </div>
+
+      <div class="home-cards">
+        <div class="card">
+          <h3>Festa de 15</h3>
+          <p>Animações elegantes e música sob medida.</p>
+        </div>
+        <div class="card">
+          <h3>Casamento Vintage</h3>
+          <p>Texturas artesanais e detalhes envelhecidos.</p>
+        </div>
+        <div class="card">
+          <h3>Infantil Temático</h3>
+          <p>Personagens animados que encantam os pequenos.</p>
+        </div>
+        <div class="card">
+          <h3>Aniversário Adulto</h3>
+          <p>Layouts sofisticados para comemorar em grande estilo.</p>
+        </div>
+        <div class="card">
+          <h3>Festa Corporativa</h3>
+          <p>Convites profissionais que fortalecem sua marca.</p>
+        </div>
+        <div class="card">
+          <h3>Chá de Bebê</h3>
+          <p>Estilos delicados e cheios de ternura.</p>
+        </div>
+        <div class="card">
+          <h3>Formatura</h3>
+          <p>Designs com elegância acadêmica e personalidade.</p>
         </div>
       </div>
     </section>
@@ -352,17 +643,22 @@
   </div>
 
   <script>
-    // Intro screen & autoplay de áudio
+    // INTRO & AUDIO
     const intro = document.getElementById('intro-screen');
     const audio = document.getElementById('bg-music');
     window.addEventListener('load', () => {
       audio.volume = 0.5;
-      audio.play().catch(() => {});
+      audio.play().catch(()=>{});
     });
-    intro.addEventListener('animationend', () => intro.remove());
+    intro?.addEventListener('animationend', ()=> intro.remove());
 
-    // Toggle tema
-    document.querySelector('.theme-toggle').addEventListener('click', () => {
+    // PANEL TOGGLE
+    document.querySelector('.panel-toggle')?.addEventListener('click', ()=>{
+      document.querySelector('.float-panel')?.classList.toggle('collapsed');
+    });
+
+    // THEME TOGGLE
+    document.querySelector('.theme-toggle')?.addEventListener('click', ()=>{
       const html = document.documentElement;
       html.setAttribute(
         'data-theme',
@@ -370,35 +666,121 @@
       );
     });
 
-    // Carrossel
-    (function () {
-      const slides = document.querySelectorAll('.fade-item');
-      const prev   = document.querySelector('.carousel-button.prev');
-      const next   = document.querySelector('.carousel-button.next');
+    // MOBILE MENU
+    document.querySelector('.mobile-menu-toggle')?.addEventListener('click', ()=>{
+      document.querySelector('nav.menu')?.classList.toggle('open');
+    });
+
+    // BANNER SLIDER
+    (function(){
+      const items = document.querySelectorAll('.banner-slider img');
       let idx = 0;
-      const show = i => slides.forEach((s,j) => s.classList.toggle('active', j === i));
-      prev.addEventListener('click', () => { idx = (idx - 1 + slides.length) % slides.length; show(idx); });
-      next.addEventListener('click', () => { idx = (idx + 1) % slides.length; show(idx); });
-      let auto = setInterval(() => { idx = (idx + 1) % slides.length; show(idx); }, 3000);
-      const cont = document.querySelector('.fade-container');
-      cont.addEventListener('mouseenter', () => clearInterval(auto));
-      cont.addEventListener('mouseleave', () => {
-        auto = setInterval(() => { idx = (idx + 1) % slides.length; show(idx); }, 3000);
+      setInterval(()=>{
+        items[idx].classList.remove('active');
+        idx = (idx+1) % items.length;
+        items[idx].classList.add('active');
+      }, 4000);
+    })();
+
+    // CHARACTER BOUNCE CLICK
+    (function(){
+      const char = document.querySelector('.video-char');
+      if (!char) return;
+      char.addEventListener('click', ()=>{
+        char.classList.remove('animate');
+        void char.offsetWidth; // force reflow
+        char.classList.add('animate');
       });
     })();
 
-    // Controles de áudio
-    (function () {
+    // INVITES CAROUSEL
+    (function(){
+      const slides = document.querySelectorAll('.fade-item');
+      const prev   = document.querySelector('.carousel-button.prev');
+      const next   = document.querySelector('.carousel-button.next');
+      let i = 0;
+      const show = x => slides.forEach((s,j)=> s.classList.toggle('active', j===x));
+      prev.addEventListener('click', ()=> show(i=(i-1+slides.length)%slides.length));
+      next.addEventListener('click', ()=> show(i=(i+1)%slides.length));
+      let auto = setInterval(()=> show(i=(i+1)%slides.length), 3000);
+      const cont = document.querySelector('.fade-container');
+      cont.addEventListener('mouseenter', ()=> clearInterval(auto));
+      cont.addEventListener('mouseleave', ()=> auto = setInterval(()=> show(i=(i+1)%slides.length),3000));
+    })();
+
+    // AUDIO CONTROLS
+    (function(){
       const btnPlay = document.getElementById('play-pause');
       const btnUp   = document.getElementById('vol-up');
       const btnDown = document.getElementById('vol-down');
-      btnPlay.addEventListener('click', () => {
-        if (audio.paused) { audio.play(); btnPlay.textContent = '⏸️'; }
-        else              { audio.pause(); btnPlay.textContent = '▶️'; }
+      btnPlay.addEventListener('click', ()=>{
+        if(audio.paused){ audio.play(); btnPlay.textContent='⏸️'; }
+        else            { audio.pause(); btnPlay.textContent='▶️'; }
       });
-      btnUp.addEventListener('click', () => { audio.volume = Math.min(audio.volume + 0.1, 1); });
-      btnDown.addEventListener('click', () => { audio.volume = Math.max(audio.volume - 0.1, 0); });
+      btnUp.addEventListener('click', ()=> audio.volume = Math.min(audio.volume+0.1,1));
+      btnDown.addEventListener('click', ()=> audio.volume = Math.max(audio.volume-0.1,0));
     })();
+
+    // MASCOT TOGGLE
+    (function(){
+      const m = document.querySelector('.mascot');
+      let v = false;
+      m?.addEventListener('click', ()=> m.classList.toggle('visible', v=!v));
+      document.addEventListener('click', e=>{
+        if(v && !e.target.closest('.mascot')){
+          v=false; m.classList.remove('visible');
+        }
+      });
+    })();
+
+    // BLOCK IMG CONTEXT MENU
+    document.addEventListener('contextmenu', e=>{
+      if(e.target.tagName==='IMG') e.preventDefault();
+    });
+
+    // CLOUDS SPAWNER
+    function spawnCloud(){
+      const c = document.createElement('div');
+      c.className = 'cloud';
+      const w = 100 + Math.random() * 100;
+      c.style.width  = w + 'px';
+      c.style.height = (w * 0.6) + 'px';
+      c.style.top    = Math.random() * 20 + 'px';
+      c.style.animationDuration = 20 + Math.random() * 15 + 's';
+      c.addEventListener('click', () => {
+        c.remove();
+        spawnCloud();
+      });
+      document.body.append(c);
+    }
+    // inicializa nuvens
+    for (let i = 0; i < 8; i++) spawnCloud();
+    // adiciona novas nuvens periodicamente
+    setInterval(spawnCloud, 10000);
+	
+	document.addEventListener('DOMContentLoaded', () => {
+  const slogan = document.querySelector('.slogan');
+  // 1) quebra em palavras e envolve cada uma
+  const text = slogan.textContent.trim();
+  slogan.innerHTML = text
+    .split(' ')
+    .map(w => `<span class="slogan-word">${w}</span>`)
+    .join(' ');
+
+  // 2) explode + reconstrói
+  slogan.addEventListener('click', () => {
+    slogan.querySelectorAll('.slogan-word').forEach(span => {
+      // gera deslocamentos aleatórios
+      const x = (Math.random() - 0.5) * 200 + 'px';
+      const y = (Math.random() - 0.5) * 200 + 'px';
+      span.style.setProperty('--tx', x);
+      span.style.setProperty('--ty', y);
+    });
+    // dispara a animação e depois limpa pra poder repetir
+    slogan.classList.add('explode');
+    setTimeout(() => slogan.classList.remove('explode'), 1400);
+  });
+});
   </script>
 </body>
 </html>
