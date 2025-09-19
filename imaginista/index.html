@@ -478,28 +478,13 @@
     user-select: none;
   }
 
-/* 1) ESTILO BASE (desktop & tablets >768px): slogan SEM quebras */
-.slogan {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 0.3rem;
-  white-space: nowrap;
-  text-align: center;
-}
-.slogan span {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-/* 2) MOBILE (≤768px): ajustes gerais + menu lateral esquerdo + slogan em 2 linhas */
-@media (max-width: 768px) {
-  /* 2.1) Toggle no canto inferior esquerdo */
+ @media (max-width: 768px) {
+  /* 1) Toggle sempre no rodapé/canto direito */
   .mobile-menu-toggle {
     display: block !important;
     position: fixed;
     bottom: var(--gap);
-    left: var(--gap);
+    right: var(--gap);
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
@@ -512,13 +497,13 @@
     cursor: pointer;
   }
 
-  /* 2.2) Drawer lateral esquerdo */
+  /* 2) Nav abre como drawer lateral */
   nav.menu {
     position: fixed;
+    top: 0;
+    right: 0;
     bottom: 0;
-    left: 0;
     width: 0;
-    height: 100vh;
     background: var(--muted);
     overflow-y: auto;
     transition: width 0.3s ease;
@@ -528,7 +513,7 @@
     width: clamp(200px, 70vw, 250px);
   }
 
-  /* 2.3) Links empilhados e legíveis */
+  /* 3) Links empilhados e legíveis */
   nav.menu ul {
     display: flex;
     flex-direction: column;
@@ -548,24 +533,24 @@
     overflow-wrap: break-word;
   }
 
-  /* 2.4) Slogan quebra em 2 linhas: span1 + span2 */
+  /* 4) Slogan em 3 linhas: símbolo, IMAGINISTA e subtítulo com nuvem */
   .slogan {
-    display: flex !important;
+    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 0.3rem;
     padding: 0 var(--gap);
-    white-space: normal !important;
     font-size: clamp(1rem, 4vw, 1.4rem);
     line-height: 1.2;
+    white-space: normal !important;
   }
+  /* Cada <span> vira uma linha */
   .slogan span {
     display: block;
-    width: 100%;
   }
 
-  /* 2.5) Outros ajustes de mobile (vídeos, cards, etc.) */
+  /* 5) Correções gerais de mobile (vídeo, cards, etc) */
   .video-wrap {
     flex-direction: column;
     align-items: center;
@@ -648,7 +633,6 @@
     margin: 0 auto;
   }
 }
-
 
 
 </style>
