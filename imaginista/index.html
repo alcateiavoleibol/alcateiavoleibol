@@ -478,60 +478,42 @@
     user-select: none;
   }
 
-/* DESKTOP: mantém menu lateral ou topo como quiser */
-nav.menu {
-  position: static;
-  width: auto;
-  height: auto;
-  background: transparent;
-  overflow: visible;
-  transition: none;
-}
-nav.menu ul {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
-nav.menu a {
-  font-size: 1rem;
-  white-space: nowrap;
-}
-@media (max-width: 768px) {
-  /* Botão ⚙️ no canto inferior esquerdo */
+ @media (max-width: 768px) {
+  /* 1) Toggle sempre no rodapé/canto direito */
   .mobile-menu-toggle {
     display: block !important;
     position: fixed;
     bottom: var(--gap);
-    left: var(--gap);
+    right: var(--gap);
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
     background: var(--accent);
     color: #fff;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     line-height: 2.5rem;
     text-align: center;
     z-index: 1002;
     cursor: pointer;
   }
 
-  /* Menu como painel inferior */
+  /* 2) Nav abre como drawer lateral */
   nav.menu {
     position: fixed;
+    top: 0;
+    right: 0;
     bottom: 0;
-    left: 0;
-    width: 100vw;
-    max-height: 0;
+    width: 0;
     background: var(--muted);
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    border-radius: 12px 12px 0 0;
+    overflow-y: auto;
+    transition: width 0.3s ease;
     z-index: 1001;
   }
   nav.menu.open {
-    max-height: 50vh;
+    width: clamp(200px, 70vw, 250px);
   }
 
+  /* 3) Links empilhados e legíveis */
   nav.menu ul {
     display: flex;
     flex-direction: column;
@@ -546,15 +528,10 @@ nav.menu a {
     padding: 0.75rem 1rem;
     font-size: 1.2rem;
     color: #fff;
-    text-align: center;
+    text-align: left;
     white-space: normal;
     overflow-wrap: break-word;
   }
-}
-
-
-
-
 
   /* 4) Slogan em 3 linhas: símbolo, IMAGINISTA e subtítulo com nuvem */
   .slogan {
@@ -686,7 +663,6 @@ nav.menu a {
 
   <div class="container">
     <button class="mobile-menu-toggle">⚙️</button>
-
 
     <header role="banner">
       <div class="banner-slider">
