@@ -599,73 +599,71 @@
   }
   
   @media (max-width: 768px) {
-  /* 1) Toggle no canto inferior direito - sem alterações */
+  /* 1) Toggle no canto inferior direito */
   .mobile-menu-toggle {
     display: block !important;
     position: fixed;
     bottom: var(--gap);
     right: var(--gap);
-    background: var(--accent);
-    color: #fff;
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
     font-size: 1.2rem;
     z-index: 1001;
+    line-height: 2.5rem;
+    text-align: center;
   }
 
-  /* 2) Bottom‐sheet full-width com max-height */
+  /* 2) Drawer lateral */
   nav.menu {
     position: fixed;
+    top: 0;
     bottom: 0;
-    left: 0;
-    width: 100vw;
-    max-height: 0;
+    right: -80vw;
+    width: 80vw;
     background: var(--muted);
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    border-radius: 8px 8px 0 0;
+    overflow-y: auto;
+    transition: right 0.3s ease;
     z-index: 1000;
   }
   nav.menu.open {
-    /* deixa crescer até o conteúdo, mas limite em 50vh */
-    max-height: 50vh;
+    right: 0;
   }
 
-  /* 3) Itens distribuídos em linha, sem corte */
+  /* 3) Links empilhados, full-width, sem cortes */
   nav.menu ul {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: var(--gap);
+    flex-direction: column;
+    padding: calc(var(--gap)*2) var(--gap);
     margin: 0;
     list-style: none;
+    gap: var(--gap);
   }
   nav.menu a {
+    display: block;
+    width: 100%;
+    padding: var(--gap) 0;
+    font-size: 1.2rem;
+    text-align: left;
+    white-space: normal;
     color: #fff;
-    font-size: 1rem;
-    white-space: nowrap;
   }
-}
 
-@media (max-width: 768px) {
+  /* 4) Slogan em duas linhas */
   .slogan {
-    /* permite quebra de linha */
-    white-space: normal !important;
-    overflow-wrap: break-word;
-    overflow: visible;
-    text-overflow: unset;
-
-    /* centraliza e ajusta o tamanho */
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 0 var(--gap);
+    white-space: normal !important;
     font-size: clamp(1rem, 4vw, 1.4rem);
     line-height: 1.2;
-    max-width: 100%;
+    padding: 0 var(--gap);
+    gap: .3rem;
   }
+
 }
 
 </style>
@@ -731,7 +729,10 @@
           organizadas e acessíveis até o dia do seu evento.
         </p>
 		<br>
-        <div class="slogan">∴ IMAGINISTA onde a imaginação vira arte</div>
+             <div class="slogan">
+       <span>∴ IMAGINISTA</span>
+       <span>onde a imaginação vira arte ☁️</span>
+     </div>
 		
 
         <div class="video-wrap">
