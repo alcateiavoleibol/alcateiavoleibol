@@ -15,15 +15,45 @@ const $$ = s => Array.from(document.querySelectorAll(s));
   }, 3000);
 })();
 
-// Carrossel automático vertical
+// Carrossel com paginação manual + automática
 (function carouselAuto() {
   const items = $$('.carousel-item');
-  if (!items.length) return;
+  const pagination = document.querySelector('.carousel-pagination');
+  if (!items.length || !pagination) return;
+
+  // cria bolinhas
+  items.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.dataset.index = i;
+    pagination.append(dot);
+  });
+
   let current = 0;
-  setInterval(() => {
-    items.forEach((el, i) => el.classList.toggle('active', i === current));
+  const dots = Array.from(pagination.children);
+
+  function update() {
+    items.forEach((img, i) => img.classList.toggle('active', i === current));
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+  }
+
+  // autoplay
+  let interval = setInterval(() => {
     current = (current + 1) % items.length;
+    update();
   }, 4000);
+
+  // clique nas bolinhas
+  pagination.addEventListener('click', e => {
+    if (!e.target.classList.contains('dot')) return;
+    clearInterval(interval);
+    current = Number(e.target.dataset.index);
+    update();
+    interval = setInterval(() => {
+      current = (current + 1) % items.length;
+      update();
+    }, 4000);
+  });
 })();
 
 // Slogan explosivo
@@ -33,10 +63,8 @@ const $$ = s => Array.from(document.querySelectorAll(s));
   slogan.addEventListener('click', () => {
     const words = slogan.querySelectorAll('.slogan-word');
     words.forEach(word => {
-      const tx = `${(Math.random() - 0.5) * 200}px`;
-      const ty = `${(Math.random() - 0.5) * 200}px`;
-      word.style.setProperty('--tx', tx);
-      word.style.setProperty('--ty', ty);
+      word.style.setProperty('--tx', `${(Math.random()-0.5)*200}px`);
+      word.style.setProperty('--ty', `${(Math.random()-0.5)*200}px`);
     });
     slogan.classList.add('explode');
     setTimeout(() => {
@@ -61,8 +89,8 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 
 // mobile menu toggle
 (function mobileMenuToggle() {
-  const toggle = document.querySelector('.mobile-menu-toggle');
-  const menu   = document.querySelector('.main-menu');
+  const toggle = $('.mobile-menu-toggle');
+  const menu   = $('.main-menu');
   if (!toggle || !menu) return;
   toggle.addEventListener('click', () => {
     menu.classList.toggle('open');
@@ -81,14 +109,11 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 
   if (!panel || !toggle || !audio) return;
 
-  toggle.addEventListener('click', () => {
-    panel.classList.toggle('collapsed');
-  });
+  toggle.addEventListener('click', () => panel.classList.toggle('collapsed'));
 
   themeBtn?.addEventListener('click', () => {
     const html = document.documentElement;
-    const atual= html.getAttribute('data-theme');
-    html.setAttribute('data-theme', atual === 'dark' ? 'light' : 'dark');
+    html.setAttribute('data-theme', html.getAttribute('data-theme')==='dark'?'light':'dark');
   });
 
   playBtn?.addEventListener('click', () => {
@@ -104,15 +129,11 @@ const $$ = s => Array.from(document.querySelectorAll(s));
   volUp?.addEventListener('click', () => {
     audio.volume = Math.min(1, audio.volume + 0.1);
   });
-
   volDown?.addEventListener('click', () => {
     audio.volume = Math.max(0, audio.volume - 0.1);
   });
 
-  // Autoplay para desktop
   window.addEventListener('load', () => {
-    if (!/Mobi|Android/i.test(navigator.userAgent)) {
-      audio.play().catch(() => {});
-    }
+    if (!/Mobi|Android/i.test(navigator.userAgent)) audio.play().catch(()=>{});
   });
 })();
