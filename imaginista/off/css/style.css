@@ -99,8 +99,7 @@ html[data-theme="dark"] {
   color: #000;
 }
 
-/* FLOAT PANEL REFACTORED */
-/* botão sempre visível */
+/* FLOAT PANEL */
 .panel-toggle {
   position: fixed;
   bottom: var(--gap);
@@ -118,7 +117,6 @@ html[data-theme="dark"] {
   cursor: pointer;
   z-index: 1002;
 }
-/* controls escondidas até abrir */
 .float-panel .controls {
   position: fixed;
   bottom: calc(var(--gap) * 2 + 2.5rem);
@@ -136,7 +134,7 @@ html[data-theme="dark"] {
   display: flex;
 }
 
-/* LAYOUT DIVIDIDO */
+/* LAYOUT PRINCIPAL */
 .dupla {
   display: flex;
   flex-wrap: wrap;
@@ -170,7 +168,7 @@ html[data-theme="dark"] {
   margin-bottom: var(--gap);
 }
 
-/* SLIDE VERTICAL AJUSTADO */
+/* CARROSSEL */
 .carousel-container {
   width: 100%;
   max-width: 400px;
@@ -195,7 +193,7 @@ html[data-theme="dark"] {
   opacity: 1;
 }
 
-/* VÍDEO PEQUENO */
+/* VÍDEO */
 .intro-video {
   width: 100%;
   max-width: 380px;
@@ -206,7 +204,7 @@ html[data-theme="dark"] {
   margin: auto;
 }
 
-/* SLOGAN INTERATIVO */
+/* SLOGAN */
 .slogan {
   font-size: clamp(2.7rem, 2vw, 1.9rem);
   font-family: 'Playfair Display', serif;
@@ -234,15 +232,15 @@ html[data-theme="dark"] {
     reconstruct 0.6s ease-in-out forwards 0.6s;
 }
 @keyframes explode {
-  from { transform: translate(0, 0) scale(1); opacity: 1; }
+  from { transform: translate(0,0) scale(1); opacity: 1; }
   to   { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
 }
 @keyframes reconstruct {
   from { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
-  to   { transform: translate(0, 0) scale(1); opacity: 1; }
+  to   { transform: translate(0,0) scale(1); opacity: 1; }
 }
 
-/* CARDS MELHORADOS */
+/* CARDS */
 .promo-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -316,7 +314,7 @@ footer {
 
 /* RESPONSIVO MOBILE (≤768px) */
 @media (max-width: 768px) {
-  /* 1) MENU: toggle ☰ + hide principal */
+  /* MENU: toggle ☰ + hide principal */
   .mobile-menu-toggle {
     display: block;
     position: fixed;
@@ -331,7 +329,6 @@ footer {
     z-index: 1003;
     cursor: pointer;
   }
-
   .main-menu {
     display: none;
   }
@@ -352,7 +349,7 @@ footer {
     align-items: center;
   }
 
-  /* 2) INTRO-VIDEO: full-bleed e centralizado */
+  /* INTRO-VIDEO full-bleed */
   .intro-video {
     width: 100vw !important;
     max-width: 100vw;
@@ -360,26 +357,42 @@ footer {
     margin: 1rem 0;
   }
 
-  /* 3) PARÁGRAFOS JUSTIFICADOS */
+  /* PARÁGRAFOS JUSTIFICADOS */
   .lado-esquerdo p {
     text-align: justify;
   }
 
-  /* 4) MASCOTE MENOR */
+  /* MASCOTE menor */
   .mascot {
     width: clamp(60px, 15vw, 80px);
   }
 
-  /* 5) BANNERS: empilhar e redimensionar */
+  /* BANNERS em linha reduzida */
   .top-banner {
-    flex-direction: column;
-    gap: var(--gap);
-    padding: var(--gap);
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    padding: 1rem;
   }
   .banner-side,
   .banner-center {
-    width: 80vw;
-    max-width: 200px;
+    width: 30vw;
+    max-width: none;
     height: auto;
+  }
+    /* 6) CENTRALIZAR SLOGAN, VÍDEO e CARROSSEL */
+  .lado-esquerdo {
+    align-items: center;
+  }
+  .slogan {
+    margin: var(--gap) auto;
+    text-align: center;
+  }
+  .lado-direito {
+    align-items: center;
+  }
+  .intro-video,
+  .carousel-container {
+    margin: var(--gap) auto;
   }
 }
