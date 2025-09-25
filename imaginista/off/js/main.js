@@ -59,15 +59,25 @@ const $$ = s => Array.from(document.querySelectorAll(s));
   });
 })();
 
+// mobile menu toggle
+(function mobileMenuToggle() {
+  const toggle = document.querySelector('.mobile-menu-toggle');
+  const menu   = document.querySelector('.main-menu');
+  if (!toggle || !menu) return;
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('open');
+  });
+})();
+
 // Painel flutuante: toggle sempre visível + controls condicionais
 (function floatPanelControls() {
-  const panel = $('.float-panel');
-  const toggle = $('.panel-toggle');
-  const themeBtn = $('.theme-toggle');
+  const panel   = $('.float-panel');
+  const toggle  = $('.panel-toggle');
+  const themeBtn= $('.theme-toggle');
   const playBtn = $('#play-pause');
-  const volUp = $('#vol-up');
+  const volUp   = $('#vol-up');
   const volDown = $('#vol-down');
-  const audio = $('#bg-music');
+  const audio   = $('#bg-music');
 
   if (!panel || !toggle || !audio) return;
 
@@ -77,7 +87,7 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 
   themeBtn?.addEventListener('click', () => {
     const html = document.documentElement;
-    const atual = html.getAttribute('data-theme');
+    const atual= html.getAttribute('data-theme');
     html.setAttribute('data-theme', atual === 'dark' ? 'light' : 'dark');
   });
 
