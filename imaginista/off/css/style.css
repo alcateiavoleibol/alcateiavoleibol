@@ -134,7 +134,7 @@ html[data-theme="dark"] {
   display: flex;
 }
 
-/* LAYOUT PRINCIPAL */
+/* LAYOUT DIVIDIDO */
 .dupla {
   display: flex;
   flex-wrap: wrap;
@@ -232,12 +232,12 @@ html[data-theme="dark"] {
     reconstruct 0.6s ease-in-out forwards 0.6s;
 }
 @keyframes explode {
-  from { transform: translate(0,0) scale(1); opacity: 1; }
+  from { transform: translate(0, 0) scale(1); opacity: 1; }
   to   { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
 }
 @keyframes reconstruct {
   from { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
-  to   { transform: translate(0,0) scale(1); opacity: 1; }
+  to   { transform: translate(0, 0) scale(1); opacity: 1; }
 }
 
 /* CARDS */
@@ -380,7 +380,23 @@ footer {
     max-width: none;
     height: auto;
   }
-    /* 6) CENTRALIZAR SLOGAN, VÍDEO e CARROSSEL */
+
+  /* centralizar slogan, vídeo e carrossel */
+  .lado-esquerdo {
+    align-items: center;
+  }
+  .slogan {
+    margin: var(--gap) auto;
+    text-align: center;
+  }
+  .lado-direito {
+    align-items: center;
+  }
+  .intro-video,
+.carousel-container {
+  margin: var(--gap) auto;
+}
+	  /* 6) CENTRALIZAR SLOGAN, VÍDEO E CARROSSEL */
   .lado-esquerdo {
     align-items: center;
   }
@@ -395,4 +411,27 @@ footer {
   .carousel-container {
     margin: var(--gap) auto;
   }
+}
+
+/* bolinhas de paginação do carrossel */
+.carousel-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+.carousel-pagination .dot {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.carousel-pagination .dot.active {
+  background: #fff;
+}
+.carousel-pagination .dot:hover {
+  background: #eee;
 }
