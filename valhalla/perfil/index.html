@@ -35,6 +35,36 @@
       0% { opacity: 0; transform: scale(0.95); }
       100% { opacity: 1; transform: scale(1); }
     }
+		
+	/* --- CONTA --- */
+    #account-info-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      padding-left: 5px; /* Alinhamento leve */
+    }
+    #account-info-container label {
+      font-weight: bold;
+    }
+    #account-name {
+      width: 200px;
+      padding: 5px;
+      background: #111;
+      color: #eee;
+      border: 1px solid #555;
+      border-radius: 4px;
+    }
+    #account-level {
+      width: 80px;
+      padding: 5px;
+      background: #111;
+      color: #eee;
+      border: 1px solid #555;
+      border-radius: 4px;
+    }
+    /* --- FIM DA ADD CONTA --- */
+	
 
     /* Menu principal separado */
     .menu {
@@ -185,11 +215,18 @@
   <div id="banner">
     <img src="../imagens/banner.png" alt="Banner ValhallaBR"/>
   </div>
-
   <!-- MENU PRINCIPAL SEPARADO -->
   <div class="menu" id="menu"></div>
 
-  <h1 style="text-align:center;">👤 PERFIL | BETA-TESTE</h1>
+  <h1 style="text-align:center;">👤 PERFIL</h1>
+  
+<div id="account-info-container">
+    <input type="text" id="account-name" placeholder="Nome da Conta">
+    <label for="account-level">C-Lv.</label>
+    <select id="account-level"></select>
+    <label for="account-collection">Coleção</label>
+    <select id="account-collection"></select>
+  </div>  
   <div id="menu-colunas"></div>
 
   <div class="table-container">
@@ -309,19 +346,19 @@
               el=criarSelect(opcoesTower,"1");
               break;
             case "berkas":
-            case "vazio":
-            case "sr":
-              {
-                let maxValor = p.birth <= 10 ? 15 : 12;
-                el=criarSelect(Array.from({length:maxValor},(_,i)=>(i+1).toString()),"1");
-              }
-              break;
+            case "vazio":
+            case "sr":
+              {
+                let maxValor = p.birth <= 10 ? 15 : 12;
+                el=criarSelect(Array.from({length: maxValor + 1}, (_, i) => i.toString()), "0");
+              }
+              break;
             case "visualChase":
-              {
-                let maxVC = p.birth <= 15 ? 5 : (p.birth === 19 ? 2 : 3);
-                el = criarSelect(Array.from({ length: maxVC }, (_, i) => (i + 1).toString()), "1");
-              }
-              break;
+              {
+                let maxVC = p.birth <= 15 ? 5 : (p.birth === 19 ? 2 : 3);
+                el = criarSelect(Array.from({ length: maxVC + 1 }, (_, i) => i.toString()), "0");
+              }
+              break;
             case "anel":
               el=criarSelect(opcoesAnel,"Nenhum");
               break;
@@ -387,33 +424,54 @@
         });
         perfil.push({birth,nome,power,...valores});
       });
-      const dadosExportar={
-        meta:{dataHora:new Date().toLocaleString()},
-        perfil
-      };
-      const blob=new Blob([JSON.stringify(dadosExportar,null,2)],{type:"application/json"});
-      const url=URL.createObjectURL(blob);
-      const a=document.createElement("a");
-      a.href=url;
-      a.download="perfil.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+     const dadosExportar={
+        meta:{dataHora:new Date().toLocaleString()},
+        // --- INÍCIO DA ADIÇÃO JAVASCRIPT ---
+        // Adiciona o nome, nível e coleção da conta ao arquivo salvo
+        accountInfo: {
+            name: document.getElementById('account-name').value,
+            level: document.getElementById('account-level').value,
+            collection: document.getElementById('account-collection').value
+        },
+        // --- FIM DA ADIÇÃO JAVASCRIPT ---
+        perfil
+      };
+      const blob=new Blob([JSON.stringify(dadosExportar,null,2)],{type:"application/json"});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");
+      a.href=url;
+      a.download="perfil.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
 
-    function aplicarPerfil(dados){
-      dados.perfil.forEach(p=>{
-        const linha=[...document.querySelectorAll("#tbody-personagens tr")].find(tr=>parseInt(tr.children[0].innerText)===p.birth);
-        if(linha){
-          colunasEditaveis.forEach((c,i)=>{
-            const cell=linha.children[i+3];
-            const input=cell.querySelector("input,select");
-            if(input) input.value=p[c];
-          });
-        }
-      });
-    }
+   function aplicarPerfil(dados){
+      // --- INÍCIO DA ADIÇÃO JAVASCRIPT ---
+      // Carrega o nome, nível e coleção da conta do arquivo, se existirem
+      if (dados.accountInfo) {
+          document.getElementById('account-name').value = dados.accountInfo.name || '';
+          document.getElementById('account-level').value = dados.accountInfo.level || '1';
+          document.getElementById('account-collection').value = dados.accountInfo.collection || '1';
+      } else {
+          // Garante que os campos fiquem nos valores padrão se o arquivo for antigo
+          document.getElementById('account-name').value = '';
+          document.getElementById('account-level').value = '1';
+          document.getElementById('account-collection').value = '1';
+      }
+      // --- FIM DA ADIÇÃO JAVASCRIPT ---
+      dados.perfil.forEach(p=>{
+        const linha=[...document.querySelectorAll("#tbody-personagens tr")].find(tr=>parseInt(tr.children[0].innerText)===p.birth);
+        if(linha){
+          colunasEditaveis.forEach((c,i)=>{
+            const cell=linha.children[i+3];
+            const input=cell.querySelector("input,select");
+            if(input) input.value=p[c];
+          });
+        }
+      });
+    }
 
     // Ordenação
     function ativarOrdenacao(){
@@ -486,7 +544,27 @@
         input.click();
       };
       menu.appendChild(btnLoad);
+	  
+	  
+	  
+	  // --- INÍCIO DA ADIÇÃO JAVASCRIPT ---
+      // Popula os selects da conta
+      const levelSelect = document.getElementById('account-level');
+      for (let i = 1; i <= 999; i++) {
+          const option = document.createElement('option');
+          option.value = i;
+          option.textContent = i;
+          levelSelect.appendChild(option);
+      }
 
+      const collectionSelect = document.getElementById('account-collection');
+      for (let i = 1; i <= 2500; i++) {
+          const option = document.createElement('option');
+          option.value = i;
+          option.textContent = i;
+          collectionSelect.appendChild(option);
+      }
+      // --- FIM DA ADIÇÃO JAVASCRIPT ---
       // Monta tabela e interações
       criarLinhas();
       criarMenuColunas();
