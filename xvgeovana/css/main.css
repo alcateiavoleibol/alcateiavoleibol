@@ -247,22 +247,17 @@ header h3 {
 }
 
 .invitation-text p {
-    font-size: 1.2rem; /* --- FONTE AUMENTADA --- */
+    font-size: 1.2rem; 
     font-style: italic;
-    margin-bottom: 15px; /* Espaçamento aumentado */
+    margin-bottom: 15px; 
 }
 
 .invitation-text .quote {
     font-family: 'Dancing Script', cursive;
-    font-size: 1.9rem; /* --- FONTE AUMENTADA --- */
+    font-size: 1.9rem; 
     color: #004d40;
     margin-top: 20px;
-    font-style: normal; /* Remove itálico do P principal */
-}
-
-/* Remove o estilo de autor, já que agora é um quote */
-.invitation-text .quote-author {
-   /* Estilo não mais usado, mas pode deixar ou remover */
+    font-style: normal; 
 }
 
 /* --- Detalhes do Evento --- */
@@ -278,7 +273,7 @@ header h3 {
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
-    font-size: 1.2rem; /* --- FONTE AUMENTADA --- */
+    font-size: 1.2rem; 
 }
 
 .detail-icon {
@@ -301,7 +296,8 @@ header h3 {
     margin: 0;
 }
 
-/* --- NOVO: Estilos do Mapa --- */
+/* ↓↓↓ ESTILOS DO MAPA (ADICIONADOS DE VOLTA) ↓↓↓ 
+*/
 .map-container {
     position: relative;
     overflow: hidden;
@@ -317,6 +313,60 @@ header h3 {
     width: 100%;
     height: 100%;
     border: 0;
+}
+/* ↑↑↑ FIM DOS ESTILOS DO MAPA ↑↑↑ 
+*/
+
+/* --- Estilos dos Botões de Direção --- */
+.directions-container {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.directions-container p {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: #004d40;
+    margin-bottom: 20px;
+}
+.direction-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap; /* Para quebrar a linha no mobile */
+}
+.direction-button {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: inline-block;
+    border: 2px solid transparent;
+}
+.direction-button.google-button {
+    background-color: #d4af37; /* Dourado */
+    color: #004d40; /* Verde escuro */
+}
+.direction-button.google-button:hover {
+    background-color: #fdfdfd;
+    border-color: #d4af37;
+    transform: translateY(-2px);
+}
+.direction-button.waze-button {
+    background-color: #004d40; /* Verde escuro */
+    color: #fdfdfd; /* Branco */
+}
+.direction-button.waze-button:hover {
+    background-color: #fdfdfd;
+    color: #004d40;
+    border-color: #004d40;
+    transform: translateY(-2px);
 }
 
 
@@ -485,7 +535,7 @@ header h3 {
 }
 
 .gift-list li {
-    font-size: 1.1rem; /* --- FONTE AUMENTADA --- */
+    font-size: 1.1rem; 
     color: #2c3e50;
     padding-left: 1.5em;
     position: relative;
@@ -589,7 +639,7 @@ header h3 {
 }
 
 .clothing-list p {
-    font-size: 1.2rem; /* --- FONTE AUMENTADA --- */
+    font-size: 1.2rem; 
     margin-bottom: 20px;
     line-height: 1.5;
 }
@@ -601,7 +651,7 @@ header h3 {
 }
 
 .clothing-list li {
-    font-size: 1.2rem; /* --- FONTE AUMENTADA --- */
+    font-size: 1.2rem; 
     margin-bottom: 12px;
     padding-left: 2em;
     position: relative;
@@ -681,10 +731,10 @@ header h3 {
     }
 
     .invitation-text p, .detail-item p, .clothing-list p, .clothing-list li {
-        font-size: 1.1rem; /* --- Ajuste mobile --- */
+        font-size: 1.1rem; 
     }
     .gift-list li {
-        font-size: 1rem; /* --- Ajuste mobile --- */
+        font-size: 1rem; 
     }
 
     .event-details h4, .gallery h3, .gift-suggestions h3, .clothing-sizes h3, .final-message p {
@@ -737,6 +787,11 @@ header h3 {
         text-align: left;
         display: inline-block;
         margin-top: 15px;
+    }
+    
+    .direction-button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
     }
 }
 
