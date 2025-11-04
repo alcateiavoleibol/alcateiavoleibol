@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XV Geovana Frigoletto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lato:wght@300;400&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <div class="main-background"></div> 
+    
+    <div class="firefly-container"></div>
+
+    <div class="container">
+        
+        <div class="banner">
+            <img src="imagens/banner.png" alt="Banner XV Geovana Frigoletto" class="banner-img">
+            <span class="banner-shimmer"></span>
+        </div>
+
+        <header>
+            <div class="header-stars"></div>
+            <h1>XV</h1>
+            <h2>Geovana Frigoletto</h2>
+            <h3>Uma Noite Mágica em Nova Orleans</h3>
+
+            <div id="countdown" class="fade-in">
+                <p>A magia começa em...</p>
+                <div id="timer">
+                    <div class="time-box"><span id="days">0</span><span class="label">Dias</span></div>
+                    <div class="time-box"><span id="hours">0</span><span class="label">Horas</span></div>
+                    <div class="time-box"><span id="minutes">0</span><span class="label">Minutos</span></div>
+                    <div class="time-box"><span id="seconds">0</span><span class="label">Segundos</span></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="invitation-text fade-in">
+            <p>Um verdadeiro sonho é algo que nos segue até mesmo quando estamos acordados.</p>
+            <p>O meu grande sonho, agora, é celebrar a vida ao lado de quem eu amo!</p>
+            <p>Convido você para uma noite de magia, músicas e sonhos realizados, com todo o encanto e a energia de Nova Orleans.</p>
+            
+            <p class="quote">"Quando você sonha, sonha pra valer!"</p>
+            <p class="quote">E eu sonho em ter você comigo nesse dia!</p>
+        </section>
+        <section class="event-details fade-in">
+            <h4>Detalhes da Festa</h4>
+            <div class="detail-item">
+                <span class="detail-icon">&#128197;</span> 
+                <p><strong>Data:</strong> 31 de Janeiro de 2026</p>
+            </div>
+            <div class="detail-item">
+                <span class="detail-icon">&#128337;</span> 
+                <p><strong>Horário:</strong> 19:00 Horas</p>
+            </div>
+            <div class="detail-item">
+                <span class="detail-icon">&#127881;</span> 
+                <p><strong>Local:</strong> Espaço 5.6 - Casa de Festas</p>
+            </div>
+            <div class="detail-item">
+                <span class="detail-icon">&#128205;</span> 
+                <p>Rua Vitor Brecheret, 80 - Santíssimo, RJ</p>
+            </div>
+            <div class="detail-item">
+                <span class="detail-icon">&#128084;</span> 
+                <p><strong>Traje:</strong> Esporte Fino</p>
+            </div>
+
+            <div class="map-container">
+                <iframe 
+                    src="https://maps.app.goo.gl/NfE1U9MtGDer9EET9" 
+                    width="600" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div class="rsvp-info">
+                <h5>Por favor, confirme sua presença até o dia 09/01</h5>
+                <p>Através do QR Code ou abrindo o link enviado.</p>
+                <div class="qr-wrapper">
+                    <img src="imagens/qr-confirmacao.png" alt="QR Code para Confirmação" class="qr-code">
+                    <a href="#" class="rsvp-button">Confirmar Presença</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery fade-in">
+            <h3>Nossos Momentos</h3>
+            <div class="slideshow-container">
+
+                <div class="mySlides fade">
+                    <img src="imagens/slide/slide-1.png" alt="Slide 1">
+                </div>
+
+                <div class="mySlides fade">
+                    <img src="imagens/slide/slide-2.jpg" alt="Slide 2">
+                </div>
+
+                <div class="mySlides fade">
+                    <img src="imagens/slide/slide-3.jpg" alt="Slide 3">
+                </div>
+                
+                <div class="mySlides fade">
+                    <img src="imagens/slide/slide-4.jpg" alt="Slide 4">
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+
+            <div class="dots-container">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+        </section>
+        
+        <section class="gift-suggestions fade-in">
+            <h3>Sugestões de Presentes</h3>
+            
+            <ul class="gift-list">
+                <li>Perfume Feminino</li>
+                <li>Acessórios (Prata ou Dourado)</li>
+                <li>Esmaltes</li>
+                <li>Esfoliantes</li>
+                <li>Sabonetes</li>
+                <li>Hidratantes Corporais</li>
+                <li>Protetor Solar</li>
+                <li>Rímel Preto (Prova d'água)</li>
+                <li>Gloss</li>
+                <li>Contorno</li>
+                <li>Delineador Preto</li>
+                <li>Pincéis</li>
+                <li>Lápis Labial (Tom de Marrom)</li>
+                <li>Blush</li>
+                <li>Paleta de Sombra</li>
+                <li>Iluminador</li>
+                <li>Bindagem</li>
+            </ul>
+
+            <div class="gift-notes">
+                <p>"Sinta-se à vontade para me presentear com o que desejar!"</p>
+                <p>"Gosto de surpresas e adoro abrir os presentes no dia seguinte!"</p>
+            </div>
+            
+            <div class="gift-voucher-area">
+                <h4>Caso queira mais comodidade...</h4>
+                <p>Poderá escolher um vale-presente clicando ou escaneando o QR Code abaixo.</p>
+                <div class="qr-wrapper">
+                    <img src="imagens/qr-vale.png" alt="QR Code para Vale Presente" class="qr-code">
+                    <a href="https://nubank.com.br/cobrar/7sd9nw/68f77381-6098-4138-9855-86f47a674546" class="rsvp-button">Acessar Vale-Presente</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="clothing-sizes fade-in">
+            <h3>Medidas para Presentes</h3>
+            <div class="clothing-container">
+                <div class="clothing-image">
+                    <img src="imagens/vestido.png" alt="Sugestão de Vestido">
+                </div>
+                <div class="clothing-list">
+                    <p>Para me ajudar a brilhar como uma princesa, caso queira me presentear com roupas ou calçados:</p>
+                    <ul>
+                        <li><strong>Blusa:</strong> Tamanho P</li>
+                        <li><strong>Cintura:</strong> Tamanho 36</li>
+                    </ul>
+                    <p class="note">Fique à vontade para escolher algo que seja a minha cara!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="final-message fade-in">
+            <p>"Não importa de onde você vem, mas para onde está indo."</p>
+            <p>Espero por você para tornarmos este sonho realidade!</p>
+        </section>
+
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

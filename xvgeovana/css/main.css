@@ -1,0 +1,765 @@
+/* Importando fontes do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lato:wght@300;400&family=Cinzel:wght@400;700&display=swap');
+
+/* Paleta de Cores (Tema Tiana):
+Verde Principal (Vestido): #b8d8be (claro)
+Verde Escuro (Bayou): #004d40
+Dourado (Magia/Elegância): #d4af37 (forte)
+Creme/Branco (Lírio): #fdfdfd
+Texto Escuro: #2c3e50
+*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    /* Fundo escuro base */
+    background-color: #0a2a24; 
+    color: #2c3e50;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Estilo de seleção de texto */
+::selection {
+    background-color: #d4af37; /* Dourado */
+    color: #004d40; /* Verde escuro */
+}
+
+/* --- CAMADA DE FUNDO PRINCIPAL --- */
+.main-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* ↓↓↓ SUA IMAGEM DE FUNDO APLICADA AQUI ↓↓↓ */
+    background: url('../imagens/background.png') no-repeat center center / cover;
+    z-index: -2; /* Atrás dos vagalumes */
+    opacity: 0.15; /* Deixa bem sutil */
+    pointer-events: none;
+    animation: fadeInScenery 3s ease;
+}
+
+@keyframes fadeInScenery {
+    from { opacity: 0; }
+    to { opacity: 0.15; }
+}
+
+
+/* --- Background Animado (Vagalumes) --- */
+.firefly-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Na frente do fundo, atrás do conteúdo */
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.firefly {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #f0e68c;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 3px #f0e68c, 0 0 12px 5px #d4af37;
+    opacity: 0;
+    animation: fly 10s linear infinite;
+}
+
+@keyframes fly {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    10%, 80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(40vw, -40vh);
+        opacity: 0;
+    }
+}
+
+.container {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 0 25px 25px 25px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 77, 64, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1; 
+    overflow: hidden;
+}
+
+/* --- Banner --- */
+.banner {
+    width: calc(100% + 50px);
+    margin-left: -25px;
+    margin-top: -25px;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    animation: bannerLoad 1.5s ease-out forwards;
+}
+
+.banner-shimmer {
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    animation: shimmer 6s infinite linear;
+    animation-delay: 3s;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    100% {
+        left: 150%;
+    }
+}
+
+@keyframes bannerLoad {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 2px dashed #b8d8be;
+    margin-bottom: 30px;
+    position: relative;
+    animation: headerFadeIn 2s ease-out forwards 0.5s;
+    opacity: 0;
+}
+
+@keyframes headerFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+header h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 5rem;
+    color: #004d40;
+    line-height: 1;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+header h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #d4af37; /* Dourado */
+    line-height: 1;
+    margin-top: -10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+header h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #2c3e50;
+    margin-top: 10px;
+}
+
+/* --- Estilos do Temporizador --- */
+#countdown {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e0e0e0;
+}
+#countdown p {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+#timer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.time-box {
+    background: #fdfdfd;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    min-width: 70px;
+    border: 1px solid #f0f0f0;
+}
+.time-box span {
+    display: block;
+}
+.time-box span:first-child { /* O número */
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #004d40;
+    line-height: 1.1;
+}
+.time-box .label { /* O texto */
+    font-size: 0.8rem;
+    color: #2c3e50;
+    text-transform: uppercase;
+}
+
+.invitation-text, .event-details, .gallery, .gift-suggestions, .clothing-sizes, .final-message {
+    text-align: center;
+    padding: 0 20px;
+    margin-bottom: 40px;
+    opacity: 0; 
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.fade-in.animated { 
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Atraso para o countdown aparecer */
+#countdown.fade-in {
+    transition-delay: 1s;
+}
+
+.invitation-text p {
+    font-size: 1.2rem; /* --- FONTE AUMENTADA --- */
+    font-style: italic;
+    margin-bottom: 15px; /* Espaçamento aumentado */
+}
+
+.invitation-text .quote {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.9rem; /* --- FONTE AUMENTADA --- */
+    color: #004d40;
+    margin-top: 20px;
+    font-style: normal; /* Remove itálico do P principal */
+}
+
+/* Remove o estilo de autor, já que agora é um quote */
+.invitation-text .quote-author {
+   /* Estilo não mais usado, mas pode deixar ou remover */
+}
+
+/* --- Detalhes do Evento --- */
+.event-details h4 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #004d40;
+    margin-bottom: 20px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem; /* --- FONTE AUMENTADA --- */
+}
+
+.detail-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    color: #d4af37;
+    animation: iconPulse 2s infinite ease-in-out;
+}
+.detail-item:nth-child(2) .detail-icon { animation-delay: 0.2s; }
+.detail-item:nth-child(3) .detail-icon { animation-delay: 0.4s; }
+.detail-item:nth-child(4) .detail-icon { animation-delay: 0.6s; }
+.detail-item:nth-child(5) .detail-icon { animation-delay: 0.8s; }
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.detail-item p {
+    margin: 0;
+}
+
+/* --- NOVO: Estilos do Mapa --- */
+.map-container {
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%; /* Proporção 16:9 (altura / largura) */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 30px 0; /* Espaçamento acima e abaixo */
+}
+.map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+
+.rsvp-info {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.rsvp-info h5 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: #004d40;
+    margin-bottom: 10px;
+}
+
+.rsvp-info p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.qr-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; 
+}
+
+.qr-code {
+    width: 170px;
+    height: auto;
+    border: 5px solid #b8d8be;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.qr-code:hover {
+    transform: scale(1.05);
+}
+
+/* --- Estilos do Slideshow --- */
+.gallery h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #004d40;
+    margin-bottom: 20px;
+}
+
+.slideshow-container {
+    max-width: 100%;
+    position: relative;
+    margin: auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.mySlides {
+    display: none;
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: #eee;
+}
+
+.mySlides img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    vertical-align: middle;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: #fdfdfd;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.4s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(44, 62, 80, 0.6);
+    z-index: 10;
+}
+
+.prev {
+    left: 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 77, 64, 0.9);
+    transform: scale(1.1);
+}
+
+.dots-container {
+    text-align: center;
+    padding-top: 15px;
+}
+
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 5px;
+    background-color: #b8d8be;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.4s ease, transform 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    animation: dotShine 3s infinite;
+}
+.dots-container .dot:nth-child(2) { animation-delay: 0.3s; }
+.dots-container .dot:nth-child(3) { animation-delay: 0.6s; }
+.dots-container .dot:nth-child(4) { animation-delay: 0.9s; }
+
+@keyframes dotShine {
+    0%, 100% { box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    50% { box-shadow: 0 2px 5px rgba(0,0,0,0.1), 0 0 8px 3px #d4af37; }
+}
+
+.active, .dot:hover {
+    background-color: #d4af37;
+    transform: scale(1.2);
+    animation: none; /* Remove animação ao interagir */
+}
+
+.fade {
+    animation-name: slideFade;
+    animation-duration: 1.5s;
+}
+
+@keyframes slideFade {
+    from {opacity: .7}
+    to {opacity: 1}
+}
+
+/* --- Sugestões de Presente --- */
+.gift-suggestions h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #004d40;
+    margin-bottom: 25px;
+}
+
+.gift-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 30px auto;
+    max-width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    text-align: left;
+}
+
+.gift-list li {
+    font-size: 1.1rem; /* --- FONTE AUMENTADA --- */
+    color: #2c3e50;
+    padding-left: 1.5em;
+    position: relative;
+}
+
+.gift-list li::before {
+    content: '\269C'; /* Flor-de-Lis */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #d4af37;
+    font-size: 1.1em;
+}
+
+.gift-notes {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: #004d40;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+.gift-voucher-area {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.gift-voucher-area h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: #004d40;
+    margin-bottom: 10px;
+}
+
+.gift-voucher-area p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.rsvp-button {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+    background-color: #d4af37;
+    color: #004d40;
+    padding: 12px 30px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
+    display: inline-block;
+    margin-top: 0; 
+}
+
+.rsvp-button:hover {
+    background-color: #e0be5b;
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+    transform: translateY(-3px) scale(1.02);
+}
+
+/* --- Seção Medidas para Presentes --- */
+.clothing-sizes h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #004d40;
+    margin-bottom: 25px;
+}
+
+.clothing-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.clothing-image {
+    flex: 1;
+    text-align: center;
+}
+
+.clothing-image img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    border-radius: 10px;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+    animation: floatImage 4s infinite ease-in-out;
+}
+
+@keyframes floatImage {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.clothing-list {
+    flex: 1.5;
+}
+
+.clothing-list p {
+    font-size: 1.2rem; /* --- FONTE AUMENTADA --- */
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.clothing-list ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+.clothing-list li {
+    font-size: 1.2rem; /* --- FONTE AUMENTADA --- */
+    margin-bottom: 12px;
+    padding-left: 2em;
+    position: relative;
+}
+
+.clothing-list li::before {
+    content: '\2728'; /* Estrela */
+    position: absolute;
+    left: 0;
+    top: -2px;
+    color: #d4af37;
+    font-size: 1.3em;
+}
+
+.clothing-list .note {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: #004d40;
+    margin-top: 20px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.final-message {
+    padding-top: 20px;
+    border-top: 1px dashed #b8d8be;
+    margin-top: 40px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: #004d40;
+}
+
+.final-message p:last-child {
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+
+/* --- Responsividade (Mobile) --- */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px auto;
+        padding: 0 15px 15px 15px;
+        border-radius: 10px;
+    }
+
+    .banner {
+        width: calc(100% + 30px);
+        margin-left: -15px;
+        margin-top: -15px;
+    }
+
+    .main-background {
+        background-size: cover;
+        background-position: 30% 0; 
+    }
+
+    header h1 {
+        font-size: 3.5rem;
+    }
+    header h2 {
+        font-size: 2.2rem;
+    }
+    header h3 {
+        font-size: 1rem;
+    }
+
+    .time-box {
+        padding: 8px 5px;
+        min-width: 60px;
+    }
+    .time-box span:first-child {
+        font-size: 1.8rem;
+    }
+    .time-box .label {
+        font-size: 0.6rem;
+    }
+
+    .invitation-text p, .detail-item p, .clothing-list p, .clothing-list li {
+        font-size: 1.1rem; /* --- Ajuste mobile --- */
+    }
+    .gift-list li {
+        font-size: 1rem; /* --- Ajuste mobile --- */
+    }
+
+    .event-details h4, .gallery h3, .gift-suggestions h3, .clothing-sizes h3, .final-message p {
+        font-size: 2rem;
+    }
+    .final-message p:last-child {
+        font-size: 1.2rem;
+    }
+
+    .rsvp-button {
+        font-size: 1rem;
+        padding: 10px 25px;
+    }
+
+    .qr-code {
+        width: 140px; 
+    }
+
+    .prev, .next {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .dot {
+        height: 12px;
+        width: 12px;
+    }
+
+    .gift-list {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .gift-notes {
+        font-size: 1.3rem;
+    }
+
+    .mySlides {
+        aspect-ratio: 4 / 3;
+    }
+
+    .clothing-container {
+        flex-direction: column;
+    }
+    .clothing-list {
+        text-align: center;
+    }
+    .clothing-list ul {
+        text-align: left;
+        display: inline-block;
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2.8rem;
+    }
+    header h2 {
+        font-size: 1.8rem;
+    }
+    header h3 {
+        font-size: 0.9rem;
+    }
+    .mySlides {
+        aspect-ratio: 1 / 1;
+    }
+    .gift-list {
+        max-width: 100%;
+    }
+    #timer {
+        gap: 8px;
+    }
+    .time-box {
+        min-width: 55px;
+    }
+}
