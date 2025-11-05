@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contato — IMAGINISTA</title>
+  <title>Banners — IMAGINISTA</title>
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../css/main.css" />
   
-  <!-- ATUALIZAÇÃO: Adicionando scripts de partículas -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
+  <!-- Partículas Removidas -->
   <script src="../js/main.js" defer></script>
 </head>
 <body>
-  <!-- ATUALIZAÇÃO: Adicionando div das partículas -->
-  <div id="tsparticles-bg"></div>
+  <!-- ATUALIZAÇÃO: Novo Efeito de Céu (CSS) -->
+  <div class="sky-effect" id="stars1"></div>
+  <div class="sky-effect" id="stars2"></div>
+  <div class="sky-effect" id="stars3"></div>
+  <!-- Fim do Efeito de Céu -->
 
   <!-- TOPO COM BANNERS (Caminhos corrigidos) -->
   <header class="top-banner">
@@ -27,16 +29,27 @@
     <ul>
       <li><a href="../index.html">INÍCIO</a></li>
       <li><a href="../convites/index.html">CONVITES</a></li>
-      <li><a href="index.html">CONTATO</a></li>
-      <li><a href="../banner/index.html">BANNER</a></li>
+      <li><a href="../contato/index.html">CONTATO</a></li>
+      <li><a href="index.html">BANNER</a></li>
       <li><a href="../flyer/index.html">FLYER</a></li>
     </ul>
   </nav>
 
+  <!-- Áudio e Controles adicionados -->
+  <audio id="bg-music" src="../mp3/hope.mp3" loop preload="auto"></audio>
+
   <!-- Conteúdo da Página "Em Construção" -->
   <main class="placeholder-main">
+
+    <div class="desktop-controls">
+      <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
+      <button id="play-pause" aria-label="Play/Pause">▶️</button>
+      <button id="vol-up" aria-label="Aumentar volume">🔊+</button>
+      <button id="vol-down" aria-label="Diminuir volume">🔊−</button>
+    </div>
+
     <h1>Em Construção</h1>
-    <p>Nossa página de contato estará disponível em breve. Mal podemos esperar para falar com você!</p>
+    <p>Nossa galeria de banners para mídias sociais e eventos estará no ar em breve.</p>
     <a href="../index.html">Voltar ao Início</a>
   </main>
 

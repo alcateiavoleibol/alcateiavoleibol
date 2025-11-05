@@ -5,7 +5,7 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 // Banners animados no topo
 (function bannerAnimation() {
   const banners = $$('.top-banner img');
-  if (!banners.length) return; // Proteção
+  if (!banners.length) return; 
   
   let index = 0;
   function updateBanner() {
@@ -22,7 +22,7 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 (function carouselAuto() {
   const items = $$('.carousel-item');
   const pagination = $('.carousel-pagination');
-  if (!items.length || !pagination) return; // Proteção
+  if (!items.length || !pagination) return; 
 
   pagination.innerHTML = ''; 
   
@@ -61,7 +61,7 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 // Slogan explosivo
 (function sloganExplode() {
   const slogan = $('#slogan');
-  if (!slogan) return; // Proteção
+  if (!slogan) return; 
   slogan.addEventListener('click', () => {
     const words = slogan.querySelectorAll('.slogan-word');
     words.forEach(word => {
@@ -83,7 +83,7 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 (function mascotAnimate() {
   const mascot = $('#mascot');
   const menu   = $('.main-menu'); 
-  if (!mascot || !menu) return; // Proteção
+  if (!mascot || !menu) return; 
 
   mascot.addEventListener('click', () => {
     mascot.classList.add('animate');
@@ -96,6 +96,7 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 /* Controles de Áudio, Tema e Partículas.
 */
 window.addEventListener('load', () => {
+  // Seleciona os controlos (agora existem em todas as páginas)
   const themeBtn= $('.desktop-controls .theme-toggle');
   const playBtn = $('.desktop-controls #play-pause');
   const volUp   = $('.desktop-controls #vol-up');
@@ -103,8 +104,9 @@ window.addEventListener('load', () => {
   const audio   = $('#bg-music');
   const html = document.documentElement;
 
-  // --- 1. Lógica de Áudio (Protegida por '?.') ---
-  playBtn?.addEventListener('click', () => {
+  // --- 1. Lógica de Áudio (Simplificada) ---
+  
+  playBtn.addEventListener('click', () => {
     if (audio.paused) {
       audio.play();
       playBtn.textContent = '⏸️';
@@ -114,105 +116,33 @@ window.addEventListener('load', () => {
     }
   });
 
-  volUp?.addEventListener('click', () => {
-    if (audio) audio.volume = Math.min(1, audio.volume + 0.1);
+  volUp.addEventListener('click', () => {
+    audio.volume = Math.min(1, audio.volume + 0.1);
   });
-  volDown?.addEventListener('click', () => {
-    if (audio) audio.volume = Math.max(0, audio.volume - 0.1);
+  
+  volDown.addEventListener('click', () => {
+    audio.volume = Math.max(0, audio.volume - 0.1);
   });
 
-  // Autoplay do Áudio (só roda se o áudio existir)
-  if (audio) {
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          if (playBtn) playBtn.textContent = '⏸️';
-        })
-        .catch((error) => {
-          if (playBtn) playBtn.textContent = '▶️';
-        });
-    }
-  }
-  
-  // --- 2. Lógica de Partículas e Tema ---
-  
-  // Roda em todas as páginas
-  if (typeof tsParticles !== 'undefined') {
-    
-    // Configuração base (comum para ambos os temas)
-    const baseOptions = {
-      fpsLimit: 60,
-      interactivity: {
-        events: {
-          onHover: { enable: true, mode: "repulse" },
-        },
-        modes: {
-          repulse: { distance: 100, duration: 0.4 },
-        },
-      },
-      particles: {
-        links: { distance: 150, enable: true, opacity: 0.4, width: 1 },
-        move: { direction: "none", enable: true, outModes: "out", random: false, speed: 2, straight: false },
-        number: { density: { enable: true, area: 800 }, value: 80 },
-        opacity: { value: 0.5 },
-        shape: { type: "circle" },
-        size: { value: { min: 1, max: 3 } },
-      },
-      detectRetina: true,
-    };
-
-    // CORREÇÃO: Cores codificadas DIRETAMENTE no JS
-    
-    // Configuração do Tema Claro
-    const lightOptions = {
-      ...baseOptions,
-      particles: {
-        ...baseOptions.particles,
-        color: { value: "#333333" }, // Cinza Escuro
-        links: { ...baseOptions.particles.links, color: "#333333" },
-      },
-    };
-
-    // Configuração do Tema Escuro
-    const darkOptions = {
-      ...baseOptions,
-      particles: {
-        ...baseOptions.particles,
-        color: { value: "#FFD700" }, // Dourado
-        links: { ...baseOptions.particles.links, color: "#FFD700" },
-      },
-    };
-    
-    // Função para carregar as partículas
-    const loadParticles = async (options) => {
-      await tsParticles.load({
-        id: "tsparticles-bg", 
-        options: options,
+  // Autoplay do Áudio
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        if (playBtn) playBtn.textContent = '⏸️';
+      })
+      .catch((error) => {
+        if (playBtn) playBtn.textContent = '▶️';
       });
-    };
-
-    // Lógica do Botão de Tema (Protegida por '?.')
-    themeBtn?.addEventListener('click', async () => {
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', newTheme);
-      
-      const instance = tsParticles.dom.find(i => i.id === "tsparticles-bg");
-      if (instance) {
-        // Simplesmente carrega as opções corretas
-        const newOptions = newTheme === 'dark' ? darkOptions : lightOptions;
-        await instance.options.load(newOptions);
-        await instance.refresh();
-      }
-    });
-    
-    // Carregamento Inicial (em todas as páginas)
-    const initialTheme = html.getAttribute('data-theme') || 'light';
-    loadParticles(initialTheme === 'dark' ? darkOptions : lightOptions);
-
-  } else {
-    console.error('tsParticles library not loaded.');
   }
+  
+  // --- 2. Lógica de Tema ---
+  // (Lógica de partículas removida daqui)
+  
+  themeBtn.addEventListener('click', () => {
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
+  });
   
 }); // Fim do window.addEventListener('load')

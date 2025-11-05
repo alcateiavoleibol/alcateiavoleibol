@@ -7,13 +7,15 @@
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../css/main.css" />
   
-  <!-- ATUALIZAÇÃO: Adicionando scripts de partículas -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
+  <!-- Partículas Removidas -->
   <script src="../js/main.js" defer></script>
 </head>
 <body>
-  <!-- ATUALIZAÇÃO: Adicionando div das partículas -->
-  <div id="tsparticles-bg"></div>
+  <!-- ATUALIZAÇÃO: Novo Efeito de Céu (CSS) -->
+  <div class="sky-effect" id="stars1"></div>
+  <div class="sky-effect" id="stars2"></div>
+  <div class="sky-effect" id="stars3"></div>
+  <!-- Fim do Efeito de Céu -->
 
   <!-- TOPO COM BANNERS (Caminhos corrigidos) -->
   <header class="top-banner">
@@ -33,8 +35,19 @@
     </ul>
   </nav>
 
+  <!-- Áudio e Controles adicionados -->
+  <audio id="bg-music" src="../mp3/hope.mp3" loop preload="auto"></audio>
+
   <!-- Conteúdo da Página "Em Construção" -->
   <main class="placeholder-main">
+
+    <div class="desktop-controls">
+      <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
+      <button id="play-pause" aria-label="Play/Pause">▶️</button>
+      <button id="vol-up" aria-label="Aumentar volume">🔊+</button>
+      <button id="vol-down" aria-label="Diminuir volume">🔊−</button>
+    </div>
+
     <h1>Em Construção</h1>
     <p>Nossa galeria de banners para mídias sociais e eventos estará no ar em breve.</p>
     <a href="../index.html">Voltar ao Início</a>

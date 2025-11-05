@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IMAGINISTA</title>
+  <title>IMAGINISTA — Convites Criativos</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/main.css" />
   
-  <!-- Biblioteca de Partículas (Efeito Constelação) -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
+  <!-- Biblioteca de Partículas REMOVIDA -->
   
   <script src="js/main.js" defer></script>
 </head>
-<!-- ATUALIZAÇÃO: Classe "homepage" adicionada -->
-<body class="homepage">
-  <!-- Container para o fundo de partículas (só existe na homepage) -->
-  <div id="tsparticles-bg"></div>
+<body>
+  <!-- ATUALIZAÇÃO: Novo Efeito de Céu (CSS) -->
+  <div class="sky-effect" id="stars1"></div>
+  <div class="sky-effect" id="stars2"></div>
+  <div class="sky-effect" id="stars3"></div>
+  <!-- Fim do Efeito de Céu -->
 
   <!-- TOPO COM BANNERS ANIMADOS -->
   <header class="top-banner">
@@ -26,7 +28,6 @@
   <!-- MENU PRINCIPAL -->
   <nav class="main-menu">
     <ul>
-      <!-- ATUALIZAÇÃO: Links atualizados -->
       <li><a href="index.html">INÍCIO</a></li>
       <li><a href="convites/index.html">CONVITES</a></li>
       <li><a href="contato/index.html">CONTATO</a></li>
@@ -35,7 +36,7 @@
     </ul>
   </nav>
 
-  <!-- ÁUDIO DE FUNDO (só existe na homepage) -->
+  <!-- ÁUDIO DE FUNDO -->
   <audio id="bg-music" src="mp3/hope.mp3" loop preload="auto"></audio>
 
   <!-- CONTEÚDO PRINCIPAL DIVIDIDO -->
@@ -61,7 +62,7 @@
     </div>
     
     <div class="lado-direito">
-      <!-- CONTROLES (só existe na homepage) -->
+      <!-- CONTROLES (só desktop) -->
       <div class="desktop-controls">
         <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
         <button id="play-pause" aria-label="Play/Pause">▶️</button>
@@ -95,7 +96,7 @@
     <article class="card"><h3>Formatura</h3><p>Designs com elegância acadêmica e personalidade.</p></article>
   </div>
 
-  <!-- MASCOTE (só existe na homepage) -->
+  <!-- MASCOTE -->
   <img src="imagens/novato.png" alt="Mascote Novato" class="mascot" id="mascot" />
 
   <!-- RODAPÉ -->
