@@ -1,151 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IMAGINISTA — Convites Criativos</title>
-  <link rel="icon" href="imagens/favicon/favicon.ico" type="image/x-icon"/>
-  <link rel="icon" href="imagens/favicon/favicon.png" type="image/png"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="css/style.css"/>
-
+  <link rel="stylesheet" href="css/main.css" />
+  <script src="js/main.js" defer></script>
 </head>
-
 <body>
-  <!-- INTRO SCREEN -->
-  <div id="intro-screen" role="status" aria-live="polite">
-    <img src="imagens/imaginista.png" alt="Logo IMAGINISTA" class="logo"/>
-    <img src="imagens/mascote.png" alt="" class="mascot"/>
-    <div class="loader" aria-hidden="true"></div>
-  </div>
+  <header class="top-banner">
+    <img src="imagens/aprendiz-3.png" alt="Aprendiz" class="banner-side left" />
+    <img src="imagens/imaginista.png" alt="Logo Imaginista" class="banner-center" />
+    <img src="imagens/mestre.png" alt="Mestre" class="banner-side right" />
+  </header>
 
-  <!-- FLOAT PANEL -->
-  <div class="float-panel collapsed" role="region" aria-label="Controles de tema e áudio">
-    <button class="panel-toggle" aria-label="Abrir controles">☰</button>
+  <button class="mobile-menu-toggle" aria-label="Abrir menu">☰</button>
+
+  <nav class="main-menu">
+    <ul>
+      <li><a href="#">INÍCIO</a></li>
+      <li><a href="#">CONVITES</a></li>
+      <li><a href="#">CONTATO</a></li>
+      <li><a href="#">BANNER</a></li>
+      <li><a href="#">FLYER</a></li>
+    </ul>
+  </nav>
+
+  <aside class="float-panel collapsed">
+    <button class="panel-toggle" aria-label="Abrir painel">⚙️</button>
     <div class="controls">
       <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
       <button id="play-pause" aria-label="Play/Pause">▶️</button>
       <button id="vol-up" aria-label="Aumentar volume">🔊+</button>
       <button id="vol-down" aria-label="Diminuir volume">🔊−</button>
     </div>
-  </div>
+  </aside>
 
   <audio id="bg-music" src="mp3/hope.mp3" loop preload="auto"></audio>
-  <img src="imagens/mascote.png" alt="Mascote" class="mascot"/>
 
-  <div class="container">
-    <button class="mobile-menu-toggle">⚙️</button>
-
-    <header role="banner">
-      <div class="banner-slider">
-        <img src="imagens/aprendiz-3.png" alt="Aprendiz" class="banner-item aprendiz"/>
-        <img src="imagens/imaginista.png" alt="IMAGINISTA" class="banner-item active"/>
-        <img src="imagens/mestre.png" alt="Mestre" class="banner-item mestre"/>
+  <main class="dupla">
+    <div class="lado-esquerdo">
+      <h1>Convites Virtuais com Magia</h1>
+      <p>
+        Cada detalhe do seu convite virtual é pensado para emocionar. O design criativo,
+        as animações envolventes e a trilha musical cuidadosamente escolhida se entrelaçam
+        para criar experiências interativas que contam histórias únicas. Cada convite é
+        uma jornada sensorial, perfeita para festas de 15 anos, casamentos, aniversários e
+        outras celebrações especiais. Aqui, o seu momento ganha vida com arte, som e emoção.
+      </p>
+      <p>
+        Diversos formatos e estilos de convites, desde os mais clássicos até os mais modernos
+        e ousados. Também oferecemos convites em formato de página, com todas as informações
+        organizadas e acessíveis até o dia do seu evento.
+      </p>
+      <div class="slogan" id="slogan">
+        <span class="slogan-word">∴ IMAGINISTA</span>
+        <span class="slogan-word">☁️ onde a imaginação vira arte</span>
       </div>
-    </header>
-
-    <nav class="menu" role="navigation" aria-label="Menu principal">
-      <ul>
-        <li><a href="#">INÍCIO</a></li>
-        <li><a href="#">CONVITES</a></li>
-        <li><a href="#">CONTATO</a></li>
-      </ul>
-    </nav>
-    <hr class="menu-divider"/>
-
-    <section class="home" role="main">
-      <div class="home-info">
-        <h2>Convites Virtuais com Magia</h2>
-        <p>
-          Cada detalhe do seu convite virtual é pensado para emocionar. O design criativo,
-          as animações envolventes e a trilha musical cuidadosamente escolhida se entrelaçam
-          para criar experiências interativas que contam histórias únicas. Cada convite é
-          uma jornada sensorial, perfeita para festas de 15 anos, casamentos, aniversários e
-          outras celebrações especiais. Aqui, o seu momento ganha vida com arte, som e emoção.
-        </p>
-		<br>
-        <p>
-          Diversos formatos e estilos de convites, desde os mais clássicos até os mais modernos
-          e ousados. Também oferecemos convites em formato de página, com todas as informações
-          organizadas e acessíveis até o dia do seu evento.
-        </p>
-		<br>
-
-<!-- HTML da SLOGAN -->
-<div class="slogan">
-  <div class="slogan-word slogan-symbol">∴</div>
-  <div class="slogan-word slogan-title">IMAGINISTA</div>
-  <div class="slogan-word slogan-subtitle">
-    <span class="cloud-emoji">☁️</span> onde a imaginação vira arte
-  </div>
-</div>
-        <div class="video-wrap">
-          <div class="video-container">
-            <video src="video/intro.mp4" muted autoplay loop playsinline></video>
-          </div>
-          <img src="imagens/novato.png" alt="Personagem Novato" class="video-char"/>
-        </div>
+    </div>
+    
+    <div class="lado-direito">
+      <video class="intro-video" autoplay muted loop playsinline>
+        <source src="video/intro.mp4" type="video/mp4" />
+      </video>
+      
+      <div class="carousel-container">
+        <img src="imagens/convites/convite1.png" class="carousel-item active" alt="Convite 1" />
+        <img src="imagens/convites/convite2.png" class="carousel-item" alt="Convite 2" />
+        <img src="imagens/convites/convite3.png" class="carousel-item" alt="Convite 3" />
       </div>
 
-      <div class="home-media">
-        <div class="home-slide" aria-label="Galeria de convites">
-          <div class="fade-container">
-            <img src="imagens/convites/convite1.png" class="fade-item active" alt="Modelo 1"/>
-            <img src="imagens/convites/convite2.png" class="fade-item" alt="Modelo 2"/>
-            <img src="imagens/convites/convite3.png" class="fade-item" alt="Modelo 3"/>
-          </div>
-          <button class="carousel-button prev" aria-label="Anterior">‹</button>
-          <button class="carousel-button next" aria-label="Próximo">›</button>
-        </div>
-      </div>
+      <div class="carousel-pagination"></div>
 
-      <div class="home-cards">
-        <div class="card">
-          <h3>Festa de 15</h3>
-          <p>Animações elegantes e música sob medida.</p>
-        </div>
-        <div class="card">
-          <h3>Casamento Vintage</h3>
-          <p>Texturas artesanais e detalhes envelhecidos.</p>
-        </div>
-        <div class="card">
-          <h3>Infantil Temático</h3>
-          <p>Personagens animados que encantam os pequenos.</p>
-        </div>
-        <div class="card">
-          <h3>Aniversário Adulto</h3>
-          <p>Layouts sofisticados para comemorar em grande estilo.</p>
-        </div>
-        <div class="card">
-          <h3>Festa Corporativa</h3>
-          <p>Convites profissionais que fortalecem sua marca.</p>
-        </div>
-        <div class="card">
-          <h3>Chá de Bebê</h3>
-          <p>Estilos delicados e cheios de ternura.</p>
-        </div>
-        <div class="card">
-          <h3>Formatura</h3>
-          <p>Designs com elegância acadêmica e personalidade.</p>
-        </div>
+      <div class="promo-cards">
+        <article class="card"><h3>Festa de 15</h3><p>Elegância e emoção em cada detalhe.</p></article>
+        <article class="card"><h3>Casamento</h3><p>Convites que contam histórias de amor.</p></article>
+        <article class="card"><h3>Infantil</h3><p>Magia e diversão para os pequenos.</p></article>
+        <article class="card"><h3>Aniversário Adulto</h3><p>Layouts sofisticados para comemorar em grande estilo.</p></article>
+        <article class="card"><h3>Festa Corporativa</h3><p>Convites profissionais que fortalecem sua marca.</p></article>
+        <article class="card"><h3>Chá de Bebê</h3><p>Estilos delicados e cheios de ternura.</p></article>
+        <article class="card"><h3>Formatura</h3><p>Designs com elegância acadêmica e personalidade.</p></article>
       </div>
-    </section>
+    </div>
+    </main>
 
-    <footer role="contentinfo">
-      &copy; 2025 IMAGINISTA. Todos os direitos reservados.
-      <div class="footer-social" role="navigation" aria-label="Redes sociais">
-        <a href="#" aria-label="WhatsApp">
-          <img src="imagens/whatsapp.png" alt="WhatsApp"/>
-        </a>
-        <a href="#" aria-label="Instagram">
-          <img src="imagens/instagram.png" alt="Instagram"/>
-        </a>
-        <a href="#" aria-label="YouTube">
-          <img src="imagens/youtube.png" alt="YouTube"/>
-        </a>
-      </div>
-    </footer>
-  </div>
-   <script src="js/main.js"></script>
+  <img src="imagens/novato.png" alt="Mascote Novato" class="mascot" id="mascot" />
+
+  <footer>
+    <p>&copy; 2025 IMAGINISTA. Todos os direitos reservados.</p>
+    <br>
+    <div class="footer-social">
+      <a href="#"><img src="imagens/whatsapp.png" alt="WhatsApp" /></a>
+      <a href="#"><img src="imagens/instagram.png" alt="Instagram" /></a>
+      <a href="#"><img src="imagens/youtube.png" alt="YouTube" /></a>
+    </div>
+  </footer>
 </body>
 </html>

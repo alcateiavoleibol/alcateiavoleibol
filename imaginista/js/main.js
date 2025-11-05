@@ -1,152 +1,162 @@
-// INTRO & ÁUDIO
-    const intro = document.getElementById('intro-screen');
-    const audio = document.getElementById('bg-music');
-    window.addEventListener('load', () => {
-      audio.volume = 0.5;
-      audio.play().catch(() => {});
+// Utilitários
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+// Banners animados no topo (OTIMIZADO)
+(function bannerAnimation() {
+  const banners = $$('.top-banner img');
+  if (banners.length === 0) return;
+  
+  let index = 0;
+
+  function updateBanner() {
+    banners.forEach((img, i) => {
+      // Alterna a classe .is-active
+      img.classList.toggle('is-active', i === index);
     });
-    intro?.addEventListener('animationend', () => intro.remove());
+    index = (index + 1) % banners.length;
+  }
 
-    // PAINEL FLOUTANTE
-    document.querySelector('.panel-toggle')?.addEventListener('click', () => {
-      document.querySelector('.float-panel')?.classList.toggle('collapsed');
-    });
+  updateBanner(); // Roda a primeira vez
+  setInterval(updateBanner, 3000); // Continua o ciclo
+})();
 
-    // THEME TOGGLE
-    document.querySelector('.theme-toggle')?.addEventListener('click', () => {
-      const html = document.documentElement;
-      html.setAttribute(
-        'data-theme',
-        html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
-      );
-    });
+// Carrossel com paginação manual + automática
+(function carouselAuto() {
+  const items = $$('.carousel-item');
+  const pagination = document.querySelector('.carousel-pagination');
+  if (!items.length || !pagination) return;
 
-    // MOBILE MENU
-    document.querySelector('.mobile-menu-toggle')?.addEventListener('click', () => {
-      document.querySelector('nav.menu')?.classList.toggle('open');
-    });
-
-    // BANNER SLIDER
-    (function() {
-      const items = document.querySelectorAll('.banner-slider img');
-      let idx = 0;
-      setInterval(() => {
-        items[idx].classList.remove('active');
-        idx = (idx + 1) % items.length;
-        items[idx].classList.add('active');
-      }, 4000);
-    })();
-
-    // CHARACTER BOUNCE
-    (function() {
-      const char = document.querySelector('.video-char');
-      if (!char) return;
-      char.addEventListener('click', () => {
-        char.classList.remove('animate');
-        void char.offsetWidth;
-        char.classList.add('animate');
-      });
-    })();
-
-    // INVITES CAROUSEL
-    (function() {
-      const slides = document.querySelectorAll('.fade-item');
-      const prev   = document.querySelector('.carousel-button.prev');
-      const next   = document.querySelector('.carousel-button.next');
-      let i = 0;
-      const show = x => slides.forEach((s,j) => s.classList.toggle('active', j === x));
-      prev.addEventListener('click', () => show(i = (i - 1 + slides.length) % slides.length));
-      next.addEventListener('click', () => show(i = (i + 1) % slides.length));
-      let auto = setInterval(() => show(i = (i + 1) % slides.length), 3000);
-      const cont = document.querySelector('.fade-container');
-      cont.addEventListener('mouseenter', () => clearInterval(auto));
-      cont.addEventListener('mouseleave', () => auto = setInterval(() => show(i = (i + 1) % slides.length), 3000));
-    })();
-
-    // AUDIO CONTROLS
-    (function() {
-      const btnPlay = document.getElementById('play-pause');
-      const btnUp   = document.getElementById('vol-up');
-      const btnDown = document.getElementById('vol-down');
-      btnPlay.addEventListener('click', () => {
-        if (audio.paused) { audio.play(); btnPlay.textContent = '⏸️'; }
-        else             { audio.pause(); btnPlay.textContent = '▶️'; }
-      });
-      btnUp.addEventListener('click', () => audio.volume = Math.min(audio.volume + 0.1, 1));
-      btnDown.addEventListener('click', () => audio.volume = Math.max(audio.volume - 0.1, 0));
-    })();
-
-    // MASCOT TOGGLE
-    (function() {
-      const m = document.querySelector('.mascot');
-      let v = false;
-      m?.addEventListener('click', () => m.classList.toggle('visible', v = !v));
-      document.addEventListener('click', e => {
-        if (v && !e.target.closest('.mascot')) {
-          v = false;
-          m.classList.remove('visible');
-        }
-      });
-    })();
-
-    // BLOCK IMG CONTEXT MENU
-    document.addEventListener('contextmenu', e => {
-      if (e.target.tagName === 'IMG') e.preventDefault();
-    });
-
-    // CLOUDS SPAWNER
-    function spawnCloud() {
-      const c = document.createElement('div');
-      c.className = 'cloud';
-      const w = 100 + Math.random() * 100;
-      c.style.width  = w + 'px';
-      c.style.height = (w * 0.6) + 'px';
-      c.style.top    = Math.random() * 20 + 'px';
-      c.style.animationDuration = 20 + Math.random() * 15 + 's';
-      c.addEventListener('click', () => {
-        c.remove();
-        spawnCloud();
-      });
-      document.body.append(c);
-    }
-    for (let i = 0; i < 8; i++) spawnCloud();
-    setInterval(spawnCloud, 10000);
-
-    // SLOGAN WORD ANIMATION
-    
- document.addEventListener('DOMContentLoaded', () => {
-    const sloganEl = document.querySelector('.slogan');
-    if (!sloganEl) return;
-
-    // 1) separa texto em spans
-    const words = sloganEl.textContent.trim().split(' ');
-    sloganEl.innerHTML = '';
-    words.forEach((w, i) => {
-      const span = document.createElement('span');
-      span.className = 'slogan-word';
-      span.textContent = w;
-      sloganEl.appendChild(span);
-      // adiciona espaço exceto depois do último
-      if (i < words.length - 1) sloganEl.appendChild(document.createTextNode(' '));
-    });
-
-    // 2) explode + reconstrói em cada click
-    sloganEl.addEventListener('click', () => {
-      const spans = sloganEl.querySelectorAll('.slogan-word');
-      spans.forEach(span => {
-        const x = `${(Math.random() - 0.5) * 200}px`;
-        const y = `${(Math.random() - 0.5) * 200}px`;
-        span.style.setProperty('--tx', x);
-        span.style.setProperty('--ty', y);
-      });
-      sloganEl.classList.add('explode');
-      setTimeout(() => {
-        sloganEl.classList.remove('explode');
-        // opcional: limpa posições customizadas
-        spans.forEach(span => {
-          span.style.removeProperty('--tx');
-          span.style.removeProperty('--ty');
-        });
-      }, 1200);
-    });
+  // cria bolinhas
+  items.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.dataset.index = i;
+    pagination.append(dot);
   });
+
+  let current = 0;
+  const dots = Array.from(pagination.children);
+
+  function update() {
+    items.forEach((img, i) => img.classList.toggle('active', i === current));
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+  }
+
+  // autoplay
+  let interval = setInterval(() => {
+    current = (current + 1) % items.length;
+    update();
+  }, 4000);
+
+  // clique nas bolinhas
+  pagination.addEventListener('click', e => {
+    if (!e.target.classList.contains('dot')) return;
+    clearInterval(interval);
+    current = Number(e.target.dataset.index);
+    update();
+    interval = setInterval(() => {
+      current = (current + 1) % items.length;
+      update();
+    }, 4000);
+  });
+})();
+
+// Slogan explosivo
+(function sloganExplode() {
+  const slogan = $('#slogan');
+  if (!slogan) return;
+  slogan.addEventListener('click', () => {
+    const words = slogan.querySelectorAll('.slogan-word');
+    words.forEach(word => {
+      word.style.setProperty('--tx', `${(Math.random()-0.5)*200}px`);
+      word.style.setProperty('--ty', `${(Math.random()-0.5)*200}px`);
+    });
+    slogan.classList.add('explode');
+    setTimeout(() => {
+      slogan.classList.remove('explode');
+      words.forEach(w => {
+        w.style.removeProperty('--tx');
+        w.style.removeProperty('--ty');
+      });
+    }, 1200);
+  });
+})();
+
+// Mascote animado ao clique
+(function mascotAnimate() {
+  const mascot = $('#mascot');
+  if (!mascot) return;
+  mascot.addEventListener('click', () => {
+    mascot.classList.add('animate');
+    setTimeout(() => mascot.classList.remove('animate'), 800);
+  });
+})();
+
+// mobile menu toggle
+(function mobileMenuToggle() {
+  const toggle = $('.mobile-menu-toggle');
+  const menu   = $('.main-menu');
+  if (!toggle || !menu) return;
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('open');
+  });
+})();
+
+// Painel flutuante: toggle sempre visível + controls condicionais
+(function floatPanelControls() {
+  const panel   = $('.float-panel');
+  const toggle  = $('.panel-toggle');
+  const themeBtn= $('.theme-toggle');
+  const playBtn = $('#play-pause');
+  const volUp   = $('#vol-up');
+  const volDown = $('#vol-down');
+  const audio   = $('#bg-music');
+
+  if (!panel || !toggle || !audio) return;
+
+  toggle.addEventListener('click', () => panel.classList.toggle('collapsed'));
+
+  themeBtn?.addEventListener('click', () => {
+    const html = document.documentElement;
+    html.setAttribute('data-theme', html.getAttribute('data-theme')==='dark'?'light':'dark');
+  });
+
+  playBtn?.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playBtn.textContent = '⏸️';
+    } else {
+      audio.pause();
+      playBtn.textContent = '▶️';
+    }
+  });
+
+  volUp?.addEventListener('click', () => {
+    audio.volume = Math.min(1, audio.volume + 0.1);
+  });
+  volDown?.addEventListener('click', () => {
+    audio.volume = Math.max(0, audio.volume - 0.1);
+  });
+
+  // CORREÇÃO: Lógica de Autoplay robusta (Desktop e Mobile)
+  window.addEventListener('load', () => {
+    // Tenta tocar a música assim que a página carrega
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          // Autoplay funcionou! (Provavelmente um Desktop)
+          // Sincroniza o botão para mostrar 'Pause'
+          playBtn.textContent = '⏸️';
+        })
+        .catch((error) => {
+          // Autoplay foi bloqueado pelo navegador (Provavelmente um Mobile)
+          // Garante que o botão mostre 'Play'
+          playBtn.textContent = '▶️';
+          // O usuário terá que clicar no play para iniciar a música
+        });
+    }
+  });
+})();
