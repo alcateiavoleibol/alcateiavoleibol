@@ -695,14 +695,16 @@ header h3 {
 @media (max-width: 768px) {
     .container {
         margin: 20px auto;
-        padding: 0 15px 15px 15px;
+        padding: 0 25px 15px 15px;
         border-radius: 10px;
     }
 
     .banner {
         width: calc(100% + 40px);
-        margin-left: -20px;
-        margin-top: -20px;
+        margin-left: -5px;
+        margin-top: -5px;
+		border-top-left-radius: 10px; 
+        border-top-right-radius: 10px;
     }
 
     .main-background {
