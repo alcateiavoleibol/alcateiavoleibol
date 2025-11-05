@@ -2,32 +2,30 @@
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
-// Banners animados no topo (OTIMIZADO)
+// Banners animados no topo
 (function bannerAnimation() {
   const banners = $$('.top-banner img');
-  if (banners.length === 0) return;
+  if (!banners.length) return; // Proteção
   
   let index = 0;
-
   function updateBanner() {
     banners.forEach((img, i) => {
-      // Alterna a classe .is-active
       img.classList.toggle('is-active', i === index);
     });
     index = (index + 1) % banners.length;
   }
-
-  updateBanner(); // Roda a primeira vez
-  setInterval(updateBanner, 3000); // Continua o ciclo
+  updateBanner();
+  setInterval(updateBanner, 3000);
 })();
 
 // Carrossel com paginação manual + automática
 (function carouselAuto() {
   const items = $$('.carousel-item');
-  const pagination = document.querySelector('.carousel-pagination');
-  if (!items.length || !pagination) return;
+  const pagination = $('.carousel-pagination');
+  if (!items.length || !pagination) return; // Proteção
 
-  // cria bolinhas
+  pagination.innerHTML = ''; 
+  
   items.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -43,13 +41,11 @@ const $$ = s => Array.from(document.querySelectorAll(s));
     dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
   }
 
-  // autoplay
   let interval = setInterval(() => {
     current = (current + 1) % items.length;
     update();
   }, 4000);
 
-  // clique nas bolinhas
   pagination.addEventListener('click', e => {
     if (!e.target.classList.contains('dot')) return;
     clearInterval(interval);
@@ -65,7 +61,7 @@ const $$ = s => Array.from(document.querySelectorAll(s));
 // Slogan explosivo
 (function sloganExplode() {
   const slogan = $('#slogan');
-  if (!slogan) return;
+  if (!slogan) return; // Proteção
   slogan.addEventListener('click', () => {
     const words = slogan.querySelectorAll('.slogan-word');
     words.forEach(word => {
@@ -83,45 +79,31 @@ const $$ = s => Array.from(document.querySelectorAll(s));
   });
 })();
 
-// Mascote animado ao clique
+// Mascote animado AO CLIQUE E ABRINDO MENU
 (function mascotAnimate() {
   const mascot = $('#mascot');
-  if (!mascot) return;
+  const menu   = $('.main-menu'); 
+  if (!mascot || !menu) return; // Proteção
+
   mascot.addEventListener('click', () => {
     mascot.classList.add('animate');
     setTimeout(() => mascot.classList.remove('animate'), 800);
+    menu.classList.toggle('open'); 
   });
 })();
 
-// mobile menu toggle
-(function mobileMenuToggle() {
-  const toggle = $('.mobile-menu-toggle');
-  const menu   = $('.main-menu');
-  if (!toggle || !menu) return;
-  toggle.addEventListener('click', () => {
-    menu.classList.toggle('open');
-  });
-})();
 
-// Painel flutuante: toggle sempre visível + controls condicionais
-(function floatPanelControls() {
-  const panel   = $('.float-panel');
-  const toggle  = $('.panel-toggle');
-  const themeBtn= $('.theme-toggle');
-  const playBtn = $('#play-pause');
-  const volUp   = $('#vol-up');
-  const volDown = $('#vol-down');
+/* Controles de Áudio, Tema e Partículas.
+*/
+window.addEventListener('load', () => {
+  const themeBtn= $('.desktop-controls .theme-toggle');
+  const playBtn = $('.desktop-controls #play-pause');
+  const volUp   = $('.desktop-controls #vol-up');
+  const volDown = $('.desktop-controls #vol-down');
   const audio   = $('#bg-music');
+  const html = document.documentElement;
 
-  if (!panel || !toggle || !audio) return;
-
-  toggle.addEventListener('click', () => panel.classList.toggle('collapsed'));
-
-  themeBtn?.addEventListener('click', () => {
-    const html = document.documentElement;
-    html.setAttribute('data-theme', html.getAttribute('data-theme')==='dark'?'light':'dark');
-  });
-
+  // --- 1. Lógica de Áudio (Protegida por '?.') ---
   playBtn?.addEventListener('click', () => {
     if (audio.paused) {
       audio.play();
@@ -133,30 +115,104 @@ const $$ = s => Array.from(document.querySelectorAll(s));
   });
 
   volUp?.addEventListener('click', () => {
-    audio.volume = Math.min(1, audio.volume + 0.1);
+    if (audio) audio.volume = Math.min(1, audio.volume + 0.1);
   });
   volDown?.addEventListener('click', () => {
-    audio.volume = Math.max(0, audio.volume - 0.1);
+    if (audio) audio.volume = Math.max(0, audio.volume - 0.1);
   });
 
-  // CORREÇÃO: Lógica de Autoplay robusta (Desktop e Mobile)
-  window.addEventListener('load', () => {
-    // Tenta tocar a música assim que a página carrega
+  // Autoplay do Áudio (só roda se o áudio existir)
+  if (audio) {
     const playPromise = audio.play();
-
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          // Autoplay funcionou! (Provavelmente um Desktop)
-          // Sincroniza o botão para mostrar 'Pause'
-          playBtn.textContent = '⏸️';
+          if (playBtn) playBtn.textContent = '⏸️';
         })
         .catch((error) => {
-          // Autoplay foi bloqueado pelo navegador (Provavelmente um Mobile)
-          // Garante que o botão mostre 'Play'
-          playBtn.textContent = '▶️';
-          // O usuário terá que clicar no play para iniciar a música
+          if (playBtn) playBtn.textContent = '▶️';
         });
     }
-  });
-})();
+  }
+  
+  // --- 2. Lógica de Partículas e Tema ---
+  
+  // Roda em todas as páginas
+  if (typeof tsParticles !== 'undefined') {
+    
+    // Configuração base (comum para ambos os temas)
+    const baseOptions = {
+      fpsLimit: 60,
+      interactivity: {
+        events: {
+          onHover: { enable: true, mode: "repulse" },
+        },
+        modes: {
+          repulse: { distance: 100, duration: 0.4 },
+        },
+      },
+      particles: {
+        links: { distance: 150, enable: true, opacity: 0.4, width: 1 },
+        move: { direction: "none", enable: true, outModes: "out", random: false, speed: 2, straight: false },
+        number: { density: { enable: true, area: 800 }, value: 80 },
+        opacity: { value: 0.5 },
+        shape: { type: "circle" },
+        size: { value: { min: 1, max: 3 } },
+      },
+      detectRetina: true,
+    };
+
+    // CORREÇÃO: Cores codificadas DIRETAMENTE no JS
+    
+    // Configuração do Tema Claro
+    const lightOptions = {
+      ...baseOptions,
+      particles: {
+        ...baseOptions.particles,
+        color: { value: "#333333" }, // Cinza Escuro
+        links: { ...baseOptions.particles.links, color: "#333333" },
+      },
+    };
+
+    // Configuração do Tema Escuro
+    const darkOptions = {
+      ...baseOptions,
+      particles: {
+        ...baseOptions.particles,
+        color: { value: "#FFD700" }, // Dourado
+        links: { ...baseOptions.particles.links, color: "#FFD700" },
+      },
+    };
+    
+    // Função para carregar as partículas
+    const loadParticles = async (options) => {
+      await tsParticles.load({
+        id: "tsparticles-bg", 
+        options: options,
+      });
+    };
+
+    // Lógica do Botão de Tema (Protegida por '?.')
+    themeBtn?.addEventListener('click', async () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      
+      const instance = tsParticles.dom.find(i => i.id === "tsparticles-bg");
+      if (instance) {
+        // Simplesmente carrega as opções corretas
+        const newOptions = newTheme === 'dark' ? darkOptions : lightOptions;
+        await instance.options.load(newOptions);
+        await instance.refresh();
+      }
+    });
+    
+    // Carregamento Inicial (em todas as páginas)
+    const initialTheme = html.getAttribute('data-theme') || 'light';
+    loadParticles(initialTheme === 'dark' ? darkOptions : lightOptions);
+
+  } else {
+    console.error('tsParticles library not loaded.');
+  }
+  
+}); // Fim do window.addEventListener('load')
