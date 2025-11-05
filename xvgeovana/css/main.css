@@ -700,9 +700,9 @@ header h3 {
     }
 
     .banner {
-        width: calc(100% + 30px);
-        margin-left: -15px;
-        margin-top: -15px;
+        width: calc(100% + 40px);
+        margin-left: -20px;
+        margin-top: -20px;
     }
 
     .main-background {
