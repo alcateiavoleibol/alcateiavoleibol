@@ -386,8 +386,9 @@ header h3 {
 }
 
 .rsvp-info p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-bottom: 15px;
+	color: #000080;
 }
 
 .qr-wrapper {
