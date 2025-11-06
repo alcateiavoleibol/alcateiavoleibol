@@ -7,59 +7,65 @@
   padding: 0;
 }
 
-/* Fundo no HTML, cor do texto no BODY */
+/* Fundo no HTML */
 html {
   background: var(--bg);
   color: var(--text);
   scroll-behavior: smooth;
-  /* Garante que o fundo não role com o conteúdo */
-  overflow-x: hidden;
 }
 
-/* Layout Flex para empurrar rodapé */
 body {
   font-family: 'Open Sans', sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
-  background: transparent; /* Fundo transparente */
-  display: flex;
-  flex-direction: column;
+  background: transparent; /* Body é transparente */
 }
 
-/* VARIÁVEIS */
+/* NOVO WRAPPER: Conteúdo */
+#page-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
+  /* A MÁGICA DO Z-INDEX */
+  position: relative;
+  z-index: 1; /* Camada 1 (à frente) */
+}
+
+/* VARIÁVEIS (TEMA ESCURO É O PADRÃO AGORA) */
 :root {
-  --bg: #f0f2f5; 
+  --bg: #121212;
+  --text: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --muted: #0f172a;
+  --h1-color: #FFD700;  
+  --card-shadow-color: rgba(255, 215, 0, 0.15);
+  --card-shadow-color-hover: rgba(255, 215, 0, 0.35);
+
+  /* Variáveis mantidas do tema claro original */
+  --accent: #6C9BCF;
+  --highlight: #AEECEF;
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.06); /* Pode precisar de ajuste para o escuro */
+  --radius: 12px;
+  --gap: 1rem;
+}
+
+/* TEMA CLARO (Alternativo) */
+html[data-theme="light"] {
+  --bg: #f0f2f5; /* Cinza-azulado claro */
   --text: #2c2c2c;
   --accent: #6C9BCF;
   --highlight: #AEECEF;
   --muted: #34495e;
   --card-bg: #ffffff;
   --shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  --radius: 12px;
-  --gap: 1rem;
   --h1-color: #002139;
-  
   --card-shadow-color: rgba(0, 25, 46, 0.2);
   --card-shadow-color-hover: rgba(0, 25, 46, 0.4);
-  /* Partículas removidas */
-}
-
-/* TEMA ESCURO */
-html[data-theme="dark"] {
-  --bg: #121212;
-  --text: #e0e0e0;
-  --card-bg: #1e1e1e;
-  --muted: #0f172a;
-  --h1-color: #FFD700; 
-
-  --card-shadow-color: rgba(255, 215, 0, 0.15);
-  --card-shadow-color-hover: rgba(255, 215, 0, 0.35);
 }
 
 /* TOPO COM BANNERS */
 .top-banner {
-  position: relative;
-  z-index: 1; /* Conteúdo acima do céu */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,12 +74,14 @@ html[data-theme="dark"] {
   background: #00192E;
   perspective: 1000px;
 }
+
 .top-banner img {
   max-height: 380px;
   opacity: 0.5;
   transform: scale(0.95);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
+
 .top-banner img.is-active {
   opacity: 1;
   transform: scale(1.1);
@@ -81,11 +89,10 @@ html[data-theme="dark"] {
 
 /* MENU PRINCIPAL */
 .main-menu {
-  position: relative;
-  z-index: 1; /* Conteúdo acima do céu */
   background: #002139;
   padding: 1.2rem 1rem;
 }
+
 .main-menu ul {
   display: flex;
   justify-content: center;
@@ -94,6 +101,7 @@ html[data-theme="dark"] {
   flex-wrap: wrap;
   font-size: clamp(1.2rem, 2.5vw, 1.3rem);
 }
+
 .main-menu a {
   color: #fff;
   text-decoration: none;
@@ -102,6 +110,7 @@ html[data-theme="dark"] {
   border-radius: var(--radius);
   transition: background 0.3s ease;
 }
+
 .main-menu a:hover {
   background: #B79A6E;
   color: #000;
@@ -114,6 +123,16 @@ html[data-theme="dark"] {
   gap: 0.5rem;
   padding: 0.5rem 0;
 }
+
+/* Alinha os controles nas sub-páginas */
+.placeholder-main .desktop-controls {
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 1rem auto;
+    padding: 0 var(--gap);
+}
+
 .desktop-controls button {
   background: var(--card-bg);
   border: none;
@@ -126,16 +145,15 @@ html[data-theme="dark"] {
 
 /* LAYOUT DIVIDIDO (Homepage) */
 .dupla {
-  position: relative;
-  z-index: 1; /* Conteúdo acima do céu */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--gap);
   padding: var(--gap);
   max-width: 1200px;
-  margin: 0 auto; 
+  margin: 0 auto;  
 }
+
 .lado-esquerdo,
 .lado-direito {
   flex: 1 1 300px;
@@ -147,12 +165,13 @@ html[data-theme="dark"] {
 /* TEXTO PRINCIPAL */
 .lado-esquerdo h1 {
   font-family: 'Playfair Display', serif;
-  color: var(--h1-color); 
+  color: var(--h1-color);  
   font-size: clamp(2rem, 5vw, 3rem);
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   margin-bottom: var(--gap);
   transition: color 0.3s ease;
 }
+
 .lado-esquerdo p {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   line-height: 1.6;
@@ -163,27 +182,29 @@ html[data-theme="dark"] {
 .carousel-container {
   width: 100%;
   max-width: 400px;
-  aspect-ratio: 5 / 7; 
+  aspect-ratio: 5 / 7;  
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   margin: var(--gap) auto;
   position: relative;
-  background: var(--muted); 
+  background: var(--muted);  
 }
+
 .carousel-item {
   position: absolute;
   inset: 0;
   opacity: 0;
   transform: scale(0.95);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  object-fit: contain; 
+  object-fit: contain;  
   width: 100%;
   height: 100%;
 }
+
 .carousel-item.active {
   opacity: 1;
-  transform: scale(1); 
+  transform: scale(1);  
 }
 
 /* BOLINHAS DE PAGINAÇÃO */
@@ -193,6 +214,7 @@ html[data-theme="dark"] {
   gap: 0.4rem;
   margin-top: 0.8rem;
 }
+
 .carousel-pagination .dot {
   width: 10px;
   height: 10px;
@@ -202,9 +224,11 @@ html[data-theme="dark"] {
   cursor: pointer;
   transition: background 0.3s ease;
 }
+
 .carousel-pagination .dot.active {
   background: var(--accent);
 }
+
 .carousel-pagination .dot:hover {
   background: #eee;
 }
@@ -232,6 +256,7 @@ html[data-theme="dark"] {
   margin: var(--gap) auto;
   text-align: center;
 }
+
 .slogan-word {
   background: linear-gradient(90deg, var(--highlight), var(--accent));
   background-clip: text;
@@ -240,19 +265,23 @@ html[data-theme="dark"] {
   animation: zoomFade 7s ease infinite;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
+
 @keyframes zoomFade {
   0%, 100% { transform: scale(1); opacity: 0.8; }
   50% { transform: scale(1.1); opacity: 1; }
 }
+
 .slogan.explode .slogan-word {
   animation:
     explode 0.6s ease-out forwards,
     reconstruct 0.6s ease-in-out forwards 0.6s;
 }
+
 @keyframes explode {
   from { transform: translate(0, 0) scale(1); opacity: 1; }
   to   { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
 }
+
 @keyframes reconstruct {
   from { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
   to   { transform: translate(0, 0) scale(1); opacity: 1; }
@@ -260,15 +289,14 @@ html[data-theme="dark"] {
 
 /* CARDS */
 .promo-cards {
-  position: relative;
-  z-index: 1; /* Conteúdo acima do céu */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.2rem;
   max-width: 1200px;
-  margin: 2rem auto; 
-  padding: 0 var(--gap); 
+  margin: 2rem auto;  
+  padding: 0 var(--gap);  
 }
+
 .card {
   background: var(--card-bg);
   padding: 1rem;
@@ -277,6 +305,7 @@ html[data-theme="dark"] {
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0 12px 24px var(--card-shadow-color-hover);
@@ -290,32 +319,34 @@ html[data-theme="dark"] {
   width: clamp(140px, 10vw, 300px);
   cursor: pointer;
   transition: transform 0.3s ease;
-  z-index: 1002; /* z-index alto para ficar acima de tudo */
+  z-index: 1002;
 }
+
 .mascot.animate {
   animation: mascotBounce 0.6s ease-out;
 }
+
 @keyframes mascotBounce {
   0%, 100% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
-  50%     { transform: scale(1.2) rotate(10deg); opacity: 1; }
+  50%      { transform: scale(1.2) rotate(10deg); opacity: 1; }
 }
 
 /* RODAPÉ */
 footer {
-  position: relative;
-  z-index: 1; /* Conteúdo acima do céu */
-  margin-top: auto; 
+  margin-top: auto; /* Empurra o rodapé para baixo */
   padding: 1rem;
   text-align: center;
   background: var(--muted);
   color: #fff;
   border-radius: var(--radius);
 }
+
 .footer-social img {
   width: 32px;
   filter: brightness(0) invert(1);
   transition: transform 0.3s ease;
 }
+
 .footer-social a:hover img {
   transform: scale(1.1);
 }
@@ -335,6 +366,7 @@ footer {
 
 /* RESPONSIVO MOBILE (≤768px) */
 @media (max-width: 768px) {
+  /* Animação do menu (controlado pelo mascote) */
   .main-menu {
     position: fixed;
     top: 0;
@@ -349,19 +381,31 @@ footer {
     display: flex;
     flex-direction: column;
   }
+
   .main-menu.open {
     visibility: visible;
     transform: translateY(0%);
   }
+
   .main-menu.open ul {
     flex-direction: column;
     gap: 1rem;
     align-items: center;
   }
   
+  /* Esconde controles do desktop no mobile */
   .desktop-controls {
     display: none;
   }
+  
+  /* Corrige controles do desktop nas sub-páginas mobile */
+  .placeholder-main .desktop-controls {
+    display: flex; /* Garante que aparece */
+    justify-content: center;
+  }
+
+
+  /* INTRO-VIDEO */
   .intro-video {
     width: 100%;
     max-width: 100%;
@@ -369,12 +413,18 @@ footer {
     margin: var(--gap) 0;
     border-radius: 0;
   }
+
+  /* PARÁGRAFOS JUSTIFICADOS */
   .lado-esquerdo p {
     text-align: justify;
   }
+
+  /* MASCOTE menor */
   .mascot {
     width: clamp(60px, 15vw, 80px);
   }
+
+  /* BANNERS: lineares e ampliados */
   .top-banner {
     flex-direction: row;
     flex-wrap: nowrap;
@@ -382,68 +432,77 @@ footer {
     gap: 0.5rem;
     padding: var(--gap) 0.5rem;
   }
+
   .top-banner .banner-side {
     width: 28vw;
     max-width: 120px;
     height: auto;
     max-height: none;
   }
+
   .top-banner .banner-center {
     width: 45vw;
     max-width: 200px;
     height: auto;
     max-height: none;
   }
+
+  /* centralizar slogan, vídeo e carrossel */
   .lado-esquerdo {
-    align-itemss: center;
+    align-items: center;
   }
+
   .slogan {
     margin: var(--gap) auto;
     text-align: center;
   }
+
   .lado-direito {
     align-items: center;
   }
+
+  /* Ajuste dos cards no mobile */
   .promo-cards {
     margin: 1rem auto;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
 }
 
-/* Partículas REMOVIDAS */
+/* ESTILOS PARA PARTÍCULAS */
+#tsparticles-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Camada 0 (atrás do #page-content) */
+}
 
-
-/* PÁGINAS "EM CONSTRUÇÃO" */
+/* ESTILOS PARA PÁGINAS "EM CONSTRUÇÃO" */
 .placeholder-main {
-  position: relative;
-  z-index: 1; /* Conteúdo acima do céu */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex-grow: 1; 
+  justify-content: flex-start; /* Alinha no topo */
+  flex-grow: 1;  
   text-align: center;
-  padding: 2rem;
-  padding-top: 1rem;
-}
-.placeholder-main .desktop-controls {
-  /* ATUALIZAÇÃO: Alinha os botões à direita, dentro do seu container */
-  justify-content: flex-end;
+  padding: 2rem var(--gap);
   width: 100%;
-  max-width: 400px;
-  margin-bottom: 2rem;
 }
+
 .placeholder-main h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2.5rem, 5vw, 4rem);
   color: var(--h1-color);
   margin-bottom: 1rem;
 }
+
 .placeholder-main p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
   max-width: 400px;
 }
+
 .placeholder-main a {
   font-size: 1rem;
   font-weight: bold;
@@ -454,62 +513,8 @@ footer {
   text-decoration: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .placeholder-main a:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 15px var(--card-shadow-color-hover);
-}
-
-
-/* ATUALIZAÇÃO: NOVO EFEITO DE CÉU (SÓ NO TEMA ESCURO) */
-.sky-effect {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* Fica atrás do conteúdo (z-index: 1) mas acima do fundo (do html) */
-  z-index: 0;
-  /* Invisível por defeito (no tema claro) */
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-/* Gera 3 camadas de estrelas (pontos brancos) */
-#stars1 {
-  background-image: 
-    radial-gradient(1px 1px at 20px 30px, white, transparent),
-    radial-gradient(1px 1px at 40px 80px, white, transparent),
-    radial-gradient(1px 1px at 90px 40px, white, transparent),
-    radial-gradient(1px 1px at 130px 100px, white, transparent),
-    radial-gradient(1px 1px at 160px 70px, white, transparent);
-  background-size: 200px 200px;
-  animation: moveStars 60s linear infinite;
-}
-
-#stars2 {
-  background-image: 
-    radial-gradient(2px 2px at 50px 120px, white, transparent),
-    radial-gradient(2px 2px at 110px 180px, white, transparent),
-    radial-gradient(2px 2px at 170px 130px, white, transparent);
-  background-size: 300px 300px;
-  animation: moveStars 120s linear infinite;
-}
-
-#stars3 {
-  background-image: 
-    radial-gradient(3px 3px at 80px 80px, white, transparent),
-    radial-gradient(3px 3px at 180px 180px, white, transparent);
-  background-size: 400px 400px;
-  animation: moveStars 180s linear infinite;
-}
-
-/* Mostra as estrelas no tema escuro */
-html[data-theme="dark"] .sky-effect {
-  opacity: 1;
-}
-
-/* Animação de parallax das estrelas */
-@keyframes moveStars {
-  from { transform: translateX(0); }
-  to   { transform: translateX(400px); } /* Move 1 tile de estrelas */
 }
