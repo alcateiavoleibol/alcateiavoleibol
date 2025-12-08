@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FARM</title>
+    <style>
+        :root {
+            --primary: #bb86fc;
+            --secondary: #03dac6; /* Cor Ciano/Teal */
+            --bg: #0b0b0b;
+            --surface: rgba(30, 30, 30, 0.6);
+            --surface-hover: rgba(50, 50, 50, 0.8);
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+            --glass: rgba(15, 15, 15, 0.9);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        
+        body {
+            background-color: var(--bg);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+        }
+
+
+
+
+
+
+
+/* --- DEFINIÇÃO DA ANIMAÇÃO (SCANNER DE LUZ) --- */
+        @keyframes scanLight {
+            0% {
+                left: -100%; /* Começa fora da tela na esquerda */
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            50% {
+                left: 200%; /* Termina fora da tela na direita */
+                opacity: 0;
+            }
+            100% {
+                left: 200%; /* Fica parado esperando o próximo ciclo */
+                opacity: 0;
+            }
+        }
+
+       /* --- HERO BANNER (ATUALIZADO PARA 400PX) --- */
+        @keyframes scanLight {
+            0% { left: -100%; opacity: 0; }
+            20% { opacity: 1; }
+            50% { left: 200%; opacity: 0; }
+            100% { left: 200%; opacity: 0; }
+        }
+
+        .hero-banner {
+            width: 100%;
+            /* AJUSTE AQUI: Mudamos de 350px para 400px para bater com sua imagem */
+            height: 400px; 
+            
+            position: relative;
+            overflow: hidden;
+            background: #020202; 
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            /* 'contain' garante que a imagem 1920x400 apareça inteira */
+            object-fit: contain; 
+            object-position: center center;
+            opacity: 1;
+            display: block;
+        }
+
+        /* Efeito Scanner (Mantido) */
+        .hero-banner::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
+            transform: skewX(-25deg);
+            animation: scanLight 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* Ajuste Mobile: Aumentamos um pouco para a imagem não ficar minuscula */
+        @media (max-width: 768px) {
+            .hero-banner {
+                height: 240px; 
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* --- HEADER --- */
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--glass); 
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+            margin-top: -60px; /* Puxa o header para cima do banner levemente */
+        }
+
+        .brand { display: flex; flex-direction: column; }
+
+        .brand h1 {
+            font-size: 1.8rem; letter-spacing: 2px; text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, var(--primary)); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
+            margin-bottom: 5px;
+        }
+        
+        .info-panel {
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .cache-info { color: #888; }
+        .cache-info span { color: var(--primary); font-weight: bold; }
+
+        .time-info { color: #aaa; font-size: 0.9rem; margin-top: 2px; display: flex; align-items: center; gap: 8px;}
+        .real-time { 
+            color: var(--secondary); 
+            font-weight: 800; 
+            font-size: 1.1rem; 
+            text-shadow: 0 0 8px rgba(3, 218, 198, 0.4);
+            font-variant-numeric: tabular-nums; /* Evita que os números pulem */
+        }
+
+        .controls { display: flex; gap: 10px; align-items: center; }
+        
+        .btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--primary);
+            color: var(--primary); padding: 8px 20px; cursor: pointer;
+            border-radius: 4px; transition: 0.3s; font-size: 0.85rem; font-weight: bold; text-transform: uppercase;
+        }
+        .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
+        
+        .btn-load { position: relative; overflow: hidden; border-color: var(--secondary); color: var(--secondary); }
+        .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
+        .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+        /* --- DASHBOARD --- */
+        .dashboard {
+            max-width: 1400px; margin: 30px auto; padding: 0 20px;
+            display: flex; justify-content: center;
+        }
+
+        .account-card {
+            background: linear-gradient(135deg, rgba(44, 26, 61, 0.8) 0%, rgba(30, 30, 30, 0.8) 100%);
+            border: 1px solid var(--primary); border-radius: 12px;
+            padding: 20px 50px; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 0 30px rgba(187, 134, 252, 0.1);
+            position: relative; overflow: hidden; backdrop-filter: blur(10px);
+        }
+        
+        .account-card h2 { color: var(--secondary); text-transform: uppercase; font-size: 1.3rem; margin-bottom: 10px; letter-spacing: 1px; }
+        .account-card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        /* --- GRID DE PERSONAGENS --- */
+        .grid-container {
+            max-width: 1400px; margin: 0 auto; padding: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 25px;
+        }
+
+        .char-card {
+            background: var(--surface); border: var(--border);
+            border-radius: 10px; overflow: hidden;
+            display: flex; flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .char-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border-color: rgba(187, 134, 252, 0.3);
+            background: var(--surface-hover);
+        }
+
+        .char-header {
+            position: relative; height: 90px; background: #000;
+            display: flex; align-items: center; padding: 0 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .char-bg-img {
+            position: absolute; width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.4; mask-image: linear-gradient(to bottom, black, transparent);
+            transition: opacity 0.3s;
+        }
+        .char-card:hover .char-bg-img { opacity: 0.6; }
+
+        .char-avatar {
+            width: 60px; height: 60px; border-radius: 50%;
+            border: 2px solid var(--primary); z-index: 2; background: #111; object-fit: cover;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .char-details { margin-left: 15px; z-index: 2; }
+        .char-name { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px black; }
+        .char-tag { font-size: 0.7rem; background: var(--secondary); color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+
+        .char-missions { padding: 15px; flex-grow: 1; }
+
+        .cat-title {
+            font-size: 0.7rem; color: #888; text-transform: uppercase;
+            margin: 15px 0 5px 0; border-bottom: 1px solid #333; padding-bottom: 2px;
+            display: flex; justify-content: space-between;
+        }
+        .cat-title span.reset-info { color: #555; font-size: 0.65rem; font-family: monospace; }
+
+        /* --- CONTROLES DE MISSÃO --- */
+        .mission-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 6px 0; transition: 0.2s;
+        }
+        .mission-row:hover { background: rgba(255,255,255,0.03); border-radius: 4px; padding-left: 5px; padding-right: 5px; }
+        .mission-row.done { opacity: 0.4; }
+        .mission-row.done span { text-decoration: line-through; }
+        
+        .mission-name { font-size: 0.85rem; color: #ddd; }
+
+        .pips-container { display: flex; gap: 4px; }
+        .pip {
+            width: 14px; height: 14px; border: 1px solid #555; border-radius: 50%;
+            cursor: pointer; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(0,0,0,0.3);
+        }
+        .pip:hover { border-color: #fff; transform: scale(1.2); }
+        .pip.active {
+            background: var(--secondary); border-color: var(--secondary);
+            box-shadow: 0 0 8px var(--secondary);
+        }
+
+        /* --- ESTILOS ESPECIAIS --- */
+        .row-blocked { opacity: 0.3; pointer-events: none; filter: grayscale(1); }
+        .tag-weekend { color: gold; font-size: 0.7rem; text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+
+        /* --- TOAST NOTIFICATION --- */
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #1e1e1e; border: 1px solid var(--secondary);
+            padding: 12px 25px; border-radius: 50px;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            z-index: 999; opacity: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast-icon { color: var(--secondary); font-size: 1.2rem; }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; margin-top: -30px; }
+            .hero-banner { height: 150px; }
+            .controls { width: 100%; justify-content: center; }
+        }
+
+    </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="hero-banner">
+    <img src="imagens/banner.png" alt="Grand Chase Banner" onerror="this.style.display='none'">
+</div>
+
+<header>
+    <div class="brand">
+        <h1>VALHALLA BR</h1>
+		<h2>FARM</h2>
+		<br>
+        <div class="info-panel">
+            <div class="cache-info" id="last-save-display">Cache Local: <span>Vazio</span></div>
+            <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
+        </div>
+    </div>
+    <div class="controls">
+        <button class="btn" onclick="downloadJSON()">SALVAR FARM</button>
+        <div class="btn btn-load">
+            CARREGAR FARM
+            <input type="file" id="fileInput" accept=".json" onchange="uploadJSON(this)">
+        </div>
+    </div>
+</header>
+
+<div class="dashboard">
+    <div class="account-card">
+        <h2>Claustro Infinito</h2>
+        <div style="font-size: 0.9rem; color: #aaa; margin-bottom: 10px;">3 Idas por Conta (Diário)</div>
+        <div class="pips-container" id="claustro-container">
+            </div>
+    </div>
+</div>
+
+<div class="grid-container" id="char-grid"></div>
+
+<div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toast-msg">Missão Concluída</span>
+</div>
+
+<script>
+    // --- DADOS E CONFIGURAÇÃO ---
+    const personagens = [
+        {char:"elesis", nome:"ELESIS", power:"MP"}, {char:"lire", nome:"LIRE", power:"MP"},
+        {char:"arme", nome:"ARME", power:"MP"}, {char:"lass", nome:"LASS", power:"MP"},
+        {char:"ryan", nome:"RYAN", power:"MP"}, {char:"ronan", nome:"RONAN", power:"MP"},
+        {char:"amy", nome:"AMY", power:"MP"}, {char:"jin", nome:"JIN", power:"MP"},
+        {char:"sieghart", nome:"SIEGHART", power:"MP"}, {char:"mari", nome:"MARI", power:"MP"},
+        {char:"dio", nome:"DIO", power:"AP"}, {char:"zero", nome:"ZERO", power:"AP"},
+        {char:"rey", nome:"REY", power:"AP"}, {char:"lupus", nome:"LUPUS", power:"AP"},
+        {char:"lin", nome:"LIN", power:"AMP"}, {char:"azin", nome:"AZIN", power:"AMP"},
+        {char:"holy", nome:"HOLY", power:"AMP"}, {char:"edel", nome:"EDEL", power:"AMP"},
+        {char:"veigas", nome:"VEIGAS", power:"AMP"}, {char:"decane", nome:"DECANE", power:"AMP"},
+        {char:"ai", nome:"AI", power:"AMP"}, {char:"kallia", nome:"KALLIA", power:"AMP"},
+        {char:"uno", nome:"UNO", power:"AMP"}, {char:"iris", nome:"IRIS", power:"AMP"}
+    ];
+
+    // IDs de dias: 0=Dom, 1=Seg, 2=Ter, 3=Qua, 4=Qui, 5=Sex, 6=Sab
+    const missoesConfig = {
+        diarias: [
+            { id: 'towerExt', label: 'Torre da Extinção', max: 3 },
+            { id: 'covil', label: 'Covil de Berkas', max: 1 },
+            { id: 'calnat', label: 'Explosão de Calnat', max: 1 },
+            { id: 'teroka', label: 'Cerco de Teroka', max: 1 },
+            { id: 'templo', label: 'Templo do Tempo', max: 1 }
+        ],
+        semanais: [
+            // Resetam Quarta (3)
+            { id: 'furnace', label: 'Fornalha Infernal', max: 3, resetDay: 3 },
+            { id: 'altar', label: 'Altar da Ruína', max: 3, resetDay: 3 },
+            { id: 'towerIllusion', label: 'Torre das Ilusões', max: 5, resetDay: 3 },
+            { id: 'abyss', label: 'Caminho Abissal', max: 1, resetDay: 3 }
+        ],
+        raids: [
+            { id: 'void1', label: 'Vazio 1 (Inv)', max: 2, resetDay: 1 }, // Seg
+            { id: 'void2', label: 'Vazio 2 (Cont)', max: 2, resetDay: 3 }, // Qua
+            { id: 'void3', label: 'Vazio 3 (Pes)', max: 2, resetDay: 5 }  // Sex
+        ],
+        eventos: [
+            // Terra do Julgamento só abre Sex(5), Sab(6), Dom(0)
+            { id: 'judgment', label: 'Terra do Julgamento', max: 1, isWeekend: true }
+        ]
+    };
+
+    // Estado Inicial
+    let appState = {
+        meta: { lastSave: Date.now() },
+        account: { claustro: 0 },
+        chars: {}
+    };
+
+    // --- RELÓGIO EM TEMPO REAL ---
+    function startClock() {
+        const clockEl = document.getElementById('real-time-clock');
+        
+        function update() {
+            const now = new Date();
+            clockEl.innerText = now.toLocaleTimeString('pt-BR');
+            
+            // Verifica reset automaticamente se virar o dia com a página aberta
+            if(now.getHours() === 3 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+                 checkAndApplyResets(appState.meta.lastSave);
+                 renderAll(); // Força re-render
+                 showToast("Reset Diário Aplicado!");
+            }
+        }
+        
+        setInterval(update, 1000);
+        update(); // Chama a primeira vez
+    }
+
+    // --- MOTOR DE RESET E DATA ---
+
+    function getResetTimestamp(targetDayOfWeek) {
+        // Retorna o timestamp do ULTIMO reset ocorrido para aquele dia às 03:00
+        const now = new Date();
+        const localNow = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
+        
+        let resetTime = new Date(localNow);
+        resetTime.setHours(3, 0, 0, 0);
+
+        // Se agora é 02:00, o reset de "hoje" ainda não rolou. O último foi ontem.
+        if (localNow < resetTime) {
+            resetTime.setDate(resetTime.getDate() - 1);
+        }
+
+        if (targetDayOfWeek !== null && targetDayOfWeek !== undefined) {
+            // Retrocede dias até chegar no dia da semana alvo
+            while (resetTime.getDay() !== targetDayOfWeek) {
+                resetTime.setDate(resetTime.getDate() - 1);
+            }
+        }
+        
+        return resetTime.getTime();
+    }
+
+    function checkAndApplyResets(lastSaveTimestamp) {
+        console.log("Verificando resets...");
+        let changes = false;
+        let messages = [];
+
+        // 1. Reset Diário (Conta + Chars)
+        const lastDailyReset = getResetTimestamp(null);
+        if (lastSaveTimestamp < lastDailyReset) {
+            appState.account.claustro = 0;
+            Object.keys(appState.chars).forEach(k => {
+                missoesConfig.diarias.forEach(m => appState.chars[k][m.id] = 0);
+                missoesConfig.eventos.forEach(m => appState.chars[k][m.id] = 0);
+            });
+            changes = true;
+            messages.push("Diárias");
+        }
+
+        // 2. Resets Específicos
+        const resetDaysToCheck = [1, 3, 5]; // Seg, Qua, Sex
+        const missionsByDay = {};
+        [...missoesConfig.semanais, ...missoesConfig.raids].forEach(m => {
+            if(!missionsByDay[m.resetDay]) missionsByDay[m.resetDay] = [];
+            missionsByDay[m.resetDay].push(m.id);
+        });
+
+        resetDaysToCheck.forEach(day => {
+            const resetTime = getResetTimestamp(day);
+            if (lastSaveTimestamp < resetTime) {
+                const missionIds = missionsByDay[day] || [];
+                if (missionIds.length > 0) {
+                    Object.keys(appState.chars).forEach(k => {
+                        missionIds.forEach(mId => appState.chars[k][mId] = 0);
+                    });
+                    changes = true;
+                    const diaNome = day === 1 ? "Segunda" : day === 3 ? "Quarta" : "Sexta";
+                    messages.push(diaNome);
+                }
+            }
+        });
+
+        if (changes) {
+            showToast("Resets aplicados: " + messages.join(", "));
+            persist();
+        }
+        
+        updateSaveDisplay(lastSaveTimestamp);
+    }
+
+    // --- GERENCIAMENTO DE ESTADO E ARQUIVO ---
+
+    function init() {
+        startClock();
+        
+        const localData = localStorage.getItem('gcFarmDataV2');
+        if (localData) {
+            try {
+                const parsed = JSON.parse(localData);
+                appState = { ...appState, ...parsed };
+                checkAndApplyResets(appState.meta.lastSave);
+            } catch (e) { console.error("Erro cache", e); }
+        } else {
+            personagens.forEach(p => {
+                if (!appState.chars[p.char]) appState.chars[p.char] = {};
+            });
+            persist();
+        }
+
+        renderAll();
+        initBackground();
+    }
+
+    function persist() {
+        appState.meta.lastSave = Date.now();
+        localStorage.setItem('gcFarmDataV2', JSON.stringify(appState));
+        updateSaveDisplay(appState.meta.lastSave);
+    }
+
+    function updateSaveDisplay(ts) {
+        const date = new Date(ts);
+        const formatted = date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR').slice(0,5);
+        const el = document.getElementById('last-save-display');
+        if(el) el.innerHTML = `Cache Local: <span>${formatted}</span>`;
+    }
+
+    function downloadJSON() {
+        persist();
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState));
+        const dlAnchor = document.createElement('a');
+        dlAnchor.setAttribute("href", dataStr);
+        dlAnchor.setAttribute("download", `farm_gc_${new Date().toISOString().slice(0,10)}.json`);
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        dlAnchor.remove();
+        showToast("Arquivo JSON salvo com sucesso!");
+    }
+
+    function uploadJSON(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const json = JSON.parse(e.target.result);
+                appState = { ...appState, ...json };
+                checkAndApplyResets(json.meta.lastSave || Date.now()); 
+                persist();
+                renderAll();
+            } catch(err) {
+                alert("Erro ao ler JSON");
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    // --- RENDERIZAÇÃO ---
+
+    function renderAll() {
+        const clContainer = document.getElementById('claustro-container');
+        if(clContainer) {
+            clContainer.innerHTML = '';
+            for(let i=1; i<=3; i++) {
+                const active = i <= appState.account.claustro ? 'active' : '';
+                clContainer.innerHTML += `<div class="pip ${active}" onclick="toggleClaustro(${i})"></div>`;
+            }
+        }
+
+        const grid = document.getElementById('char-grid');
+        grid.innerHTML = '';
+        
+        const today = new Date().getDay();
+        const isWeekend = (today === 5 || today === 6 || today === 0);
+
+        personagens.forEach(p => {
+            if(!appState.chars[p.char]) appState.chars[p.char] = {};
+
+            const html = `
+            <div class="char-card">
+                <div class="char-header">
+                    <img src="imagens/personagens/${p.char}.png" class="char-bg-img" onerror="this.style.display='none'">
+                    <img src="imagens/personagens/${p.char}.png" class="char-avatar" onerror="this.src='https://placehold.co/60x60/111/FFF?text=?'">
+                    <div class="char-details">
+                        <div class="char-name">${p.nome}</div>
+                        <span class="char-tag">${p.power}</span>
+                    </div>
+                </div>
+                <div class="char-missions">
+                    <div class="cat-title">Diárias <span class="reset-info">03:00 AM</span></div>
+                    ${missoesConfig.diarias.map(m => renderMissionRow(p.char, m)).join('')}
+                    
+                    <div class="cat-title">Semanais <span class="reset-info">Qua 03:00</span></div>
+                    ${missoesConfig.semanais.map(m => renderMissionRow(p.char, m)).join('')}
+
+                    <div class="cat-title">Raid Vazio <span class="reset-info">Seg/Qua/Sex</span></div>
+                    ${missoesConfig.raids.map(m => renderMissionRow(p.char, m)).join('')}
+
+                    <div class="cat-title">Eventos <span class="reset-info">Fim de Semana</span></div>
+                    ${missoesConfig.eventos.map(m => renderMissionRow(p.char, m, isWeekend)).join('')}
+                </div>
+            </div>`;
+            grid.innerHTML += html;
+        });
+    }
+
+    function renderMissionRow(charKey, mission, isWeekendOpen = true) {
+        const val = appState.chars[charKey][mission.id] || 0;
+        const isDone = val >= mission.max;
+        const blockedClass = (mission.isWeekend && !isWeekendOpen) ? 'row-blocked' : '';
+        const weekendTag = (mission.isWeekend && !isWeekendOpen) ? '<span style="font-size:0.6rem; margin-left:5px">(Fechado)</span>' : '';
+
+        let pips = '';
+        for(let i=1; i<=mission.max; i++) {
+            const active = i <= val ? 'active' : '';
+            pips += `<div class="pip ${active}" onclick="toggleMission('${charKey}', '${mission.id}', ${i}, '${mission.label}')"></div>`;
+        }
+
+        return `
+        <div class="mission-row ${isDone ? 'done' : ''} ${blockedClass}">
+            <span class="mission-name ${mission.isWeekend ? 'tag-weekend':''}">${mission.label}${weekendTag}</span>
+            <div class="pips-container">${pips}</div>
+        </div>`;
+    }
+
+    // --- INTERAÇÕES ---
+
+    function toggleClaustro(val) {
+        if(appState.account.claustro === val) appState.account.claustro = val - 1;
+        else {
+            appState.account.claustro = val;
+            showToast("Claustro Infinito: Concluído!");
+        }
+        persist();
+        renderAll();
+    }
+
+    function toggleMission(charKey, mId, val, label) {
+        const current = appState.chars[charKey][mId] || 0;
+        if(current === val) {
+            appState.chars[charKey][mId] = val - 1; 
+        } else {
+            appState.chars[charKey][mId] = val; 
+            showToast(`${label} Concluído!`);
+        }
+        persist();
+        renderAll();
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        const tm = document.getElementById('toast-msg');
+        tm.innerText = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // --- CANVAS BACKGROUND ANIMATION ---
+    function initBackground() {
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if(this.x < 0 || this.x > width) this.vx *= -1;
+                if(this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(187, 134, 252, 0.3)'; 
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for(let i=0; i<60; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+                particles.forEach(p2 => {
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if(dist < 100) {
+                        ctx.strokeStyle = `rgba(187, 134, 252, ${0.1 - dist/1000})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    }
+
+    // Start
+    init();
+
+</script>
+</body>
+</html>
