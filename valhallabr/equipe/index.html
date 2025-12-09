@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EQUIPE</title>
+  <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
+  
+  <style>
+    /* --- CONFIGURAÇÕES GERAIS --- */
+    :root {
+      --primary: #bb86fc;       /* Roxo */
+      --secondary: #03dac6;     /* Ciano */
+      --bg: #0b0b0b;
+      --surface: rgba(30, 30, 30, 0.7);
+      --border: 1px solid rgba(255, 255, 255, 0.15);
+      
+      /* Cores de Cargos */
+      --role-leader: #FFD700;   /* Dourado */
+      --role-founder: #bb86fc;  /* Roxo */
+      --role-system: #00BFFF;   /* Deep Sky Blue */
+      --role-admin: #DC143C;    /* Crimson Red */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+    body {
+      background-color: var(--bg);
+      color: #e0e0e0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex; flex-direction: column;
+    }
+
+    /* --- FUNDO ANIMADO --- */
+    #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); }
+
+       /* --- HERO BANNER (400px) --- */
+        @keyframes scanLight {
+            0% { left: -100%; opacity: 0; }
+            20% { opacity: 1; }
+            50% { left: 200%; opacity: 0; }
+            100% { left: 200%; opacity: 0; }
+        }
+
+        .hero-banner {
+            width: 100%;
+            height: 400px; /* Ajustado para 400px */
+            position: relative;
+            overflow: hidden;
+            background: #020202; 
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            object-position: center center;
+            opacity: 1;
+            display: block;
+        }
+
+        .hero-banner::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
+            transform: skewX(-25deg);
+            animation: scanLight 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+    /* --- HEADER --- */
+    header {
+      position: sticky; top: 0; z-index: 100; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(187, 134, 252, 0.2); padding: 0.8rem 2rem;
+      display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+    }
+    .brand h1 {
+        font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, var(--primary)); 
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        margin: 0; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
+    }
+    .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
+   .cache-info span { color: var(--primary); font-weight: bold; }
+   .real-time { color: var(--secondary); font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 5px rgba(3, 218, 198, 0.4); }
+
+    .main-nav { display: flex; gap: 15px; }
+    .nav-link {
+        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 1.4rem;
+        padding: 8px 16px; border-radius: 4px; transition: 0.3s; display: flex; align-items: center; gap: 6px;
+        border-bottom: 2px solid transparent;
+    }
+    .nav-link:hover, .nav-link.active {
+        color: #fff; text-shadow: 0 0 10px var(--secondary); border-bottom: 2px solid var(--secondary);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
+
+    /* --- LAYOUT DE PIRÂMIDE (TEAM) --- */
+    .team-container {
+        max-width: 1400px; width: 100%; margin: 50px auto; padding: 0 20px;
+        display: flex; flex-direction: column; align-items: center; gap: 60px;
+    }
+
+    .team-row {
+        display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; width: 100%;
+        opacity: 0; animation: fadeUp 0.8s ease forwards;
+    }
+    .row-1 { animation-delay: 0.2s; } /* Líder */
+    .row-2 { animation-delay: 0.5s; } /* Fundadores */
+    .row-3 { animation-delay: 0.8s; } /* Admins */
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARD DE MEMBRO */
+    .member-card {
+        background: var(--surface);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 16px;
+        padding: 25px;
+        width: 280px;
+        display: flex; flex-direction: column; align-items: center;
+        position: relative; overflow: hidden;
+        backdrop-filter: blur(10px);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s, filter 0.4s, opacity 0.4s;
+    }
+    
+    .member-card:hover { transform: translateY(-10px); }
+
+    /* Avatar */
+    .member-img-box {
+        width: 120px; height: 120px; margin-bottom: 15px; position: relative;
+    }
+    .member-img {
+        width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+        border: 3px solid #fff; box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        transition: 0.3s; background: #111;
+    }
+    .member-card:hover .member-img { transform: scale(1.05); }
+
+    /* Texto */
+    .member-name { font-size: 1.4rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; text-align: center; }
+    .member-badge {
+        padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; 
+        text-transform: uppercase; letter-spacing: 1px; color: #000;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    /* --- ESTILOS ESPECÍFICOS POR CARGO --- */
+    
+    /* LÍDER */
+    .role-lider { border-color: var(--role-leader); box-shadow: 0 0 30px rgba(255, 215, 0, 0.15); transform: scale(1.1); }
+    .role-lider:hover { box-shadow: 0 0 50px rgba(255, 215, 0, 0.4); border-color: #fff; transform: scale(1.15) translateY(-10px); }
+    .role-lider .member-img { border-color: var(--role-leader); }
+    .role-lider .member-badge { background: var(--role-leader); box-shadow: 0 0 15px var(--role-leader); }
+    .role-lider .member-name { text-shadow: 0 0 10px var(--role-leader); }
+
+    /* FUNDADOR */
+    .role-founder { border-color: var(--role-founder); }
+    .role-founder:hover { box-shadow: 0 0 30px rgba(187, 134, 252, 0.3); border-color: #fff; }
+    .role-founder .member-img { border-color: var(--role-founder); }
+    .role-founder .member-badge { background: var(--role-founder); color: #000; box-shadow: 0 0 10px var(--role-founder); }
+
+    /* SYSTEM (Destaque Tecnológico) */
+    .role-system { border-color: var(--role-system); }
+    .role-system:hover { box-shadow: 0 0 30px rgba(0, 191, 255, 0.3); border-color: #fff; }
+    .role-system .member-img { border-color: var(--role-system); }
+    .role-system .member-badge { background: var(--role-system); color: #000; box-shadow: 0 0 10px var(--role-system); }
+
+    /* ADMIN */
+    .role-admin { border-color: var(--role-admin); }
+    .role-admin:hover { box-shadow: 0 0 30px rgba(220, 20, 60, 0.3); border-color: #fff; }
+    .role-admin .member-img { border-color: var(--role-admin); }
+    .role-admin .member-badge { background: var(--role-admin); color: #fff; box-shadow: 0 0 10px var(--role-admin); }
+
+    /* --- NOVO: STATUS INATIVO / HONRA --- */
+    .status-inactive {
+        opacity: 0.5;                /* Fica 50% transparente */
+        filter: grayscale(100%);     /* Fica preto e branco */
+        transform: scale(0.95);      /* Um pouco menor */
+        border-style: dashed;        /* Borda tracejada */
+    }
+    
+    .status-inactive:hover {
+        opacity: 1;                  /* Volta a cor normal ao passar o mouse */
+        filter: grayscale(0%);       /* Remove preto e branco */
+        transform: scale(1.05) translateY(-10px); /* Sobe e cresce */
+        border-style: solid;
+        z-index: 10;
+        cursor: help; /* Ícone de ajuda/memória */
+    }
+    
+    .status-inactive .member-badge {
+        background: #555;            /* Badge cinza quando inativo */
+        color: #ccc;
+    }
+    .status-inactive:hover .member-badge {
+        background: var(--role-founder); /* Volta a cor original no hover */
+        color: #000;
+    }
+
+    /* DIVISORES VISUAIS */
+    .level-divider {
+        width: 100%; max-width: 600px; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        margin: 10px 0;
+    }
+
+    footer { margin-top: auto; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; }
+
+/* Responsividade para Celulares */
+    @media (max-width: 768px) {
+        header { 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-top: 0; 
+            padding-bottom: 1rem; /* Ajuste fino para não colar */
+        }
+
+        .hero-banner { 
+            /* AUMENTAMOS A ALTURA PARA CABER O BANNER 800x600 */
+            height: 450px; 
+        }
+
+        .main-nav { 
+            flex-wrap: wrap; 
+            justify-content: center; 
+        }
+
+        /* Ajustes específicos de cada página (Grid, etc) */
+        .controls { width: 100%; justify-content: center; }
+        .brand { text-align: center; }
+        .grid-container { grid-template-columns: 1fr; }
+        .account-stats-panel { flex-direction: column; gap: 15px; }
+        .dashboard-grid { grid-template-columns: 1fr; }
+        .role-lider { transform: scale(1); }
+        .role-lider:hover { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+<div class="hero-banner">
+    <picture>
+        <source media="(max-width: 768px)" srcset="../imagens/banner-mobile.png">
+        <img src="../imagens/banner.png" alt="Banner ValhallaBR" onerror="this.style.display='none'">
+    </picture>
+</div>
+
+  <header>
+    <div class="brand">
+        <h1>VALHALLA BR</h1>
+        <h3>EQUIPE</h3>
+         <br>
+        <div class="info-panel">
+            <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
+        </div>
+    </div>
+    
+    <nav class="main-nav">
+        <a href="../index.html" class="nav-link">⌂ Início</a>
+        <a href="../farm/index.html" class="nav-link">🚜 Farm</a>
+        <a href="../titulos/index.html" class="nav-link">🏆 Títulos</a>
+        <a href="../perfil/index.html" class="nav-link">👤 Perfil</a>
+        <a href="#" class="nav-link active">🛡️ Equipe</a>
+    </nav>
+
+    <div class="controls" style="min-width:180px"></div> </header>
+
+  <div class="team-container">
+      
+      <div class="team-row row-1">
+          <div class="member-card role-lider">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/lass.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/FFD700?text=Lider'">
+              </div>
+              <div class="member-name">GD칠</div>
+              <div class="member-badge">Líder | Fundador</div>
+          </div>
+      </div>
+
+      <div class="level-divider"></div>
+
+      <div class="team-row row-2">
+          
+          <div class="member-card role-founder status-inactive" title="Membro Inativo">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/arme.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=F'">
+              </div>
+              <div class="member-name">Meczao칠</div>
+              <div class="member-badge">Ex Líder | Fundador</div> </div>
+           
+          <div class="member-card role-founder">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/veigas.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=F'">
+              </div>
+              <div class="member-name">Foley칠</div>
+              <div class="member-badge">Fundador</div>
+          </div>
+
+          <div class="member-card role-founder">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/lupus.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=M'">
+              </div>
+              <div class="member-name">Law칠</div>
+              <div class="member-badge">Fundador</div>
+          </div>
+
+          <div class="member-card role-system">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/00BFFF?text=Sys'">
+              </div>
+              <div class="member-name">TREV4S</div>
+              <div class="member-badge">404 System</div>
+          </div>
+
+      </div>
+
+      <div class="level-divider"></div>
+
+      <div class="team-row row-3">
+          
+          <div class="member-card role-admin">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/pb.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+              </div>
+              <div class="member-name">LordPb칠 | PB</div>
+              <div class="member-badge">Admin</div>
+          </div>
+
+          <div class="member-card role-admin">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/heitor.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+              </div>
+              <div class="member-name">Kratos</div>
+              <div class="member-badge">Admin</div>
+          </div>
+
+          <div class="member-card role-admin">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/remmy.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+              </div>
+              <div class="member-name">remmy칠</div>
+              <div class="member-badge">Admin</div>
+          </div>
+
+          <div class="member-card role-admin">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/m0narca.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+              </div>
+              <div class="member-name">Monarca</div>
+              <div class="member-badge">Admin</div>
+          </div>
+
+          <div class="member-card role-admin">
+              <div class="member-img-box">
+                  <img src="../imagens/equipe/immortal.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+              </div>
+              <div class="member-name">Immortal</div>
+              <div class="member-badge">Admin</div>
+          </div>
+
+      </div>
+
+  </div>
+
+  <footer>
+    © 2025 VALHALLA. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // --- LÓGICA DE PARTÍCULAS ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particlesArray = [];
+    function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+    resize();
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width; this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        if(this.x < 0 || this.x > width) this.vx *= -1;
+        if(this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() { ctx.fillStyle = 'rgba(187, 134, 252, 0.3)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+    }
+    function initParticles() { particlesArray = []; for(let i=0; i<60; i++) particlesArray.push(new Particle()); }
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particlesArray.forEach(p => {
+        p.update(); p.draw();
+        particlesArray.forEach(p2 => {
+          const dx = p.x - p2.x; const dy = p.y - p2.y; const dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < 100) {
+            ctx.strokeStyle = `rgba(187, 134, 252, ${0.1 - dist/1000})`; ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+          }
+        });
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    initParticles(); animateParticles();
+
+    // --- RELÓGIO ---
+    function startClock() {
+        const clockEl = document.getElementById('real-time-clock');
+        function update() {
+            const now = new Date();
+            clockEl.innerText = now.toLocaleTimeString('pt-BR');
+        }
+        setInterval(update, 1000); update();
+    }
+    startClock();
+  </script>
+</body>
+</html>

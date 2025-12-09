@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PERFIL</title>
+  <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
+  
+  <style>
+    /* --- CONFIGURAÇÕES GERAIS --- */
+    :root {
+      --primary: #bb86fc;
+      --secondary: #03dac6;
+      --bg: #0b0b0b;
+      --surface: rgba(30, 30, 30, 0.7);
+      --surface-hover: rgba(50, 50, 50, 0.9);
+      --border: 1px solid rgba(255, 255, 255, 0.15);
+      --glass: rgba(15, 15, 15, 0.95);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+    body {
+      background-color: var(--bg);
+      color: #e0e0e0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex; flex-direction: column;
+    }
+
+    /* --- FUNDO ANIMADO --- */
+    #bg-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+    }
+
+        /* --- HERO BANNER (400px) --- */
+        @keyframes scanLight {
+            0% { left: -100%; opacity: 0; }
+            20% { opacity: 1; }
+            50% { left: 200%; opacity: 0; }
+            100% { left: 200%; opacity: 0; }
+        }
+
+        .hero-banner {
+            width: 100%;
+            height: 400px; /* Ajustado para 400px */
+            position: relative;
+            overflow: hidden;
+            background: #020202; 
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            object-position: center center;
+            opacity: 1;
+            display: block;
+        }
+
+        .hero-banner::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
+            transform: skewX(-25deg);
+            animation: scanLight 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+    /* --- HEADER --- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--glass); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+      padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+    }
+    
+    .brand { display: flex; flex-direction: column; min-width: 180px; }
+    .brand h1 {
+        font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, var(--primary)); 
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        margin: 0; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
+    }
+    .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
+    .cache-info { color: #888; }
+    .cache-info span { color: var(--primary); font-weight: bold; }
+    .time-info { color: #aaa; font-size: 0.8rem; display: flex; align-items: center; gap: 5px;}
+    .real-time { color: var(--secondary); font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 5px rgba(3, 218, 198, 0.4); }
+
+    .main-nav { display: flex; gap: 15px; }
+    .nav-link {
+        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 1.4rem;
+        padding: 8px 16px; border-radius: 4px; transition: 0.3s; display: flex; align-items: center; gap: 6px;
+        border-bottom: 2px solid transparent;
+    }
+    .nav-link:hover, .nav-link.active {
+        color: #fff; text-shadow: 0 0 10px var(--secondary); border-bottom: 2px solid var(--secondary);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+        .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
+        .btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--primary); color: var(--primary);
+            padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
+        }
+        .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
+        
+        .btn-load { position: relative; overflow: hidden; border-color: var(--secondary); color: var(--secondary); }
+        .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
+        .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+    /* --- CONTAINER PRINCIPAL --- */
+    .content-wrapper {
+        max-width: 100%; margin: 30px auto; padding: 0 30px; width: 100%;
+        display: flex; flex-direction: column; gap: 25px; align-items: center;
+    }
+
+    /* --- PAINEL DE CONTA --- */
+    .account-stats-panel {
+        display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; align-items: center;
+        background: var(--surface); padding: 25px 40px; border-radius: 12px;
+        border: var(--border); box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        width: auto;
+        backdrop-filter: blur(10px);
+    }
+
+    .stat-group {
+        display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative;
+    }
+    .stat-group label {
+        color: var(--secondary); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    }
+    
+    .stat-input {
+        background: rgba(0,0,0,0.6); border: 1px solid #444; color: #fff;
+        padding: 8px 12px; border-radius: 6px; font-size: 1rem; text-align: center;
+        transition: 0.3s; width: 180px; font-weight: bold; cursor: pointer;
+    }
+    .stat-input:focus {
+        border-color: var(--primary); box-shadow: 0 0 15px rgba(187, 134, 252, 0.3); outline: none; background: #000;
+    }
+    
+    select.stat-input {
+        appearance: none; -webkit-appearance: none; -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2303dac6%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat; background-position: right 10px center; background-size: 10px;
+        padding-right: 30px;
+    }
+
+    /* --- CONTROLES DE COLUNA --- */
+    #menu-colunas {
+        display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+        background: var(--surface); padding: 10px 20px; border-radius: 12px;
+        border: var(--border); width: auto;
+    }
+    .menu-group { display: flex; gap: 10px; border-right: 1px solid #444; padding-right: 15px; margin-right: 5px; }
+
+    .col-toggle {
+        background: rgba(0,0,0,0.4); border: 1px solid #444; color: #aaa;
+        padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;
+        transition: 0.3s; user-select: none;
+    }
+    .col-toggle.active {
+        background: var(--secondary); color: #000; border-color: var(--secondary);
+        box-shadow: 0 0 10px rgba(3, 218, 198, 0.3); font-weight: bold;
+    }
+    .col-toggle.action-btn { background: var(--primary); color: #000; border-color: var(--primary); font-weight: bold; }
+    .col-toggle.action-btn:hover { background: #fff; }
+    .col-toggle:hover { filter: brightness(1.2); }
+
+    /* --- TABELA OTIMIZADA --- */
+    .table-container-center { display: flex; justify-content: center; width: 100%; }
+
+    .table-wrapper {
+        display: inline-block; max-width: 100%; overflow-x: auto;
+        background: var(--surface); border: var(--border);
+        border-radius: 12px; backdrop-filter: blur(10px);
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        scrollbar-width: thin; scrollbar-color: var(--primary) #111;
+    }
+
+    table { border-collapse: collapse; width: auto; margin: 0 auto; }
+
+    thead th {
+        background: rgba(10,10,10,0.95); color: var(--secondary);
+        padding: 15px 12px; text-align: center; font-size: 0.9rem; text-transform: uppercase;
+        border-bottom: 2px solid var(--border); cursor: pointer; 
+        white-space: nowrap; user-select: none;
+    }
+    thead th:hover { color: #fff; text-shadow: 0 0 8px var(--secondary); background: rgba(255,255,255,0.05); }
+
+    tbody tr { transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    tbody tr:hover { background: rgba(187, 134, 252, 0.15) !important; }
+    tbody td { padding: 8px 8px; text-align: center; vertical-align: middle; color: #ddd; font-size: 0.95rem; white-space: nowrap; }
+
+    /* Célula de Personagem */
+    .char-cell { display: flex; align-items: center; gap: 10px; justify-content: flex-start; padding-left: 15px; padding-right: 15px; }
+    .char-img {
+        width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+        border: 2px solid var(--primary); box-shadow: 0 0 8px rgba(187, 134, 252, 0.3);
+        background: #000; transition: transform 0.3s;
+    }
+    tbody tr:hover .char-img { transform: scale(1.2); border-color: var(--secondary); }
+    .char-name { font-weight: bold; color: #fff; font-size: 0.9rem; }
+
+    /* Inputs e Selects na Tabela */
+    select, input {
+        background: rgba(0,0,0,0.4); border: 1px solid #444; color: #fff;
+        padding: 8px; border-radius: 6px; width: 100%; 
+        text-align: center; font-size: 0.9rem; transition: 0.3s;
+        min-width: 60px; cursor: pointer;
+    }
+    select {
+        appearance: none; -webkit-appearance: none;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23bb86fc%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat; background-position: right 5px center; background-size: 8px;
+        padding-right: 15px;
+    }
+    select:focus, input:focus { border-color: var(--primary); outline: none; background: #000; }
+
+    /* Badges de Poder */
+    .badge-power {
+        padding: 5px 10px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; color: #fff;
+        display: inline-block; min-width: 50px;
+    }
+    .p-MP { background: linear-gradient(135deg, #1e3c72, #2a5298); }
+    .p-AP { background: linear-gradient(135deg, #800000, #ff0000); }
+    .p-AMP { background: linear-gradient(135deg, #4b0082, #9932cc); }
+
+    /* Footer */
+    footer {
+        margin-top: auto; padding: 25px; text-align: center;
+        background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1);
+        color: #777; font-size: 0.85rem; letter-spacing: 1px;
+    }
+
+    .sorted-asc::after { content: " ▲"; color: var(--secondary); font-size: 0.7em; }
+    .sorted-desc::after { content: " ▼"; color: var(--primary); font-size: 0.7em; }
+
+/* Responsividade para Celulares */
+    @media (max-width: 768px) {
+        header { 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-top: 0; 
+            padding-bottom: 1rem; /* Ajuste fino para não colar */
+        }
+
+        .hero-banner { 
+            /* AUMENTAMOS A ALTURA PARA CABER O BANNER 800x600 */
+            height: 450px; 
+        }
+
+        .main-nav { 
+            flex-wrap: wrap; 
+            justify-content: center; 
+        }
+
+        /* Ajustes específicos de cada página (Grid, etc) */
+        .controls { width: 100%; justify-content: center; }
+        .brand { text-align: center; }
+        .grid-container { grid-template-columns: 1fr; }
+        .account-stats-panel { flex-direction: column; gap: 15px; }
+        .dashboard-grid { grid-template-columns: 1fr; }
+        .role-lider { transform: scale(1); }
+        .role-lider:hover { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+<div class="hero-banner">
+    <picture>
+        <source media="(max-width: 768px)" srcset="../imagens/banner-mobile.png">
+        <img src="../imagens/banner.png" alt="Banner ValhallaBR" onerror="this.style.display='none'">
+    </picture>
+</div>
+
+  <header>
+    <div class="brand">
+        <h1>VALHALLA BR</h1>
+		<h3>PERFIL</h3>
+		 <br>
+        <div class="info-panel">
+            <div class="cache-info" id="last-save-display">Memória Cache: <span>⛬</span></div>
+            <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
+        </div>
+    </div>
+    
+    <nav class="main-nav">
+        <a href="../index.html" class="nav-link">⌂ Início</a>
+        <a href="../farm/index.html" class="nav-link">🚜 Farm</a>
+        <a href="../titulos/index.html" class="nav-link">🏆 Títulos</a>
+        <a href="#" class="nav-link active">👤 Perfil</a>
+    </nav>
+
+    <div class="controls">
+        <button class="btn" onclick="salvarPerfilManual()">💾 SALVAR</button>
+        <button class="btn btn-load" onclick="document.getElementById('fileInput').click()">📂 CARREGAR</button>
+        <input type="file" id="fileInput" style="display:none" accept=".json" onchange="carregarPerfilArquivo(this)">
+    </div>
+  </header>
+
+  <div class="content-wrapper">
+    
+    <div class="account-stats-panel">
+        <div class="stat-group">
+            <label>Apelido / Nick</label>
+            <input type="text" id="acc-nick" class="stat-input" placeholder="VALHALLA BR" oninput="persistirConta()">
+        </div>
+        
+        <div class="stat-group">
+            <label>Chase Level (C-Lv)</label>
+            <select id="acc-clv" class="stat-input" onchange="persistirConta()">
+                </select>
+        </div>
+
+        <div class="stat-group">
+            <label>Coleção de Cartas</label>
+            <select id="acc-coll" class="stat-input" onchange="persistirConta()">
+                </select>
+        </div>
+    </div>
+
+    <div id="menu-colunas">
+        <div class="menu-group">
+            <div class="col-toggle action-btn" onclick="toggleTodasColunas(true)">👁️ Mostrar Todas</div>
+            <div class="col-toggle action-btn" onclick="toggleTodasColunas(false)">🙈 Ocultar Todas</div>
+        </div>
+        </div>
+
+    <div class="table-container-center">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th onclick="ordenarTabela(0, 'number')">#</th>
+                        <th onclick="ordenarTabela(1, 'text')">Personagem</th>
+                        <th onclick="ordenarTabela(2, 'text')">Sistema</th>
+                        <th>Classe</th>
+                        <th onclick="ordenarTabela(4, 'number')">Nível</th>
+                        <th onclick="ordenarTabela(5, 'number')">Torre das Ilussões</th>
+                        <th onclick="ordenarTabela(6, 'number')">Berkas</th>
+                        <th onclick="ordenarTabela(7, 'number')">Vazio</th>
+                        <th onclick="ordenarTabela(8, 'number')">Sistema R.</th>
+                        <th onclick="ordenarTabela(9, 'number')">V. Chase</th>
+                        
+                        <th>Colar</th>
+                        <th>Tornozeleira</th>
+                        
+                        <th>Anel</th>
+                        <th>Brinco</th>
+                        <th>Piercing</th>
+                        <th onclick="ordenarTabela(14, 'number')">Ataque Total</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-personagens">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+  </div>
+
+  <footer>
+    © 2025 VALHALLA. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // --- LÓGICA DE PARTÍCULAS ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particlesArray = [];
+    function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+    resize();
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width; this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        if(this.x < 0 || this.x > width) this.vx *= -1;
+        if(this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() { ctx.fillStyle = 'rgba(187, 134, 252, 0.3)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+    }
+    function initParticles() { particlesArray = []; for(let i=0; i<60; i++) particlesArray.push(new Particle()); }
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particlesArray.forEach(p => {
+        p.update(); p.draw();
+        particlesArray.forEach(p2 => {
+          const dx = p.x - p2.x; const dy = p.y - p2.y; const dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < 100) {
+            ctx.strokeStyle = `rgba(187, 134, 252, ${0.1 - dist/1000})`; ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+          }
+        });
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    initParticles(); animateParticles();
+
+    // --- RELÓGIO (BRASÍLIA) ---
+    function startClock() {
+        const clockEl = document.getElementById('real-time-clock');
+        function update() {
+            const now = new Date();
+            clockEl.innerText = now.toLocaleTimeString('pt-BR');
+        }
+        setInterval(update, 1000); update();
+    }
+
+    // --- UTILS DE RANGE ---
+    function generateRange(max) {
+        return Array.from({length: max + 1}, (_, i) => i.toString());
+    }
+
+    // --- GERAR SELECTS DA CONTA ---
+    function populateAccountSelects() {
+        const clvSelect = document.getElementById('acc-clv');
+        const collSelect = document.getElementById('acc-coll');
+        const clvFrag = document.createDocumentFragment();
+        const collFrag = document.createDocumentFragment();
+
+        // C-Lv 1 a 999
+        for(let i = 1; i <= 999; i++) {
+            const opt = document.createElement('option');
+            opt.value = i; opt.textContent = i;
+            clvFrag.appendChild(opt);
+        }
+        clvSelect.appendChild(clvFrag);
+
+        // Coleção 0 a 2500
+        for(let i = 0; i <= 2500; i++) {
+            const opt = document.createElement('option');
+            opt.value = i; opt.textContent = i;
+            collFrag.appendChild(opt);
+        }
+        collSelect.appendChild(collFrag);
+    }
+
+    // --- DADOS E TABELA ---
+    const CACHE_KEY = 'valhalla_perfil_v6'; // Atualizado para nova versão
+    
+    // Configuração das Colunas
+    const colunasConfig = [
+        { key: 'classe', type: 'select' },
+        { key: 'level', type: 'select' },
+        { key: 'tower', type: 'select' },
+        { key: 'berkas', type: 'select' }, 
+        { key: 'vazio', type: 'select' },
+        { key: 'sr', type: 'select' },
+        { key: 'visualChase', type: 'select' },
+        
+        // NOVAS COLUNAS
+        { key: 'colar', type: 'select' },
+        { key: 'tornozeleira', type: 'select' },
+
+        { key: 'anel', type: 'select' },
+        { key: 'brinco', type: 'select' },
+        { key: 'piercing', type: 'select' },
+        { key: 'atkTotal', type: 'input' }
+    ];
+
+    const opcoesClasse = ['1ª Classe','2ª Classe','3ª Classe','4ª Classe','Despertar'];
+    const opcoesAnel = ['Nenhum','Piupiu','Harkyon','Dimensão BI','Dimensão BII','Dimensão BIII','Infinito BI','Infinito BII','Infinito BIII','Incumprível III','Ciclo Infinito'];
+    const opcoesBrinco = ['Nenhum','Piupiu','Chamas','Gnosis','Fênix','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
+    const opcoesPiercing = ['Nenhum','Piupiu','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
+    
+    // OPÇÕES NOVAS (ORDENADAS ALFABETICAMENTE + NENHUM)
+    const opcoesColar = ['Nenhum', 'Amor', 'Átropos', 'Energia Azul', 'Energia Vermelha', 'Fogo', 'Folhas da Vida', 'Gelo', 'Halloween', 'Luz', 'Morte', 'Rosas', 'Trovão', 'Vento'];
+    const opcoesTornozeleira = ['Nenhum', 'Eternidade', 'Mágica', 'Real', 'Zoro'];
+
+    const opcoesLevel = Array.from({length:90},(_,i)=>(i+1).toString());
+    const opcoesTower = Array.from({length:30},(_,i)=>(i+1).toString());
+
+    // --- LÓGICA DE OPÇÕES DINÂMICAS ---
+    function getOpcoesBerkasVazioSR(birth) {
+        if(birth <= 10) return generateRange(15); 
+        return generateRange(12);
+    }
+
+    function getOpcoesVisual(birth) {
+        if(birth === 19) return generateRange(2);
+        if(birth <= 15) return generateRange(5);
+        return generateRange(3);
+    }
+
+    const dadosIniciais = [
+      {birth:1,char:"elesis",nome:"ELESIS",power:"MP"}, {birth:2,char:"lire",nome:"LIRE",power:"MP"},
+      {birth:3,char:"arme",nome:"ARME",power:"MP"}, {birth:4,char:"lass",nome:"LASS",power:"MP"},
+      {birth:5,char:"ryan",nome:"RYAN",power:"MP"}, {birth:6,char:"ronan",nome:"RONAN",power:"MP"},
+      {birth:7,char:"amy",nome:"AMY",power:"MP"}, {birth:8,char:"jin",nome:"JIN",power:"MP"},
+      {birth:9,char:"sieghart",nome:"SIEGHART",power:"MP"}, {birth:10,char:"mari",nome:"MARI",power:"MP"},
+      {birth:11,char:"dio",nome:"DIO",power:"AP"}, {birth:12,char:"zero",nome:"ZERO",power:"AP"},
+      {birth:13,char:"rey",nome:"REY",power:"AP"}, {birth:14,char:"lupus",nome:"LUPUS",power:"AP"},
+      {birth:15,char:"lin",nome:"LIN",power:"AMP"}, {birth:16,char:"azin",nome:"AZIN",power:"AMP"},
+      {birth:17,char:"holy",nome:"HOLY",power:"AMP"}, {birth:18,char:"edel",nome:"EDEL",power:"AMP"},
+      {birth:19,char:"veigas",nome:"VEIGAS",power:"AMP"}, {birth:20,char:"decane",nome:"DECANE",power:"AMP"},
+      {birth:21,char:"ai",nome:"AI",power:"AMP"}, {birth:22,char:"kallia",nome:"KALLIA",power:"AMP"},
+      {birth:23,char:"uno",nome:"UNO",power:"AMP"}, {birth:24,char:"iris",nome:"IRIS",power:"AMP"}
+    ];
+
+    let appData = {
+        account: { nick: "", cLevel: "1", collection: "0" },
+        perfil: []
+    };
+
+    function criarSelect(opcoes, valorSel){
+      const s = document.createElement("select");
+      opcoes.forEach(o => {
+        const opt = document.createElement("option");
+        opt.value = opt.textContent = o;
+        if(String(o) === String(valorSel)) opt.selected = true;
+        s.appendChild(opt);
+      });
+      return s;
+    }
+
+    function getOpcoesClassePorPersonagem(birth){
+      if([16,17,18,20,21,22,23,24].includes(Number(birth))) return ['1ª Classe','2ª Classe','Despertar'];
+      else if([19].includes(Number(birth))) return ['1ª Classe','Despertar'];
+      else return opcoesClasse;
+    }
+
+    // --- INICIALIZAÇÃO ---
+    function init() {
+        startClock();
+        populateAccountSelects();
+        
+        const cached = localStorage.getItem(CACHE_KEY);
+        if(cached) {
+            try {
+                const parsed = JSON.parse(cached);
+                appData.perfil = parsed.perfil || [];
+                appData.account = parsed.account || { nick: "", cLevel: "1", collection: "0" };
+                updateSaveDisplay(parsed.meta?.dataHora || Date.now());
+            } catch(e) { console.error("Erro cache", e); }
+        }
+
+        dadosIniciais.forEach(baseChar => {
+            const existing = appData.perfil.find(p => p.birth === baseChar.birth);
+            if(!existing) {
+                appData.perfil.push({
+                    ...baseChar,
+                    classe: "1ª Classe", level: "1", tower: "1", 
+                    berkas: "0", vazio: "0", sr: "0", visualChase: "0",
+                    colar: "Nenhum", tornozeleira: "Nenhum", // Novos Campos
+                    anel: "Nenhum", brinco: "Nenhum", piercing: "Nenhum", atkTotal: "0"
+                });
+            } else {
+                // Migração para quem já tinha cache antigo
+                if(!existing.colar) existing.colar = "Nenhum";
+                if(!existing.tornozeleira) existing.tornozeleira = "Nenhum";
+            }
+        });
+
+        document.getElementById("acc-nick").value = appData.account.nick;
+        document.getElementById("acc-clv").value = appData.account.cLevel;
+        document.getElementById("acc-coll").value = appData.account.collection;
+
+        renderizarTabela();
+        criarMenuColunas();
+    }
+
+    function renderizarTabela() {
+        const tb = document.getElementById("tbody-personagens");
+        tb.innerHTML = "";
+
+        appData.perfil.forEach((p) => {
+            const tr = document.createElement("tr");
+            tr.dataset.birth = p.birth;
+
+            tr.innerHTML = `<td>${p.birth}</td>`;
+            
+            const tdChar = document.createElement("td");
+            tdChar.className = "char-cell";
+            tdChar.innerHTML = `<img src="../imagens/personagens/${p.char}.png" class="char-img" onerror="this.src='https://placehold.co/35x35/000/FFF?text=?'"><span class="char-name">${p.nome}</span>`;
+            tr.appendChild(tdChar);
+
+            tr.innerHTML += `<td><span class="badge-power p-${p.power}">${p.power}</span></td>`;
+
+            colunasConfig.forEach(conf => {
+                const td = document.createElement("td");
+                let el;
+                let options = [];
+                
+                if(conf.key === 'classe') options = getOpcoesClassePorPersonagem(p.birth);
+                else if(conf.key === 'level') options = opcoesLevel;
+                else if(conf.key === 'tower') options = opcoesTower;
+                else if(conf.key === 'anel') options = opcoesAnel;
+                else if(conf.key === 'brinco') options = opcoesBrinco;
+                else if(conf.key === 'piercing') options = opcoesPiercing;
+                else if(['berkas', 'vazio', 'sr'].includes(conf.key)) options = getOpcoesBerkasVazioSR(p.birth);
+                else if(conf.key === 'visualChase') options = getOpcoesVisual(p.birth);
+                // NOVOS
+                else if(conf.key === 'colar') options = opcoesColar;
+                else if(conf.key === 'tornozeleira') options = opcoesTornozeleira;
+
+                if(conf.type === 'select') {
+                    el = criarSelect(options, p[conf.key]);
+                } else {
+                    el = document.createElement("input");
+                    el.type = "text";
+                    el.value = p[conf.key];
+                    if(conf.key === 'atkTotal') {
+                        el.addEventListener('input', function() { this.value = this.value.replace(/[^0-9]/g, ''); });
+                    }
+                }
+
+                el.addEventListener('change', (e) => persistirDadosTabela(p.birth, conf.key, e.target.value));
+                if(conf.type === 'input') el.addEventListener('input', (e) => persistirDadosTabela(p.birth, conf.key, e.target.value));
+
+                td.appendChild(el);
+                tr.appendChild(td);
+            });
+            tb.appendChild(tr);
+        });
+        atualizarColunasVisiveis();
+    }
+
+    function salvarNoCache() {
+        const ts = Date.now();
+        const dataToSave = {
+            meta: { dataHora: ts },
+            account: appData.account,
+            perfil: appData.perfil
+        };
+        localStorage.setItem(CACHE_KEY, JSON.stringify(dataToSave));
+        updateSaveDisplay(ts);
+    }
+
+    function persistirConta() {
+        appData.account.nick = document.getElementById("acc-nick").value;
+        appData.account.cLevel = document.getElementById("acc-clv").value;
+        appData.account.collection = document.getElementById("acc-coll").value;
+        salvarNoCache();
+    }
+
+    function persistirDadosTabela(birth, key, value) {
+        const char = appData.perfil.find(p => p.birth === birth);
+        if(char) char[key] = value;
+        salvarNoCache();
+    }
+
+    function updateSaveDisplay(ts) {
+        const date = new Date(ts);
+        const formatted = date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR').slice(0,5);
+        const el = document.getElementById('last-save-display');
+        if(el) el.innerHTML = `Memória Cache: <span>${formatted}</span>`;
+    }
+
+    function salvarPerfilManual() {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
+            meta: { dataHora: new Date().toLocaleString() },
+            account: appData.account,
+            perfil: appData.perfil
+        }));
+        const dlAnchor = document.createElement('a');
+        dlAnchor.setAttribute("href", dataStr);
+        dlAnchor.setAttribute("download", `perfil_valhalla_${new Date().toISOString().slice(0,10)}.json`);
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        dlAnchor.remove();
+    }
+
+    function carregarPerfilArquivo(input) {
+        const file = input.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const dados = JSON.parse(e.target.result);
+                appData.perfil = dados.perfil || [];
+                appData.account = dados.account || { nick: "", cLevel: "1", collection: "0" };
+                
+                document.getElementById("acc-nick").value = appData.account.nick;
+                document.getElementById("acc-clv").value = appData.account.cLevel;
+                document.getElementById("acc-coll").value = appData.account.collection;
+                
+                renderizarTabela();
+                salvarNoCache();
+                alert("Perfil carregado!");
+            } catch(err) { alert("Erro ao ler JSON."); }
+        };
+        reader.readAsText(file);
+    }
+
+    function criarMenuColunas() {
+        const headers = document.querySelectorAll("thead th");
+        const menu = document.getElementById("menu-colunas");
+        const existingToggles = menu.querySelectorAll('.col-toggle:not(.action-btn)');
+        existingToggles.forEach(el => el.remove());
+
+        headers.forEach((th, i) => {
+            if(i < 3) return; 
+
+            const btn = document.createElement("div");
+            btn.className = "col-toggle active";
+            btn.textContent = th.innerText;
+            btn.onclick = () => {
+                const isHidden = th.style.display === "none";
+                setColumnVisible(i, isHidden);
+                if(isHidden) btn.classList.add("active");
+                else btn.classList.remove("active");
+            };
+            menu.appendChild(btn);
+        });
+    }
+
+    function setColumnVisible(index, visible) {
+        const th = document.querySelectorAll("thead th")[index];
+        th.style.display = visible ? "" : "none";
+        document.querySelectorAll(`tbody tr td:nth-child(${index+1})`).forEach(td => td.style.display = visible ? "" : "none");
+    }
+
+    function toggleTodasColunas(show) {
+        const headers = document.querySelectorAll("thead th");
+        headers.forEach((th, i) => {
+            if(i < 3) return; 
+            setColumnVisible(i, show);
+        });
+        const toggles = document.querySelectorAll("#menu-colunas .col-toggle:not(.action-btn)");
+        toggles.forEach(btn => show ? btn.classList.add("active") : btn.classList.remove("active"));
+    }
+
+    function atualizarColunasVisiveis() {
+        const headers = document.querySelectorAll("thead th");
+        headers.forEach((th, i) => {
+            if(th.style.display === "none") {
+                document.querySelectorAll(`tbody tr td:nth-child(${i+1})`).forEach(td => td.style.display = "none");
+            }
+        });
+    }
+
+    let sortAsc = true;
+    let lastSortIdx = -1;
+
+    function ordenarTabela(colIndex, type) {
+        if(lastSortIdx !== colIndex) sortAsc = true;
+        lastSortIdx = colIndex;
+
+        const tb = document.getElementById("tbody-personagens");
+        const rows = Array.from(tb.querySelectorAll("tr"));
+
+        rows.sort((a, b) => {
+            const aCell = a.children[colIndex];
+            const bCell = b.children[colIndex];
+            
+            let aVal, bVal;
+            const aInput = aCell.querySelector("input,select");
+            aVal = aInput ? aInput.value : aCell.innerText;
+            const bInput = bCell.querySelector("input,select");
+            bVal = bInput ? bInput.value : bCell.innerText;
+
+            if(type === 'number') {
+                const aNum = parseFloat(aVal.replace(/[^0-9.-]/g, '')) || 0;
+                const bNum = parseFloat(bVal.replace(/[^0-9.-]/g, '')) || 0;
+                return sortAsc ? aNum - bNum : bNum - aNum;
+            } else {
+                return sortAsc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+            }
+        });
+
+        document.querySelectorAll("thead th").forEach(th => th.classList.remove("sorted-asc", "sorted-desc"));
+        const currentTh = document.querySelectorAll("thead th")[colIndex];
+        currentTh.classList.add(sortAsc ? "sorted-asc" : "sorted-desc");
+
+        tb.innerHTML = "";
+        rows.forEach(r => tb.appendChild(r));
+        sortAsc = !sortAsc;
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TÍTULOS</title>
+  <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
+  
+  <style>
+    /* --- CONFIGURAÇÕES GERAIS --- */
+    :root {
+      --primary: #bb86fc;
+      --secondary: #03dac6;
+      --bg: #0b0b0b;
+      --surface: rgba(30, 30, 30, 0.7);
+      --border: 1px solid rgba(255, 255, 255, 0.15);
+      
+      /* Cores de Raridade (Solicitadas) */
+      --normal: #a0a0a0;    /* Cinza */
+      --rare: #00bfff;      /* Azul */
+      --epic: #ffd700;      /* Amarelo */
+      --legendary: #b026ff; /* Roxo */
+      --ancestral: #ff1493; /* Rosa */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+    body {
+      background-color: var(--bg);
+      color: #e0e0e0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex; flex-direction: column;
+    }
+
+    /* --- FUNDO & BANNER --- */
+    #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); }
+    
+        /* --- HERO BANNER (400px) --- */
+        @keyframes scanLight {
+            0% { left: -100%; opacity: 0; }
+            20% { opacity: 1; }
+            50% { left: 200%; opacity: 0; }
+            100% { left: 200%; opacity: 0; }
+        }
+
+        .hero-banner {
+            width: 100%;
+            height: 400px; /* Ajustado para 400px */
+            position: relative;
+            overflow: hidden;
+            background: #020202; 
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            object-position: center center;
+            opacity: 1;
+            display: block;
+        }
+
+        .hero-banner::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
+            transform: skewX(-25deg);
+            animation: scanLight 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+    /* --- HEADER --- */
+    header {
+      position: sticky; top: 0; z-index: 100; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(187, 134, 252, 0.2); padding: 0.8rem 2rem;
+      display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+    }
+    .brand { display: flex; flex-direction: column; min-width: 180px; }
+    .brand h1 {
+        font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, var(--primary)); 
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        margin: 0; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
+    }
+    .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
+    .cache-info { color: #888; }
+    .cache-info span { color: var(--primary); font-weight: bold; }
+    .time-info { color: #aaa; font-size: 0.8rem; display: flex; align-items: center; gap: 5px;}
+    .real-time { color: var(--secondary); font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 5px rgba(3, 218, 198, 0.4); }
+
+    .main-nav { display: flex; gap: 15px; }
+    .nav-link {
+        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 1.4rem;
+        padding: 8px 16px; border-radius: 4px; transition: 0.3s; display: flex; align-items: center; gap: 6px;
+        border-bottom: 2px solid transparent;
+    }
+    .nav-link:hover, .nav-link.active {
+        color: #fff; text-shadow: 0 0 10px var(--secondary); border-bottom: 2px solid var(--secondary);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+        .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
+        .btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--primary); color: var(--primary);
+            padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
+        }
+        .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
+        
+        .btn-load { position: relative; overflow: hidden; border-color: var(--secondary); color: var(--secondary); }
+        .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
+        .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+    /* --- FILTRO --- */
+    .filter-wrapper {
+        display: flex; justify-content: center; align-items: center; gap: 10px; margin: 30px auto; padding: 15px;
+        background: var(--surface); border-radius: 50px; border: var(--border); width: fit-content; backdrop-filter: blur(10px);
+    }
+    .filter-select {
+        background: rgba(0,0,0,0.6); border: 1px solid #444; color: #fff; padding: 10px 20px;
+        border-radius: 20px; font-size: 1rem; width: 300px; cursor: pointer; text-align: center;
+    }
+    .btn-clear {
+        background: rgba(255, 255, 255, 0.1); border: 1px solid var(--secondary); color: var(--secondary);
+        padding: 8px 15px; border-radius: 50%; cursor: pointer; font-weight: bold; transition: 0.3s;
+        width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+    }
+    .btn-clear:hover { background: var(--secondary); color: #000; transform: rotate(90deg); }
+
+    /* --- GRID DE PERSONAGENS (2 POR LINHA) --- */
+    .grid-container {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(750px, 1fr)); gap: 30px;
+        width: 100%; max-width: 1800px; margin: 0 auto 40px auto; padding: 0 30px;
+    }
+
+    .char-card {
+        background: var(--surface); border: var(--border); border-radius: 12px; overflow: hidden;
+        display: flex; flex-direction: column; transition: transform 0.3s; backdrop-filter: blur(10px);
+    }
+    .char-card:hover { transform: translateY(-5px); border-color: var(--secondary); box-shadow: 0 15px 50px rgba(0,0,0,0.6); }
+
+    .char-header {
+        background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(30,30,30,0.9) 100%);
+        padding: 25px; display: flex; align-items: center; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; }
+    .char-info { flex-grow: 1; }
+    .char-name { font-size: 1.4rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+    .char-birth { font-size: 0.9rem; color: #888; }
+
+    .equipped-slot {
+        width: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px; min-height: 80px;
+    }
+    .equipped-img { width: 70px; height: 70px; object-fit: contain; filter: drop-shadow(0 0 5px var(--secondary)); }
+    .equipped-label { font-size: 0.75rem; color: var(--secondary); text-align: center; line-height: 1.2; margin-top: 5px; font-weight: bold; }
+    .placeholder-text { font-size: 0.75rem; color: #555; font-style: italic; }
+
+    /* --- GRID DE TÍTULOS --- */
+    .titles-grid { display: flex; flex-wrap: wrap; gap: 12px; padding: 25px; justify-content: center; min-height: 180px; align-content: flex-start; }
+    .title-item {
+        width: 60px; height: 60px; border-radius: 10px; border: 1px solid transparent; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: 0.2s;
+    }
+    .title-item img { width: 100%; height: 100%; object-fit: contain; opacity: 0.2; filter: grayscale(1); transition: 0.3s; }
+    
+    .title-item:hover { background: rgba(255,255,255,0.05); transform: scale(1.15); z-index: 2; }
+    .title-item:hover img { opacity: 0.8; }
+    
+    .title-item.obtained img { opacity: 1; filter: grayscale(0); }
+    .title-item.obtained { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+
+    .title-item.equipped { border-color: var(--secondary); background: rgba(3, 218, 198, 0.05); }
+    .title-item.equipped img { opacity: 1; filter: drop-shadow(0 0 5px var(--secondary)); }
+
+    /* --- TOOLTIP PROFISSIONAL --- */
+    #tooltip {
+        position: fixed; display: none; z-index: 9999; pointer-events: none;
+        background: rgba(10, 12, 16, 0.98); 
+        border: 2px solid #333;
+        border-radius: 8px; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+        min-width: 320px; max-width: 380px;
+        color: #eee; font-size: 0.9rem;
+    }
+
+    .tt-header {
+        padding: 12px 15px;
+        background: linear-gradient(90deg, rgba(30,30,30,0.8), transparent);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-radius: 6px 6px 0 0;
+    }
+    .tt-name { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .tt-meta { font-size: 0.75rem; color: #aaa; margin-top: 2px; display: flex; justify-content: space-between; }
+
+    /* Cores das Bordas e Textos por Raridade */
+    .rarity-normal { border-top: 3px solid var(--normal); }
+    .rarity-normal .tt-name { color: var(--normal); }
+
+    .rarity-raro { border-top: 3px solid var(--rare); }
+    .rarity-raro .tt-name { color: var(--rare); text-shadow: 0 0 10px rgba(0, 191, 255, 0.4); }
+
+    .rarity-epico { border-top: 3px solid var(--epic); }
+    .rarity-epico .tt-name { color: var(--epic); text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+
+    .rarity-lendario { border-top: 3px solid var(--legendary); }
+    .rarity-lendario .tt-name { color: var(--legendary); text-shadow: 0 0 10px rgba(176, 38, 255, 0.4); }
+
+    .rarity-ancestral { border-top: 3px solid var(--ancestral); }
+    .rarity-ancestral .tt-name { color: var(--ancestral); text-shadow: 0 0 10px rgba(255, 20, 147, 0.4); }
+
+    .tt-body { padding: 15px; }
+
+    .tt-stats-grid {
+        display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; 
+        background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px;
+    }
+    .tt-stat { display: flex; flex-direction: column; align-items: center; }
+    .tt-stat-val { font-weight: bold; font-size: 1rem; color: #fff; }
+    .tt-stat-label { font-size: 0.65rem; color: #aaa; text-transform: uppercase; }
+
+    .tt-effects { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+    .tt-effect-row { display: flex; align-items: flex-start; gap: 8px; color: #ddd; font-size: 0.85rem; line-height: 1.3; }
+    .tt-bullet { color: var(--secondary); font-size: 1rem; line-height: 1; }
+
+    .tt-notes { 
+        margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); 
+        font-size: 0.8rem; color: #888; font-style: italic; 
+    }
+    .tt-note-item { margin-bottom: 4px; display: block; }
+    .tt-fallback-img { width: 100%; display: block; border-radius: 8px; }
+
+    footer { margin-top: auto; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; }
+
+/* Responsividade para Celulares */
+    @media (max-width: 768px) {
+        header { 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-top: 0; 
+            padding-bottom: 1rem; /* Ajuste fino para não colar */
+        }
+
+        .hero-banner { 
+            /* AUMENTAMOS A ALTURA PARA CABER O BANNER 800x600 */
+            height: 450px; 
+        }
+
+        .main-nav { 
+            flex-wrap: wrap; 
+            justify-content: center; 
+        }
+
+        /* Ajustes específicos de cada página (Grid, etc) */
+        .controls { width: 100%; justify-content: center; }
+        .brand { text-align: center; }
+        .grid-container { grid-template-columns: 1fr; }
+        .account-stats-panel { flex-direction: column; gap: 15px; }
+        .dashboard-grid { grid-template-columns: 1fr; }
+        .role-lider { transform: scale(1); }
+        .role-lider:hover { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+<div class="hero-banner">
+    <picture>
+        <source media="(max-width: 768px)" srcset="../imagens/banner-mobile.png">
+        <img src="../imagens/banner.png" alt="Banner ValhallaBR" onerror="this.style.display='none'">
+    </picture>
+</div>
+
+  <header>
+    <div class="brand">
+        <h1>VALHALLA BR</h1>
+		<h3>TÍTULOS</h3>
+		 <br>
+        <div class="info-panel">
+            <div class="cache-info" id="last-save-display">Memória Cache: <span>⛬</span></div>
+            <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
+        </div>
+    </div>
+    
+    <nav class="main-nav">
+        <a href="../index.html" class="nav-link">⌂ Início</a>
+        <a href="../farm/index.html" class="nav-link">🚜 Farm</a>
+        <a href="#" class="nav-link active">🏆 Títulos</a>
+        <a href="../perfil/index.html" class="nav-link">👤 Perfil</a>
+    </nav>
+
+    <div class="controls">
+        <button class="btn" onclick="salvarTitulos()">💾 SALVAR</button>
+        <button class="btn btn-load" onclick="document.getElementById('fileInput').click()">📂 CARREGAR</button>
+        <input type="file" id="fileInput" style="display:none" accept=".json" onchange="carregarArquivo(this)">
+    </div>
+  </header>
+
+  <div class="filter-wrapper">
+      <select id="seletor-personagem" class="filter-select" onchange="filtrarPersonagem()">
+          <option value="">Todos os Personagens</option>
+      </select>
+      <button class="btn-clear" onclick="limparFiltro()" title="Limpar Filtro">✖</button>
+  </div>
+
+  <div class="grid-container" id="lista-personagens">
+      </div>
+
+  <div id="tooltip"></div>
+
+  <footer>
+    © 2025 VALHALLA. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // --- DATABASE DE TÍTULOS COMPLETO ---
+    const titleDatabase = {
+        'portador-da-enorme-coragem': {
+            name: "Portador da Enorme Coragem", rarity: "epico", level: 0,
+            stats: { atk: 190, def: 247, hp: 247 },
+            effects: ["Acerto Crítico + 1.20%", "Dano Crítico + 10.00%", "Resistência a Contaminação + 2.20%"],
+            notes: ["Não acumula com 'Maquinista Infernal' e 'O Dia do Julgamento'", "[Missão] Dano +5%, Vit +2%, Crít +1.5% (Grupo)"]
+        },
+        'maquinista-infernal': {
+            name: "Maquinista Infernal", rarity: "raro", level: 0,
+            stats: { atk: 81, def: 82, hp: 82 },
+            effects: ["Acerto Crítico + 1.20%"],
+            notes: ["Não acumula com 'O Dia do Julgamento' e 'Portador da Enorme Coragem'", "[Missão] Dano +5%, Vit +2%, Crít +1.5% (Grupo)", "[PVP] Dano +0.5%, Vit +2%, Crít +1.5%"]
+        },
+        'dia-do-julgamento': {
+            name: "O Dia do Julgamento", rarity: "lendario", level: 0,
+            stats: { atk: 85, def: 85, hp: 85 },
+            effects: ["Acerto Crítico + 1.20%"],
+            notes: ["Não acumula com 'Maquinista Infernal' e 'Portador da Enorme Coragem'", "[Missão] Dano +5%, Vit +2%, Crít +1.5% (Grupo)"]
+        },
+        'conquistador-do-continente-harrier': {
+            name: "Conquistador do Continente Harrier", rarity: "lendario", level: 0,
+            stats: { atk: 200, def: 260, hp: 260 },
+            effects: ["Acerto Crítico + 1.20%", "EXP Adquirido + 7.00%", "Resistência a Contaminação + 3.00%"],
+            notes: ["Não acumula com 'Rebelião das Mascotes'", "[Missão] Dano +10%, Vit +2%, Crít +1.5% (Grupo)"]
+        },
+        'rebeliao-das-mascotes': {
+            name: "Rebelião das Mascotes", rarity: "epico", level: 0,
+            stats: { atk: 81, def: 82, hp: 82 },
+            effects: ["Velocidade Aumentada em 1.20%"],
+            notes: ["Não acumula com 'Conquistador do Continente Harrier'", "[Missão] Dano +10%, Vit +2%, Crít +1.5% (Grupo)", "[PVP] Dano +1%, Vit +2%, Crít +1.5%"]
+        },
+        'tirano-do-deserto': {
+            name: "Tirano do Deserto", rarity: "normal", level: 0,
+            stats: { atk: 173, def: 263, hp: 263 },
+            effects: ["Lim. recup. HP missão + 9.00%", "Resist. status anormais + 9.00%", "Invencibilidade arena + 8.00%", "EXP adquirido + 15.00%"]
+        },
+        'retorno-a-calnat': {
+            name: "Retorno a Calnat", rarity: "normal", level: 0,
+            stats: { atk: 175, def: 265, hp: 265 },
+            effects: ["Lim. recup. HP missão + 9.00%", "Resist. status anormais + 10.00%", "Invencibilidade arena + 8.00%", "EXP adquirido + 15.00%"]
+        },
+        'aquele-que-consome-o-caos': {
+            name: "Aquele que Consome o Caos", rarity: "epico", level: 0,
+            stats: { atk: 200, def: 260, hp: 260 },
+            effects: ["Acerto Crítico +1.50%", "Dano Crítico + 12.00%", "MP Recuperado + 5.00%", "Resistência a Contaminação + 4.50%"]
+        },
+        'aquele-que-superou-a-morte': {
+            name: "Aquele que Superou a Morte", rarity: "lendario", level: 0,
+            stats: { atk: 190, def: 247, hp: 247 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "Atq. pelas costas + 13.00%", "Resistência a Contaminação + 5.00%"]
+        },
+        'iluminador-abissal': {
+            name: "Iluminador Abissal", rarity: "lendario", level: 0,
+            stats: { atk: 190, def: 247, hp: 247 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "Atq. pelas costas + 5.00%", "MP Recuperado + 2.00%", "Resistência a Contaminação + 5.00%"]
+        },
+        'iluminador-abissal-ancestral': {
+            name: "Iluminador Abissal Ancestral", rarity: "ancestral", level: 0,
+            stats: { atk: 200, def: 260, hp: 260 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "Atq. pelas costas + 10.00%", "MP Recuperado + 2.50%", "Resistência a Contaminação + 5.00%"]
+        },
+        'apocalipse-do-mundo': {
+            name: "Apocalipse do Mundo", rarity: "lendario", level: 0,
+            stats: { atk: 190, def: 247, hp: 247 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "MP Recuperado + 5.00%", "Resistência a Contaminação + 5.00%"]
+        },
+        'aniquilador-do-vazio': {
+            name: "Aniquilador do Vazio", rarity: "lendario", level: 0,
+            stats: { atk: 190, def: 247, hp: 247 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "Ataque Especial + 750", "Resistência a Contaminação + 5.00%"]
+        },
+        'aniquilador-do-vazio-ancestral': {
+            name: "Aniquilador do Vazio Ancestral", rarity: "ancestral", level: 0,
+            stats: { atk: 200, def: 260, hp: 260 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "Ataque Especial + 800", "Resistência a Contaminação + 5.00%"]
+        },
+        'inicio-do-caos': {
+            name: "Início do Caos", rarity: "lendario", level: 0,
+            stats: { atk: 190, def: 247, hp: 247 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "Atq. pelas costas + 15.00%", "Resistência a Contaminação + 5.00%"]
+        },
+        'sacrificio-dos-12-discipulos-escolhidos': {
+            name: "Sacrifício dos 12 Discípulos", rarity: "lendario", level: 0,
+            stats: { atk: 164, def: 236, hp: 236 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "Atq. pelas costas + 10.00%"]
+        },
+        'origem-do-caos-ancestral': {
+            name: "Origem do Caos Ancestral", rarity: "ancestral", level: 0,
+            stats: { atk: 200, def: 260, hp: 260 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "Atq. pelas costas + 16.00%", "Resistência a Contaminação + 5.00%"]
+        },
+        'apocalipse-do-mundo-ancestral': {
+            name: "Apocalipse do Mundo Ancestral", rarity: "ancestral", level: 0,
+            stats: { atk: 190, def: 250, hp: 250 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico + 10.00%", "MP Recuperado + 5.50%", "Resistência a Contaminação + 5.00%"]
+        },
+        'preludio-da-escuridao': {
+            name: "Prelúdio da Escuridão", rarity: "raro", level: 85,
+            stats: { atk: 190, def: 250, hp: 250 },
+            effects: ["Acerto Crítico +1.00%", "Dano Crítico +10.00%", "Ataque Especial +350", "Resistência a Contaminação +5.00%"]
+        }
+    };
+
+    // --- LÓGICA DE PARTÍCULAS ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particlesArray = [];
+    function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+    resize();
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width; this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        if(this.x < 0 || this.x > width) this.vx *= -1;
+        if(this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() { ctx.fillStyle = 'rgba(187, 134, 252, 0.3)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+    }
+    function initParticles() { particlesArray = []; for(let i=0; i<60; i++) particlesArray.push(new Particle()); }
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particlesArray.forEach(p => {
+        p.update(); p.draw();
+        particlesArray.forEach(p2 => {
+          const dx = p.x - p2.x; const dy = p.y - p2.y; const dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < 100) {
+            ctx.strokeStyle = `rgba(187, 134, 252, ${0.1 - dist/1000})`; ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+          }
+        });
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    initParticles(); animateParticles();
+
+    // --- RELÓGIO ---
+    function startClock() {
+        const clockEl = document.getElementById('real-time-clock');
+        function update() {
+            const now = new Date();
+            clockEl.innerText = now.toLocaleTimeString('pt-BR');
+        }
+        setInterval(update, 1000); update();
+    }
+
+    // --- DADOS ---
+    const CACHE_KEY = 'valhalla_titulos_v4';
+
+    const dadosIniciais = [
+      { birth:1, char:'elesis', nome:'ELESIS' }, { birth:2, char:'lire', nome:'LIRE' },
+      { birth:3, char:'arme', nome:'ARME' }, { birth:4, char:'lass', nome:'LASS' },
+      { birth:5, char:'ryan', nome:'RYAN' }, { birth:6, char:'ronan', nome:'RONAN' },
+      { birth:7, char:'amy', nome:'AMY' }, { birth:8, char:'jin', nome:'JIN' },
+      { birth:9, char:'sieghart', nome:'SIEGHART' }, { birth:10, char:'mari', nome:'MARI' },
+      { birth:11, char:'dio', nome:'DIO' }, { birth:12, char:'zero', nome:'ZERO' },
+      { birth:13, char:'rey', nome:'REY' }, { birth:14, char:'lupus', nome:'LUPUS' },
+      { birth:15, char:'lin', nome:'LIN' }, { birth:16, char:'azin', nome:'AZIN' },
+      { birth:17, char:'holy', nome:'HOLY' }, { birth:18, char:'edel', nome:'EDEL' },
+      { birth:19, char:'veigas', nome:'VEIGAS' }, { birth:20, char:'decane', nome:'DECANE' },
+      { birth:21, char:'ai', nome:'AI' }, { birth:22, char:'kallia', nome:'KALLIA' },
+      { birth:23, char:'uno', nome:'UNO' }, { birth:24, char:'iris', nome:'IRIS' }
+    ];
+
+    // Lista de Imagens (nomes de arquivo)
+    // O sistema agora usa essa lista para saber quais títulos existem
+    // E busca os detalhes no titleDatabase usando a chave (nome sem .png)
+    const listaTitulos = Object.keys(titleDatabase).map(key => key + '.png');
+
+    // Ordenar a lista mestre alfabeticamente pelo Nome Real do título
+    listaTitulos.sort((a, b) => {
+        const slugA = a.replace('.png', '');
+        const slugB = b.replace('.png', '');
+        const nomeA = titleDatabase[slugA]?.name || slugA;
+        const nomeB = titleDatabase[slugB]?.name || slugB;
+        return nomeA.localeCompare(nomeB);
+    });
+
+    let appData = {
+        meta: { dataHora: Date.now() },
+        chars: {} 
+    };
+
+    function translateRarity(rarity) {
+        if(rarity === 'raro') return 'Raro';
+        if(rarity === 'epico') return 'Épico';
+        if(rarity === 'lendario') return 'Lendário';
+        if(rarity === 'ancestral') return 'Ancestral';
+        return 'Normal';
+    }
+
+    // --- INICIALIZAÇÃO ---
+    function init() {
+        startClock();
+        
+        const sel = document.getElementById('seletor-personagem');
+        dadosIniciais.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.char; opt.textContent = p.nome;
+            sel.appendChild(opt);
+        });
+
+        const cached = localStorage.getItem(CACHE_KEY);
+        if(cached) {
+            try {
+                const parsed = JSON.parse(cached);
+                appData = parsed;
+                updateSaveDisplay(appData.meta.dataHora);
+            } catch(e) { console.error("Erro cache", e); }
+        }
+
+        dadosIniciais.forEach(p => {
+            if(!appData.chars[p.char]) appData.chars[p.char] = { obtidos: [], equipado: null };
+        });
+
+        renderAll();
+    }
+
+    function renderAll() {
+        const container = document.getElementById('lista-personagens');
+        container.innerHTML = '';
+
+        dadosIniciais.forEach(p => {
+            const charData = appData.chars[p.char];
+            const equipadoSlug = charData.equipado;
+            const obtidosSet = new Set(charData.obtidos);
+
+            // 1. Organizar os Títulos para este personagem
+            // Prioridade: Equipado > Obtido (A-Z) > Não Obtido (A-Z)
+            const titulosOrdenados = [...listaTitulos].sort((a, b) => {
+                const slugA = a.replace('.png', '');
+                const slugB = b.replace('.png', '');
+                
+                // Se um for o equipado, ele ganha
+                if (slugA === equipadoSlug) return -1;
+                if (slugB === equipadoSlug) return 1;
+
+                const hasA = obtidosSet.has(slugA);
+                const hasB = obtidosSet.has(slugB);
+
+                // Obtidos vem antes de não obtidos
+                if (hasA && !hasB) return -1;
+                if (!hasA && hasB) return 1;
+
+                // Desempate: Ordem Alfabética (já feito na listaTitulos, mas garante estabilidade)
+                const nomeA = titleDatabase[slugA]?.name || slugA;
+                const nomeB = titleDatabase[slugB]?.name || slugB;
+                return nomeA.localeCompare(nomeB);
+            });
+
+            // Card
+            const card = document.createElement('div');
+            card.className = 'char-card';
+            card.dataset.char = p.char;
+
+            // Header - Equipado
+            let equippedHtml = `<div class="placeholder-text">Nenhum</div>`;
+            if(equipadoSlug) {
+                const dbInfo = titleDatabase[equipadoSlug];
+                const realName = dbInfo ? dbInfo.name : equipadoSlug;
+                equippedHtml = `
+                    <img src="../imagens/titulos/${equipadoSlug}.png" class="equipped-img" onerror="this.style.display='none'">
+                    <div class="equipped-label">${realName}</div>
+                `;
+            }
+
+            const header = document.createElement('div');
+            header.className = 'char-header';
+            header.innerHTML = `
+                <img src="../imagens/personagens/${p.char}.png" class="avatar" onerror="this.src='https://placehold.co/80x80/333/FFF?text=?'">
+                <div class="char-info">
+                    <div class="char-name">${p.nome}</div>
+                    <div class="char-birth">#${p.birth}</div>
+                </div>
+                <div class="equipped-slot" id="eq-slot-${p.char}">${equippedHtml}</div>
+            `;
+            card.appendChild(header);
+
+            // Grid de Títulos
+            const grid = document.createElement('div');
+            grid.className = 'titles-grid';
+
+            titulosOrdenados.forEach(file => {
+                const slug = file.replace('.png','');
+                const isObtained = obtidosSet.has(slug);
+                const isEquipped = (slug === equipadoSlug);
+
+                const item = document.createElement('div');
+                item.className = `title-item ${isObtained ? 'obtained' : ''} ${isEquipped ? 'equipped' : ''}`;
+                
+                item.onclick = (e) => toggleTitle(p.char, slug, e);
+                item.oncontextmenu = (e) => { e.preventDefault(); if(isObtained) equipTitle(p.char, slug); };
+                item.onmouseenter = (e) => showTooltip(e, slug);
+                item.onmouseleave = hideTooltip;
+                item.onmousemove = (e) => moveTooltip(e);
+
+                item.innerHTML = `<img src="../imagens/titulos/${file}" alt="${slug}">`;
+                grid.appendChild(item);
+            });
+
+            card.appendChild(grid);
+            container.appendChild(card);
+        });
+        
+        filtrarPersonagem();
+    }
+
+    // --- INTERAÇÕES ---
+    function toggleTitle(charKey, slug, e) {
+        if(e.ctrlKey) { equipTitle(charKey, slug); return; }
+        const data = appData.chars[charKey];
+        const idx = data.obtidos.indexOf(slug);
+        if(idx > -1) {
+            data.obtidos.splice(idx, 1);
+            if(data.equipado === slug) data.equipado = null; 
+        } else { data.obtidos.push(slug); }
+        persist(); renderAll();
+    }
+
+    function equipTitle(charKey, slug) {
+        const data = appData.chars[charKey];
+        if(!data.obtidos.includes(slug)) return;
+        if(data.equipado === slug) data.equipado = null; 
+        else data.equipado = slug; 
+        persist(); renderAll();
+    }
+
+    function filtrarPersonagem() {
+        const val = document.getElementById('seletor-personagem').value;
+        const cards = document.querySelectorAll('.char-card');
+        cards.forEach(c => {
+            if(val === "" || c.dataset.char === val) c.style.display = 'flex';
+            else c.style.display = 'none';
+        });
+    }
+
+    function limparFiltro() {
+        document.getElementById('seletor-personagem').value = "";
+        filtrarPersonagem();
+    }
+
+    // --- TOOLTIP HYBRIDO (HTML + IMG FALLBACK) ---
+    const tooltip = document.getElementById('tooltip');
+
+    function showTooltip(e, slug) {
+        const dbData = titleDatabase[slug];
+        let htmlContent = '';
+
+        if(dbData) {
+            const notesHtml = dbData.notes ? 
+                `<div class="tt-notes">${dbData.notes.map(n => `<span class="tt-note-item">${n}</span>`).join('')}</div>` : '';
+
+            htmlContent = `
+                <div class="tt-content">
+                    <div class="tt-header rarity-${dbData.rarity}">
+                        <div class="tt-name">${dbData.name}</div>
+                        <div class="tt-meta">
+                            <span>Nível ${dbData.level}</span>
+                            <span>${translateRarity(dbData.rarity)}</span>
+                        </div>
+                    </div>
+                    <div class="tt-body">
+                        <div class="tt-stats-grid">
+                            <div class="tt-stat"><span class="tt-stat-val">${dbData.stats.atk}</span><span class="tt-stat-label">Ataque</span></div>
+                            <div class="tt-stat"><span class="tt-stat-val">${dbData.stats.def}</span><span class="tt-stat-label">Defesa</span></div>
+                            <div class="tt-stat"><span class="tt-stat-val">${dbData.stats.hp}</span><span class="tt-stat-label">HP</span></div>
+                        </div>
+                        <div class="tt-effects">
+                            ${dbData.effects.map(ef => `<div class="tt-effect-row"><span class="tt-bullet">◆</span> ${ef}</div>`).join('')}
+                        </div>
+                        ${notesHtml}
+                    </div>
+                </div>
+            `;
+        } else {
+            htmlContent = `<img src="../imagens/titulos-descricao/${slug}.png" class="tt-fallback-img" onerror="this.style.display='none'">`;
+        }
+
+        tooltip.innerHTML = htmlContent;
+        tooltip.style.display = 'block';
+        moveTooltip(e);
+    }
+
+    function hideTooltip() { tooltip.style.display = 'none'; }
+    function moveTooltip(e) {
+        tooltip.style.left = (e.clientX + 15) + 'px';
+        tooltip.style.top = (e.clientY + 15) + 'px';
+    }
+
+    // --- PERSISTÊNCIA ---
+    function persist() {
+        appData.meta.dataHora = Date.now();
+        localStorage.setItem(CACHE_KEY, JSON.stringify(appData));
+        updateSaveDisplay(appData.meta.dataHora);
+    }
+
+    function updateSaveDisplay(ts) {
+        const date = new Date(ts);
+        const formatted = date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR').slice(0,5);
+        document.getElementById('last-save-display').innerHTML = `Memória Cache: <span>${formatted}</span>`;
+    }
+
+    function salvarTitulos() {
+        persist();
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData));
+        const dlAnchor = document.createElement('a');
+        dlAnchor.setAttribute("href", dataStr);
+        dlAnchor.setAttribute("download", `titulos_valhalla_${new Date().toISOString().slice(0,10)}.json`);
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        dlAnchor.remove();
+    }
+
+    function carregarArquivo(input) {
+        const file = input.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const json = JSON.parse(e.target.result);
+                if(Array.isArray(json.perfil)) {
+                    appData = { meta: json.meta, chars: {} };
+                    json.perfil.forEach(p => {
+                        const charObj = dadosIniciais.find(d => d.birth === p.birth);
+                        if(charObj) {
+                            appData.chars[charObj.char] = { 
+                                obtidos: p.titulos || [], 
+                                equipado: p.equipado 
+                            };
+                        }
+                    });
+                } else {
+                    appData = json;
+                }
+                persist(); renderAll(); alert("Títulos carregados!");
+            } catch(err) { alert("Erro ao ler JSON"); }
+        };
+        reader.readAsText(file);
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
