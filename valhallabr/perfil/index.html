@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PERFIL</title>
+  <title>ValhallaBR - Perfil</title>
   <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
   
   <style>
@@ -29,49 +29,23 @@
     }
 
     /* --- FUNDO ANIMADO --- */
-    #bg-canvas {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+    #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); }
+
+    /* --- HERO BANNER (PC) --- */
+    .hero-banner {
+      width: 100%; height: 350px; position: relative; overflow: hidden;
+      background: #020202; display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid rgba(187, 134, 252, 0.2); box-shadow: 0 10px 40px rgba(0,0,0,0.6);
     }
-
-        /* --- HERO BANNER (400px) --- */
-        @keyframes scanLight {
-            0% { left: -100%; opacity: 0; }
-            20% { opacity: 1; }
-            50% { left: 200%; opacity: 0; }
-            100% { left: 200%; opacity: 0; }
-        }
-
-        .hero-banner {
-            width: 100%;
-            height: 400px; /* Ajustado para 400px */
-            position: relative;
-            overflow: hidden;
-            background: #020202; 
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-        }
-
-        .hero-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; 
-            object-position: center center;
-            opacity: 1;
-            display: block;
-        }
-
-        .hero-banner::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
-            transform: skewX(-25deg);
-            animation: scanLight 6s ease-in-out infinite;
-            pointer-events: none;
-        }
+    .hero-banner img { width: 100%; height: 100%; object-fit: contain; object-position: center center; display: block; }
+    
+    /* Efeito Scanner */
+    .hero-banner::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
+      transform: skewX(-25deg); animation: scanLight 6s ease-in-out infinite; pointer-events: none;
+    }
+    @keyframes scanLight { 0% { left: -100%; opacity: 0; } 20% { opacity: 1; } 50% { left: 200%; opacity: 0; } 100% { left: 200%; opacity: 0; } }
 
     /* --- HEADER --- */
     header {
@@ -89,6 +63,7 @@
         -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         margin: 0; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
     }
+	        .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
     .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
     .cache-info { color: #888; }
     .cache-info span { color: var(--primary); font-weight: bold; }
@@ -106,16 +81,16 @@
         background: rgba(255, 255, 255, 0.05);
     }
 
-        .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
-        .btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--primary); color: var(--primary);
-            padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
-        }
-        .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
-        
-        .btn-load { position: relative; overflow: hidden; border-color: var(--secondary); color: var(--secondary); }
-        .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
-        .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
+    .btn {
+        background: rgba(255,255,255,0.05); border: 1px solid var(--primary); color: var(--primary);
+        padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
+    }
+    .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
+    
+    .btn-load { position: relative; overflow: hidden; border-color: var(--secondary); color: var(--secondary); }
+    .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
+    .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
     /* --- CONTAINER PRINCIPAL --- */
     .content-wrapper {
@@ -245,33 +220,38 @@
     .sorted-asc::after { content: " ▲"; color: var(--secondary); font-size: 0.7em; }
     .sorted-desc::after { content: " ▼"; color: var(--primary); font-size: 0.7em; }
 
-/* Responsividade para Celulares */
-    @media (max-width: 768px) {
+    /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
+    @media (max-width: 900px) {
         header { 
-            flex-direction: column; 
-            gap: 15px; 
-            margin-top: 0; 
-            padding-bottom: 1rem; /* Ajuste fino para não colar */
+            flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; 
         }
 
+        /* Banner Mobile Inteligente */
         .hero-banner { 
-            /* AUMENTAMOS A ALTURA PARA CABER O BANNER 800x600 */
-            height: 450px; 
+            height: auto; 
+            aspect-ratio: 4/3; /* 800x600 */
+            max-height: 50vh;
         }
 
         .main-nav { 
-            flex-wrap: wrap; 
-            justify-content: center; 
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Grid 2 colunas */
+            gap: 10px;
+            width: 100%;
         }
 
-        /* Ajustes específicos de cada página (Grid, etc) */
-        .controls { width: 100%; justify-content: center; }
+        .nav-link {
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-link:last-child:nth-child(odd) { grid-column: span 2; } /* Se sobrar 1, ocupa tudo */
+
         .brand { text-align: center; }
-        .grid-container { grid-template-columns: 1fr; }
+        .controls { width: 100%; justify-content: center; margin-top: 10px; }
         .account-stats-panel { flex-direction: column; gap: 15px; }
-        .dashboard-grid { grid-template-columns: 1fr; }
-        .role-lider { transform: scale(1); }
-        .role-lider:hover { transform: translateY(-5px); }
     }
   </style>
 </head>
@@ -279,20 +259,20 @@
 
   <canvas id="bg-canvas"></canvas>
 
-<div class="hero-banner">
+  <div class="hero-banner">
     <picture>
         <source media="(max-width: 768px)" srcset="../imagens/banner-mobile.png">
-        <img src="../imagens/banner.png" alt="Banner ValhallaBR" onerror="this.style.display='none'">
+        <img src="../imagens/banner.png" alt="Banner ValhallaBR" onerror="this.style.display='none'"/>
     </picture>
-</div>
+  </div>
 
   <header>
     <div class="brand">
         <h1>VALHALLA BR</h1>
-		<h3>PERFIL</h3>
-		 <br>
+        <h3>PERFIL</h3>
+		<br>
         <div class="info-panel">
-            <div class="cache-info" id="last-save-display">Memória Cache: <span>⛬</span></div>
+            <div class="cache-info" id="last-save-display">Memória Cache: <span>Vazio</span></div>
             <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
         </div>
     </div>
@@ -302,12 +282,14 @@
         <a href="../farm/index.html" class="nav-link">🚜 Farm</a>
         <a href="../titulos/index.html" class="nav-link">🏆 Títulos</a>
         <a href="#" class="nav-link active">👤 Perfil</a>
+
     </nav>
 
     <div class="controls">
         <button class="btn" onclick="salvarPerfilManual()">💾 SALVAR</button>
-        <button class="btn btn-load" onclick="document.getElementById('fileInput').click()">📂 CARREGAR</button>
-        <input type="file" id="fileInput" style="display:none" accept=".json" onchange="carregarPerfilArquivo(this)">
+        <div class="btn btn-load"> 📂 CARREGAR
+            <input type="file" id="fileInput" accept=".json" onchange="carregarPerfilArquivo(this)">
+        </div>
     </div>
   </header>
 
@@ -316,7 +298,7 @@
     <div class="account-stats-panel">
         <div class="stat-group">
             <label>Apelido / Nick</label>
-            <input type="text" id="acc-nick" class="stat-input" placeholder="VALHALLA BR" oninput="persistirConta()">
+            <input type="text" id="acc-nick" class="stat-input" placeholder="Nick" oninput="persistirConta()">
         </div>
         
         <div class="stat-group">
@@ -349,19 +331,17 @@
                         <th onclick="ordenarTabela(2, 'text')">Sistema</th>
                         <th>Classe</th>
                         <th onclick="ordenarTabela(4, 'number')">Nível</th>
-                        <th onclick="ordenarTabela(5, 'number')">Torre das Ilussões</th>
+                        <th onclick="ordenarTabela(5, 'number')">Torre</th>
                         <th onclick="ordenarTabela(6, 'number')">Berkas</th>
                         <th onclick="ordenarTabela(7, 'number')">Vazio</th>
-                        <th onclick="ordenarTabela(8, 'number')">Sistema R.</th>
-                        <th onclick="ordenarTabela(9, 'number')">V. Chase</th>
-                        
+                        <th onclick="ordenarTabela(8, 'number')">SR</th>
+                        <th onclick="ordenarTabela(9, 'number')">Visual</th>
                         <th>Colar</th>
                         <th>Tornozeleira</th>
-                        
                         <th>Anel</th>
                         <th>Brinco</th>
                         <th>Piercing</th>
-                        <th onclick="ordenarTabela(14, 'number')">Ataque Total</th>
+                        <th onclick="ordenarTabela(15, 'number')">Ataque Total</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-personagens">
@@ -453,7 +433,7 @@
     }
 
     // --- DADOS E TABELA ---
-    const CACHE_KEY = 'valhalla_perfil_v6'; // Atualizado para nova versão
+    const CACHE_KEY = 'valhalla_perfil_v6'; 
     
     // Configuração das Colunas
     const colunasConfig = [
@@ -558,11 +538,10 @@
                     ...baseChar,
                     classe: "1ª Classe", level: "1", tower: "1", 
                     berkas: "0", vazio: "0", sr: "0", visualChase: "0",
-                    colar: "Nenhum", tornozeleira: "Nenhum", // Novos Campos
+                    colar: "Nenhum", tornozeleira: "Nenhum", 
                     anel: "Nenhum", brinco: "Nenhum", piercing: "Nenhum", atkTotal: "0"
                 });
             } else {
-                // Migração para quem já tinha cache antigo
                 if(!existing.colar) existing.colar = "Nenhum";
                 if(!existing.tornozeleira) existing.tornozeleira = "Nenhum";
             }
@@ -606,7 +585,6 @@
                 else if(conf.key === 'piercing') options = opcoesPiercing;
                 else if(['berkas', 'vazio', 'sr'].includes(conf.key)) options = getOpcoesBerkasVazioSR(p.birth);
                 else if(conf.key === 'visualChase') options = getOpcoesVisual(p.birth);
-                // NOVOS
                 else if(conf.key === 'colar') options = opcoesColar;
                 else if(conf.key === 'tornozeleira') options = opcoesTornozeleira;
 
