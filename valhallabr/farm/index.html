@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FARM</title>
+    <title>ValhallaBR - Farm</title>
     <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
     <style>
         /* --- CONFIGURAÇÕES GERAIS --- */
         :root {
             --primary: #bb86fc;
-            --secondary: #03dac6;
+            --secondary: #03dac6; /* Ciano/Teal */
             --bg: #0b0b0b;
-            --surface: rgba(30, 30, 30, 0.7);
-            --surface-hover: rgba(50, 50, 50, 0.9);
-            --border: 1px solid rgba(255, 255, 255, 0.15);
+            --surface: rgba(30, 30, 30, 0.6);
+            --surface-hover: rgba(50, 50, 50, 0.8);
+            --border: 1px solid rgba(255, 255, 255, 0.1);
             --glass: rgba(15, 15, 15, 0.95);
         }
 
@@ -27,60 +27,55 @@
             display: flex; flex-direction: column;
         }
 
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); }
-
-        /* --- HERO BANNER (400px) --- */
-        @keyframes scanLight {
-            0% { left: -100%; opacity: 0; }
-            20% { opacity: 1; }
-            50% { left: 200%; opacity: 0; }
-            100% { left: 200%; opacity: 0; }
+        /* --- BACKGROUND ANIMATION --- */
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
         }
 
+        /* --- HERO BANNER (PC) --- */
         .hero-banner {
-            width: 100%;
-            height: 400px; /* Ajustado para 400px */
-            position: relative;
-            overflow: hidden;
+            width: 100%; height: 350px;
+            position: relative; overflow: hidden;
             background: #020202; 
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            z-index: 1; display: flex; align-items: center; justify-content: center;
             border-bottom: 1px solid rgba(187, 134, 252, 0.2);
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
         .hero-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; 
-            object-position: center center;
-            opacity: 1;
-            display: block;
+            width: 100%; height: 100%;
+            object-fit: contain; object-position: center center;
+            opacity: 1; display: block;
         }
 
         .hero-banner::after {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
             transform: skewX(-25deg);
-            animation: scanLight 6s ease-in-out infinite;
-            pointer-events: none;
+            animation: scanLight 6s ease-in-out infinite; pointer-events: none;
+        }
+        @keyframes scanLight { 0% { left: -100%; opacity: 0; } 20% { opacity: 1; } 50% { left: 200%; opacity: 0; } 100% { left: 200%; opacity: 0; } }
+
+        /* --- HEADER & MENU --- */
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--glass); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+            padding: 0.8rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.6);
         }
 
-    /* --- HEADER --- */
-    header {
-      position: sticky; top: 0; z-index: 100; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(187, 134, 252, 0.2); padding: 0.8rem 2rem;
-      display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 30px rgba(0,0,0,0.6);
-    }
-    .brand { display: flex; flex-direction: column; min-width: 180px; }
-    .brand h1 {
-        font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px;
-        background: linear-gradient(90deg, #fff, var(--primary)); 
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        margin: 0; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
-    }
+        .brand { display: flex; flex-direction: column; min-width: 180px; }
+
+        .brand h1 {
+            font-size: 1.8rem; letter-spacing: 2px; text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, var(--primary)); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3); margin: 0;
+        }
+	        .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
     .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
     .cache-info { color: #888; }
     .cache-info span { color: var(--primary); font-weight: bold; }
@@ -98,10 +93,13 @@
         background: rgba(255, 255, 255, 0.05);
     }
 
+        /* --- CONTROLES --- */
         .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
+        
         .btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--primary); color: var(--primary);
-            padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--primary);
+            color: var(--primary); padding: 8px 15px; cursor: pointer;
+            border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
         }
         .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
         
@@ -109,17 +107,15 @@
         .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
         .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
-        /* --- DASHBOARD GRID (2 CARDS LADO A LADO) --- */
-        .dashboard { 
-            max-width: 1400px; margin: 30px auto; padding: 0 20px; 
-            width: 100%;
-        }
+        /* --- DASHBOARD --- */
+        .dashboard { max-width: 1400px; margin: 30px auto; padding: 0 20px; display: flex; justify-content: center; width: 100%; }
 
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 25px;
             align-items: stretch;
+            width: 100%;
         }
 
         .dash-card {
@@ -135,7 +131,6 @@
         .dash-card h2 { color: var(--secondary); text-transform: uppercase; font-size: 1.2rem; margin-bottom: 5px; letter-spacing: 1px; text-align: center; }
         .dash-card .subtitle { font-size: 0.85rem; color: #aaa; margin-bottom: 15px; text-align: center; }
 
-        /* Estilos Claustro */
         .pips-container { display: flex; gap: 8px; }
         .pip {
             width: 20px; height: 20px; border: 2px solid #555; border-radius: 50%;
@@ -148,51 +143,77 @@
             box-shadow: 0 0 10px var(--secondary);
         }
 
-        /* Estilos Progresso */
+        /* PROGRESSO GLOBAL */
         .progress-container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 8px; }
         .progress-header { display: flex; justify-content: space-between; align-items: flex-end; }
         .pct-big { font-size: 2rem; font-weight: 800; color: var(--primary); text-shadow: 0 0 15px rgba(187, 134, 252, 0.5); line-height: 1; }
         .pct-label { font-size: 0.8rem; color: #bbb; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .progress-track {
-            width: 100%; height: 12px; background: rgba(0,0,0,0.6); border-radius: 6px; 
-            border: 1px solid #444; overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%; width: 0%; 
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 15px rgba(3, 218, 198, 0.5);
-        }
+        .progress-track { width: 100%; height: 12px; background: rgba(0,0,0,0.6); border-radius: 6px; border: 1px solid #444; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.6s ease; box-shadow: 0 0 15px rgba(3, 218, 198, 0.5); }
 
-        /* --- GRID PERSONAGENS --- */
+        /* --- GRID DE PERSONAGENS --- */
         .grid-container {
-            max-width: 1400px; margin: 0 auto; padding: 20px; width: 100%;
+            max-width: 1400px; margin: 0 auto; padding: 20px;
             display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 25px;
+            width: 100%;
         }
 
         .char-card {
-            background: var(--surface); border: var(--border); border-radius: 10px; overflow: hidden;
-            display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; backdrop-filter: blur(5px);
+            background: var(--surface); border: var(--border);
+            border-radius: 10px; overflow: hidden;
+            display: flex; flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            backdrop-filter: blur(5px);
         }
-        .char-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.5); border-color: rgba(187, 134, 252, 0.3); background: var(--surface-hover); }
 
-        .char-header { position: relative; height: 90px; background: #000; display: flex; align-items: center; padding: 0 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .char-bg-img { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; mask-image: linear-gradient(to bottom, black, transparent); transition: opacity 0.3s; }
+        .char-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border-color: rgba(187, 134, 252, 0.3);
+            background: var(--surface-hover);
+        }
+
+        .char-header {
+            position: relative; height: 90px; background: #000;
+            display: flex; align-items: center; padding: 0 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .char-bg-img {
+            position: absolute; width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.4; mask-image: linear-gradient(to bottom, black, transparent);
+            transition: opacity 0.3s;
+        }
         .char-card:hover .char-bg-img { opacity: 0.6; }
-        .char-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--primary); z-index: 2; background: #111; object-fit: cover; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+
+        .char-avatar {
+            width: 60px; height: 60px; border-radius: 50%;
+            border: 2px solid var(--primary); z-index: 2; background: #111; object-fit: cover;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
         .char-details { margin-left: 15px; z-index: 2; }
         .char-name { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px black; }
         .char-tag { font-size: 0.7rem; background: var(--secondary); color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
 
         .char-missions { padding: 15px; flex-grow: 1; }
-        .cat-title { font-size: 0.7rem; color: #888; text-transform: uppercase; margin: 15px 0 5px 0; border-bottom: 1px solid #333; padding-bottom: 2px; display: flex; justify-content: space-between; }
+
+        .cat-title {
+            font-size: 0.7rem; color: #888; text-transform: uppercase;
+            margin: 15px 0 5px 0; border-bottom: 1px solid #333; padding-bottom: 2px;
+            display: flex; justify-content: space-between;
+        }
         .cat-title span.reset-info { color: #555; font-size: 0.65rem; font-family: monospace; }
 
-        .mission-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; transition: 0.2s; opacity: 1; }
+        .mission-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 6px 0; transition: 0.2s; opacity: 1;
+        }
         .mission-row:hover { background: rgba(255,255,255,0.03); border-radius: 4px; padding-left: 5px; padding-right: 5px; }
+        
         .mission-row.done { opacity: 0.4; }
         .mission-row.done span { text-decoration: line-through; }
+        
         .mission-name { font-size: 0.85rem; color: #ddd; }
 
         .pips-container-small { display: flex; gap: 4px; }
@@ -207,43 +228,56 @@
 
         .toast {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: #1e1e1e; border: 1px solid var(--secondary); padding: 12px 25px; border-radius: 50px;
-            display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            background: #1e1e1e; border: 1px solid var(--secondary);
+            padding: 12px 25px; border-radius: 50px;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             z-index: 999; opacity: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         .toast-icon { color: var(--secondary); font-size: 1.2rem; }
 
-        footer { margin-top: auto; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; }
-
-/* Responsividade para Celulares */
-    @media (max-width: 768px) {
-        header { 
-            flex-direction: column; 
-            gap: 15px; 
-            margin-top: 0; 
-            padding-bottom: 1rem; /* Ajuste fino para não colar */
+        footer {
+            margin-top: auto; padding: 25px; text-align: center;
+            background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1);
+            color: #777; font-size: 0.85rem; letter-spacing: 1px;
         }
 
-        .hero-banner { 
-            /* AUMENTAMOS A ALTURA PARA CABER O BANNER 800x600 */
-            height: 450px; 
-        }
+        /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
+        @media (max-width: 900px) {
+            header { 
+                flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; 
+            }
 
-        .main-nav { 
-            flex-wrap: wrap; 
-            justify-content: center; 
-        }
+            /* Banner Mobile Inteligente */
+            .hero-banner { 
+                height: auto; 
+                aspect-ratio: 4/3; /* 800x600 */
+                max-height: 50vh;
+            }
 
-        /* Ajustes específicos de cada página (Grid, etc) */
-        .controls { width: 100%; justify-content: center; }
-        .brand { text-align: center; }
-        .grid-container { grid-template-columns: 1fr; }
-        .account-stats-panel { flex-direction: column; gap: 15px; }
-        .dashboard-grid { grid-template-columns: 1fr; }
-        .role-lider { transform: scale(1); }
-        .role-lider:hover { transform: translateY(-5px); }
-    }
+            .main-nav { 
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* Grid 2 colunas */
+                gap: 10px;
+                width: 100%;
+            }
+
+            .nav-link {
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.05);
+                padding: 12px;
+                font-size: 0.9rem;
+                border: 1px solid rgba(255,255,255,0.1);
+            }
+            .nav-link:last-child:nth-child(odd) { grid-column: span 2; } /* Se sobrar 1, ocupa tudo */
+
+            .brand { text-align: center; }
+            .controls { width: 100%; justify-content: center; margin-top: 10px; }
+            
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .grid-container { grid-template-columns: 1fr; padding: 0 15px; }
+        }
     </style>
 </head>
 <body>
@@ -253,17 +287,17 @@
 <div class="hero-banner">
     <picture>
         <source media="(max-width: 768px)" srcset="../imagens/banner-mobile.png">
-        <img src="../imagens/banner.png" alt="Banner ValhallaBR" onerror="this.style.display='none'">
+        <img src="../imagens/banner.png" alt="Grand Chase Banner" onerror="this.style.display='none'">
     </picture>
 </div>
 
 <header>
     <div class="brand">
         <h1>VALHALLA BR</h1>
-		<h3>FARM</h3>
-		 <br>
+        <h3>FARM</h3>
+		<br>
         <div class="info-panel">
-            <div class="cache-info" id="last-save-display">Memória Cache: <span>⛬</span></div>
+            <div class="cache-info" id="last-save-display">Memória Cache: <span>Vazio</span></div>
             <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
         </div>
     </div>
@@ -273,6 +307,7 @@
         <a href="#" class="nav-link active">🚜 Farm</a>
         <a href="../titulos/index.html" class="nav-link">🏆 Títulos</a>
         <a href="../perfil/index.html" class="nav-link">👤 Perfil</a>
+        
     </nav>
 
     <div class="controls">
@@ -348,9 +383,9 @@
             { id: 'abyss', label: 'Caminho Abissal', max: 1, resetDay: 3 }
         ],
         raids: [
-            { id: 'void1', label: 'Vazio 1 (Inv)', max: 2, resetDay: 1 }, // Seg
-            { id: 'void2', label: 'Vazio 2 (Cont)', max: 2, resetDay: 3 }, // Qua
-            { id: 'void3', label: 'Vazio 3 (Pes)', max: 2, resetDay: 5 }  // Sex
+            { id: 'void1', label: 'Vazio 1 (Invasão)', max: 2, resetDay: 1 }, // Seg
+            { id: 'void2', label: 'Vazio 2 (Contaminação)', max: 2, resetDay: 3 }, // Qua
+            { id: 'void3', label: 'Vazio 3 (Pesadelo)', max: 2, resetDay: 5 }  // Sex
         ],
         eventos: [
             { id: 'judgment', label: 'Terra do Julgamento', max: 1, isWeekend: true }
@@ -363,7 +398,7 @@
         chars: {}
     };
 
-    // --- RELÓGIO E VERIFICAÇÃO AUTOMÁTICA ---
+    // --- RELÓGIO ---
     function startClock() {
         const clockEl = document.getElementById('real-time-clock');
         function update() {
@@ -377,23 +412,22 @@
         update(); 
     }
 
-    // --- LÓGICA DE RESET ---
-    function getResetTimestamp(targetDayOfWeek) {
+    // --- RESET LOGIC ---
+    function getDailyResetTime() {
         const now = new Date();
-        const localNow = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
-        let resetTime = new Date(localNow);
-        resetTime.setHours(3, 0, 0, 0); 
+        const reset = new Date();
+        reset.setHours(3, 0, 0, 0);
+        if (now < reset) { reset.setDate(reset.getDate() - 1); }
+        return reset.getTime();
+    }
 
-        if (localNow < resetTime) {
-            resetTime.setDate(resetTime.getDate() - 1);
-        }
-
-        if (targetDayOfWeek !== null && targetDayOfWeek !== undefined) {
-            while (resetTime.getDay() !== targetDayOfWeek) {
-                resetTime.setDate(resetTime.getDate() - 1);
-            }
-        }
-        return resetTime.getTime();
+    function getWeeklyResetTime(targetDayOfWeek) {
+        const now = new Date();
+        const reset = new Date();
+        reset.setHours(3, 0, 0, 0);
+        if (now < reset) { reset.setDate(reset.getDate() - 1); }
+        while (reset.getDay() !== targetDayOfWeek) { reset.setDate(reset.getDate() - 1); }
+        return reset.getTime();
     }
 
     function checkAndApplyResets(lastSaveTimestamp) {
@@ -401,10 +435,9 @@
         let changes = false;
         let messages = [];
 
-        // 1. Reset Diário (03:00 AM)
-        const lastDailyReset = getResetTimestamp(null);
-        if (lastSaveTimestamp < lastDailyReset) {
-            appState.account.claustro = 0; 
+        const dailyResetTime = getDailyResetTime();
+        if (lastSaveTimestamp < dailyResetTime) {
+            appState.account.claustro = 0;
             Object.keys(appState.chars).forEach(k => {
                 missoesConfig.diarias.forEach(m => appState.chars[k][m.id] = 0);
                 missoesConfig.eventos.forEach(m => appState.chars[k][m.id] = 0);
@@ -413,7 +446,6 @@
             messages.push("Diárias");
         }
 
-        // 2. Resets Semanais
         const resetDaysToCheck = [1, 3, 5]; 
         const missionsByDay = {};
         [...missoesConfig.semanais, ...missoesConfig.raids].forEach(m => {
@@ -422,8 +454,8 @@
         });
 
         resetDaysToCheck.forEach(day => {
-            const resetTime = getResetTimestamp(day);
-            if (lastSaveTimestamp < resetTime) {
+            const weeklyResetTime = getWeeklyResetTime(day);
+            if (lastSaveTimestamp < weeklyResetTime) {
                 const missionIds = missionsByDay[day] || [];
                 if (missionIds.length > 0) {
                     Object.keys(appState.chars).forEach(k => {
@@ -437,8 +469,8 @@
         });
 
         if (changes) {
-            showToast("Resets aplicados: " + messages.join(", "));
-            appState.meta.lastSave = Date.now(); // Atualiza data para não loopar
+            showToast("Resets automáticos aplicados: " + messages.join(", "));
+            appState.meta.lastSave = Date.now(); 
             persist();
             renderAll(); 
         }
@@ -473,7 +505,7 @@
         appState.meta.lastSave = Date.now();
         persist();
         updateSaveDisplay(appState.meta.lastSave);
-        renderAll(); // Re-renderiza para atualizar a barra de progresso
+        renderAll();
     }
 
     function updateSaveDisplay(ts) {
@@ -521,21 +553,17 @@
         let maxPoints = 3; // Claustro
         let currentPoints = parseInt(appState.account.claustro) || 0;
         
-        // Verifica se é FDS (0=Dom, 5=Sex, 6=Sab)
         const today = new Date().getDay();
         const isWeekend = (today === 0 || today === 5 || today === 6);
 
         personagens.forEach(p => {
             const charData = appState.chars[p.char] || {};
 
-            // Soma Diárias, Semanais e Raids (sempre contam no total possível)
             [...missoesConfig.diarias, ...missoesConfig.semanais, ...missoesConfig.raids].forEach(m => {
                 maxPoints += m.max;
                 currentPoints += (parseInt(charData[m.id]) || 0);
             });
 
-            // "Terra do Julgamento" só entra na soma se for Fim de Semana
-            // Se for Segunda a Quinta, ela não conta nem no máximo nem no atual
             if(isWeekend) {
                 missoesConfig.eventos.forEach(m => {
                     maxPoints += m.max;
@@ -544,16 +572,12 @@
             }
         });
 
-        // Cálculo da porcentagem
         const percent = maxPoints > 0 ? Math.round((currentPoints / maxPoints) * 100) : 0;
-
-        // Atualização Visual
         document.getElementById('global-pct').innerText = `${percent}%`;
         const fill = document.getElementById('global-fill');
         fill.style.width = `${percent}%`;
         
-        // Muda cor ao completar
-        if(percent === 100) fill.style.background = '#03dac6'; // Verde/Ciano
+        if(percent === 100) fill.style.background = '#03dac6'; 
         else fill.style.background = 'linear-gradient(90deg, var(--primary), var(--secondary))';
     }
 
@@ -600,14 +624,12 @@
             grid.innerHTML += html;
         });
 
-        // Chama o cálculo de progresso toda vez que renderizar
         updateGlobalProgress();
     }
 
     function renderMissionRow(charKey, mission, isWeekendOpen = true) {
         const val = parseInt(appState.chars[charKey][mission.id]) || 0;
         const isDone = val >= mission.max;
-        
         const blockedClass = (mission.isWeekend && !isWeekendOpen) ? 'row-blocked' : '';
         const weekendTag = (mission.isWeekend && !isWeekendOpen) ? '<span style="font-size:0.6rem; margin-left:5px">(Fechado)</span>' : '';
         
