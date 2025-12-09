@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TÍTULOS</title>
+  <title>ValhallaBR - Títulos</title>
   <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
   
   <style>
@@ -13,9 +13,11 @@
       --secondary: #03dac6;
       --bg: #0b0b0b;
       --surface: rgba(30, 30, 30, 0.7);
+      --surface-hover: rgba(50, 50, 50, 0.9);
       --border: 1px solid rgba(255, 255, 255, 0.15);
+      --glass: rgba(15, 15, 15, 0.95);
       
-      /* Cores de Raridade (Solicitadas) */
+      /* Cores de Raridade */
       --normal: #a0a0a0;    /* Cinza */
       --rare: #00bfff;      /* Azul */
       --epic: #ffd700;      /* Amarelo */
@@ -33,54 +35,34 @@
       display: flex; flex-direction: column;
     }
 
-    /* --- FUNDO & BANNER --- */
+    /* --- FUNDO ANIMADO --- */
     #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); }
+
+    /* --- HERO BANNER (RESPONSIVO) --- */
+    .hero-banner {
+      width: 100%; height: 350px; position: relative; overflow: hidden;
+      background: #020202; display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid rgba(187, 134, 252, 0.2); box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    .hero-banner img { width: 100%; height: 100%; object-fit: contain; object-position: center center; display: block; }
     
-        /* --- HERO BANNER (400px) --- */
-        @keyframes scanLight {
-            0% { left: -100%; opacity: 0; }
-            20% { opacity: 1; }
-            50% { left: 200%; opacity: 0; }
-            100% { left: 200%; opacity: 0; }
-        }
-
-        .hero-banner {
-            width: 100%;
-            height: 400px; /* Ajustado para 400px */
-            position: relative;
-            overflow: hidden;
-            background: #020202; 
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-        }
-
-        .hero-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; 
-            object-position: center center;
-            opacity: 1;
-            display: block;
-        }
-
-        .hero-banner::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
-            transform: skewX(-25deg);
-            animation: scanLight 6s ease-in-out infinite;
-            pointer-events: none;
-        }
+    /* Efeito Scanner */
+    .hero-banner::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
+      transform: skewX(-25deg); animation: scanLight 6s ease-in-out infinite; pointer-events: none;
+    }
+    @keyframes scanLight { 0% { left: -100%; opacity: 0; } 20% { opacity: 1; } 50% { left: 200%; opacity: 0; } 100% { left: 200%; opacity: 0; } }
 
     /* --- HEADER --- */
     header {
-      position: sticky; top: 0; z-index: 100; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(187, 134, 252, 0.2); padding: 0.8rem 2rem;
-      display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+      position: sticky; top: 0; z-index: 100;
+      background: var(--glass); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+      padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.6);
     }
+    
     .brand { display: flex; flex-direction: column; min-width: 180px; }
     .brand h1 {
         font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px;
@@ -96,7 +78,7 @@
 
     .main-nav { display: flex; gap: 15px; }
     .nav-link {
-        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 1.4rem;
+        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 0.9rem;
         padding: 8px 16px; border-radius: 4px; transition: 0.3s; display: flex; align-items: center; gap: 6px;
         border-bottom: 2px solid transparent;
     }
@@ -105,54 +87,78 @@
         background: rgba(255, 255, 255, 0.05);
     }
 
-        .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
-        .btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--primary); color: var(--primary);
-            padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
-        }
-        .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
-        
-        .btn-load { position: relative; overflow: hidden; border-color: var(--secondary); color: var(--secondary); }
-        .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
-        .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
+    .btn {
+        background: rgba(255,255,255,0.05); border: 1px solid var(--primary);
+        color: var(--primary); padding: 8px 15px; cursor: pointer;
+        border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
+    }
+    .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
 
-    /* --- FILTRO --- */
+    /* --- FILTRO SUPERIOR --- */
     .filter-wrapper {
-        display: flex; justify-content: center; align-items: center; gap: 10px; margin: 30px auto; padding: 15px;
-        background: var(--surface); border-radius: 50px; border: var(--border); width: fit-content; backdrop-filter: blur(10px);
+        display: flex; justify-content: center; align-items: center; gap: 10px; 
+        margin: 30px auto; padding: 15px;
+        background: var(--surface); border-radius: 50px; border: var(--border);
+        width: fit-content; backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .filter-select {
-        background: rgba(0,0,0,0.6); border: 1px solid #444; color: #fff; padding: 10px 20px;
-        border-radius: 20px; font-size: 1rem; width: 300px; cursor: pointer; text-align: center;
+        background: rgba(0,0,0,0.6); border: 1px solid #444; color: #fff;
+        padding: 10px 20px; border-radius: 20px; font-size: 1rem; width: 300px;
+        cursor: pointer; text-align: center;
     }
+    .filter-select:focus { border-color: var(--primary); outline: none; }
+
+    /* Botão Limpar Filtro */
     .btn-clear {
-        background: rgba(255, 255, 255, 0.1); border: 1px solid var(--secondary); color: var(--secondary);
-        padding: 8px 15px; border-radius: 50%; cursor: pointer; font-weight: bold; transition: 0.3s;
+        background: rgba(255, 255, 255, 0.1); border: 1px solid var(--secondary);
+        color: var(--secondary); padding: 8px 15px; border-radius: 50%;
+        cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 1.1rem;
         width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
     }
-    .btn-clear:hover { background: var(--secondary); color: #000; transform: rotate(90deg); }
+    .btn-clear:hover {
+        background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); transform: rotate(90deg);
+    }
 
-    /* --- GRID DE PERSONAGENS (2 POR LINHA) --- */
+    /* --- GRID DE PERSONAGENS --- */
     .grid-container {
-        display: grid; grid-template-columns: repeat(auto-fill, minmax(750px, 1fr)); gap: 30px;
-        width: 100%; max-width: 1800px; margin: 0 auto 40px auto; padding: 0 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(750px, 1fr)); 
+        gap: 30px;
+        width: 100%; max-width: 1800px;
+        margin: 0 auto 40px auto; padding: 0 30px;
     }
 
     .char-card {
-        background: var(--surface); border: var(--border); border-radius: 12px; overflow: hidden;
-        display: flex; flex-direction: column; transition: transform 0.3s; backdrop-filter: blur(10px);
+        background: var(--surface); border: var(--border);
+        border-radius: 12px; overflow: hidden;
+        display: flex; flex-direction: column;
+        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        backdrop-filter: blur(10px); position: relative;
     }
-    .char-card:hover { transform: translateY(-5px); border-color: var(--secondary); box-shadow: 0 15px 50px rgba(0,0,0,0.6); }
+    .char-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+        border-color: var(--secondary);
+    }
 
+    /* Cabeçalho do Card */
     .char-header {
         background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(30,30,30,0.9) 100%);
-        padding: 25px; display: flex; align-items: center; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding: 25px;
+        display: flex; align-items: center; gap: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1); position: relative;
     }
-    .avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; }
+    .avatar {
+        width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--primary);
+        object-fit: cover; box-shadow: 0 0 15px rgba(187, 134, 252, 0.4);
+    }
     .char-info { flex-grow: 1; }
     .char-name { font-size: 1.4rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
-    .char-birth { font-size: 0.9rem; color: #888; }
+    .char-birth { font-size: 0.9rem; color: #888; font-family: monospace; }
 
+    /* Slot Equipado */
     .equipped-slot {
         width: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;
         border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px; min-height: 80px;
@@ -161,24 +167,38 @@
     .equipped-label { font-size: 0.75rem; color: var(--secondary); text-align: center; line-height: 1.2; margin-top: 5px; font-weight: bold; }
     .placeholder-text { font-size: 0.75rem; color: #555; font-style: italic; }
 
-    /* --- GRID DE TÍTULOS --- */
-    .titles-grid { display: flex; flex-wrap: wrap; gap: 12px; padding: 25px; justify-content: center; min-height: 180px; align-content: flex-start; }
-    .title-item {
-        width: 60px; height: 60px; border-radius: 10px; border: 1px solid transparent; cursor: pointer;
-        display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: 0.2s;
+    /* Grid de Títulos */
+    .titles-grid {
+        display: flex; flex-wrap: wrap; gap: 12px; padding: 25px;
+        justify-content: center; min-height: 180px; align-content: flex-start;
     }
-    .title-item img { width: 100%; height: 100%; object-fit: contain; opacity: 0.2; filter: grayscale(1); transition: 0.3s; }
     
+    .title-item {
+        width: 60px; height: 60px; border-radius: 10px;
+        border: 1px solid transparent; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.3); transition: 0.2s; position: relative;
+    }
+    .title-item img {
+        width: 100%; height: 100%; object-fit: contain;
+        opacity: 0.2; filter: grayscale(1); transition: 0.3s;
+    }
+
+    /* Estados */
     .title-item:hover { background: rgba(255,255,255,0.05); transform: scale(1.15); z-index: 2; }
     .title-item:hover img { opacity: 0.8; }
     
     .title-item.obtained img { opacity: 1; filter: grayscale(0); }
     .title-item.obtained { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
 
-    .title-item.equipped { border-color: var(--secondary); background: rgba(3, 218, 198, 0.05); }
+    .title-item.equipped {
+        border-color: var(--secondary);
+        box-shadow: 0 0 15px rgba(3, 218, 198, 0.25);
+        background: rgba(3, 218, 198, 0.05);
+    }
     .title-item.equipped img { opacity: 1; filter: drop-shadow(0 0 5px var(--secondary)); }
 
-    /* --- TOOLTIP PROFISSIONAL --- */
+    /* Tooltip */
     #tooltip {
         position: fixed; display: none; z-index: 9999; pointer-events: none;
         background: rgba(10, 12, 16, 0.98); 
@@ -235,35 +255,46 @@
     .tt-note-item { margin-bottom: 4px; display: block; }
     .tt-fallback-img { width: 100%; display: block; border-radius: 8px; }
 
-    footer { margin-top: auto; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; }
+    /* Footer */
+    footer {
+        margin-top: auto; padding: 25px; text-align: center;
+        background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1);
+        color: #777; font-size: 0.85rem; letter-spacing: 1px;
+    }
 
-/* Responsividade para Celulares */
-    @media (max-width: 768px) {
-        header { 
-            flex-direction: column; 
-            gap: 15px; 
-            margin-top: 0; 
-            padding-bottom: 1rem; /* Ajuste fino para não colar */
-        }
-
+    /* RESPONSIVIDADE (MOBILE) */
+    @media (max-width: 900px) {
+        header { flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; }
+        
         .hero-banner { 
-            /* AUMENTAMOS A ALTURA PARA CABER O BANNER 800x600 */
-            height: 450px; 
+            height: 450px; /* Altura ajustada para o banner quadrado 800x600 */
         }
-
-        .main-nav { 
-            flex-wrap: wrap; 
-            justify-content: center; 
+        
+        .main-nav { flex-wrap: wrap; justify-content: center; }
+        
+        .grid-container { 
+            grid-template-columns: 1fr; /* 1 Card por linha no celular */
+            padding: 0 15px; /* Menos padding lateral */
         }
+        
+        .filter-wrapper { width: 95%; padding: 10px; }
+        .filter-select { width: 100%; }
 
-        /* Ajustes específicos de cada página (Grid, etc) */
-        .controls { width: 100%; justify-content: center; }
-        .brand { text-align: center; }
-        .grid-container { grid-template-columns: 1fr; }
-        .account-stats-panel { flex-direction: column; gap: 15px; }
-        .dashboard-grid { grid-template-columns: 1fr; }
-        .role-lider { transform: scale(1); }
-        .role-lider:hover { transform: translateY(-5px); }
+        .char-header { flex-direction: column; text-align: center; }
+        .equipped-slot { 
+            width: 100%; 
+            border-left: none; border-top: 1px solid rgba(255,255,255,0.1);
+            padding-left: 0; padding-top: 15px; 
+            margin-top: 10px;
+        }
+        
+        /* Ajuste do Tooltip para não vazar a tela */
+        #tooltip { 
+            max-width: 90%; 
+            left: 5% !important; 
+            top: 50% !important; 
+            transform: translateY(-50%); 
+        }
     }
   </style>
 </head>
@@ -271,21 +302,19 @@
 
   <canvas id="bg-canvas"></canvas>
 
-<div class="hero-banner">
+  <div class="hero-banner">
     <picture>
         <source media="(max-width: 768px)" srcset="../imagens/banner-mobile.png">
         <img src="../imagens/banner.png" alt="Banner ValhallaBR" onerror="this.style.display='none'">
     </picture>
-</div>
+  </div>
 
   <header>
     <div class="brand">
-        <h1>VALHALLA BR</h1>
-		<h3>TÍTULOS</h3>
-		 <br>
+        <h1>Valhalla BR</h1>
         <div class="info-panel">
-            <div class="cache-info" id="last-save-display">Memória Cache: <span>⛬</span></div>
-            <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
+            <div class="cache-info" id="last-save-display">Cache: <span>Vazio</span></div>
+            <div class="time-info">Hora Oficial: <span class="real-time" id="real-time-clock">--:--:--</span></div>
         </div>
     </div>
     
@@ -297,8 +326,8 @@
     </nav>
 
     <div class="controls">
-        <button class="btn" onclick="salvarTitulos()">💾 SALVAR</button>
-        <button class="btn btn-load" onclick="document.getElementById('fileInput').click()">📂 CARREGAR</button>
+        <button class="btn" onclick="salvarTitulos()">💾 Salvar JSON</button>
+        <button class="btn" onclick="document.getElementById('fileInput').click()">📂 Carregar</button>
         <input type="file" id="fileInput" style="display:none" accept=".json" onchange="carregarArquivo(this)">
     </div>
   </header>
@@ -488,12 +517,7 @@
       { birth:23, char:'uno', nome:'UNO' }, { birth:24, char:'iris', nome:'IRIS' }
     ];
 
-    // Lista de Imagens (nomes de arquivo)
-    // O sistema agora usa essa lista para saber quais títulos existem
-    // E busca os detalhes no titleDatabase usando a chave (nome sem .png)
     const listaTitulos = Object.keys(titleDatabase).map(key => key + '.png');
-
-    // Ordenar a lista mestre alfabeticamente pelo Nome Real do título
     listaTitulos.sort((a, b) => {
         const slugA = a.replace('.png', '');
         const slugB = b.replace('.png', '');
@@ -506,6 +530,15 @@
         meta: { dataHora: Date.now() },
         chars: {} 
     };
+
+    function formatarSlug(slug) {
+      if(!slug) return "";
+      const clean = slug.replace('.png','');
+      const dbEntry = titleDatabase[clean];
+      if(dbEntry) return dbEntry.name;
+      const s = clean.replace(/-/g, ' ');
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
 
     function translateRarity(rarity) {
         if(rarity === 'raro') return 'Raro';
@@ -551,35 +584,24 @@
             const equipadoSlug = charData.equipado;
             const obtidosSet = new Set(charData.obtidos);
 
-            // 1. Organizar os Títulos para este personagem
-            // Prioridade: Equipado > Obtido (A-Z) > Não Obtido (A-Z)
             const titulosOrdenados = [...listaTitulos].sort((a, b) => {
                 const slugA = a.replace('.png', '');
                 const slugB = b.replace('.png', '');
-                
-                // Se um for o equipado, ele ganha
                 if (slugA === equipadoSlug) return -1;
                 if (slugB === equipadoSlug) return 1;
-
                 const hasA = obtidosSet.has(slugA);
                 const hasB = obtidosSet.has(slugB);
-
-                // Obtidos vem antes de não obtidos
                 if (hasA && !hasB) return -1;
                 if (!hasA && hasB) return 1;
-
-                // Desempate: Ordem Alfabética (já feito na listaTitulos, mas garante estabilidade)
                 const nomeA = titleDatabase[slugA]?.name || slugA;
                 const nomeB = titleDatabase[slugB]?.name || slugB;
                 return nomeA.localeCompare(nomeB);
             });
 
-            // Card
             const card = document.createElement('div');
             card.className = 'char-card';
             card.dataset.char = p.char;
 
-            // Header - Equipado
             let equippedHtml = `<div class="placeholder-text">Nenhum</div>`;
             if(equipadoSlug) {
                 const dbInfo = titleDatabase[equipadoSlug];
@@ -602,7 +624,6 @@
             `;
             card.appendChild(header);
 
-            // Grid de Títulos
             const grid = document.createElement('div');
             grid.className = 'titles-grid';
 
@@ -704,13 +725,25 @@
 
         tooltip.innerHTML = htmlContent;
         tooltip.style.display = 'block';
-        moveTooltip(e);
+        
+        // Ajuste para mobile: tooltip centralizado ou fixo
+        if(window.innerWidth < 768) {
+             tooltip.style.left = '50%';
+             tooltip.style.top = '50%';
+             tooltip.style.transform = 'translate(-50%, -50%)';
+        } else {
+             tooltip.style.transform = 'none';
+             moveTooltip(e);
+        }
     }
 
     function hideTooltip() { tooltip.style.display = 'none'; }
+    
     function moveTooltip(e) {
-        tooltip.style.left = (e.clientX + 15) + 'px';
-        tooltip.style.top = (e.clientY + 15) + 'px';
+        if(window.innerWidth >= 768) {
+             tooltip.style.left = (e.clientX + 15) + 'px';
+             tooltip.style.top = (e.clientY + 15) + 'px';
+        }
     }
 
     // --- PERSISTÊNCIA ---
