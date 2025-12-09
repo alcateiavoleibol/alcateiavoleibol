@@ -11,22 +11,25 @@
     :root {
       --primary: #bb86fc;
       --secondary: #03dac6;
+      --discord: #5865F2;
+      --whatsapp: #25D366;
       --bg: #0b0b0b;
       --surface: rgba(30, 30, 30, 0.7);
       --surface-hover: rgba(50, 50, 50, 0.9);
       --border: 1px solid rgba(255, 255, 255, 0.15);
       --glass: rgba(15, 15, 15, 0.95);
-      
-      /* Cores de Cargos */
+
+      /* Cores dos Cargos */
       --role-leader: #FFD700;   /* Dourado */
       --role-founder: #bb86fc;  /* Roxo */
-      --role-system: #00BFFF;   /* Azul System */
-      --role-admin: #DC143C;    /* Vermelho Admin */
+      --role-system: #00BFFF;   /* Ciano Escuro */
+      --role-admin: #DC143C;    /* Vermelho */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
 
     body {
+      margin: 0; padding: 0;
       background-color: var(--bg);
       color: #e0e0e0;
       min-height: 100vh;
@@ -37,7 +40,7 @@
     /* --- FUNDO ANIMADO --- */
     #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); }
 
-    /* --- HERO BANNER (RESPONSIVO) --- */
+    /* --- HERO BANNER (PC PADRÃO) --- */
     .hero-banner {
       width: 100%; height: 350px; position: relative; overflow: hidden;
       background: #020202; display: flex; align-items: center; justify-content: center;
@@ -61,23 +64,22 @@
       padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
       box-shadow: 0 4px 30px rgba(0,0,0,0.6);
     }
-    
     .brand { display: flex; flex-direction: column; min-width: 180px; }
     .brand h1 {
-        font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px;
-        background: linear-gradient(90deg, #fff, var(--primary)); 
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        margin: 0; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
+        font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; margin: 0;
+        background: linear-gradient(90deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
     }
-    .brand h3 { margin: 0; color: #aaa; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; }
+    .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
 
     .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 5px; }
-    .time-info { color: #aaa; font-size: 0.8rem; display: flex; align-items: center; gap: 5px;}
-    .real-time { color: var(--secondary); font-weight: 800; text-shadow: 0 0 5px rgba(3, 218, 198, 0.4); font-variant-numeric: tabular-nums; }
+    .time-info { color: #aaa; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
+    .real-time { color: var(--secondary); font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 5px rgba(3, 218, 198, 0.4); }
 
+    /* MENU DE NAVEGAÇÃO (DESKTOP) */
     .main-nav { display: flex; gap: 15px; }
     .nav-link {
-        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 1.4rem;
+        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 0.9rem;
         padding: 8px 16px; border-radius: 4px; transition: 0.3s; display: flex; align-items: center; gap: 6px;
         border-bottom: 2px solid transparent;
     }
@@ -85,23 +87,22 @@
         color: #fff; text-shadow: 0 0 10px var(--secondary); border-bottom: 2px solid var(--secondary);
         background: rgba(255, 255, 255, 0.05);
     }
+    .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
 
-    .controls { min-width: 180px; } /* Spacer */
-
-    /* --- TEAM CONTAINER (PIRÂMIDE) --- */
+    /* --- TEAM STYLES (PIRÂMIDE) --- */
     .team-container {
-        max-width: 1400px; width: 100%; margin: 50px auto; padding: 0 20px;
-        display: flex; flex-direction: column; align-items: center; gap: 60px;
+        max-width: 1400px; width: 100%; margin: 40px auto; padding: 0 20px;
+        display: flex; flex-direction: column; align-items: center; gap: 50px;
         flex-grow: 1;
     }
 
     .team-row {
-        display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; width: 100%;
+        display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; width: 100%;
         opacity: 0; animation: fadeUp 0.8s ease forwards;
     }
-    .row-1 { animation-delay: 0.2s; } 
-    .row-2 { animation-delay: 0.5s; } 
-    .row-3 { animation-delay: 0.8s; } 
+    .row-1 { animation-delay: 0.2s; }
+    .row-2 { animation-delay: 0.5s; }
+    .row-3 { animation-delay: 0.8s; }
 
     @keyframes fadeUp {
         from { opacity: 0; transform: translateY(30px); }
@@ -113,19 +114,16 @@
         background: var(--surface);
         border: 1px solid rgba(255,255,255,0.1);
         border-radius: 16px;
-        padding: 25px;
-        width: 280px;
+        padding: 30px 20px;
+        width: 260px;
         display: flex; flex-direction: column; align-items: center;
         position: relative; overflow: hidden;
         backdrop-filter: blur(10px);
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s, filter 0.3s, opacity 0.3s;
     }
-    
     .member-card:hover { transform: translateY(-10px); }
 
-    .member-img-box {
-        width: 120px; height: 120px; margin-bottom: 15px; position: relative;
-    }
+    .member-img-box { width: 120px; height: 120px; margin-bottom: 15px; }
     .member-img {
         width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
         border: 3px solid #fff; box-shadow: 0 0 20px rgba(0,0,0,0.5);
@@ -133,79 +131,111 @@
     }
     .member-card:hover .member-img { transform: scale(1.05); }
 
-    .member-name { font-size: 1.4rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 5px; text-align: center; }
+    .member-name { font-size: 1.3rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 8px; text-align: center; }
     .member-badge {
-        padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; 
+        padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; 
         text-transform: uppercase; letter-spacing: 1px; color: #000;
         box-shadow: 0 0 10px rgba(0,0,0,0.5); margin-bottom: 5px;
     }
 
-    /* --- ESTILOS DE CARGO --- */
-    .role-lider { border-color: var(--role-leader); box-shadow: 0 0 30px rgba(255, 215, 0, 0.15); transform: scale(1.1); }
-    .role-lider:hover { box-shadow: 0 0 50px rgba(255, 215, 0, 0.4); border-color: #fff; transform: scale(1.15) translateY(-10px); }
+    /* --- CARGOS --- */
+    /* Líder */
+    .role-lider { border-color: var(--role-leader); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); transform: scale(1.1); }
+    .role-lider:hover { box-shadow: 0 0 50px rgba(255, 215, 0, 0.5); border-color: #fff; transform: scale(1.15) translateY(-10px); }
     .role-lider .member-img { border-color: var(--role-leader); }
-    .role-lider .member-badge { background: var(--role-leader); box-shadow: 0 0 15px var(--role-leader); }
+    .role-lider .member-badge { background: var(--role-leader); }
     .role-lider .member-name { text-shadow: 0 0 10px var(--role-leader); }
 
+    /* Fundador */
     .role-founder { border-color: var(--role-founder); }
-    .role-founder:hover { box-shadow: 0 0 30px rgba(187, 134, 252, 0.3); border-color: #fff; }
+    .role-founder:hover { box-shadow: 0 0 30px rgba(187, 134, 252, 0.4); border-color: #fff; }
     .role-founder .member-img { border-color: var(--role-founder); }
     .role-founder .member-badge { background: var(--role-founder); color: #000; }
 
+    /* System */
     .role-system { border-color: var(--role-system); }
-    .role-system:hover { box-shadow: 0 0 30px rgba(0, 191, 255, 0.3); border-color: #fff; }
+    .role-system:hover { box-shadow: 0 0 30px rgba(0, 191, 255, 0.4); border-color: #fff; }
     .role-system .member-img { border-color: var(--role-system); }
     .role-system .member-badge { background: var(--role-system); color: #000; }
 
+    /* Admin */
     .role-admin { border-color: var(--role-admin); }
-    .role-admin:hover { box-shadow: 0 0 30px rgba(220, 20, 60, 0.3); border-color: #fff; }
+    .role-admin:hover { box-shadow: 0 0 30px rgba(220, 20, 60, 0.4); border-color: #fff; }
     .role-admin .member-img { border-color: var(--role-admin); }
     .role-admin .member-badge { background: var(--role-admin); color: #fff; }
 
-    /* Inativo / Honra */
-    .status-inactive { opacity: 0.5; filter: grayscale(100%); transform: scale(0.95); border-style: dashed; }
-    .status-inactive:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.05) translateY(-10px); border-style: solid; cursor: help; }
-    .status-inactive .member-badge { background: #555; color: #ccc; }
+    /* --- MEMBRO HONORÁRIO / INATIVO --- */
+    .status-inactive {
+        opacity: 0.6; filter: grayscale(100%); border-style: dashed;
+    }
+    .status-inactive:hover {
+        opacity: 1; filter: grayscale(0%); border-style: solid;
+        cursor: help; transform: scale(1.05) translateY(-10px);
+    }
+    .status-inactive .member-badge { background: #555; color: #aaa; }
     .status-inactive:hover .member-badge { background: var(--role-founder); color: #000; }
 
     /* Divisor */
     .level-divider {
-        width: 100%; max-width: 600px; height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-        margin: 10px 0;
+        width: 80%; max-width: 600px; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
     }
 
-    footer { margin-top: auto; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; }
+    /* Footer */
+    footer {
+        margin-top: 50px; padding: 25px; text-align: center;
+        background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1);
+        color: #777; font-size: 0.85rem; letter-spacing: 1px; width: 100%;
+    }
 
-    /* --- RESPONSIVIDADE (MOBILE) --- */
+    /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
     @media (max-width: 900px) {
-        header { flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; }
-        
-        .hero-banner { 
-            height: 450px; /* Altura para banner mobile */
-            aspect-ratio: 4/3; 
-            max-height: 50vh;
-        }
-        
-        .main-nav { flex-wrap: wrap; justify-content: center; gap: 10px; }
-        
-        /* Botões de menu largos no celular */
-        .nav-link {
-            width: 48%; 
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px;
+        header { 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-top: 0; 
+            padding-bottom: 1rem; 
         }
 
-        .controls { display: none; } /* Oculta spacer */
+        /* Banner Mobile Perfeito */
+        .hero-banner { 
+            height: auto; 
+            /* Aspect Ratio 4/3 garante que a imagem 800x600 fique perfeita */
+            aspect-ratio: 4/3; 
+            max-height: 60vh;
+        }
+
         .brand { text-align: center; }
 
-        /* Ajustes Pirâmide Mobile */
+        /* Menu Mobile em Grade (Botões Grandes) */
+        .main-nav { 
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 colunas */
+            gap: 10px;
+            width: 100%;
+        }
+        
+        /* O último item (se for ímpar) ocupa a linha toda */
+        .nav-link:last-child:nth-child(odd) {
+             grid-column: span 2;
+        }
+
+        .nav-link {
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .controls { display: none; } /* Oculta o espaçador no mobile */
+
+        /* Ajustes da Pirâmide para Mobile */
         .team-container { gap: 30px; margin-top: 20px; }
-        .role-lider { transform: scale(1); } /* Remove zoom exagerado */
+        .role-lider { transform: scale(1); } /* Remove zoom do líder no mobile para não estourar a tela */
         .role-lider:hover { transform: translateY(-5px); }
         
-        .member-card { width: 100%; max-width: 320px; } /* Cards ocupam largura boa */
+        .member-card { width: 100%; max-width: 340px; } /* Ocupa bem a tela */
     }
   </style>
 </head>
@@ -238,7 +268,7 @@
         <a href="#" class="nav-link active">🛡️ Equipe</a>
     </nav>
 
-    <div class="controls"></div>
+    <div class="controls" style="min-width:180px"></div>
   </header>
 
   <div class="team-container">
@@ -258,9 +288,9 @@
 
       <div class="team-row row-2">
           
-          <div class="member-card role-founder status-inactive" title="Membro Inativo">
+          <div class="member-card role-founder status-inactive" title="Membro Honorário">
               <div class="member-img-box">
-                  <img src="../imagens/equipe/arme.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=F'">
+                  <img src="../imagens/equipe/arme.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=Mec'">
               </div>
               <div class="member-name">Meczao칠</div>
               <div class="member-badge">Ex Líder | Fundador</div>
@@ -269,7 +299,7 @@
             
           <div class="member-card role-founder">
               <div class="member-img-box">
-                  <img src="../imagens/equipe/veigas.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=F'">
+                  <img src="../imagens/equipe/veigas.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=Foley'">
               </div>
               <div class="member-name">Foley칠</div>
               <div class="member-badge">Fundador</div>
@@ -277,7 +307,7 @@
 
           <div class="member-card role-founder">
               <div class="member-img-box">
-                  <img src="../imagens/equipe/lupus.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=M'">
+                  <img src="../imagens/equipe/lupus.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=Law'">
               </div>
               <div class="member-name">Law칠</div>
               <div class="member-badge">Fundador</div>
@@ -299,7 +329,7 @@
           
           <div class="member-card role-admin">
               <div class="member-img-box">
-                  <img src="../imagens/equipe/pb.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+                  <img src="../imagens/equipe/pb.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=PB'">
               </div>
               <div class="member-name">LordPb칠 | PB</div>
               <div class="member-badge">Admin</div>
@@ -307,7 +337,7 @@
 
           <div class="member-card role-admin">
               <div class="member-img-box">
-                  <img src="../imagens/equipe/heitor.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+                  <img src="../imagens/equipe/heitor.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Heitor'">
               </div>
               <div class="member-name">Kratos</div>
               <div class="member-badge">Admin</div>
@@ -315,7 +345,7 @@
 
           <div class="member-card role-admin">
               <div class="member-img-box">
-                  <img src="../imagens/equipe/remmy.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+                  <img src="../imagens/equipe/remmy.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Remmy'">
               </div>
               <div class="member-name">remmy칠</div>
               <div class="member-badge">Admin</div>
@@ -323,7 +353,7 @@
 
           <div class="member-card role-admin">
               <div class="member-img-box">
-                  <img src="../imagens/equipe/m0narca.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+                  <img src="../imagens/equipe/m0narca.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=M0n'">
               </div>
               <div class="member-name">Monarca</div>
               <div class="member-badge">Admin</div>
@@ -331,7 +361,7 @@
 
           <div class="member-card role-admin">
               <div class="member-img-box">
-                  <img src="../imagens/equipe/immortal.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=A'">
+                  <img src="../imagens/equipe/immortal.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Imm'">
               </div>
               <div class="member-name">Immortal</div>
               <div class="member-badge">Admin</div>
@@ -366,7 +396,7 @@
       }
       draw() { ctx.fillStyle = 'rgba(187, 134, 252, 0.3)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
     }
-    function initParticles() { particlesArray = []; for(let i=0; i<60; i++) particlesArray.push(new Particle()); }
+    function initParticles() { particlesArray = []; for(let i=0; i<80; i++) particlesArray.push(new Particle()); }
     function animateParticles() {
       ctx.clearRect(0, 0, width, height);
       particlesArray.forEach(p => {
