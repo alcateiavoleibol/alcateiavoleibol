@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ValhallaBR - Farm</title>
+    <title>FARM</title>
     <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
     <style>
         /* --- CONFIGURAÇÕES GERAIS --- */
@@ -243,41 +243,56 @@
             color: #777; font-size: 0.85rem; letter-spacing: 1px;
         }
 
-        /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
-        @media (max-width: 900px) {
-            header { 
-                flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; 
-            }
-
-            /* Banner Mobile Inteligente */
-            .hero-banner { 
-                height: auto; 
-                aspect-ratio: 4/3; /* 800x600 */
-                max-height: 50vh;
-            }
-
-            .main-nav { 
-                display: grid;
-                grid-template-columns: 1fr 1fr; /* Grid 2 colunas */
-                gap: 10px;
-                width: 100%;
-            }
-
-            .nav-link {
-                justify-content: center;
-                background: rgba(255, 255, 255, 0.05);
-                padding: 12px;
-                font-size: 0.9rem;
-                border: 1px solid rgba(255,255,255,0.1);
-            }
-            .nav-link:last-child:nth-child(odd) { grid-column: span 2; } /* Se sobrar 1, ocupa tudo */
-
-            .brand { text-align: center; }
-            .controls { width: 100%; justify-content: center; margin-top: 10px; }
-            
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .grid-container { grid-template-columns: 1fr; padding: 0 15px; }
+/* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
+    @media (max-width: 900px) {
+        header { 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-top: 0; 
+            padding-bottom: 1rem;
         }
+
+        /* 1. Centraliza o H1, H3 e o bloco todo da marca */
+        .brand { 
+            text-align: center; 
+            align-items: center; /* ESSA LINHA CENTRALIZA O FLEX NO MEIO */
+        }
+
+        /* 2. Centraliza especificamente o Cache e a Hora */
+        .info-panel {
+            align-items: center; /* ESSA LINHA CENTRALIZA OS ITENS INTERNOS */
+        }
+
+        /* Banner Mobile Inteligente */
+        .hero-banner { 
+            height: auto; 
+            aspect-ratio: 4/3; 
+            max-height: 50vh;
+        }
+
+        .main-nav { 
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px;
+            width: 100%;
+        }
+
+        .nav-link {
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-link:last-child:nth-child(odd) { grid-column: span 2; }
+
+        .controls { width: 100%; justify-content: center; margin-top: 10px; }
+        
+        /* Ajustes específicos de cada página */
+        .account-stats-panel { flex-direction: column; gap: 15px; }
+        .dashboard-grid { grid-template-columns: 1fr; }
+        .grid-container { grid-template-columns: 1fr; padding: 0 15px; }
+    }
     </style>
 </head>
 <body>

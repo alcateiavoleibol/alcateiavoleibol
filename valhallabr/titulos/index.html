@@ -266,65 +266,109 @@
         color: #777; font-size: 0.85rem; letter-spacing: 1px;
     }
 
-    /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
+   /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
     @media (max-width: 900px) {
+        
+        /* 1. CABEÇALHO E BANNER */
         header { 
             flex-direction: column; 
             gap: 15px; 
             margin-top: 0; 
             padding-bottom: 1rem;
         }
-        
-        /* BANNER INTELIGENTE */
+
+        .brand { text-align: center; } /* Centraliza Logo e Títulos */
+
         .hero-banner { 
             height: auto; 
-            aspect-ratio: 4/3; /* Garante que 800x600 fique perfeito */
-            max-height: 50vh;
+            aspect-ratio: 4/3; /* Mantém a proporção exata da imagem 800x600 */
+            max-height: 50vh;  /* Não deixa ocupar mais que metade da tela */
         }
 
+        /* 2. MENU DE NAVEGAÇÃO EM GRID (APP STYLE) */
         .main-nav { 
-            flex-wrap: wrap; 
-            justify-content: center; 
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Duas colunas exatas */
             gap: 10px;
+            width: 100%;
         }
 
-        /* MENU EM GRID NO MOBILE (BOTÕES) */
         .nav-link {
-            width: 48%; /* 2 por linha */
             justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08); /* Um pouco mais claro para destaque */
             font-size: 0.9rem;
-            padding: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: auto; /* O Grid controla a largura */
+        }
+        
+        /* O último item ocupa a linha toda se for ímpar */
+        .nav-link:last-child:nth-child(odd) { 
+            grid-column: span 2; 
         }
 
-        /* CONTROLES E FILTRO */
-        .controls { width: 100%; justify-content: center; margin-top: 10px; }
-        .filter-wrapper { width: 95%; padding: 10px; flex-direction: column; }
-        .filter-select { width: 100%; }
-        .btn-clear { width: 100%; border-radius: 20px; }
+        /* 3. BOTÕES DE AÇÃO (Salvar/Carregar) */
+        .controls { 
+            width: 100%; 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; /* Lado a lado */
+            gap: 10px;
+            margin-top: 5px; 
+        }
+        .btn, .btn-load { width: 100%; justify-content: center; }
 
-        /* GRID VERTICAL */
+        /* 4. ÁREA DE FILTRO OTIMIZADA */
+        .filter-wrapper { 
+            width: 95%; 
+            padding: 10px; 
+            flex-direction: row; /* Coloca lado a lado */
+            gap: 10px;
+            align-items: stretch;
+        }
+        .filter-select { flex-grow: 1; width: auto; } /* Ocupa o espaço disponível */
+        .btn-clear { width: 45px; flex-shrink: 0; } /* Tamanho fixo para o botão X */
+
+        /* 5. GRID DE PERSONAGENS */
         .grid-container { 
             grid-template-columns: 1fr; /* 1 Card por linha */
             padding: 0 15px; 
         }
 
-        /* AJUSTES NO CARD */
-        .char-header { flex-direction: column; text-align: center; gap: 10px; }
+        /* 6. CARD DO PERSONAGEM REFINADO */
+        .char-header { 
+            flex-direction: column; 
+            text-align: center; 
+            gap: 10px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .char-info { margin-bottom: 5px; }
+
         .equipped-slot { 
             width: 100%; 
             border-left: none; 
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-left: 0; padding-top: 10px; 
-            min-height: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-left: 0; 
+            padding-top: 15px; 
+            margin-top: 5px;
+            background: rgba(255, 255, 255, 0.02); /* Fundo sutil para destacar */
+            border-radius: 8px;
         }
 
-        /* TOOLTIP NO MOBILE */
+        /* Aumentar área de toque dos ícones de título */
+        .titles-grid { gap: 15px; }
+        .title-item { width: 55px; height: 55px; }
+
+        /* 7. TOOLTIP CENTRALIZADO */
         #tooltip { 
             max-width: 90%; 
-            left: 5% !important; 
+            width: 90%;
+            left: 50% !important; 
             top: 50% !important; 
-            transform: translateY(-50%); 
+            transform: translate(-50%, -50%); /* Centraliza perfeitamente */
+            font-size: 0.85rem;
+            pointer-events: none; /* Garante que o toque passe através */
         }
     }
   </style>

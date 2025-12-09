@@ -220,22 +220,36 @@
     .sorted-asc::after { content: " ▲"; color: var(--secondary); font-size: 0.7em; }
     .sorted-desc::after { content: " ▼"; color: var(--primary); font-size: 0.7em; }
 
-    /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
+/* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
     @media (max-width: 900px) {
         header { 
-            flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-top: 0; 
+            padding-bottom: 1rem;
+        }
+
+        /* 1. Centraliza o H1, H3 e o bloco todo da marca */
+        .brand { 
+            text-align: center; 
+            align-items: center; /* ESSA LINHA CENTRALIZA O FLEX NO MEIO */
+        }
+
+        /* 2. Centraliza especificamente o Cache e a Hora */
+        .info-panel {
+            align-items: center; /* ESSA LINHA CENTRALIZA OS ITENS INTERNOS */
         }
 
         /* Banner Mobile Inteligente */
         .hero-banner { 
             height: auto; 
-            aspect-ratio: 4/3; /* 800x600 */
+            aspect-ratio: 4/3; 
             max-height: 50vh;
         }
 
         .main-nav { 
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Grid 2 colunas */
+            grid-template-columns: 1fr 1fr; 
             gap: 10px;
             width: 100%;
         }
@@ -247,11 +261,14 @@
             font-size: 0.9rem;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .nav-link:last-child:nth-child(odd) { grid-column: span 2; } /* Se sobrar 1, ocupa tudo */
+        .nav-link:last-child:nth-child(odd) { grid-column: span 2; }
 
-        .brand { text-align: center; }
         .controls { width: 100%; justify-content: center; margin-top: 10px; }
+        
+        /* Ajustes específicos de cada página */
         .account-stats-panel { flex-direction: column; gap: 15px; }
+        .dashboard-grid { grid-template-columns: 1fr; }
+        .grid-container { grid-template-columns: 1fr; padding: 0 15px; }
     }
   </style>
 </head>

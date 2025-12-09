@@ -176,53 +176,77 @@
 
     footer { margin-top: auto; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; width: 100%; }
 
-    /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
+ /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
     @media (max-width: 900px) {
+        
+        /* 1. CABEÇALHO E BANNER */
         header { 
-            flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-top: 0; 
+            padding-bottom: 1rem;
         }
 
-        /* Banner Mobile Perfeito */
-        .hero-banner { 
-            height: auto; 
-            aspect-ratio: 4/3; /* Proporção do 800x600 */
-            max-height: 50vh;
-        }
-
-        .brand { text-align: center; }
-
-        /* Menu Mobile em Grade (Botões Grandes) */
-        .main-nav { 
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 colunas */
-            gap: 10px;
+        /* Centraliza Logo, Subtítulo e Hora */
+        .brand { 
+            text-align: center; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             width: 100%;
         }
-        
-        /* O último item (se for ímpar) ocupa a linha toda */
-        .nav-link:last-child:nth-child(odd) {
-             grid-column: span 2;
+
+        .hero-banner { 
+            height: auto; 
+            aspect-ratio: 4/3; /* Proporção exata para 800x600 não distorcer */
+            max-height: 50vh;  /* Limita a altura para não ocupar a tela toda */
+        }
+
+        /* 2. MENU DE NAVEGAÇÃO EM GRID (BOTÕES) */
+        .main-nav { 
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 colunas iguais */
+            gap: 10px;
+            width: 100%;
         }
 
         .nav-link {
             justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08); /* Fundo leve para parecer botão */
             padding: 12px;
             font-size: 0.9rem;
+            border-radius: 8px;
             border: 1px solid rgba(255,255,255,0.1);
         }
-
-        .controls { display: none; } /* Oculta spacer */
-
-        /* Ajustes da Pirâmide para Mobile */
-        .team-container { gap: 30px; margin-top: 20px; }
         
-        /* Remove o zoom exagerado do líder no mobile */
+        /* O último botão ocupa a linha toda se sobrar (ímpar) */
+        .nav-link:last-child:nth-child(odd) { 
+            grid-column: span 2; 
+        }
+
+        .controls { display: none; } /* Remove o espaçador vazio no mobile */
+
+        /* 3. AJUSTES DA EQUIPE (PIRÂMIDE VERTICAL) */
+        .team-container { 
+            margin-top: 20px; 
+            gap: 40px; /* Mais espaço entre os níveis hierárquicos */
+            padding: 0 15px;
+        }
+        
+        .team-row {
+            gap: 25px; /* Espaço entre membros do mesmo nível */
+        }
+
+        /* Cards ocupam largura confortável e removemos efeitos de mouse */
+        .member-card { 
+            width: 100%; 
+            max-width: 340px;
+        } 
+        
+        /* Remove o zoom do líder para não estourar a tela no celular */
         .role-lider { transform: scale(1); } 
-        .role-lider:hover { transform: translateY(-5px); }
-        
-        /* Cards ocupam largura boa */
-        .member-card { width: 100%; max-width: 320px; } 
+        .role-lider:hover { transform: none; }
+        .member-card:hover { transform: none; } /* Remove pulo ao tocar */
     }
   </style>
 </head>
