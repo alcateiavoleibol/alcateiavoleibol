@@ -11,14 +11,12 @@
     :root {
       --primary: #bb86fc;
       --secondary: #03dac6;
-      --discord: #5865F2;
-      --whatsapp: #25D366;
       --bg: #0b0b0b;
       --surface: rgba(30, 30, 30, 0.7);
       --surface-hover: rgba(50, 50, 50, 0.9);
       --border: 1px solid rgba(255, 255, 255, 0.15);
       --glass: rgba(15, 15, 15, 0.95);
-
+      
       /* Cores dos Cargos */
       --role-leader: #FFD700;   /* Dourado */
       --role-founder: #bb86fc;  /* Roxo */
@@ -29,7 +27,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
 
     body {
-      margin: 0; padding: 0;
       background-color: var(--bg);
       color: #e0e0e0;
       min-height: 100vh;
@@ -40,7 +37,7 @@
     /* --- FUNDO ANIMADO --- */
     #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); }
 
-    /* --- HERO BANNER (PC PADRÃO) --- */
+    /* --- HERO BANNER (PC) --- */
     .hero-banner {
       width: 100%; height: 350px; position: relative; overflow: hidden;
       background: #020202; display: flex; align-items: center; justify-content: center;
@@ -64,30 +61,30 @@
       padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
       box-shadow: 0 4px 30px rgba(0,0,0,0.6);
     }
+    
     .brand { display: flex; flex-direction: column; min-width: 180px; }
     .brand h1 {
         font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; margin: 0;
         background: linear-gradient(90deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
     }
-    .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
-
     .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 5px; }
     .time-info { color: #aaa; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
     .real-time { color: var(--secondary); font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 5px rgba(3, 218, 198, 0.4); }
 
-    /* MENU DE NAVEGAÇÃO (DESKTOP) */
+    /* MENU DESKTOP */
     .main-nav { display: flex; gap: 15px; }
     .nav-link {
-        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 0.9rem;
+        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 1.4rem;
         padding: 8px 16px; border-radius: 4px; transition: 0.3s; display: flex; align-items: center; gap: 6px;
-        border-bottom: 2px solid transparent;
+        border-bottom: 2px solid transparent; white-space: nowrap;
     }
     .nav-link:hover, .nav-link.active {
         color: #fff; text-shadow: 0 0 10px var(--secondary); border-bottom: 2px solid var(--secondary);
         background: rgba(255, 255, 255, 0.05);
     }
-    .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
+
+    .controls { min-width: 180px; } /* Spacer */
 
     /* --- TEAM STYLES (PIRÂMIDE) --- */
     .team-container {
@@ -119,7 +116,7 @@
         display: flex; flex-direction: column; align-items: center;
         position: relative; overflow: hidden;
         backdrop-filter: blur(10px);
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s, filter 0.3s, opacity 0.3s;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
     }
     .member-card:hover { transform: translateY(-10px); }
 
@@ -164,45 +161,31 @@
     .role-admin .member-img { border-color: var(--role-admin); }
     .role-admin .member-badge { background: var(--role-admin); color: #fff; }
 
-    /* --- MEMBRO HONORÁRIO / INATIVO --- */
-    .status-inactive {
-        opacity: 0.6; filter: grayscale(100%); border-style: dashed;
-    }
-    .status-inactive:hover {
-        opacity: 1; filter: grayscale(0%); border-style: solid;
-        cursor: help; transform: scale(1.05) translateY(-10px);
-    }
-    .status-inactive .member-badge { background: #555; color: #aaa; }
+    /* Inativo */
+    .status-inactive { opacity: 0.6; filter: grayscale(100%); border-style: dashed; }
+    .status-inactive:hover { opacity: 1; filter: grayscale(0%); border-style: solid; cursor: help; transform: scale(1.05) translateY(-10px); }
+    .status-inactive .member-badge { background: #555; color: #ccc; }
     .status-inactive:hover .member-badge { background: var(--role-founder); color: #000; }
 
     /* Divisor */
     .level-divider {
-        width: 80%; max-width: 600px; height: 1px;
+        width: 100%; max-width: 600px; height: 1px;
         background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
     }
 
-    /* Footer */
-    footer {
-        margin-top: 50px; padding: 25px; text-align: center;
-        background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1);
-        color: #777; font-size: 0.85rem; letter-spacing: 1px; width: 100%;
-    }
+    footer { margin-top: auto; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; width: 100%; }
 
     /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
     @media (max-width: 900px) {
         header { 
-            flex-direction: column; 
-            gap: 15px; 
-            margin-top: 0; 
-            padding-bottom: 1rem; 
+            flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; 
         }
 
         /* Banner Mobile Perfeito */
         .hero-banner { 
             height: auto; 
-            /* Aspect Ratio 4/3 garante que a imagem 800x600 fique perfeita */
-            aspect-ratio: 4/3; 
-            max-height: 60vh;
+            aspect-ratio: 4/3; /* Proporção do 800x600 */
+            max-height: 50vh;
         }
 
         .brand { text-align: center; }
@@ -228,14 +211,17 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .controls { display: none; } /* Oculta o espaçador no mobile */
+        .controls { display: none; } /* Oculta spacer */
 
         /* Ajustes da Pirâmide para Mobile */
         .team-container { gap: 30px; margin-top: 20px; }
-        .role-lider { transform: scale(1); } /* Remove zoom do líder no mobile para não estourar a tela */
+        
+        /* Remove o zoom exagerado do líder no mobile */
+        .role-lider { transform: scale(1); } 
         .role-lider:hover { transform: translateY(-5px); }
         
-        .member-card { width: 100%; max-width: 340px; } /* Ocupa bem a tela */
+        /* Cards ocupam largura boa */
+        .member-card { width: 100%; max-width: 320px; } 
     }
   </style>
 </head>
@@ -253,8 +239,8 @@
   <header>
     <div class="brand">
         <h1>VALHALLA BR</h1>
-		<h3>EQUIPE</h3>
-		 <br>
+        <h3>EQUIPE</h3>
+		<br>
         <div class="info-panel">
             <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
         </div>
@@ -268,7 +254,7 @@
         <a href="#" class="nav-link active">🛡️ Equipe</a>
     </nav>
 
-    <div class="controls" style="min-width:180px"></div>
+    <div class="controls"></div>
   </header>
 
   <div class="team-container">
