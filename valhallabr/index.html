@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valhalla BR</title>
+  <link rel="icon" href="imagens/favicon/favicon.png" />
+  <style>
+    /* --- CONFIGURAÇÕES GERAIS --- */
+    :root {
+      --primary: #bb86fc;
+      --secondary: #03dac6;
+      --discord: #5865F2;
+      --whatsapp: #25D366;
+      --warning: #ffb74d; /* Cor para avisos importantes */
+      --bg: #0b0b0b;
+      --surface: rgba(30, 30, 30, 0.6);
+      --surface-hover: rgba(50, 50, 50, 0.8);
+      --border: 1px solid rgba(255, 255, 255, 0.1);
+      --glass: rgba(15, 15, 15, 0.95);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+    body {
+      margin: 0; padding: 0;
+      background-color: var(--bg);
+      color: #e0e0e0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex; flex-direction: column;
+    }
+
+    /* --- FUNDO ANIMADO --- */
+    #bg-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+    }
+
+    /* --- TELA DE INTRODUÇÃO --- */
+    #intro-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 999; transition: opacity 1s ease;
+    }
+
+    #typed-title {
+      font-size: clamp(2rem, 5vw, 4.8em);
+      white-space: nowrap; overflow: hidden;
+      border-right: 3px solid var(--secondary);
+      margin-bottom: 40px; max-width: fit-content;
+      background: linear-gradient(90deg, #fff, var(--primary)); 
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(187, 134, 252, 0.3);
+      letter-spacing: 2px;
+    }
+
+    #typed-title::after { content: ""; animation: blinkCursor 0.8s infinite; }
+    @keyframes blinkCursor { 0%, 100% { border-color: transparent; } 50% { border-color: var(--secondary); } }
+
+    #start-btn {
+      padding: 15px 40px; font-size: 1.5rem;
+      background: transparent; color: var(--secondary);
+      border: 1px solid var(--secondary); border-radius: 50px;
+      cursor: pointer; font-weight: bold; text-transform: uppercase;
+      letter-spacing: 2px; opacity: 0; transform: translateY(20px);
+      transition: all 0.5s ease; box-shadow: 0 0 15px rgba(3, 218, 198, 0.1);
+      display: none;
+    }
+    #start-btn.show { display: inline-block; opacity: 1; transform: translateY(0); }
+    #start-btn:hover { background: var(--secondary); color: #000; box-shadow: 0 0 30px var(--secondary); }
+
+    /* --- CONTEÚDO PRINCIPAL --- */
+    .main-content {
+      display: none; flex-direction: column; align-items: center; width: 100%; min-height: 100vh;
+      animation: fadeInContent 1.5s ease forwards;
+    }
+    @keyframes fadeInContent { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* --- HERO BANNER (SCANNER) --- */
+    @keyframes scanLight {
+      0% { left: -100%; opacity: 0; } 20% { opacity: 1; } 50% { left: 200%; opacity: 0; } 100% { left: 200%; opacity: 0; }
+    }
+    .hero-banner {
+      width: 100%; height: 400px; position: relative; overflow: hidden;
+      background: #020202; display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6); margin-bottom: 40px;
+    }
+    .hero-banner img { width: 100%; height: 100%; object-fit: contain; object-position: center center; display: block; }
+    .hero-banner::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
+      transform: skewX(-25deg); animation: scanLight 6s ease-in-out infinite; pointer-events: none;
+    }
+
+    /* --- SEÇÕES DE CONTEÚDO (TEXTO, GUILDA) --- */
+    .content-wrapper {
+        max-width: 1000px;
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        text-align: center;
+        flex-grow: 1; /* Empurra o footer para baixo */
+    }
+
+    .info-section h1 {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        color: #fff;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        text-shadow: 0 2px 10px rgba(187, 134, 252, 0.5);
+    }
+
+    .info-section p {
+        font-size: 1.1rem;
+        color: #ccc;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* --- NOTA DO SISTEMA (ESTILO NOVO) --- */
+    .system-note {
+        background: rgba(255, 183, 77, 0.05); /* Fundo alaranjado muito sutil */
+        border: 1px solid var(--warning);
+        border-left: 5px solid var(--warning);
+        border-radius: 8px;
+        padding: 30px;
+        text-align: justify;
+        margin-top: 30px;
+        position: relative;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .system-note h2 {
+        color: var(--warning);
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        display: flex; align-items: center; gap: 10px;
+        text-transform: uppercase; letter-spacing: 1px;
+    }
+    
+    .system-note h2::before { content: '⚠️'; font-size: 1.2em; }
+
+    .system-note p {
+        color: #ddd;
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 15px;
+        text-align: justify;
+    }
+    
+    .system-note strong { color: #fff; font-weight: 700; }
+    .system-note em { color: var(--secondary); font-style: normal; font-weight: 600; }
+
+    /* --- CITAÇÃO --- */
+    .quote-box {
+        background: var(--surface);
+        border: var(--border);
+        padding: 30px;
+        border-radius: 12px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        border-left: 4px solid var(--primary);
+    }
+    .quote-box h2 {
+        font-style: italic;
+        color: var(--primary);
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+
+    /* --- AÇÕES --- */
+    .action-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px 0;
+    }
+    .action-btn {
+        padding: 18px 40px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+        border-radius: 8px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .btn-discord { background: var(--discord); box-shadow: 0 0 15px rgba(88, 101, 242, 0.4); }
+    .btn-whatsapp { background: var(--whatsapp); box-shadow: 0 0 15px rgba(37, 211, 102, 0.4); }
+    .action-btn:hover { transform: translateY(-5px); filter: brightness(1.2); }
+
+    /* --- WIDGET --- */
+    .widget-container {
+        max-width: 400px;
+        width: 100%;
+        margin: 0 auto;
+        background: rgba(0,0,0,0.5);
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #5865F2;
+        box-shadow: 0 0 20px rgba(88, 101, 242, 0.2);
+    }
+    .widget-header {
+        background: #5865F2;
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    /* --- LINKS EXTERNOS --- */
+    .external-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-size: 1.1rem;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+    .ext-link {
+        color: #888;
+        text-decoration: none;
+        transition: 0.3s;
+        border-bottom: 1px solid transparent;
+    }
+    .ext-link:hover { color: var(--primary); border-color: var(--primary); }
+
+    /* --- GRID DE NAVEGAÇÃO --- */
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      width: 90%;
+      margin: 40px auto;
+    }
+
+    .nav-card {
+      background: var(--surface);
+      border: var(--border);
+      padding: 40px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      backdrop-filter: blur(10px);
+      height: 200px;
+    }
+    .nav-card:hover {
+      transform: translateY(-10px); background: var(--surface-hover);
+      border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .nav-card:hover h2 { color: var(--secondary); }
+    .nav-icon { font-size: 3rem; margin-bottom: 15px; }
+    .nav-card h2 { color: #fff; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+    .nav-card p { color: #888; font-size: 0.9rem; margin-top: 10px; text-align: center; }
+
+    /* --- AUDIO & FOOTER --- */
+    .audio-panel {
+      position: fixed; bottom: 20px; right: 20px;
+      background: var(--glass); padding: 10px 20px; border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.1); display: flex; gap: 15px; align-items: center;
+      backdrop-filter: blur(10px); z-index: 100;
+    }
+    .audio-btn { background: none; border: none; color: #aaa; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+    .audio-btn:hover { color: var(--secondary); transform: scale(1.1); }
+
+    footer {
+      margin-top: 50px; padding: 25px; text-align: center;
+      background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1);
+      color: #777; font-size: 0.85rem; letter-spacing: 1px;
+      width: 100%;
+    }
+
+    .fade-in { animation: fadeInSection 1s ease forwards; opacity: 0; }
+    .fade-in-1 { animation-delay: 0.2s; }
+    .fade-in-2 { animation-delay: 0.4s; }
+    .fade-in-3 { animation-delay: 0.6s; }
+    .fade-in-4 { animation-delay: 0.8s; }
+    
+    @keyframes fadeInSection { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Responsividade para Celulares */
+    @media (max-width: 768px) {
+        header { 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-top: 0; 
+            padding-bottom: 1rem; /* Ajuste fino para não colar */
+        }
+
+        .hero-banner { 
+            /* AUMENTAMOS A ALTURA PARA CABER O BANNER 800x600 */
+            height: 450px; 
+        }
+
+        .main-nav { 
+            flex-wrap: wrap; 
+            justify-content: center; 
+        }
+
+        /* Ajustes específicos de cada página (Grid, etc) */
+        .controls { width: 100%; justify-content: center; }
+        .brand { text-align: center; }
+        .grid-container { grid-template-columns: 1fr; }
+        .account-stats-panel { flex-direction: column; gap: 15px; }
+        .dashboard-grid { grid-template-columns: 1fr; }
+        .role-lider { transform: scale(1); }
+        .role-lider:hover { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div id="intro-screen">
+    <h1 id="typed-title"></h1>
+    <button id="start-btn">⚡ INICIAR SISTEMA</button>
+  </div>
+
+  <audio id="type-sound" src="mp3/typewriter.mp3" preload="auto"></audio>
+  <audio id="bg-music" src="mp3/hope-ptbr.mp3" preload="auto" loop></audio>
+
+  <div class="main-content" id="main-content">
+    
+<div class="hero-banner">
+    <picture>
+        <source media="(max-width: 768px)" srcset="imagens/banner-mobile.png">
+        <img src="imagens/banner.png" alt="Banner ValhallaBR" onerror="this.style.display='none'">
+    </picture>
+</div>
+
+    <nav class="nav-grid fade-in fade-in-1">
+      <a href="perfil/index.html" class="nav-card">
+        <div class="nav-icon">👤</div>
+        <h2>Perfil</h2>
+        <p>Gerencie sua conta e dados</p>
+      </a>
+      <a href="titulos/index.html" class="nav-card">
+        <div class="nav-icon">🏆</div>
+        <h2>Títulos</h2>
+        <p>Veja suas conquistas</p>
+      </a>
+      <a href="farm/index.html" class="nav-card">
+        <div class="nav-icon">🚜</div>
+        <h2>Farm</h2>
+        <p>Controle de missões e resets</p>
+      </a>
+      <a href="equipe/index.html" class="nav-card">
+        <div class="nav-icon">🛡️</div>
+        <h2>Equipe</h2>
+        <p>Membros e Staff da guilda</p>
+      </a>
+    </nav>
+
+    <div class="content-wrapper">
+        
+        <section class="info-section fade-in fade-in-2">
+            <h1>Bem-vindos à Valhalla BR</h1>
+            <p>Somos mais que uma guilda. Somos uma família forjada nas batalhas de Ernas. Em GrandChase Classic, buscamos a glória, mas valorizamos a honra, a amizade e o espírito de equipe acima de tudo.</p>
+            
+            <div class="system-note">
+                <h2>Observação Importante</h2>
+                <p>
+                    Para aqueles que desejam utilizar os sistemas de controle, é necessário observar que todo sistema possui uma proteção de <strong>Auto Save</strong> (memória cache do navegador). Contudo, para garantir a segurança absoluta de seu perfil, títulos, dados de <em>Farm</em> e demais informações, é indispensável clicar no botão <strong>Salvar</strong>, o qual gerará o download de um arquivo de backup.
+                </p>
+                <p>
+                    Para acessar novamente esses dados em outro momento ou dispositivo, basta utilizar o botão <strong>Carregar</strong> e selecionar o arquivo salvo anteriormente.
+                </p>
+                <p>
+                    Na página de <strong>FARM</strong>, o sistema opera com um relógio interno sincronizado, realizando o <em>Reset Automático</em> das missões exatamente às 03:00 AM (Horário de Brasília), sejam elas diárias, semanais ou de fim de semana.
+                </p>
+                <p>
+                    Portanto, recomendamos fortemente a utilização combinada do cache com o <strong>Salvamento Manual</strong> (Download) para preservar seu progresso com total segurança.
+                </p>
+            </div>
+        </section>
+
+        <section class="quote-box fade-in fade-in-2">
+            <h2>"Onde os heróis se encontram e as lendas renascem."</h2>
+        </section>
+
+        <section class="fade-in fade-in-3">
+            <h3 style="text-transform: uppercase; color: #fff; margin-bottom: 20px;">Junte-se à Batalha!</h3>
+            <div class="action-container">
+                <a href="https://discord.gg/RFWSRpfmQd" target="_blank" class="action-btn btn-discord">
+                    Entrar no Discord
+                </a>
+                <a href="https://chat.whatsapp.com/IIvUa40kHP41TrDTEpmz9Z" target="_blank" class="action-btn btn-whatsapp">
+                    Entrar no WhatsApp
+                </a>
+            </div>
+        </section>
+
+        <section class="fade-in fade-in-4" style="display: flex; justify-content: center;">
+            <div class="widget-container">
+                <div class="widget-header">Membros Online no Discord</div>
+                <iframe 
+                    src="https://discord.com/widget?id=1437993172369150095&theme=dark" 
+                    width="100%" 
+                    height="500" 
+                    allowtransparency="true" 
+                    frameborder="0" 
+                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+                </iframe>
+            </div>
+        </section>
+
+        <section class="fade-in fade-in-4">
+            <p style="color: #666; margin-bottom: 10px;">Links Oficiais:</p>
+            <div class="external-links">
+                <a href="https://www.koggames.com/game/grandchaseclassic" target="_blank" class="ext-link">Site Oficial</a>
+                <span style="color:#444">|</span>
+                <a href="https://store.steampowered.com/app/985810/GrandChase/" target="_blank" class="ext-link">Steam</a>
+                <span style="color:#444">|</span>
+                <a href="https://store.epicgames.com/en-US/p/grandchase-c03eb2" target="_blank" class="ext-link">Epic Games</a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+      © 2025 VALHALLA. Todos os direitos reservados.
+    </footer>
+  </div>
+
+  <div class="audio-panel" style="display:none;" id="audio-panel">
+    <button class="audio-btn" id="play-pause" title="Play/Pause">▶</button>
+    <button class="audio-btn" id="volume-down" title="Diminuir Volume">🔉</button>
+    <button class="audio-btn" id="volume-up" title="Aumentar Volume">🔊</button>
+  </div>
+
+  <script>
+    // --- LÓGICA DE PARTÍCULAS ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particlesArray = [];
+
+    function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+    resize();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width; this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        if(this.x < 0 || this.x > width) this.vx *= -1;
+        if(this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() {
+        ctx.fillStyle = 'rgba(187, 134, 252, 0.3)'; ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particlesArray = []; for(let i = 0; i < 80; i++) particlesArray.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particlesArray.forEach(p => {
+        p.update(); p.draw();
+        particlesArray.forEach(p2 => {
+          const dx = p.x - p2.x; const dy = p.y - p2.y; const dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < 100) {
+            ctx.strokeStyle = `rgba(187, 134, 252, ${0.1 - dist/1000})`;
+            ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+          }
+        });
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    initParticles(); animateParticles();
+
+    // --- DIGITAÇÃO E INTRO ---
+    const text = "Bem-vindo à ValhallaBR!";
+    const titleEl = document.getElementById("typed-title");
+    const typeSound = document.getElementById("type-sound");
+    const startBtn = document.getElementById("start-btn");
+
+    let i = 0;
+    function typeLetter() {
+      if (i < text.length) {
+        titleEl.textContent += text.charAt(i);
+        typeSound.currentTime = 0; try { typeSound.play(); } catch(e){} 
+        i++; setTimeout(typeLetter, Math.random() * 50 + 80);
+      } else {
+        titleEl.style.borderRight = "none"; startBtn.classList.add("show");
+      }
+    }
+    window.addEventListener("load", () => setTimeout(typeLetter, 500));
+
+    // --- ÁUDIO ---
+    const audio = document.getElementById('bg-music');
+    const playPauseBtn = document.getElementById('play-pause');
+    const volumeUpBtn = document.getElementById('volume-up');
+    const volumeDownBtn = document.getElementById('volume-down');
+    const introScreen = document.getElementById('intro-screen');
+    const mainContent = document.getElementById('main-content');
+    const audioPanel = document.getElementById('audio-panel');
+    let isPlaying = false;
+
+    startBtn.addEventListener('click', () => {
+      introScreen.style.opacity = 0;
+      setTimeout(() => { introScreen.style.display = 'none'; mainContent.style.display = 'flex'; audioPanel.style.display = 'flex'; }, 1000);
+      audio.volume = 0.3;
+      audio.play().then(() => { isPlaying = true; playPauseBtn.innerHTML = '⏸'; })
+           .catch(err => { console.log('Autoplay block:', err); playPauseBtn.innerHTML = '▶'; });
+    });
+
+    playPauseBtn.addEventListener('click', () => {
+      if (isPlaying) { audio.pause(); playPauseBtn.innerHTML = '▶'; } else { audio.play(); playPauseBtn.innerHTML = '⏸'; }
+      isPlaying = !isPlaying;
+    });
+
+    volumeUpBtn.addEventListener('click', () => { if(audio.volume < 0.9) audio.volume += 0.1; });
+    volumeDownBtn.addEventListener('click', () => { if(audio.volume > 0.1) audio.volume -= 0.1; });
+
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => { sessionStorage.setItem('audioTime', audio.currentTime); });
+    });
+  </script>
+</body>
+</html>
