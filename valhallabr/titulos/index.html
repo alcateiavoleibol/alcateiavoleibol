@@ -277,65 +277,79 @@
             padding-bottom: 1rem;
         }
 
-        .brand { text-align: center; } /* Centraliza Logo e Títulos */
+        /* Centraliza Logo, Título e o Painel de Info */
+        .brand { 
+            text-align: center; 
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centraliza Horizontalmente */
+            width: 100%;
+        }
+
+        /* Centraliza Cache e Horário Oficial */
+        .info-panel {
+            align-items: center; /* Garante que os textos fiquem no meio */
+            display: flex;
+            flex-direction: column;
+            margin-top: 5px;
+        }
 
         .hero-banner { 
             height: auto; 
-            aspect-ratio: 4/3; /* Mantém a proporção exata da imagem 800x600 */
-            max-height: 50vh;  /* Não deixa ocupar mais que metade da tela */
+            aspect-ratio: 4/3; 
+            max-height: 50vh; 
         }
 
         /* 2. MENU DE NAVEGAÇÃO EM GRID (APP STYLE) */
         .main-nav { 
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Duas colunas exatas */
+            grid-template-columns: 1fr 1fr; 
             gap: 10px;
             width: 100%;
         }
 
         .nav-link {
             justify-content: center;
-            background: rgba(255, 255, 255, 0.08); /* Um pouco mais claro para destaque */
+            background: rgba(255, 255, 255, 0.08); 
             font-size: 0.9rem;
             padding: 12px;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            width: auto; /* O Grid controla a largura */
+            width: auto; 
         }
         
-        /* O último item ocupa a linha toda se for ímpar */
         .nav-link:last-child:nth-child(odd) { 
             grid-column: span 2; 
         }
 
-        /* 3. BOTÕES DE AÇÃO (Salvar/Carregar) */
+        /* 3. BOTÕES DE AÇÃO */
         .controls { 
             width: 100%; 
             display: grid; 
-            grid-template-columns: 1fr 1fr; /* Lado a lado */
+            grid-template-columns: 1fr 1fr; 
             gap: 10px;
             margin-top: 5px; 
         }
         .btn, .btn-load { width: 100%; justify-content: center; }
 
-        /* 4. ÁREA DE FILTRO OTIMIZADA */
+        /* 4. ÁREA DE FILTRO */
         .filter-wrapper { 
             width: 95%; 
             padding: 10px; 
-            flex-direction: row; /* Coloca lado a lado */
+            flex-direction: row; 
             gap: 10px;
             align-items: stretch;
         }
-        .filter-select { flex-grow: 1; width: auto; } /* Ocupa o espaço disponível */
-        .btn-clear { width: 45px; flex-shrink: 0; } /* Tamanho fixo para o botão X */
+        .filter-select { flex-grow: 1; width: auto; } 
+        .btn-clear { width: 45px; flex-shrink: 0; } 
 
         /* 5. GRID DE PERSONAGENS */
         .grid-container { 
-            grid-template-columns: 1fr; /* 1 Card por linha */
+            grid-template-columns: 1fr; 
             padding: 0 15px; 
         }
 
-        /* 6. CARD DO PERSONAGEM REFINADO */
+        /* 6. CARD DO PERSONAGEM */
         .char-header { 
             flex-direction: column; 
             text-align: center; 
@@ -352,23 +366,22 @@
             padding-left: 0; 
             padding-top: 15px; 
             margin-top: 5px;
-            background: rgba(255, 255, 255, 0.02); /* Fundo sutil para destacar */
+            background: rgba(255, 255, 255, 0.02); 
             border-radius: 8px;
         }
 
-        /* Aumentar área de toque dos ícones de título */
         .titles-grid { gap: 15px; }
         .title-item { width: 55px; height: 55px; }
 
-        /* 7. TOOLTIP CENTRALIZADO */
+        /* 7. TOOLTIP */
         #tooltip { 
             max-width: 90%; 
             width: 90%;
             left: 50% !important; 
             top: 50% !important; 
-            transform: translate(-50%, -50%); /* Centraliza perfeitamente */
+            transform: translate(-50%, -50%); 
             font-size: 0.85rem;
-            pointer-events: none; /* Garante que o toque passe através */
+            pointer-events: none; 
         }
     }
   </style>
