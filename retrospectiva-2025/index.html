@@ -153,26 +153,23 @@
            ========================================= */
         #hero { 
             height: 100vh; 
-            /* Background removido daqui para usar pseudo-elemento */
             display: flex; align-items: center; justify-content: center; text-align: center; font-size: 30px; 
             position: relative; 
             overflow: hidden; 
-            /* A animação agora é no ::before */
         }
 
-        /* Pseudo-elemento para a imagem de fundo e animação */
+        /* Pseudo-elemento para a imagem de fundo e animação (Evita duplicação) */
         #hero::before {
             content: '';
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, rgba(10,25,47,0.6) 0%, rgba(5,13,26,1) 100%), url('imagens/banner-topo.jpg');
             background-size: cover;
             background-position: center center;
-            background-repeat: no-repeat; /* Evita duplicação */
+            background-repeat: no-repeat; 
             z-index: 0;
             animation: hero-scale 20s infinite alternate linear;
         }
         
-        /* Nova animação usando Scale em vez de background-size */
         @keyframes hero-scale { 
             0% { transform: scale(1); } 
             100% { transform: scale(1.15); } 
@@ -220,6 +217,20 @@
 
         #uniform-section { padding: 60px 0; background: var(--secondary-bg); text-align: center; font-size: 30px; }
         .uniform-img { max-width: 850px; width: 100%; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4)); animation: float 3s ease-in-out infinite alternate; display: block; margin: 0 auto; }
+        
+        /* TEASER NOVO UNIFORME 2026 */
+        .new-uniform-teaser { margin-top: 50px; text-align: center; position: relative; padding: 20px 0; }
+        .teaser-intro { color: var(--text-gray); font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; opacity: 0.8; }
+        .teaser-headline {
+            font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 15px;
+            /* Gradiente Animado */
+            background: linear-gradient(90deg, #f5a623, #ff4500, #00e5ff, #f5a623); background-size: 300% 100%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: vibrant-flow 4s linear infinite; filter: drop-shadow(0 0 10px rgba(245, 166, 35, 0.3));
+        }
+        @keyframes vibrant-flow { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+        .teaser-divider { height: 4px; width: 60px; background: linear-gradient(90deg, transparent, var(--accent-color), transparent); margin: 0 auto 20px auto; border-radius: 10px; }
+        .teaser-sub { color: var(--text-light); font-size: 1.2rem; font-style: italic; max-width: 600px; margin: 0 auto; }
 
         #galeria { padding: 80px 0; background: var(--primary-bg); font-size: 30px;}
         .gallery-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
@@ -294,7 +305,7 @@
         .slogan-cta { 
             font-size: 1.4rem; color: var(--accent-color); margin-bottom: 20px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; 
             text-shadow: 0 0 10px rgba(245, 166, 35, 0.5); 
-            animation: pulse-energy 1.5s ease-in-out infinite; /* Nova animação de energia */
+            animation: pulse-energy 1.5s ease-in-out infinite; 
             position: relative; z-index: 10; 
         }
         
@@ -395,10 +406,22 @@
 
             /* Uniforme MAIOR no Mobile (Aumentado para 150%) */
             .uniform-img { width: 150%; max-width: none; margin-left: -25%; }
+            
+            /* Teaser Uniforme Mobile */
+            .new-uniform-teaser { margin-top: 30px; }
+            .teaser-intro { font-size: 0.75rem; letter-spacing: 2px; }
+            .teaser-headline { font-size: 1.6rem; }
+            .teaser-sub { font-size: 1rem; padding: 0 10px; }
 
             /* Slogan Maior e Centralizado */
             .slogan-img { width: 100% !important; max-width: none; }
-            .slogan-cta { font-size: 1rem; letter-spacing: 1px; padding: 0 10px; line-height: 1.4; }
+            /* Correção Slogan Mobile (Quebra de Linha e Tamanho) */
+            .slogan-cta { 
+                font-size: 1.3rem; /* Aumentado */
+                letter-spacing: 1px; 
+                padding: 0 10px; 
+                line-height: 1.5; 
+            }
 
             /* Outros Ajustes */
             .video-layout { flex-direction: column; } 
@@ -497,7 +520,14 @@
             <div class="shine-container">
                  <img src="imagens/uniforme.png" alt="Uniforme Alcateia" class="uniform-img shine-img">
             </div>
-        </div>
+
+            <div class="new-uniform-teaser" data-aos="fade-up" data-aos-delay="300">
+                <p class="teaser-intro">O futuro já está sendo forjado</p>
+                <h4 class="teaser-headline">2026: A NOVA ARMADURA DA ALCATEIA</h4>
+                <div class="teaser-divider"></div>
+                <p class="teaser-sub">"Inovação, design e a mesma garra de sempre. Prepare-se para a evolução."</p>
+            </div>
+            </div>
     </section>
 
     <section id="tournament">
