@@ -136,7 +136,7 @@
         @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(245, 166, 35, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0); } }
 
         /* =========================================
-           ESTILOS DO SITE
+           ESTILOS DO SITE - CABEÇALHO
            ========================================= */
         header { position: fixed; top: 0; width: 100%; padding: 15px 0; z-index: 1000; background: linear-gradient(to bottom, rgba(5,13,26,0.95), transparent); transition: 0.4s; }
         header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.4); padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -145,12 +145,27 @@
         .logo-img { height: 45px; filter: drop-shadow(0 0 5px rgba(245,166,35,0.5)); }
         .logo-text { font-size: 1.2rem; color: var(--text-light); font-weight: 700; }
         .logo-text span { color: var(--accent-color); }
-        
-        /* CORREÇÃO: Remoção do sublinhado */
         .btn-back { border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 15px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; transition: 0.3s; text-decoration: none; }
         .btn-back:hover { background: var(--accent-color); color: var(--primary-bg); }
 
-        #hero { height: 100vh; background: radial-gradient(circle, rgba(10,25,47,0.6) 0%, rgba(5,13,26,1) 100%), url('imagens/banner-topo.jpg'); background-size: cover; background-position: center top; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 30px; position: relative; }
+        /* =========================================
+           HERO / BANNER TOPO (EFEITO KEN BURNS)
+           ========================================= */
+        #hero { 
+            height: 100vh; 
+            background: radial-gradient(circle, rgba(10,25,47,0.6) 0%, rgba(5,13,26,1) 100%), url('imagens/banner-topo.jpg'); 
+            background-size: cover; 
+            background-position: center top; 
+            display: flex; align-items: center; justify-content: center; text-align: center; font-size: 30px; 
+            position: relative; 
+            overflow: hidden; /* Importante para o zoom */
+            animation: hero-zoom 20s infinite alternate linear; 
+        }
+        @keyframes hero-zoom { 0% { background-size: 100%; } 100% { background-size: 115%; } }
+        /* Overlay Pulsante */
+        #hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 50%, rgba(5, 13, 26, 0.7) 100%); z-index: 1; pointer-events: none; }
+        
+        .hero-text { z-index: 2; position: relative; }
         .hero-text h1 { font-size: 3.5rem; line-height: 1; margin-bottom: 15px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-text h1 span { color: var(--accent-color); font-size: 4.5rem; display: block; }
         .hero-text p { font-size: 1.5rem; }
@@ -196,10 +211,17 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 0.9; }
         .gallery-item:hover img { transform: scale(1.1); opacity: 1; }
 
+        /* =========================================
+           MAP SECTION & SCHEDULE CARD
+           ========================================= */
         #map-section { padding: 60px 0; background: var(--secondary-bg); text-align: center; font-size: 30px; }
         .map-frame { width: 100%; height: 480px; border: 0; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); filter: grayscale(0.1) contrast(1.1); }
         .main-location-container { margin: 30px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .meeting-info { max-width: 600px; color: var(--text-gray); margin-top: 15px; font-size: 1rem; background: rgba(10, 25, 47, 0.5); padding: 10px 20px; border-radius: 10px; border-left: 3px solid var(--accent-color); }
+        
+        .schedule-box { display: inline-flex; flex-direction: column; align-items: center; background: rgba(10, 25, 47, 0.8); border: 1px solid var(--accent-color); border-radius: 12px; padding: 15px 25px; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); gap: 10px; }
+        .schedule-time { font-size: 1.1rem; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .schedule-badge { background: var(--christmas-red); color: #fff; font-size: 0.8rem; font-weight: 900; text-transform: uppercase; padding: 4px 12px; border-radius: 4px; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(0,0,0,0.4); }
+        
         .places-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); }
         .place-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-bg); color: var(--text-light); padding: 12px 20px; border-radius: 30px; font-size: 0.9rem; border: 1px solid var(--accent-color); text-decoration: none; transition: 0.3s; }
         .place-tag:hover { background: var(--accent-color); color: var(--primary-bg); transform: translateY(-3px); }
@@ -211,7 +233,9 @@
         @keyframes fall { to { transform: translateY(105vh); } }
         .xmas-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 20px; }
         .xmas-banner { max-width: 900px; width: 95%; border-radius: 10px; box-shadow: 0 0 20px rgba(192, 57, 43, 0.5); }
-        .xmas-message { max-width: 800px; color: #ffcccb; font-size: 1.1rem; font-style: italic; background: rgba(192, 57, 43, 0.2); padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        
+        /* Ajuste do Texto de Natal */
+        .xmas-message { max-width: 800px; color: #ffcccb; font-size: 1.1rem; font-style: italic; background: rgba(192, 57, 43, 0.2); padding: 20px; border-radius: 10px; margin-bottom: 20px; word-wrap: break-word; overflow-wrap: break-word; width: 90%; margin-left: auto; margin-right: auto; }
         
         /* Bola Global */
         .bola-bounce { width: 80px; position: absolute; bottom: 20px; left: 5%; z-index: 20; animation: bounce-ball 2s infinite ease-in-out; pointer-events: none; }
@@ -228,9 +252,18 @@
         .btn-contact.tiktok:hover { background: #000; border-color: #00f2ea; box-shadow: -2px -2px 0 #ff0050, 2px 2px 0 #00f2ea; }
         .btn-contact.website:hover { background: var(--accent-color); color: var(--primary-bg); border-color: var(--accent-color); }
 
-        #slogan-section { padding: 50px 0 100px 0; text-align: center; background: #02060d; }
-        .slogan-img { max-width: 660px; width: 90%; height: auto; transition: transform 0.3s; }
-        .slogan-cta { font-size: 1.2rem; color: var(--accent-color); margin-bottom: 15px; font-weight: 800; letter-spacing: 1px; animation: pulse-text 2s infinite; }
+        /* =========================================
+           SLOGAN SECTION & ENERGY EFFECTS
+           ========================================= */
+        #slogan-section { padding: 60px 0 100px 0; text-align: center; background: #02060d; position: relative; overflow: hidden; }
+        
+        .slogan-cta { 
+            font-size: 1.4rem; color: var(--accent-color); margin-bottom: 20px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; 
+            text-shadow: 0 0 10px rgba(245, 166, 35, 0.5); animation: pulse-text 2s infinite; position: relative; z-index: 10; 
+        }
+        
+        .slogan-img { max-width: 660px; width: 90%; height: auto; transition: transform 0.3s; position: relative; z-index: 5; }
+        
         @keyframes pulse-text { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
         @keyframes glitch-skew {
             0% { transform: skew(0deg) translate(0,0); filter: hue-rotate(0deg); }
@@ -246,7 +279,12 @@
             100% { transform: skew(0deg) translate(0,0); filter: hue-rotate(0deg); }
         }
         .slogan-img.breaking { animation: glitch-skew 0.8s linear 1 forwards; }
-        
+
+        /* Partículas de Energia */
+        .energy-spark { position: absolute; bottom: 0; width: 2px; height: 2px; background: transparent; box-shadow: 0 0 10px 2px rgba(245, 166, 35, 0.8); border-radius: 50%; animation: riseUp linear forwards; z-index: 1; pointer-events: none; }
+        .energy-spark.blue { box-shadow: 0 0 10px 2px rgba(0, 200, 255, 0.8); }
+        @keyframes riseUp { 0% { opacity: 0; transform: translateY(0) scale(0); } 20% { opacity: 1; transform: translateY(-20px) scale(1); } 100% { opacity: 0; transform: translateY(-300px) scale(0); } }
+
         footer { background: #000; padding: 30px 0; text-align: center; border-top: 1px solid #1f2a3d; color: var(--text-gray); }
 
         /* Shine Effect */
@@ -263,6 +301,10 @@
         /* =========================================
            RESPONSIVIDADE E CORREÇÕES MOBILE
            ========================================= */
+        @media (min-width: 768px) {
+            .schedule-box { flex-direction: row; gap: 20px; } 
+        }
+
         @media (max-width: 992px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
         
         @media (max-width: 768px) {
@@ -272,7 +314,7 @@
             h3 { font-size: 1.3rem !important; }
 
             /* Intro Logo Maior */
-            .intro-logo { width: 220px; } /* Aumentado para melhor visualização */
+            .intro-logo { width: 220px; } 
             .intro-title { font-size: 1.8rem; }
             .time-box { min-width: 60px; padding: 8px; }
             .time-val { font-size: 1.5rem; }
@@ -282,7 +324,7 @@
             .hero-text h1 span { font-size: 3rem; position: relative; display: block; }
             .hero-text p { font-size: 1.1rem; padding: 0 10px; margin-top: 10px; }
             
-            /* Correção Específica da Bola no Hero para não tapar texto */
+            /* Correção Específica da Bola no Hero */
             #hero .bola-bounce {
                 width: 50px;
                 position: relative; /* Remove o absolute */
@@ -293,28 +335,24 @@
                 margin-top: -10px;
             }
 
-            /* Correção Título Torneio (para ficar em 2 linhas se possível) */
+            /* Correção Título Torneio */
             #tournament h2 { font-size: 1.35rem !important; padding: 0 10px; }
             #tournament { font-size: 16px; }
             .tourn-desc { font-size: 1.1rem; padding: 0 15px; }
 
             /* Correção Texto Parabéns */
-            .celeb-text { 
-                padding: 20px 15px; 
-                font-size: 0.95rem; 
-                line-height: 1.5;
-            }
+            .celeb-text { padding: 20px 15px; font-size: 0.95rem; line-height: 1.5; }
             .celeb-text h3 { font-size: 1.2rem !important; }
 
-            /* Uniforme Maior no Mobile */
-            .uniform-img { 
-                width: 120%; /* Aumenta além da margem para parecer maior */
-                max-width: none; 
-                margin-left: -10%; /* Centraliza o excesso */
-            }
+            /* Correção Natal (Emojis) */
+            .xmas-message { font-size: 1rem; padding: 15px; line-height: 1.5; width: 95%; }
 
-            /* Slogan Maior no Mobile */
+            /* Uniforme Maior no Mobile */
+            .uniform-img { width: 120%; max-width: none; margin-left: -10%; }
+
+            /* Slogan Maior e Centralizado */
             .slogan-img { width: 100% !important; max-width: none; }
+            .slogan-cta { font-size: 1rem; letter-spacing: 1px; padding: 0 10px; line-height: 1.4; }
 
             /* Outros Ajustes */
             .video-layout { flex-direction: column; } 
@@ -457,17 +495,26 @@
         <div class="container" data-aos="fade-up">
             <h3 style="color: var(--accent-color); margin-bottom: 30px;">ONDE FIZEMOS HISTÓRIA</h3>
             <iframe class="map-frame" src="https://www.google.com/maps/d/u/3/embed?mid=1ZblUu70GKhVinuoZx_uU8qDnoHA32Uc&ehbc=2E312F" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            
             <div class="main-location-container">
                 <a href="https://maps.app.goo.gl/NK8pmGF3HMDKzMgm8" target="_blank" class="place-tag main-place">
                     <i class="fas fa-map-marker-alt"></i> Praça Soldado José de Souza
                 </a>
-                <div class="meeting-info">
-                    <i class="fas fa-info-circle"></i> Todo Sábado | 7h-12h (Lista Fechada)
+                
+                <div class="schedule-box">
+                    <div class="schedule-time">
+                        <i class="far fa-clock"></i> Todo Sábado | 07h às 12h
+                    </div>
+                    <div class="schedule-badge">
+                        <i class="fas fa-lock"></i> Lista Fechada
+                    </div>
                 </div>
-                <div class="meeting-info">
-                    <i class="fas fa-info-circle"></i> Local fixo dos nossos treinos e encontros nos últimos meses. A casa da Alcateia aos sábados!
-                </div>
+                
+                <p style="color: var(--text-gray); margin-top:15px; font-size: 0.95rem; max-width: 600px; text-align: center;">
+                    Local fixo dos nossos treinos e encontros nos últimos meses. A casa da Alcateia aos sábados!
+                </p>
             </div>
+
             <div class="places-list">
                 <a href="https://share.google/uCCAKJRUtaBNuuJ5G" target="_blank" class="place-tag">
                     <i class="fas fa-map-marker-alt"></i> Centro Esportivo
@@ -532,7 +579,9 @@
     </section>
 
     <section id="slogan-section">
-        <div class="container" data-aos="zoom-in">
+        <div id="energy-container" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
+        
+        <div class="container" data-aos="zoom-in" style="position: relative; z-index: 5;">
             <p class="slogan-cta">⚡ CLIQUE NO SLOGAN PARA SENTIR A ENERGIA ⚡</p>
             <img src="imagens/slogan.png" alt="Slogan Alcateia" class="slogan-img interactive-img" id="anim-slogan">
         </div>
@@ -600,6 +649,25 @@
             this.classList.add('breaking');
             setTimeout(() => { this.classList.remove('breaking'); }, 800);
         });
+
+        /* =================================
+           EFEITO DE ENERGIA/FAÍSCAS NO SLOGAN
+           ================================= */
+        const energyContainer = document.getElementById('energy-container');
+        function createEnergySpark() {
+            const spark = document.createElement('div');
+            spark.classList.add('energy-spark');
+            if(Math.random() > 0.5) { spark.classList.add('blue'); }
+            spark.style.left = Math.random() * 100 + '%';
+            const duration = Math.random() * 2 + 1;
+            spark.style.animationDuration = duration + 's';
+            const size = Math.random() * 3 + 1;
+            spark.style.width = size + 'px';
+            spark.style.height = (size * 3) + 'px';
+            energyContainer.appendChild(spark);
+            setTimeout(() => { spark.remove(); }, duration * 1000);
+        }
+        setInterval(createEnergySpark, 150);
 
         function lancarConfetes() {
             var duration = 3 * 1000; var end = Date.now() + duration;
