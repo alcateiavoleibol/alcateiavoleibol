@@ -149,19 +149,35 @@
         .btn-back:hover { background: var(--accent-color); color: var(--primary-bg); }
 
         /* =========================================
-           HERO / BANNER TOPO (EFEITO KEN BURNS)
+           HERO / BANNER TOPO (CORREÇÃO MOBILE KEN BURNS)
            ========================================= */
         #hero { 
             height: 100vh; 
-            background: radial-gradient(circle, rgba(10,25,47,0.6) 0%, rgba(5,13,26,1) 100%), url('imagens/banner-topo.jpg'); 
-            background-size: cover; 
-            background-position: center top; 
+            /* Background removido daqui para usar pseudo-elemento */
             display: flex; align-items: center; justify-content: center; text-align: center; font-size: 30px; 
             position: relative; 
-            overflow: hidden; /* Importante para o zoom */
-            animation: hero-zoom 20s infinite alternate linear; 
+            overflow: hidden; 
+            /* A animação agora é no ::before */
         }
-        @keyframes hero-zoom { 0% { background-size: 100%; } 100% { background-size: 115%; } }
+
+        /* Pseudo-elemento para a imagem de fundo e animação */
+        #hero::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(10,25,47,0.6) 0%, rgba(5,13,26,1) 100%), url('imagens/banner-topo.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat; /* Evita duplicação */
+            z-index: 0;
+            animation: hero-scale 20s infinite alternate linear;
+        }
+        
+        /* Nova animação usando Scale em vez de background-size */
+        @keyframes hero-scale { 
+            0% { transform: scale(1); } 
+            100% { transform: scale(1.15); } 
+        }
+
         /* Overlay Pulsante */
         #hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 50%, rgba(5, 13, 26, 0.7) 100%); z-index: 1; pointer-events: none; }
         
@@ -212,7 +228,7 @@
         .gallery-item:hover img { transform: scale(1.1); opacity: 1; }
 
         /* =========================================
-           MAP SECTION & SCHEDULE CARD
+           MAP SECTION & SCHEDULE CARD & HIGHLIGHT
            ========================================= */
         #map-section { padding: 60px 0; background: var(--secondary-bg); text-align: center; font-size: 30px; }
         .map-frame { width: 100%; height: 480px; border: 0; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); filter: grayscale(0.1) contrast(1.1); }
@@ -222,6 +238,23 @@
         .schedule-time { font-size: 1.1rem; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 8px; }
         .schedule-badge { background: var(--christmas-red); color: #fff; font-size: 0.8rem; font-weight: 900; text-transform: uppercase; padding: 4px 12px; border-radius: 4px; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(0,0,0,0.4); }
         
+        /* DESTAQUE DO TEXTO "CASA DA ALCATEIA" */
+        .location-highlight {
+            background: linear-gradient(90deg, rgba(245, 166, 35, 0.1) 0%, rgba(5, 13, 26, 0.6) 100%);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 0 10px 10px 0;
+            max-width: 800px;
+            position: relative;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+        .location-highlight:hover { transform: translateX(5px); background: linear-gradient(90deg, rgba(245, 166, 35, 0.15) 0%, rgba(5, 13, 26, 0.8) 100%); }
+        .location-highlight p { color: #fff; font-size: 1.1rem; font-weight: 400; margin: 0; line-height: 1.6; }
+        .location-highlight span { display: block; color: var(--accent-color); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; margin-top: 5px; letter-spacing: 1px; }
+        .location-icon { font-size: 2rem; color: var(--accent-color); margin-bottom: 10px; display: block; }
+
         .places-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); }
         .place-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-bg); color: var(--text-light); padding: 12px 20px; border-radius: 30px; font-size: 0.9rem; border: 1px solid var(--accent-color); text-decoration: none; transition: 0.3s; }
         .place-tag:hover { background: var(--accent-color); color: var(--primary-bg); transform: translateY(-3px); }
@@ -257,14 +290,21 @@
            ========================================= */
         #slogan-section { padding: 60px 0 100px 0; text-align: center; background: #02060d; position: relative; overflow: hidden; }
         
+        /* Animação de Energia no Texto do Slogan */
         .slogan-cta { 
             font-size: 1.4rem; color: var(--accent-color); margin-bottom: 20px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; 
-            text-shadow: 0 0 10px rgba(245, 166, 35, 0.5); animation: pulse-text 2s infinite; position: relative; z-index: 10; 
+            text-shadow: 0 0 10px rgba(245, 166, 35, 0.5); 
+            animation: pulse-energy 1.5s ease-in-out infinite; /* Nova animação de energia */
+            position: relative; z-index: 10; 
         }
         
+        @keyframes pulse-energy {
+            0%, 100% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px rgba(245, 166, 35, 0.5); }
+            50% { opacity: 0.9; transform: scale(1.05); text-shadow: 0 0 20px rgba(245, 166, 35, 0.8), 0 0 30px rgba(245, 166, 35, 0.6); }
+        }
+
         .slogan-img { max-width: 660px; width: 90%; height: auto; transition: transform 0.3s; position: relative; z-index: 5; }
         
-        @keyframes pulse-text { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
         @keyframes glitch-skew {
             0% { transform: skew(0deg) translate(0,0); filter: hue-rotate(0deg); }
             10% { transform: skew(5deg) translate(-5px, 2px); filter: hue-rotate(90deg) blur(1px); opacity: 0.8; }
@@ -303,6 +343,12 @@
            ========================================= */
         @media (min-width: 768px) {
             .schedule-box { flex-direction: row; gap: 20px; } 
+            
+            /* Ajuste Desktop para o Highlight */
+            .location-highlight { display: flex; align-items: center; gap: 20px; text-align: left; padding: 30px; }
+            .location-icon { margin-bottom: 0; font-size: 2.5rem; padding-right: 20px; border-right: 1px solid rgba(255,255,255,0.1); }
+            .location-highlight p { font-size: 1.2rem; }
+            .location-highlight span { font-size: 1.6rem; }
         }
 
         @media (max-width: 992px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -347,8 +393,8 @@
             /* Correção Natal (Emojis) */
             .xmas-message { font-size: 1rem; padding: 15px; line-height: 1.5; width: 95%; }
 
-            /* Uniforme Maior no Mobile */
-            .uniform-img { width: 120%; max-width: none; margin-left: -10%; }
+            /* Uniforme MAIOR no Mobile (Aumentado para 150%) */
+            .uniform-img { width: 150%; max-width: none; margin-left: -25%; }
 
             /* Slogan Maior e Centralizado */
             .slogan-img { width: 100% !important; max-width: none; }
@@ -413,7 +459,7 @@
                 <img src="imagens/logo-lobo.png" alt="Lobo" class="logo-img">
                 <div class="logo-text">ALCATEIA VOLEIBOL <span>2025</span></div>
             </div>
-            <a href="https://www.alcateiavoleibol.com.br" class="btn-back">PÁGINA INICIAL</a>
+            <a href="https://www.alcateiavoleibol.com.br" class="btn-back">INÍCIO</a>
         </div>
     </header>
 
@@ -510,9 +556,13 @@
                     </div>
                 </div>
                 
-                <p style="color: var(--text-gray); margin-top:15px; font-size: 0.95rem; max-width: 600px; text-align: center;">
-                    Local fixo dos nossos treinos e encontros nos últimos meses. A casa da Alcateia aos sábados!
-                </p>
+                <div class="location-highlight" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-home location-icon"></i>
+                    <div>
+                        <p>Local fixo dos nossos treinos e encontros nos últimos meses.</p>
+                        <span>A CASA DA ALCATEIA AOS SÁBADOS!</span>
+                    </div>
+                </div>
             </div>
 
             <div class="places-list">
