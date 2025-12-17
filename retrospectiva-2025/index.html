@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Retrospectiva 2025</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           VARIÁVEIS E GERAL
+           ========================================= */
+        :root {
+            --primary-bg: #050d1a;
+            --secondary-bg: #0a192f;
+            --accent-color: #f5a623;
+            --christmas-red: #c0392b;
+            --text-light: #e6f1ff;
+            --text-gray: #8892b0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-user-select: none; user-select: none;
+            padding-bottom: 120px;
+        }
+
+        body.scroll-active { overflow-x: hidden; overflow-y: auto; }
+
+        img { pointer-events: none; -webkit-user-drag: none; }
+        .interactive-img { pointer-events: auto !important; cursor: pointer; }
+
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; }
+
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+
+        /* =========================================
+           INTRODUÇÃO (SPLASH SCREEN)
+           ========================================= */
+        #intro-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 100000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+        }
+        #intro-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .intro-content { text-align: center; animation: fadeUp 1s ease-out; display: flex; flex-direction: column; align-items: center; }
+        .intro-logo { width: 420px; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(245, 166, 35, 0.4)); animation: pulse-logo 2s infinite; }
+        .intro-title { font-size: 2.5rem; color: #fff; margin-bottom: 10px; letter-spacing: 2px; }
+        .intro-subtitle { font-size: 1.2rem; color: var(--accent-color); margin-bottom: 30px; font-weight: 300; }
+        
+        #countdown { display: flex; gap: 15px; margin-bottom: 30px; }
+        .time-box { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; border: 1px solid var(--accent-color); min-width: 70px; }
+        .time-val { font-size: 1.8rem; font-weight: 900; color: var(--accent-color); }
+        .time-label { font-size: 0.7rem; text-transform: uppercase; }
+        #ny-message { display: none; font-size: 2rem; color: var(--accent-color); font-weight: 900; margin-bottom: 30px; animation: pulse-text 2s infinite; }
+
+        .btn-start { background: transparent; border: 2px solid var(--accent-color); color: var(--accent-color); padding: 15px 50px; font-size: 1.2rem; border-radius: 50px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; letter-spacing: 1px; }
+        .btn-start:hover { background: var(--accent-color); color: var(--primary-bg); box-shadow: 0 0 30px rgba(245, 166, 35, 0.6); transform: scale(1.05); }
+        
+        @keyframes pulse-logo { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           PLAYER DE MÚSICA (CORREÇÃO DE CORES)
+           ========================================= */
+        #music-player-container {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 9999; display: flex; align-items: center; justify-content: center;
+            transition: 0.5s; opacity: 0; visibility: hidden; width: 90%; max-width: 400px;
+        }
+        #music-player-container.visible { opacity: 1; visibility: visible; }
+
+        .music-player {
+            background: rgba(5, 13, 26, 0.95); backdrop-filter: blur(15px);
+            border: 1px solid var(--accent-color); padding: 10px 20px; border-radius: 50px;
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 100%;
+        }
+
+        /* TEXTO DESLIZANTE */
+        .track-wrapper {
+            flex: 1; overflow: hidden; white-space: nowrap; margin: 0 10px;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .track-title {
+            display: inline-block; padding-left: 100%;
+            animation: marquee 10s linear infinite;
+            font-weight: bold; font-size: 0.9rem; color: var(--accent-color); text-transform: uppercase;
+        }
+        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+
+        /* BOTÃO PLAY/PAUSE (AMARELO) */
+        .play-btn {
+            background: var(--accent-color); border: none; width: 50px; height: 50px;
+            border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(245, 166, 35, 0.4); animation: pulse-btn 2s infinite; flex-shrink: 0;
+        }
+        /* CORREÇÃO: Forçar ícone escuro dentro do botão amarelo */
+        .play-btn i {
+            color: #050d1a !important; /* Cor escura forçada */
+            font-size: 1.3rem;
+        }
+
+        /* BOTÕES DE VOLUME */
+        .controls-right { display: flex; align-items: center; gap: 10px; }
+        .btn-control {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); 
+            width: 35px; height: 35px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: 0.3s;
+        }
+        /* CORREÇÃO: Forçar ícones brancos dentro dos botões de volume */
+        .btn-control i {
+            color: #ffffff !important; /* Cor branca forçada */
+            font-size: 0.9rem;
+        }
+        .btn-control:hover { background: var(--accent-color); border-color: var(--accent-color); }
+        .btn-control:hover i { color: #050d1a !important; } /* Muda para escuro ao passar o mouse */
+
+        /* Estados de Pausa */
+        .music-player.paused .track-title { animation-play-state: paused; opacity: 0.5; }
+        .music-player.paused .play-btn { animation: none; background: #333; box-shadow: none;}
+        .music-player.paused .play-btn i { color: #888 !important; }
+
+        @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(245, 166, 35, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0); } }
+
+        /* =========================================
+           ESTILOS DO SITE (MANTIDOS)
+           ========================================= */
+        header { position: fixed; top: 0; width: 100%; padding: 15px 0; z-index: 1000; background: linear-gradient(to bottom, rgba(5,13,26,0.95), transparent); transition: 0.4s; }
+        header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.4); padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-img { height: 45px; filter: drop-shadow(0 0 5px rgba(245,166,35,0.5)); }
+        .logo-text { font-size: 1.2rem; color: var(--text-light); font-weight: 700; }
+        .logo-text span { color: var(--accent-color); }
+        .btn-back { border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 15px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; transition: 0.3s; }
+        .btn-back:hover { background: var(--accent-color); color: var(--primary-bg); }
+
+        #hero { height: 100vh; background: radial-gradient(circle, rgba(10,25,47,0.6) 0%, rgba(5,13,26,1) 100%), url('imagens/galeria/alcateia (1).jpg'); background-size: cover; background-position: center top; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 30px; position: relative; }
+        .hero-text h1 { font-size: 3.5rem; line-height: 1; margin-bottom: 15px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .hero-text h1 span { color: var(--accent-color); font-size: 4.5rem; display: block; }
+
+        #celebration { padding: 80px 0; background: var(--secondary-bg); text-align: center; position: relative; }
+        .celeb-img { max-width: 500px; width: 90%; margin: 0 auto 20px auto; display: block; filter: drop-shadow(0 0 20px rgba(245, 166, 35, 0.3)); animation: float 4s ease-in-out infinite; }
+        .celeb-text { max-width: 800px; margin: 0 auto 30px auto; font-size: 1.1rem; color: var(--text-light); background: rgba(0,0,0,0.2); padding: 30px 20px; border-radius: 15px; border: 1px solid var(--accent-color); }
+        .milestone-badge { display: inline-flex; align-items: center; gap: 15px; background: linear-gradient(45deg, var(--accent-color), #d48806); color: var(--primary-bg); padding: 10px 25px; border-radius: 50px; margin-top: 20px; font-weight: 900; box-shadow: 0 5px 15px rgba(245, 166, 35, 0.4); }
+        .btn-confetti { background: linear-gradient(45deg, #f5a623, #ffd700); border: none; padding: 15px 40px; border-radius: 50px; color: #050d1a; font-weight: 900; font-size: 1.2rem; cursor: pointer; box-shadow: 0 10px 30px rgba(245, 166, 35, 0.4); text-transform: uppercase; margin-top: 20px; }
+        .btn-confetti:active { transform: scale(0.95); }
+
+        #tournament { padding: 80px 0; background: #081020; text-align: center; font-size: 20px; position: relative; border-top: 1px solid #1f2a3d; }
+        .tourn-date { display: inline-block; background: var(--accent-color); color: var(--primary-bg); padding: 10px 30px; border-radius: 30px; font-weight: 900; margin: 0 auto 30px auto; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(245, 166, 35, 0.3); text-transform: uppercase; letter-spacing: 1px; }
+        .tourn-img { max-width: 100%; height: auto; max-height: 500px; object-fit: cover; display: block; }
+        .tourn-desc { max-width: 700px; margin: 30px auto 0 auto; color: var(--text-gray); font-size: 1.5rem; }
+
+        #video-section { background-color: var(--primary-bg); padding: 80px 0; }
+        .video-layout { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+        .video-info { flex: 1; }
+        .video-info h2 { font-size: 2.2rem; color: var(--accent-color); margin-bottom: 15px; }
+        .phone-mockup { flex: 0 0 auto; width: 320px; height: 640px; background: #000; border-radius: 35px; border: 8px solid #1f2a3d; box-shadow: 0 30px 60px rgba(0,0,0,0.6); overflow: hidden; position: relative; }
+        .click-mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; cursor: pointer; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); transition: 0.3s; }
+        .click-mask i { font-size: 4rem; color: rgba(255,255,255,0.7); }
+        .phone-mockup video { width: 100%; height: 100%; object-fit: cover; }
+        
+        #cinema-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 99999; flex-direction: column; align-items: center; justify-content: center; }
+        #cinema-overlay.active { display: flex; }
+        .cinema-video-container { width: 100%; height: 90%; display: flex; align-items: center; justify-content: center; }
+        .cinema-video-container video { max-width: 100%; max-height: 100%; width: auto; height: 100%; object-fit: contain; }
+        .btn-exit-cinema { position: absolute; top: 20px; right: 20px; background: rgba(255, 0, 0, 0.8); color: white; padding: 10px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; z-index: 10000; border: 2px solid white; text-transform: uppercase; }
+
+        #highlights { padding: 60px 0; background: linear-gradient(to bottom, var(--primary-bg), var(--secondary-bg)); border-top: 1px solid #1f2a3d; text-align: center; font-size: 30px; }
+        .swiper { width: 100%; padding: 40px 0; }
+        .swiper-slide { width: 280px; height: 380px; border-radius: 15px; border: 2px solid var(--accent-color); overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+
+        #uniform-section { padding: 60px 0; background: var(--secondary-bg); text-align: center; font-size: 30px; }
+        .uniform-img { max-width: 850px; width: 100%; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4)); animation: float 3s ease-in-out infinite alternate; display: block; margin: 0 auto; }
+
+        #galeria { padding: 80px 0; background: var(--primary-bg); font-size: 30px;}
+        .gallery-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; border-radius: 8px; cursor: pointer; background-color: #0a192f; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 0.9; }
+        .gallery-item:hover img { transform: scale(1.1); opacity: 1; }
+
+        #map-section { padding: 60px 0; background: var(--secondary-bg); text-align: center; font-size: 30px; }
+        .map-frame { width: 100%; height: 480px; border: 0; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); filter: grayscale(0.1) contrast(1.1); }
+        .main-location-container { margin: 30px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .meeting-info { max-width: 600px; color: var(--text-gray); margin-top: 15px; font-size: 1rem; background: rgba(10, 25, 47, 0.5); padding: 10px 20px; border-radius: 10px; border-left: 3px solid var(--accent-color); }
+        .places-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .place-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-bg); color: var(--text-light); padding: 12px 20px; border-radius: 30px; font-size: 0.9rem; border: 1px solid var(--accent-color); text-decoration: none; transition: 0.3s; }
+        .place-tag:hover { background: var(--accent-color); color: var(--primary-bg); transform: translateY(-3px); }
+        .place-tag.main-place { font-size: 1.1rem; padding: 15px 30px; background: rgba(245, 166, 35, 0.15); border: 2px solid var(--accent-color); font-weight: bold; box-shadow: 0 0 15px rgba(245, 166, 35, 0.2); }
+        .place-tag.main-place:hover { background: var(--accent-color); color: var(--primary-bg); box-shadow: 0 0 25px rgba(245, 166, 35, 0.5); }
+
+        #christmas-section { position: relative; background: linear-gradient(180deg, #050d1a 0%, #2c0a0a 100%); padding: 80px 0; text-align: center; overflow: hidden; border-top: 2px solid var(--christmas-red); }
+        .snowflake { position: absolute; top: -10px; z-index: 5; color: #FFF; font-size: 1em; opacity: 0.8; animation: fall linear infinite; }
+        @keyframes fall { to { transform: translateY(105vh); } }
+        .xmas-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .xmas-banner { max-width: 900px; width: 95%; border-radius: 10px; box-shadow: 0 0 20px rgba(192, 57, 43, 0.5); }
+        .xmas-message { max-width: 800px; color: #ffcccb; font-size: 1.1rem; font-style: italic; background: rgba(192, 57, 43, 0.2); padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .bola-bounce { width: 80px; position: absolute; bottom: 20px; left: 5%; z-index: 20; animation: bounce-ball 2s infinite ease-in-out; pointer-events: none; }
+        @keyframes bounce-ball { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        #contacts-section { padding: 60px 0; background: #081020; text-align: center; font-size: 25px; border-top: 1px solid #1f2a3d; }
+        .contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
+        .btn-contact { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 140px; height: 140px; border-radius: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; text-decoration: none; transition: 0.3s; }
+        .btn-contact i { font-size: 2.5rem; margin-bottom: 10px; }
+        .btn-contact span { font-size: 0.9rem; font-weight: bold; }
+        .btn-contact:hover { transform: translateY(-10px); }
+        .btn-contact.whatsapp:hover { background: #25D366; border-color: #25D366; }
+        .btn-contact.instagram:hover { background: linear-gradient(45deg, #405de6, #fd1d1d); border-color: transparent; }
+        .btn-contact.tiktok:hover { background: #000; border-color: #00f2ea; box-shadow: -2px -2px 0 #ff0050, 2px 2px 0 #00f2ea; }
+        .btn-contact.website:hover { background: var(--accent-color); color: var(--primary-bg); border-color: var(--accent-color); }
+
+        #slogan-section { padding: 50px 0 100px 0; text-align: center; background: #02060d; }
+        .slogan-img { max-width: 660px; width: 90%; height: auto; transition: transform 0.3s; }
+        .slogan-cta { font-size: 1.2rem; color: var(--accent-color); margin-bottom: 15px; font-weight: 800; letter-spacing: 1px; animation: pulse-text 2s infinite; }
+        @keyframes pulse-text { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg) translate(0,0); filter: hue-rotate(0deg); }
+            10% { transform: skew(5deg) translate(-5px, 2px); filter: hue-rotate(90deg) blur(1px); opacity: 0.8; }
+            20% { transform: skew(-5deg) translate(5px, -2px); filter: invert(1); opacity: 1; }
+            30% { transform: skew(3deg) translate(-2px, 5px); filter: hue-rotate(-90deg) blur(2px); }
+            40% { transform: skew(-3deg) translate(2px, -5px); opacity: 0.6; }
+            50% { transform: skew(0deg) scale(1.1); filter: none; opacity: 1;}
+            60% { transform: skew(2deg) translate(0,0); }
+            70% { transform: skew(-2deg) translate(0,0); filter: hue-rotate(45deg); }
+            80% { transform: skew(1deg) translate(0,0); }
+            90% { transform: skew(-1deg) translate(0,0); }
+            100% { transform: skew(0deg) translate(0,0); filter: hue-rotate(0deg); }
+        }
+        .slogan-img.breaking { animation: glitch-skew 0.8s linear 1 forwards; }
+        
+        footer { background: #000; padding: 30px 0; text-align: center; border-top: 1px solid #1f2a3d; color: var(--text-gray); }
+
+        /* Shine Effect */
+        .shine-container { position: relative; display: block; margin: 0 auto; max-width: fit-content; border-radius: 15px; overflow: hidden; }
+        .shine-container::after {
+            content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; opacity: 0; transform: rotate(30deg);
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.3) 77%, rgba(255, 255, 255, 0.7) 92%, rgba(255, 255, 255, 0.0) 100%);
+            animation: shine-sweep 5s infinite linear; pointer-events: none; z-index: 2;
+        }
+        @keyframes shine-sweep { 0% { left: -60%; opacity: 0; } 20% { opacity: 1; } 40% { left: 150%; opacity: 0; } 100% { left: 150%; opacity: 0; } }
+        .shine-img { display: block; transition: transform 0.4s ease; z-index: 1; }
+        .shine-container:hover .shine-img { transform: scale(1.03); }
+
+        /* Responsividade */
+        @media (max-width: 992px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 2.2rem; } .hero-text h1 span { font-size: 3rem; }
+            .video-layout { flex-direction: column; } .phone-mockup { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
+            .milestone-badge { font-size: 0.9rem; padding: 8px 15px; }
+            .map-frame { height: 350px; }
+            .place-tag { width: 100%; justify-content: center; }
+            .main-location-container { width: 100%; }
+            .music-player { padding: 8px 15px; width: 95%; max-width: 350px; }
+            .track-title { font-size: 0.8rem; }
+            .intro-logo { width: 100px; }
+            .intro-title { font-size: 1.8rem; }
+            .time-box { min-width: 60px; padding: 8px; }
+            .time-val { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro-screen">
+        <div class="intro-content">
+            <img src="imagens/logo-lobo.png" alt="Logo Alcateia" class="intro-logo">
+            <h1 class="intro-title">RETROSPECTIVA 2025</h1>
+            <h2 class="intro-subtitle">ALCATEIA VOLEIBOL 🏐</h2>
+            <div id="countdown">
+                <div class="time-box"><span class="time-val" id="d">00</span><span class="time-label">Dias</span></div>
+                <div class="time-box"><span class="time-val" id="h">00</span><span class="time-label">Horas</span></div>
+                <div class="time-box"><span class="time-val" id="m">00</span><span class="time-label">Min</span></div>
+                <div class="time-box"><span class="time-val" id="s">00</span><span class="time-label">Seg</span></div>
+            </div>
+            <div id="ny-message">FELIZ ANO NOVO, ALCATEIA! ✨🏐</div>
+            <button class="btn-start" onclick="startJourney()">INICIAR JORNADA <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop><source src="song/alcateia.mp3" type="audio/mp3"></audio>
+
+    <div id="music-player-container">
+        <div class="music-player paused" id="player-ui">
+            <button class="play-btn" onclick="toggleMusic()">
+                <i class="fas fa-play" id="play-icon"></i>
+            </button>
+            <div class="track-wrapper">
+                <span class="track-title">HINO DA ALCATEIA - RETROSPECTIVA 2025 - A FORÇA DA MATILHA    </span>
+            </div>
+            <div class="controls-right">
+                <button class="btn-control" onclick="adjustVolume(-0.1)"><i class="fas fa-volume-down"></i></button>
+                <button class="btn-control" onclick="adjustVolume(0.1)"><i class="fas fa-volume-up"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cinema-overlay">
+        <div class="btn-exit-cinema" onclick="closeCinema()"><i class="fas fa-times"></i> SAIR DO MODO CINEMA</div>
+        <div class="cinema-video-container" id="cinemaContainer"></div>
+    </div>
+
+    <header id="navbar">
+        <div class="container header-content">
+            <div class="logo-area">
+                <img src="imagens/logo-lobo.png" alt="Lobo" class="logo-img">
+                <div class="logo-text">ALCATEIA VOLEIBOL <span>2025</span></div>
+            </div>
+            <a href="https://www.alcateiavoleibol.com.br" class="btn-back">PÁGINA INICIAL</a>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container hero-text" data-aos="zoom-in">
+            <h1>RETROSPECTIVA<br><span>ALCATEIA VOLEIBOL <img src="imagens/bola.png" class="bola-bounce" alt="Bola"></span></h1>
+            <p>Juntos somos mais fortes.</p>
+        </div>
+    </section>
+
+    <section id="highlights">
+        <div class="container" style="text-align: center; margin-bottom: 20px;">
+            <h3 style="color:var(--text-light)">MOMENTOS</h3>
+        </div>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (34).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (35).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (36).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (37).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (38).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (39).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (34).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (35).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (36).jpg"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="uniform-section">
+        <div class="container" data-aos="fade-up">
+            <h3 style="color: var(--accent-color); margin-bottom: 30px;">NOSSO MANTO</h3>
+            <div class="shine-container">
+                 <img src="imagens/uniforme.png" alt="Uniforme Alcateia" class="uniform-img shine-img">
+            </div>
+        </div>
+    </section>
+
+    <section id="tournament">
+        <div class="container" data-aos="zoom-in-up">
+            <h2 style="color: var(--text-light); margin-bottom: 15px;">1° TORNEIO INTERNO DE VÔLEI DE AREIA</h2>
+            <div class="tourn-date">21 DE ABRIL DE 2025</div>
+            <div class="shine-container">
+                <img src="imagens/torneio.jpeg" alt="Torneio de Vôlei" class="tourn-img shine-img">
+            </div>
+            <p class="tourn-desc">Um dia marcado pela competição saudável, superação de limites e união do time. Esse torneio ficou para a história!</p>
+        </div>
+    </section>
+
+    <section id="celebration">
+        <div class="container" data-aos="fade-up">
+            <img src="imagens/2anos.png" alt="2 Anos Alcateia" class="celeb-img">
+            <div class="celeb-text">
+                <h3 style="color: var(--accent-color); margin-bottom: 15px;">🎉🐺 Parabéns, Alcateia Voleibol! 🏐🥳</h3>
+                <p>Mais um ano juntos, com garra, amizade e muitas histórias pra contar! 💙💛<br>
+                🔥 Obrigado a todos que fazem parte da Alcateia! Esse projeto é de cada um de nós. 🐺💪</p>
+                <div class="milestone-badge">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>17 DE AGOSTO • 2 ANOS DE HISTÓRIA</span>
+                </div>
+            </div>
+            <button class="btn-confetti" onclick="lancarConfetes()">COMEMORAR! 🎉</button>
+        </div>
+    </section>
+
+    <section id="galeria">
+        <div class="container">
+            <div style="text-align:center; margin-bottom:40px;" data-aos="fade-up">
+                <h2>NOSSA JORNADA</h2>
+                <p style="color:var(--accent-color)">Clique para ampliar</p>
+            </div>
+            <div class="gallery-grid" id="main-gallery-grid"></div>
+        </div>
+    </section>
+
+    <section id="map-section">
+        <div class="container" data-aos="fade-up">
+            <h3 style="color: var(--accent-color); margin-bottom: 30px;">ONDE FIZEMOS HISTÓRIA</h3>
+            <iframe class="map-frame" src="https://www.google.com/maps/d/u/3/embed?mid=1ZblUu70GKhVinuoZx_uU8qDnoHA32Uc&ehbc=2E312F" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="main-location-container">
+                <a href="https://maps.app.goo.gl/NK8pmGF3HMDKzMgm8" target="_blank" class="place-tag main-place">
+                    <i class="fas fa-map-marker-alt"></i> Praça Soldado José de Souza
+                </a>
+                <div class="meeting-info">
+                    <i class="fas fa-info-circle"></i> Todo Sábado | 7h-12h (Lista Fechada)
+                </div>
+				                <div class="meeting-info">
+                    <i class="fas fa-info-circle"></i> Local fixo dos nossos treinos e encontros nos últimos meses. A casa da Alcateia aos sábados!
+                </div>
+            </div>
+            <div class="places-list">
+                <a href="https://share.google/uCCAKJRUtaBNuuJ5G" target="_blank" class="place-tag">
+                    <i class="fas fa-map-marker-alt"></i> Centro Esportivo
+                </a>
+                <a href="https://maps.app.goo.gl/a8DhTtoh2DKwvtgr6" target="_blank" class="place-tag">
+                    <i class="fas fa-map-marker-alt"></i> Praça Maria Magdala da Gama Oliveira
+                </a>
+                <a href="https://maps.app.goo.gl/CLkDVfDj6y7NzJzU8" target="_blank" class="place-tag">
+                    <i class="fas fa-map-marker-alt"></i> RJ Beach Arena
+                </a>
+                <a href="https://www.google.com/maps?q=Rua+Narciso+Kalili,+165+-+Campo+Grande,+Rio+de+Janeiro+-+RJ,+23045-435,+Brasil&ftid=0x9be6a91365bb0f:0x6fe45b088ce3f871" target="_blank" class="place-tag">
+                    <i class="fas fa-map-marker-alt"></i> Quadra Kids (Comari)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="christmas-section">
+        <div id="snow-container"></div>
+        <img src="imagens/bola.png" class="bola-bounce" alt="Bola">
+        <div class="container xmas-content">
+            <h2 style="color: #fff; text-shadow: 0 0 10px red;">FELIZ NATAL & UM 2026 DE VITÓRIAS</h2>
+            <img src="imagens/banner-natal.png" alt="Banner Natal" class="xmas-banner" data-aos="zoom-in">
+            <div class="xmas-message" data-aos="fade-up">
+                "✨ Que a magia do Natal renove nossas energias e fortaleça ainda mais nossa união. Em 2026, seguiremos juntos, com força coletiva e determinação, para dominarmos a quadra lado a lado. Somos mais que um time, somos uma família: Alcateia Voleibol!🎄🏐"
+            </div>
+			            <div class="xmas-message" data-aos="fade-up">
+                Boas festas, time, em nome de toda a Administração. 📋🖊️
+            </div>
+        </div>
+    </section>
+
+    <section id="video-section">
+        <div class="container video-layout">
+            <div class="video-info" data-aos="fade-right">
+                <h2>A TEMPORADA EM VÍDEO</h2>
+                <p>Reviva cada momento. Toque no vídeo para expandir para o <strong>Modo Cinema</strong> e ter a melhor experiência vertical.</p>
+                <div style="margin-top:20px; color: var(--accent-color); font-weight:bold; cursor:pointer;" onclick="openCinema()">
+                    <i class="fas fa-expand-arrows-alt"></i> CLIQUE PARA TELA CHEIA
+                </div>
+            </div>
+            <div class="phone-mockup" id="phoneContainer" data-aos="fade-left">
+                <div class="click-mask" onclick="openCinema()"><i class="fas fa-play-circle"></i></div>
+                <video id="theVideo" muted playsinline loop poster="imagens/mobile.png">
+                    <source src="movie/2025.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacts-section">
+        <div class="container" data-aos="fade-up">
+            <h3 style="color: var(--text-light);">FALE CONOSCO</h3>
+            <p style="color: var(--text-gray);">Faça parte ou acompanhe nossas redes</p>
+            <div class="contact-grid">
+                <a href="https://wa.me/5521967248256" target="_blank" class="btn-contact whatsapp"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+                <a href="https://www.instagram.com/alcateiavoleibol.oficial/" target="_blank" class="btn-contact instagram"><i class="fab fa-instagram"></i><span>Instagram</span></a>
+                <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank" class="btn-contact tiktok"><i class="fab fa-tiktok"></i><span>TikTok</span></a>
+                <a href="https://alcateiavoleibol.com.br/contato/" target="_blank" class="btn-contact website"><i class="fas fa-envelope-open-text"></i><span>Formulário</span></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="slogan-section">
+        <div class="container" data-aos="zoom-in">
+            <p class="slogan-cta">⚡ CLIQUE NO SLOGAN PARA SENTIR A ENERGIA ⚡</p>
+            <img src="imagens/slogan.png" alt="Slogan Alcateia" class="slogan-img interactive-img" id="anim-slogan">
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 ALCATEIA VOLEIBOL. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        function startJourney() {
+            const intro = document.getElementById('intro-screen');
+            const musicContainer = document.getElementById('music-player-container');
+            const bgMusic = document.getElementById('bg-music');
+            intro.classList.add('hidden');
+            document.body.classList.add('scroll-active');
+            bgMusic.play().then(() => { toggleMusicUI(true); }).catch(e => { console.log("Autoplay bloqueado."); });
+            bgMusic.volume = 0.5;
+            musicContainer.classList.add('visible');
+        }
+
+        const countDate = new Date('Jan 1, 2026 00:00:00').getTime();
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const gap = countDate - now;
+            if (gap < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').style.display = 'none';
+                document.getElementById('ny-message').style.display = 'block';
+            } else {
+                const second = 1000; const minute = second * 60; const hour = minute * 60; const day = hour * 24;
+                document.getElementById('d').innerText = Math.floor(gap / day);
+                document.getElementById('h').innerText = Math.floor((gap % day) / hour);
+                document.getElementById('m').innerText = Math.floor((gap % hour) / minute);
+                document.getElementById('s').innerText = Math.floor((gap % minute) / second);
+            }
+        }, 1000);
+
+        const galleryContainer = document.getElementById('main-gallery-grid');
+        let galleryHTML = '';
+        for (let i = 1; i <= 20; i++) {
+            galleryHTML += `<a href="imagens/galeria/alcateia (${i}).jpg" class="gallery-item"><img src="imagens/galeria/alcateia (${i}).jpg"></a>`;
+        }
+        galleryContainer.innerHTML = galleryHTML;
+        new SimpleLightbox('.gallery-grid a', { overlayOpacity: 0.95, animationSpeed: 250 });
+
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow", grabCursor: false, centeredSlides: true, slidesPerView: "auto",
+            loop: true, speed: 800, autoplay: { delay: 1500, disableOnInteraction: false },
+            coverflowEffect: { rotate: 0, stretch: 0, depth: 200, modifier: 1, slideShadows: true },
+        });
+
+        const sloganImg = document.getElementById('anim-slogan');
+        sloganImg.addEventListener('click', function() {
+            if(this.classList.contains('breaking')) return;
+            this.classList.add('breaking');
+            setTimeout(() => { this.classList.remove('breaking'); }, 800);
+        });
+
+        function lancarConfetes() {
+            var duration = 3 * 1000; var end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        const bgMusic = document.getElementById('bg-music');
+        const playIcon = document.getElementById('play-icon');
+        const playerUi = document.getElementById('player-ui');
+
+        function toggleMusic() {
+            if (bgMusic.paused) { bgMusic.play(); toggleMusicUI(true); } else { bgMusic.pause(); toggleMusicUI(false); }
+        }
+
+        function toggleMusicUI(isPlaying) {
+            if(isPlaying) {
+                playIcon.classList.remove('fa-play'); playIcon.classList.add('fa-pause'); playerUi.classList.remove('paused');
+            } else {
+                playIcon.classList.remove('fa-pause'); playIcon.classList.add('fa-play'); playerUi.classList.add('paused');
+            }
+        }
+
+        function adjustVolume(amount) {
+            let newVolume = bgMusic.volume + amount;
+            if (newVolume > 1) newVolume = 1; if (newVolume < 0) newVolume = 0;
+            bgMusic.volume = newVolume;
+        }
+
+        const videoElement = document.getElementById('theVideo');
+        const phoneContainer = document.getElementById('phoneContainer');
+        const cinemaContainer = document.getElementById('cinemaContainer');
+        const cinemaOverlay = document.getElementById('cinema-overlay');
+        function openCinema() {
+            cinemaOverlay.classList.add('active'); cinemaContainer.appendChild(videoElement);
+            videoElement.controls = true; videoElement.muted = false; videoElement.play();
+            if(!bgMusic.paused) toggleMusic(); 
+        }
+        function closeCinema() {
+            videoElement.pause(); videoElement.muted = true; videoElement.controls = false;
+            phoneContainer.appendChild(videoElement); cinemaOverlay.classList.remove('active');
+        }
+
+        const snowContainer = document.getElementById('snow-container');
+        for(let i=0; i<30; i++) {
+            let flake = document.createElement('div'); flake.className = 'snowflake'; flake.innerHTML = '❄';
+            flake.style.left = Math.random() * 100 + '%';
+            flake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            flake.style.opacity = Math.random(); flake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+            snowContainer.appendChild(flake);
+        }
+
+        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+        document.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
+</body>
+</html>
