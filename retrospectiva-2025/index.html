@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Retrospectiva 2025</title>
+    <title>Retrospectiva 2025 - Alcateia Voleibol</title>
     
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="Imaginista">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -76,7 +84,7 @@
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================================
-           PLAYER DE MÚSICA (CORREÇÃO DE CORES)
+           PLAYER DE MÚSICA
            ========================================= */
         #music-player-container {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
@@ -92,7 +100,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 100%;
         }
 
-        /* TEXTO DESLIZANTE */
         .track-wrapper {
             flex: 1; overflow: hidden; white-space: nowrap; margin: 0 10px;
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
@@ -105,34 +112,23 @@
         }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        /* BOTÃO PLAY/PAUSE (AMARELO) */
         .play-btn {
             background: var(--accent-color); border: none; width: 50px; height: 50px;
             border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 15px rgba(245, 166, 35, 0.4); animation: pulse-btn 2s infinite; flex-shrink: 0;
         }
-        /* CORREÇÃO: Forçar ícone escuro dentro do botão amarelo */
-        .play-btn i {
-            color: #050d1a !important; /* Cor escura forçada */
-            font-size: 1.3rem;
-        }
+        .play-btn i { color: #050d1a !important; font-size: 1.3rem; }
 
-        /* BOTÕES DE VOLUME */
         .controls-right { display: flex; align-items: center; gap: 10px; }
         .btn-control {
             background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); 
             width: 35px; height: 35px; border-radius: 50%; cursor: pointer;
             display: flex; align-items: center; justify-content: center; transition: 0.3s;
         }
-        /* CORREÇÃO: Forçar ícones brancos dentro dos botões de volume */
-        .btn-control i {
-            color: #ffffff !important; /* Cor branca forçada */
-            font-size: 0.9rem;
-        }
+        .btn-control i { color: #ffffff !important; font-size: 0.9rem; }
         .btn-control:hover { background: var(--accent-color); border-color: var(--accent-color); }
-        .btn-control:hover i { color: #050d1a !important; } /* Muda para escuro ao passar o mouse */
+        .btn-control:hover i { color: #050d1a !important; }
 
-        /* Estados de Pausa */
         .music-player.paused .track-title { animation-play-state: paused; opacity: 0.5; }
         .music-player.paused .play-btn { animation: none; background: #333; box-shadow: none;}
         .music-player.paused .play-btn i { color: #888 !important; }
@@ -140,7 +136,7 @@
         @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(245, 166, 35, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0); } }
 
         /* =========================================
-           ESTILOS DO SITE (MANTIDOS)
+           ESTILOS DO SITE
            ========================================= */
         header { position: fixed; top: 0; width: 100%; padding: 15px 0; z-index: 1000; background: linear-gradient(to bottom, rgba(5,13,26,0.95), transparent); transition: 0.4s; }
         header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.4); padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -149,12 +145,15 @@
         .logo-img { height: 45px; filter: drop-shadow(0 0 5px rgba(245,166,35,0.5)); }
         .logo-text { font-size: 1.2rem; color: var(--text-light); font-weight: 700; }
         .logo-text span { color: var(--accent-color); }
-        .btn-back { border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 15px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; transition: 0.3s; }
+        
+        /* CORREÇÃO: Remoção do sublinhado */
+        .btn-back { border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 15px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; transition: 0.3s; text-decoration: none; }
         .btn-back:hover { background: var(--accent-color); color: var(--primary-bg); }
 
         #hero { height: 100vh; background: radial-gradient(circle, rgba(10,25,47,0.6) 0%, rgba(5,13,26,1) 100%), url('imagens/banner-topo.jpg'); background-size: cover; background-position: center top; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 30px; position: relative; }
         .hero-text h1 { font-size: 3.5rem; line-height: 1; margin-bottom: 15px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-text h1 span { color: var(--accent-color); font-size: 4.5rem; display: block; }
+        .hero-text p { font-size: 1.5rem; }
 
         #celebration { padding: 80px 0; background: var(--secondary-bg); text-align: center; position: relative; }
         .celeb-img { max-width: 500px; width: 90%; margin: 0 auto 20px auto; display: block; filter: drop-shadow(0 0 20px rgba(245, 166, 35, 0.3)); animation: float 4s ease-in-out infinite; }
@@ -213,6 +212,8 @@
         .xmas-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 20px; }
         .xmas-banner { max-width: 900px; width: 95%; border-radius: 10px; box-shadow: 0 0 20px rgba(192, 57, 43, 0.5); }
         .xmas-message { max-width: 800px; color: #ffcccb; font-size: 1.1rem; font-style: italic; background: rgba(192, 57, 43, 0.2); padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        
+        /* Bola Global */
         .bola-bounce { width: 80px; position: absolute; bottom: 20px; left: 5%; z-index: 20; animation: bounce-ball 2s infinite ease-in-out; pointer-events: none; }
         @keyframes bounce-ball { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
@@ -259,22 +260,72 @@
         .shine-img { display: block; transition: transform 0.4s ease; z-index: 1; }
         .shine-container:hover .shine-img { transform: scale(1.03); }
 
-        /* Responsividade */
+        /* =========================================
+           RESPONSIVIDADE E CORREÇÕES MOBILE
+           ========================================= */
         @media (max-width: 992px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+        
         @media (max-width: 768px) {
-            .hero-text h1 { font-size: 2.2rem; } .hero-text h1 span { font-size: 3rem; }
-            .video-layout { flex-direction: column; } .phone-mockup { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
+            /* Títulos Ajustados */
+            h1 { font-size: 2.2rem !important; }
+            h2 { font-size: 1.5rem !important; line-height: 1.3; }
+            h3 { font-size: 1.3rem !important; }
+
+            /* Intro Logo Maior */
+            .intro-logo { width: 220px; } /* Aumentado para melhor visualização */
+            .intro-title { font-size: 1.8rem; }
+            .time-box { min-width: 60px; padding: 8px; }
+            .time-val { font-size: 1.5rem; }
+
+            /* Hero e Correção da Bola sobreposta */
+            .hero-text h1 { font-size: 2.2rem; }
+            .hero-text h1 span { font-size: 3rem; position: relative; display: block; }
+            .hero-text p { font-size: 1.1rem; padding: 0 10px; margin-top: 10px; }
+            
+            /* Correção Específica da Bola no Hero para não tapar texto */
+            #hero .bola-bounce {
+                width: 50px;
+                position: relative; /* Remove o absolute */
+                bottom: auto; left: auto;
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: 10px;
+                margin-top: -10px;
+            }
+
+            /* Correção Título Torneio (para ficar em 2 linhas se possível) */
+            #tournament h2 { font-size: 1.35rem !important; padding: 0 10px; }
+            #tournament { font-size: 16px; }
+            .tourn-desc { font-size: 1.1rem; padding: 0 15px; }
+
+            /* Correção Texto Parabéns */
+            .celeb-text { 
+                padding: 20px 15px; 
+                font-size: 0.95rem; 
+                line-height: 1.5;
+            }
+            .celeb-text h3 { font-size: 1.2rem !important; }
+
+            /* Uniforme Maior no Mobile */
+            .uniform-img { 
+                width: 120%; /* Aumenta além da margem para parecer maior */
+                max-width: none; 
+                margin-left: -10%; /* Centraliza o excesso */
+            }
+
+            /* Slogan Maior no Mobile */
+            .slogan-img { width: 100% !important; max-width: none; }
+
+            /* Outros Ajustes */
+            .video-layout { flex-direction: column; } 
+            .phone-mockup { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
-            .milestone-badge { font-size: 0.9rem; padding: 8px 15px; }
+            .milestone-badge { font-size: 0.8rem; padding: 8px 15px; width: 100%; justify-content: center; }
             .map-frame { height: 350px; }
             .place-tag { width: 100%; justify-content: center; }
             .main-location-container { width: 100%; }
             .music-player { padding: 8px 15px; width: 95%; max-width: 350px; }
             .track-title { font-size: 0.8rem; }
-            .intro-logo { width: 100px; }
-            .intro-title { font-size: 1.8rem; }
-            .time-box { min-width: 60px; padding: 8px; }
-            .time-val { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -304,7 +355,7 @@
                 <i class="fas fa-play" id="play-icon"></i>
             </button>
             <div class="track-wrapper">
-                <span class="track-title">HINO DA ALCATEIA - RETROSPECTIVA 2025 - A FORÇA DA MATILHA    </span>
+                <span class="track-title">HINO DA ALCATEIA - RETROSPECTIVA 2025 - A FORÇA DA MATILHA    </span>
             </div>
             <div class="controls-right">
                 <button class="btn-control" onclick="adjustVolume(-0.1)"><i class="fas fa-volume-down"></i></button>
@@ -350,6 +401,8 @@
                 <div class="swiper-slide"><img src="imagens/galeria/alcateia (7).jpg"></div>
                 <div class="swiper-slide"><img src="imagens/galeria/alcateia (8).jpg"></div>
                 <div class="swiper-slide"><img src="imagens/galeria/alcateia (9).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (10).jpg"></div>
+                <div class="swiper-slide"><img src="imagens/galeria/alcateia (11).jpg"></div>
             </div>
         </div>
     </section>
@@ -411,7 +464,7 @@
                 <div class="meeting-info">
                     <i class="fas fa-info-circle"></i> Todo Sábado | 7h-12h (Lista Fechada)
                 </div>
-				                <div class="meeting-info">
+                <div class="meeting-info">
                     <i class="fas fa-info-circle"></i> Local fixo dos nossos treinos e encontros nos últimos meses. A casa da Alcateia aos sábados!
                 </div>
             </div>
@@ -434,14 +487,14 @@
 
     <section id="christmas-section">
         <div id="snow-container"></div>
-        <img src="imagens/bola.png" class="bola-bounce" alt="Bola">
+        <img src="imagens/bola.png" class="bola-bounce" alt="Bola" style="bottom: 20px;">
         <div class="container xmas-content">
             <h2 style="color: #fff; text-shadow: 0 0 10px red;">FELIZ NATAL & UM 2026 DE VITÓRIAS</h2>
             <img src="imagens/banner-natal.png" alt="Banner Natal" class="xmas-banner" data-aos="zoom-in">
             <div class="xmas-message" data-aos="fade-up">
                 "✨ Que a magia do Natal renove nossas energias e fortaleça ainda mais nossa união. Em 2026, seguiremos juntos, com força coletiva e determinação, para dominarmos a quadra lado a lado. Somos mais que um time, somos uma família: Alcateia Voleibol!🎄🏐"
             </div>
-			            <div class="xmas-message" data-aos="fade-up">
+            <div class="xmas-message" data-aos="fade-up">
                 Boas festas, time, em nome de toda a Administração. 📋🖊️
             </div>
         </div>
@@ -529,7 +582,7 @@
 
         const galleryContainer = document.getElementById('main-gallery-grid');
         let galleryHTML = '';
-        for (let i = 10; i <= 29; i++) {
+        for (let i = 12; i <= 31; i++) {
             galleryHTML += `<a href="imagens/galeria/alcateia (${i}).jpg" class="gallery-item"><img src="imagens/galeria/alcateia (${i}).jpg"></a>`;
         }
         galleryContainer.innerHTML = galleryHTML;
