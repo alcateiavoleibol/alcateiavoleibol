@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Retrospectiva 2025 - Alcateia Voleibol</title>
     
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
     <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
     <link rel="shortcut icon" href="/favicon/favicon.ico">
@@ -301,7 +304,7 @@
         .embed-container { position: relative; width: 100%; height: 100%; }
         .embed-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* --- CORREÇÃO ERRO 153: ESTILOS DA CAPA --- */
+        /* ESTILOS DA CAPA */
         .video-cover {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             cursor: pointer; z-index: 20; background: #000;
@@ -325,15 +328,6 @@
         .cinema-video-container iframe { width: 100%; height: 100%; max-width: 1200px; max-height: 90vh; border: none; flex: 1; }
         .btn-exit-cinema { position: absolute; top: 20px; right: 20px; background: rgba(255, 0, 0, 0.8); color: white; padding: 10px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; z-index: 10000; border: 2px solid white; text-transform: uppercase; }
         
-        /* BOTÃO DE EMERGÊNCIA (FALLBACK) */
-        .btn-fallback {
-            background: #222; border: 1px solid var(--accent-color); color: var(--accent-color);
-            padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;
-            display: inline-flex; align-items: center; gap: 10px; font-size: 0.9rem;
-            transition: 0.3s;
-        }
-        .btn-fallback:hover { background: var(--accent-color); color: #000; }
-
         /* CONTROLE DE EXIBIÇÃO (TV vs CELULAR) */
         .desktop-only { display: flex; }
         .mobile-only { display: none; }
@@ -666,20 +660,22 @@
 
             <div class="monitor-wrapper desktop-only" data-aos="fade-left">
                 <div class="monitor-screen">
-                    <div class="video-cover" id="cover-desktop" onclick="openCinema()">
+                    <div class="video-cover" id="cover-desktop" onclick="playVideo('desktop')">
                         <img src="https://img.youtube.com/vi/nh3Ydq6pTw0/maxresdefault.jpg" alt="Capa Vídeo">
                         <div class="play-button-overlay"><i class="fas fa-play"></i></div>
                     </div>
+                    <div class="embed-container" id="video-container-desktop"></div>
                 </div>
                 <div class="monitor-stand"></div>
                 <div class="monitor-base"></div>
             </div>
 
             <div class="phone-mockup mobile-only" id="phoneContainer" data-aos="fade-left">
-                <div class="video-cover" id="cover-mobile" onclick="openCinema()">
+                <div class="video-cover" id="cover-mobile" onclick="playVideo('mobile')">
                     <img src="https://img.youtube.com/vi/nh3Ydq6pTw0/maxresdefault.jpg" alt="Capa Vídeo">
                     <div class="play-button-overlay"><i class="fas fa-play"></i></div>
                 </div>
+                <div class="embed-container" id="video-container-mobile"></div>
             </div>
 
         </div>
@@ -723,7 +719,37 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
-        // --- MODO CINEMA COM FALLBACK ---
+        // --- LÓGICA DE VÍDEO "MODO DE COMPATIBILIDADE" ---
+        // Usa youtube-nocookie.com para evitar bloqueio local
+        // Mostra controles para garantir que o usuário consiga dar play
+        
+        function playVideo(device) {
+            const videoId = 'nh3Ydq6pTw0';
+            let container, cover;
+
+            if (device === 'desktop') {
+                container = document.getElementById('video-container-desktop');
+                cover = document.getElementById('cover-desktop');
+            } else {
+                container = document.getElementById('video-container-mobile');
+                cover = document.getElementById('cover-mobile');
+            }
+
+            // Esconde a capa
+            cover.style.display = 'none';
+
+            // Injeta o Iframe USANDO NOCOOKIE e COM CONTROLES
+            container.innerHTML = `
+                <iframe 
+                    src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0&modestbranding=1&controls=1" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            `;
+        }
+
+        // --- MODO CINEMA ---
         const cinemaOverlay = document.getElementById('cinema-overlay');
         const cinemaContainer = document.getElementById('cinemaContainer');
         const bgMusic = document.getElementById('bg-music');
@@ -736,17 +762,14 @@
 
             const videoId = 'nh3Ydq6pTw0';
 
-            // Carrega o vídeo E o botão de segurança
+            // Carrega o vídeo no modal com controles
             cinemaContainer.innerHTML = `
                 <iframe 
-                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
+                    src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1" 
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
                 </iframe>
-                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="btn-fallback">
-                    <i class="fab fa-youtube"></i> Se o vídeo não abrir, clique aqui para assistir no YouTube
-                </a>
             `;
         }
 
