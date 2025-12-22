@@ -74,11 +74,24 @@
         .intro-title { font-size: 2.5rem; color: #fff; margin-bottom: 10px; letter-spacing: 2px; }
         .intro-subtitle { font-size: 1.2rem; color: var(--accent-color); margin-bottom: 30px; font-weight: 300; }
         
-        #countdown { display: flex; gap: 15px; margin-bottom: 30px; }
+        #countdown { display: flex; gap: 15px; margin-bottom: 30px; transition: opacity 0.5s ease; }
         .time-box { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; border: 1px solid var(--accent-color); min-width: 70px; }
         .time-val { font-size: 1.8rem; font-weight: 900; color: var(--accent-color); }
         .time-label { font-size: 0.7rem; text-transform: uppercase; }
-        #ny-message { display: none; font-size: 2rem; color: var(--accent-color); font-weight: 900; margin-bottom: 30px; animation: pulse-text 2s infinite; }
+        
+        /* Mensagem de Ano Novo */
+        #ny-message { 
+            display: none; 
+            font-size: 3rem; 
+            color: var(--accent-color); 
+            font-weight: 900; 
+            margin-bottom: 30px; 
+            text-align: center;
+            text-shadow: 0 0 30px rgba(245, 166, 35, 0.8), 0 0 60px rgba(255, 0, 0, 0.6);
+            animation: pop-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            line-height: 1.2;
+        }
+        @keyframes pop-in { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
         .btn-start { background: transparent; border: 2px solid var(--accent-color); color: var(--accent-color); padding: 15px 50px; font-size: 1.2rem; border-radius: 50px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; letter-spacing: 1px; }
         .btn-start:hover { background: var(--accent-color); color: var(--primary-bg); box-shadow: 0 0 30px rgba(245, 166, 35, 0.6); transform: scale(1.05); }
@@ -216,11 +229,44 @@
         .teaser-divider { height: 4px; width: 60px; background: linear-gradient(90deg, transparent, var(--accent-color), transparent); margin: 0 auto 20px auto; border-radius: 10px; }
         .teaser-sub { color: var(--text-light); font-size: 1.2rem; font-style: italic; max-width: 600px; margin: 0 auto; }
 
+        /* =========================================
+           GALERIA - ESTILOS E ANIMAÇÃO
+           ========================================= */
         #galeria { padding: 80px 0; background: var(--primary-bg); font-size: 30px;}
-        .gallery-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; border-radius: 8px; cursor: pointer; background-color: #0a192f; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 0.9; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; perspective: 1000px; }
+        
+        .gallery-item { 
+            aspect-ratio: 1 / 1; overflow: hidden; border-radius: 8px; cursor: pointer; background-color: #0a192f; position: relative;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 0.9; display: block; }
         .gallery-item:hover img { transform: scale(1.1); opacity: 1; }
+        
+        /* Classes para animação de shuffle */
+        .gallery-item.shuffling-out {
+            transform: scale(0) rotateY(180deg);
+            opacity: 0;
+        }
+        .gallery-item.shuffling-in {
+            animation: popInCard 0.5s forwards ease-out;
+        }
+        
+        @keyframes popInCard {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Botão Embaralhar Galeria */
+        .btn-shuffle {
+            background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);
+            padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 0.9rem;
+            margin-top: 10px; transition: 0.3s; overflow: hidden; position: relative;
+        }
+        .btn-shuffle:hover { background: var(--accent-color); color: var(--primary-bg); box-shadow: 0 0 15px rgba(245, 166, 35, 0.4); }
+        .btn-shuffle i { margin-right: 5px; transition: transform 0.5s; }
+        .btn-shuffle:hover i { transform: rotate(180deg); }
 
         #map-section { padding: 60px 0; background: var(--secondary-bg); text-align: center; font-size: 30px; }
         .map-frame { width: 100%; height: 480px; border: 0; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); filter: grayscale(0.1) contrast(1.1); }
@@ -264,59 +310,62 @@
         @keyframes bounce-ball { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
         /* =========================================
-           VÍDEOS: TV (DESKTOP) E CELULAR (MOBILE)
+           VÍDEOS: TV (DESKTOP) E CELULAR (MOBILE) E NOVOS SHORTS
            ========================================= */
         #video-section { background-color: var(--primary-bg); padding: 80px 0; }
+        
+        /* Layout de Destaque Vertical (Shorts/TikTok) */
+        .highlight-row {
+            display: flex; align-items: center; justify-content: space-between; gap: 50px; margin-bottom: 100px; padding: 20px 0;
+        }
+        .highlight-row.reverse { flex-direction: row-reverse; }
+        .highlight-text { flex: 1; }
+        .highlight-text h3 { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 20px; text-transform: uppercase; border-left: 5px solid var(--accent-color); padding-left: 15px; }
+        .highlight-text p { font-size: 1.1rem; color: var(--text-light); margin-bottom: 15px; }
+        .highlight-text span.hashtag { color: var(--text-gray); font-size: 0.9rem; font-weight: bold; }
+        
+        .vertical-video-frame {
+            flex: 0 0 320px; height: 570px; background: #000; border-radius: 20px; border: 4px solid #1f2a3d;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6); overflow: hidden; position: relative;
+        }
+        .vertical-video-frame iframe, .vertical-video-frame blockquote { width: 100%; height: 100%; border: none; margin: 0; }
+        .tiktok-embed { margin: 0 !important; border-radius: 15px !important; max-width: 100% !important; }
+        
+        .vertical-cinema-btn {
+             display: inline-block; margin-top: 20px; color: var(--accent-color); font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .vertical-cinema-btn:hover { transform: scale(1.05); text-shadow: 0 0 10px var(--accent-color); }
+
+        /* Layout do Vídeo Principal (Horizontal) */
         .video-layout { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
         .video-info { flex: 1; }
         .video-info h2 { font-size: 2.2rem; color: var(--accent-color); margin-bottom: 15px; }
         
         /* MOCKUP DO CELULAR (MOBILE) */
         .phone-mockup { 
-            flex: 0 0 auto; width: 320px; height: 640px; 
-            background: #000; border-radius: 35px; border: 8px solid #1f2a3d; 
+            flex: 0 0 auto; width: 320px; height: 640px; background: #000; border-radius: 35px; border: 8px solid #1f2a3d; 
             box-shadow: 0 30px 60px rgba(0,0,0,0.6); overflow: hidden; position: relative; 
         }
 
         /* MOCKUP DA TV/MONITOR (DESKTOP) */
-        .monitor-wrapper {
-            flex: 0 0 auto; width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center;
-        }
+        .monitor-wrapper { flex: 0 0 auto; width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
         .monitor-screen {
             width: 100%; aspect-ratio: 16/9; background: #000; border: 12px solid #1f2a3d; border-bottom-width: 25px;
             border-radius: 5px; position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
-        .monitor-stand {
-            width: 140px; height: 40px; background: #1f2a3d; 
-            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%); margin-top: -2px;
-        }
-        .monitor-base {
-            width: 240px; height: 10px; background: #1f2a3d; border-radius: 10px;
-        }
+        .monitor-stand { width: 140px; height: 40px; background: #1f2a3d; clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%); margin-top: -2px; }
+        .monitor-base { width: 240px; height: 10px; background: #1f2a3d; border-radius: 10px; }
 
-        /* MASCARA DE CLIQUE */
-        .click-mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; cursor: pointer; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); transition: 0.3s; }
-        .click-mask i { font-size: 4rem; color: rgba(255,255,255,0.7); }
-        .click-mask:hover { background: rgba(0,0,0,0.4); }
-        .click-mask:hover i { transform: scale(1.1); color: var(--accent-color); }
-        
-        /* IFRAMES RESPONSIVOS */
+        /* IFRAMES RESPONSIVOS & CAPAS */
         .embed-container { position: relative; width: 100%; height: 100%; }
         .embed-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-
-        /* ESTILOS DA CAPA */
-        .video-cover {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            cursor: pointer; z-index: 20; background: #000;
-        }
-        .video-cover img {
-            width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.3s;
-        }
+        .video-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; z-index: 20; background: #000; }
+        .video-cover img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.3s; }
         .video-cover:hover img { opacity: 0.6; }
         .play-button-overlay {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 70px; height: 70px; background: rgba(245, 166, 35, 0.9);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            width: 70px; height: 70px; background: rgba(245, 166, 35, 0.9); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 20px rgba(245, 166, 35, 0.5); animation: pulse-btn 2s infinite;
         }
         .play-button-overlay i { color: #050d1a; font-size: 30px; margin-left: 5px; }
@@ -325,12 +374,14 @@
         #cinema-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 99999; flex-direction: column; align-items: center; justify-content: center; }
         #cinema-overlay.active { display: flex; }
         .cinema-video-container { width: 90%; height: 80%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px; }
-        .cinema-video-container iframe { width: 100%; height: 100%; max-width: 1200px; max-height: 90vh; border: none; flex: 1; }
+        .cinema-video-container iframe, .cinema-video-container blockquote { width: 100%; height: 100%; max-width: 1200px; max-height: 90vh; border: none; flex: 1; }
+        /* Ajuste específico para TikTok no cinema */
+        .cinema-video-container .tiktok-embed { max-height: 85vh !important; width: auto !important; aspect-ratio: 9/16; }
+
         .btn-exit-cinema { position: absolute; top: 20px; right: 20px; background: rgba(255, 0, 0, 0.8); color: white; padding: 10px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; z-index: 10000; border: 2px solid white; text-transform: uppercase; }
         
-        /* CONTROLE DE EXIBIÇÃO (TV vs CELULAR) */
-        .desktop-only { display: flex; }
-        .mobile-only { display: none; }
+        /* CONTROLE DE EXIBIÇÃO */
+        .desktop-only { display: flex; } .mobile-only { display: none; }
 
         #contacts-section { padding: 60px 0; background: #081020; text-align: center; font-size: 25px; border-top: 1px solid #1f2a3d; }
         .contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
@@ -372,7 +423,7 @@
             90% { transform: skew(-1deg) translate(0,0); }
             100% { transform: skew(0deg) translate(0,0); filter: hue-rotate(0deg); }
         }
-        .slogan-img.breaking { animation: glitch-skew 0.8s linear 1 forwards; }
+        .slogan-img.breaking { animation: glitch-skew 1.5s linear 1 forwards; } /* Tempo aumentado para 1.5s */
 
         .energy-spark { position: absolute; bottom: 0; width: 2px; height: 2px; background: transparent; box-shadow: 0 0 10px 2px rgba(245, 166, 35, 0.8); border-radius: 50%; animation: riseUp linear forwards; z-index: 1; pointer-events: none; }
         .energy-spark.blue { box-shadow: 0 0 10px 2px rgba(0, 200, 255, 0.8); }
@@ -401,58 +452,37 @@
             .location-highlight span { font-size: 1.6rem; }
         }
 
+        @media (max-width: 900px) {
+            .highlight-row, .highlight-row.reverse { flex-direction: column; text-align: center; gap: 30px; }
+            .highlight-text h3 { border-left: none; border-bottom: 3px solid var(--accent-color); display: inline-block; padding-bottom: 10px; padding-left: 0; }
+            .vertical-video-frame { width: 100%; max-width: 320px; height: 570px; }
+            .vertical-cinema-btn { margin-top: 15px; margin-bottom: 30px; display: block;}
+        }
+
         @media (max-width: 992px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
         
         @media (max-width: 768px) {
-            /* TROCA DO MONITOR PELO CELULAR */
-            .desktop-only { display: none !important; }
-            .mobile-only { display: block !important; }
-
-            h1 { font-size: 2.2rem !important; }
-            h2 { font-size: 1.5rem !important; line-height: 1.3; }
-            h3 { font-size: 1.3rem !important; }
-
-            .intro-logo { width: 220px; } 
-            .intro-title { font-size: 1.8rem; }
-            .time-box { min-width: 60px; padding: 8px; }
-            .time-val { font-size: 1.5rem; }
-
-            .hero-text h1 { font-size: 2.2rem; }
-            .hero-text h1 span { font-size: 3rem; position: relative; display: block; }
-            .hero-text p { font-size: 1.1rem; padding: 0 10px; margin-top: 10px; }
-            
-            #hero .bola-bounce {
-                width: 50px; position: relative; bottom: auto; left: auto; display: inline-block; vertical-align: middle; margin-left: 10px; margin-top: -10px;
-            }
-
-            #tournament h2 { font-size: 1.35rem !important; padding: 0 10px; }
-            #tournament { font-size: 16px; }
-            .tourn-desc { font-size: 1.1rem; padding: 0 15px; }
-
-            .celeb-text { padding: 20px 15px; font-size: 0.95rem; line-height: 1.5; }
-            .celeb-text h3 { font-size: 1.2rem !important; }
-
+            .desktop-only { display: none !important; } .mobile-only { display: block !important; }
+            h1 { font-size: 2.2rem !important; } h2 { font-size: 1.5rem !important; line-height: 1.3; } h3 { font-size: 1.3rem !important; }
+            .intro-logo { width: 220px; } .intro-title { font-size: 1.8rem; } .time-box { min-width: 60px; padding: 8px; } .time-val { font-size: 1.5rem; }
+            .hero-text h1 { font-size: 2.2rem; } .hero-text h1 span { font-size: 3rem; position: relative; display: block; } .hero-text p { font-size: 1.1rem; padding: 0 10px; margin-top: 10px; }
+            #hero .bola-bounce { width: 50px; position: relative; bottom: auto; left: auto; display: inline-block; vertical-align: middle; margin-left: 10px; margin-top: -10px; }
+            #tournament h2 { font-size: 1.35rem !important; padding: 0 10px; } #tournament { font-size: 16px; } .tourn-desc { font-size: 1.1rem; padding: 0 15px; }
+            .celeb-text { padding: 20px 15px; font-size: 0.95rem; line-height: 1.5; } .celeb-text h3 { font-size: 1.2rem !important; }
             .xmas-message { font-size: 1rem; padding: 15px; line-height: 1.5; width: 95%; }
-
             .uniform-img { width: 150%; max-width: none; margin-left: -25%; }
+            .new-uniform-teaser { margin-top: 30px; } .teaser-intro { font-size: 0.75rem; letter-spacing: 2px; } .teaser-headline { font-size: 1.6rem; } .teaser-sub { font-size: 1rem; padding: 0 10px; }
             
-            .new-uniform-teaser { margin-top: 30px; }
-            .teaser-intro { font-size: 0.75rem; letter-spacing: 2px; }
-            .teaser-headline { font-size: 1.6rem; }
-            .teaser-sub { font-size: 1rem; padding: 0 10px; }
-
-            .slogan-img { width: 100% !important; max-width: none; }
-            .slogan-cta { font-size: 1.3rem; letter-spacing: 1px; padding: 0 10px; line-height: 1.5; }
+            /* Ajustes Slogan Mobile */
+            .slogan-img { width: 100% !important; max-width: 500px; } /* Aumentado no mobile */
+            .slogan-cta { font-size: 1.5rem; letter-spacing: 1px; padding: 0 20px; line-height: 1.4; margin-bottom: 30px; display: block; }
 
             .video-layout { flex-direction: column; } 
             .phone-mockup { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
             .milestone-badge { font-size: 0.8rem; padding: 8px 15px; width: 100%; justify-content: center; }
-            .map-frame { height: 350px; }
-            .place-tag { width: 100%; justify-content: center; }
-            .main-location-container { width: 100%; }
-            .music-player { padding: 8px 15px; width: 95%; max-width: 350px; }
-            .track-title { font-size: 0.8rem; }
+            .map-frame { height: 350px; } .place-tag { width: 100%; justify-content: center; } .main-location-container { width: 100%; }
+            .music-player { padding: 8px 15px; width: 95%; max-width: 350px; } .track-title { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -469,7 +499,7 @@
                 <div class="time-box"><span class="time-val" id="m">00</span><span class="time-label">Min</span></div>
                 <div class="time-box"><span class="time-val" id="s">00</span><span class="time-label">Seg</span></div>
             </div>
-            <div id="ny-message">FELIZ ANO NOVO, ALCATEIA! ✨🏐</div>
+            <div id="ny-message">FELIZ ANO NOVO, ALCATEIA! ✨2026✨<br><span style="font-size: 1.5rem; font-weight: normal;">O futuro é nosso!</span></div>
             <button class="btn-start" onclick="startJourney()">INICIAR JORNADA <i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
@@ -583,6 +613,9 @@
             <div style="text-align:center; margin-bottom:40px;" data-aos="fade-up">
                 <h2>NOSSA JORNADA</h2>
                 <p style="color:var(--accent-color)">Clique para ampliar</p>
+                <button class="btn-shuffle" id="shuffleBtn" onclick="shuffleGallery()">
+                    <i class="fas fa-random"></i> EMBARALHAR MEMÓRIAS
+                </button>
             </div>
             <div class="gallery-grid" id="main-gallery-grid"></div>
         </div>
@@ -595,7 +628,7 @@
             
             <div class="main-location-container">
                 <a href="https://maps.app.goo.gl/NK8pmGF3HMDKzMgm8" target="_blank" class="place-tag main-place">
-                    <i class="fas fa-map-marker-alt"></i> Praça Soldado José de Souza
+                    <i class="fas fa-map-marker-alt"></i> Praça José Antunes Toledo
                 </a>
                 
                 <div class="schedule-box">
@@ -617,17 +650,20 @@
             </div>
 
             <div class="places-list">
-                <a href="https://share.google/uCCAKJRUtaBNuuJ5G" target="_blank" class="place-tag">
+                <a href="https://maps.app.goo.gl/nx7Gmj32PdGUmFFYA" target="_blank" class="place-tag">
                     <i class="fas fa-map-marker-alt"></i> Centro Esportivo
+                </a>
+                <a href="https://maps.app.goo.gl/QasxkmfoDBmVLSRF8" target="_blank" class="place-tag">
+                    <i class="fas fa-map-marker-alt"></i> Olympia Park Clube Condomínio
                 </a>
                 <a href="https://maps.app.goo.gl/a8DhTtoh2DKwvtgr6" target="_blank" class="place-tag">
                     <i class="fas fa-map-marker-alt"></i> Praça Maria Magdala da Gama Oliveira
                 </a>
-                <a href="https://maps.app.goo.gl/CLkDVfDj6y7NzJzU8" target="_blank" class="place-tag">
-                    <i class="fas fa-map-marker-alt"></i> RJ Beach Arena
-                </a>
                 <a href="https://www.google.com/maps?q=Rua+Narciso+Kalili,+165+-+Campo+Grande,+Rio+de+Janeiro+-+RJ,+23045-435,+Brasil&ftid=0x9be6a91365bb0f:0x6fe45b088ce3f871" target="_blank" class="place-tag">
                     <i class="fas fa-map-marker-alt"></i> Quadra Kids (Comari)
+                </a>
+                 <a href="https://maps.app.goo.gl/CLkDVfDj6y7NzJzU8" target="_blank" class="place-tag">
+                    <i class="fas fa-map-marker-alt"></i> RJ Beach Arena
                 </a>
             </div>
         </div>
@@ -649,35 +685,74 @@
     </section>
 
     <section id="video-section">
-        <div class="container video-layout">
-            <div class="video-info" data-aos="fade-right">
-                <h2>A TEMPORADA EM VÍDEO</h2>
-                <p>Reviva cada momento. Toque no vídeo para expandir para o <strong>Modo Cinema</strong>.</p>
-                <div style="margin-top:20px; color: var(--accent-color); font-weight:bold; cursor:pointer;" onclick="openCinema()">
-                    <i class="fas fa-expand-arrows-alt"></i> CLIQUE PARA TELA CHEIA
+        <div class="container highlight-row" data-aos="fade-right">
+            <div class="highlight-text">
+                <h3>A Resenha da Dupla 🐺😂</h3>
+                <p>Hoje é dia de mostrar o que rola nos bastidores e na quadra com a família Alcateia Voleibol! A gente tem orgulho de quem corre junto.</p>
+                <p><strong>Gustavo e MaFe:</strong> Um registro especial dessa dupla que tem cadeira cativa na nossa história. Obrigado por cada grito, pela parceria e por toda a vibração nos jogos. A casa é e sempre será de vocês! ✨</p>
+                <p><span class="hashtag">#AlcateiaVoleibol #Resenha #VoleiBrasil #Humor</span></p>
+                <div class="vertical-cinema-btn" onclick="openCinema('shorts')">
+                    <i class="fas fa-expand"></i> ASSISTIR NO MODO CINEMA
                 </div>
             </div>
+            <div class="vertical-video-frame">
+                 <div class="video-cover" id="cover-shorts" onclick="playVerticalVideo('shorts')">
+                    <img src="imagens/movie.png" alt="Capa Vídeo Vertical">
+                    <div class="play-button-overlay"><i class="fas fa-play"></i></div>
+                </div>
+                <div class="embed-container" id="video-container-shorts"></div>
+            </div>
+        </div>
 
-            <div class="monitor-wrapper desktop-only" data-aos="fade-left">
-                <div class="monitor-screen">
-                    <div class="video-cover" id="cover-desktop" onclick="playVideo('desktop')">
+        <div class="container video-layout" style="margin-bottom: 100px;">
+            <div class="video-info" data-aos="fade-up">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">A TEMPORADA EM VÍDEO</h2>
+                <p style="text-align: center; margin-bottom: 30px;">Reviva cada momento épico de 2025.</p>
+                
+                <div style="text-align: center; color: var(--accent-color); font-weight:bold; cursor:pointer; margin-bottom: 20px;" onclick="openCinema('main')">
+                    <i class="fas fa-expand-arrows-alt"></i> CLIQUE PARA TELA CHEIA
+                </div>
+
+                <div class="monitor-wrapper desktop-only" style="margin: 0 auto;">
+                    <div class="monitor-screen">
+                        <div class="video-cover" id="cover-desktop" onclick="playVideo('desktop')">
+                            <img src="https://img.youtube.com/vi/nh3Ydq6pTw0/maxresdefault.jpg" alt="Capa Vídeo">
+                            <div class="play-button-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="embed-container" id="video-container-desktop"></div>
+                    </div>
+                    <div class="monitor-stand"></div>
+                    <div class="monitor-base"></div>
+                </div>
+
+                <div class="phone-mockup mobile-only" id="phoneContainer" style="margin: 0 auto;">
+                    <div class="video-cover" id="cover-mobile" onclick="playVideo('mobile')">
                         <img src="https://img.youtube.com/vi/nh3Ydq6pTw0/maxresdefault.jpg" alt="Capa Vídeo">
                         <div class="play-button-overlay"><i class="fas fa-play"></i></div>
                     </div>
-                    <div class="embed-container" id="video-container-desktop"></div>
+                    <div class="embed-container" id="video-container-mobile"></div>
                 </div>
-                <div class="monitor-stand"></div>
-                <div class="monitor-base"></div>
             </div>
+        </div>
 
-            <div class="phone-mockup mobile-only" id="phoneContainer" data-aos="fade-left">
-                <div class="video-cover" id="cover-mobile" onclick="playVideo('mobile')">
-                    <img src="https://img.youtube.com/vi/nh3Ydq6pTw0/maxresdefault.jpg" alt="Capa Vídeo">
+        <div class="container highlight-row reverse" data-aos="fade-left">
+            <div class="highlight-text">
+                <h3>A Energia do Andrey ⚡😁</h3>
+                <p>Ligado no 220v e com a cara de quem tá no melhor lugar do mundo! Se não for pra entrar em quadra com essa animação, o Andrey nem sai de casa.</p>
+                <p>A energia dele contagia o time todo: é sobre jogar sério, mas sem perder a alegria nunca. <strong>O inimigo do mau humor ataca novamente!</strong></p>
+                <p>Que vibe boa ter você na Alcateia, craque! 🐺💙</p>
+                <p><span class="hashtag">#AlcateiaVoleibol #GoodVibes #Alegria #Time</span></p>
+                 <div class="vertical-cinema-btn" onclick="openCinema('tiktok')">
+                    <i class="fas fa-expand"></i> ASSISTIR NO MODO CINEMA
+                </div>
+            </div>
+            
+            <div class="vertical-video-frame" style="border-color: #f5a623;"> <div class="video-cover" id="cover-tiktok" onclick="playVerticalVideo('tiktok')">
+                    <img src="imagens/movie.png" alt="Capa Vídeo TikTok">
                     <div class="play-button-overlay"><i class="fas fa-play"></i></div>
                 </div>
-                <div class="embed-container" id="video-container-mobile"></div>
+                <div id="video-container-tiktok" style="width:100%; height:100%;"></div>
             </div>
-
         </div>
     </section>
 
@@ -698,7 +773,11 @@
         <div id="energy-container" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
         
         <div class="container" data-aos="zoom-in" style="position: relative; z-index: 5;">
-            <p class="slogan-cta">⚡ CLIQUE NO SLOGAN PARA SENTIR A ENERGIA ⚡</p>
+            <p class="slogan-cta">
+                <i class="fas fa-fingerprint" style="display:block; font-size: 2rem; margin-bottom: 10px;"></i>
+                ⚡ VENHA SENTIR ESSA ENERGIA ⚡<br>
+                <span style="font-size: 0.9rem; font-weight: normal; opacity: 0.8;">Toque na imagem abaixo</span>
+            </p>
             <img src="imagens/slogan.png" alt="Slogan Alcateia" class="slogan-img interactive-img" id="anim-slogan">
         </div>
     </section>
@@ -715,14 +794,118 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <script src="https://www.youtube.com/iframe_api"></script>
+    <script async src="https://www.tiktok.com/embed.js"></script>
 
     <script>
         AOS.init({ duration: 1000, once: true });
 
-        // --- LÓGICA DE VÍDEO "MODO DE COMPATIBILIDADE" ---
-        // Usa youtube-nocookie.com para evitar bloqueio local
-        // Mostra controles para garantir que o usuário consiga dar play
+        // --- GLOBAL: TRATAMENTO DE ERRO DE IMAGEM ROBUSTO ---
+        // Se qualquer imagem der erro, substitui por "imagens/galeria/alcateia.jpg"
+        document.addEventListener('error', function(e) {
+            if (e.target.tagName.toLowerCase() === 'img') {
+                // Evita loop infinito se a imagem de fallback também falhar
+                if(e.target.dataset.triedFallback === 'true') {
+                   console.log("Fallback também falhou para: " + e.target.src);
+                   return;
+                }
+                e.target.dataset.triedFallback = 'true';
+                e.target.src = 'imagens/galeria/alcateia.jpg';
+                e.target.alt = 'Imagem indisponível';
+            }
+        }, true); // Use capture phase
+
+        // --- FUNÇÃO PARA EMBARALHAR A GALERIA COM EFEITO 3D ---
+        let isShuffling = false;
         
+        function shuffleGallery() {
+            if(isShuffling) return; // Evita cliques múltiplos
+            isShuffling = true;
+            
+            const btn = document.getElementById('shuffleBtn');
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ORGANIZANDO...';
+
+            const container = document.getElementById('main-gallery-grid');
+            const items = Array.from(container.children);
+            
+            // 1. Efeito de Saída (Flip e Scale Down)
+            items.forEach((item, index) => {
+                // Adiciona um pequeno delay aleatório para saída ficar mais orgânica
+                setTimeout(() => {
+                    item.classList.add('shuffling-out');
+                }, index * 10);
+            });
+
+            // 2. Aguarda a animação de saída terminar antes de embaralhar o DOM
+            setTimeout(() => {
+                // Algoritmo Fisher-Yates
+                for (let i = items.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [items[i], items[j]] = [items[j], items[i]];
+                }
+
+                // Esvazia e Reinsere
+                items.forEach(item => {
+                    container.appendChild(item);
+                    // Remove classe de saída mas mantem opacidade 0 para entrada
+                    item.classList.remove('shuffling-out');
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.5)';
+                });
+
+                // 3. Efeito de Entrada (Staggered Pop-up)
+                items.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.add('shuffling-in');
+                        // Limpa a classe depois da animação para não atrapalhar o hover
+                        setTimeout(() => { 
+                            item.classList.remove('shuffling-in'); 
+                            item.style.opacity = '1'; 
+                            item.style.transform = 'none';
+                        }, 500);
+                    }, index * 30); // Delay em cascata
+                });
+                
+                // Reinstancia o Lightbox
+                new SimpleLightbox('.gallery-grid a', { overlayOpacity: 0.95, animationSpeed: 250 });
+                
+                // Restaura o botão
+                setTimeout(() => {
+                    btn.innerHTML = originalBtnText;
+                    isShuffling = false;
+                }, items.length * 30 + 500);
+
+            }, 600); // Tempo para todas as imagens saírem
+        }
+
+
+        // --- FUNÇÃO PARA TOCAR VÍDEOS VERTICAIS NA PRÓPRIA PÁGINA ---
+        function playVerticalVideo(type) {
+            let container, cover, embedCode;
+            
+            if (type === 'shorts') {
+                container = document.getElementById('video-container-shorts');
+                cover = document.getElementById('cover-shorts');
+                embedCode = `
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/CjBnR4NM9vY?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                `;
+            } else if (type === 'tiktok') {
+                container = document.getElementById('video-container-tiktok');
+                cover = document.getElementById('cover-tiktok');
+                embedCode = `
+                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alcateiavoleibol/video/7586806658018381072" data-video-id="7586806658018381072" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@alcateiavoleibol" href="https://www.tiktok.com/@alcateiavoleibol?refer=embed">@alcateiavoleibol</a> </section> </blockquote> 
+                `;
+                if (window.tiktok) window.tiktok.reload();
+            }
+
+            if (container && cover) {
+                cover.style.display = 'none';
+                container.innerHTML = embedCode;
+                 if(type === 'tiktok') setTimeout(() => { if (window.tiktok) window.tiktok.reload(); }, 100);
+            }
+        }
+
+        // --- FUNÇÃO DO VÍDEO PRINCIPAL (MODO TV/CELULAR) ---
         function playVideo(device) {
             const videoId = 'nh3Ydq6pTw0';
             let container, cover;
@@ -735,17 +918,10 @@
                 cover = document.getElementById('cover-mobile');
             }
 
-            // Esconde a capa
             cover.style.display = 'none';
 
-            // Injeta o Iframe USANDO NOCOOKIE e COM CONTROLES
             container.innerHTML = `
-                <iframe 
-                    src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0&modestbranding=1&controls=1" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
+                <iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0&modestbranding=1&controls=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             `;
         }
 
@@ -754,31 +930,33 @@
         const cinemaContainer = document.getElementById('cinemaContainer');
         const bgMusic = document.getElementById('bg-music');
 
-        function openCinema() {
+        function openCinema(type) {
             cinemaOverlay.classList.add('active');
-            
-            // Pausa a música do site
             if (!bgMusic.paused) toggleMusic();
 
-            const videoId = 'nh3Ydq6pTw0';
+            let embedCode = '';
 
-            // Carrega o vídeo no modal com controles
-            cinemaContainer.innerHTML = `
-                <iframe 
-                    src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-            `;
+            if (type === 'main') {
+                const videoId = 'nh3Ydq6pTw0';
+                embedCode = `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            } else if (type === 'shorts') {
+                embedCode = `<iframe src="https://www.youtube.com/embed/CjBnR4NM9vY?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="aspect-ratio: 9/16; max-width: 400px;"></iframe>`;
+            } else if (type === 'tiktok') {
+                 embedCode = `
+                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alcateiavoleibol/video/7586806658018381072" data-video-id="7586806658018381072" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@alcateiavoleibol" href="https://www.tiktok.com/@alcateiavoleibol?refer=embed">@alcateiavoleibol</a> </section> </blockquote> 
+                `;
+            }
+
+            cinemaContainer.innerHTML = embedCode;
+            if(type === 'tiktok') setTimeout(() => { if (window.tiktok) window.tiktok.reload(); }, 100);
         }
 
         function closeCinema() {
             cinemaOverlay.classList.remove('active');
-            cinemaContainer.innerHTML = ''; // Limpa para parar o som
+            cinemaContainer.innerHTML = ''; 
         }
 
-        // --- RESTANTE DO CÓDIGO (MÚSICA, CONTAGEM, ETC) ---
+        // --- START JOURNEY ---
         function startJourney() {
             const intro = document.getElementById('intro-screen');
             const musicContainer = document.getElementById('music-player-container');
@@ -789,14 +967,54 @@
             musicContainer.classList.add('visible');
         }
 
+        // --- CONTAGEM REGRESSIVA E CELEBRAÇÃO ---
         const countDate = new Date('Jan 1, 2026 00:00:00').getTime();
+        
+        function celebrationProtocol() {
+            // Esconde contador e mostra mensagem
+            const countdownEl = document.getElementById('countdown');
+            const msgEl = document.getElementById('ny-message');
+            
+            if(countdownEl.style.display !== 'none') {
+                countdownEl.style.opacity = '0';
+                setTimeout(() => {
+                    countdownEl.style.display = 'none';
+                    msgEl.style.display = 'block';
+                    triggerFireworks();
+                }, 500);
+            }
+        }
+
+        function triggerFireworks() {
+            // Simulação de fogos de artifício usando canvas-confetti
+            var duration = 15 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999999 };
+
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                // Fogos de artifício aleatórios
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
         const countdownInterval = setInterval(() => {
             const now = new Date().getTime();
             const gap = countDate - now;
+
             if (gap < 0) {
                 clearInterval(countdownInterval);
-                document.getElementById('countdown').style.display = 'none';
-                document.getElementById('ny-message').style.display = 'block';
+                celebrationProtocol(); // Chama a função especial
             } else {
                 const second = 1000; const minute = second * 60; const hour = minute * 60; const day = hour * 24;
                 document.getElementById('d').innerText = Math.floor(gap / day);
@@ -806,27 +1024,31 @@
             }
         }, 1000);
 
+        // --- POPULA GALERIA ---
         const galleryContainer = document.getElementById('main-gallery-grid');
         let galleryHTML = '';
-        for (let i = 12; i <= 31; i++) {
+        for (let i = 12; i <= 41; i++) {
             galleryHTML += `<a href="imagens/galeria/alcateia (${i}).jpg" class="gallery-item"><img src="imagens/galeria/alcateia (${i}).jpg"></a>`;
         }
         galleryContainer.innerHTML = galleryHTML;
         new SimpleLightbox('.gallery-grid a', { overlayOpacity: 0.95, animationSpeed: 250 });
 
+        // --- SWIPER ---
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow", grabCursor: false, centeredSlides: true, slidesPerView: "auto",
             loop: true, speed: 800, autoplay: { delay: 1500, disableOnInteraction: false },
             coverflowEffect: { rotate: 0, stretch: 0, depth: 200, modifier: 1, slideShadows: true },
         });
 
+        // --- SLOGAN INTERATIVO ---
         const sloganImg = document.getElementById('anim-slogan');
         sloganImg.addEventListener('click', function() {
             if(this.classList.contains('breaking')) return;
             this.classList.add('breaking');
-            setTimeout(() => { this.classList.remove('breaking'); }, 800);
+            setTimeout(() => { this.classList.remove('breaking'); }, 1500); 
         });
 
+        // --- PARTICULAS DE ENERGIA ---
         const energyContainer = document.getElementById('energy-container');
         function createEnergySpark() {
             const spark = document.createElement('div');
@@ -843,6 +1065,7 @@
         }
         setInterval(createEnergySpark, 150);
 
+        // --- CONFETES (BOTÃO) ---
         function lancarConfetes() {
             var duration = 3 * 1000; var end = Date.now() + duration;
             (function frame() {
@@ -852,6 +1075,7 @@
             }());
         }
 
+        // --- CONTROLES DE MÚSICA ---
         const playIcon = document.getElementById('play-icon');
         const playerUi = document.getElementById('player-ui');
 
@@ -873,6 +1097,7 @@
             bgMusic.volume = newVolume;
         }
 
+        // --- NEVE ---
         const snowContainer = document.getElementById('snow-container');
         for(let i=0; i<30; i++) {
             let flake = document.createElement('div'); flake.className = 'snowflake'; flake.innerHTML = '❄';
