@@ -50,6 +50,12 @@
             padding-bottom: 120px;
         }
 
+        /* SCROLLBAR PERSONALIZADA (PROFISSIONAL) */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #02060d; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d48806; }
+
         body.scroll-active { overflow-x: hidden; overflow-y: auto; }
 
         img { pointer-events: none; -webkit-user-drag: none; }
@@ -295,6 +301,12 @@
         .places-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); }
         .place-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-bg); color: var(--text-light); padding: 12px 20px; border-radius: 30px; font-size: 0.9rem; border: 1px solid var(--accent-color); text-decoration: none; transition: 0.3s; }
         .place-tag:hover { background: var(--accent-color); color: var(--primary-bg); transform: translateY(-3px); }
+        
+        /* ÍCONES E CORES ESPECÍFICAS DE LOCAIS */
+        .place-tag i { width: 20px; text-align: center; margin-right: 5px; }
+        .place-tag.sand-court { border-color: #ffd700; color: #ffd700; } /* Destaque Areia */
+        .place-tag.sand-court:hover { background: #ffd700; color: #000; }
+
         .place-tag.main-place { font-size: 1.1rem; padding: 15px 30px; background: rgba(245, 166, 35, 0.15); border: 2px solid var(--accent-color); font-weight: bold; box-shadow: 0 0 15px rgba(245, 166, 35, 0.2); }
         .place-tag.main-place:hover { background: var(--accent-color); color: var(--primary-bg); box-shadow: 0 0 25px rgba(245, 166, 35, 0.5); }
 
@@ -310,7 +322,7 @@
         @keyframes bounce-ball { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
         /* =========================================
-           VÍDEOS: TV (DESKTOP) E CELULAR (MOBILE) E NOVOS SHORTS
+           VÍDEOS: TV (DESKTOP) E CELULAR (MOBILE)
            ========================================= */
         #video-section { background-color: var(--primary-bg); padding: 80px 0; }
         
@@ -370,6 +382,30 @@
         }
         .play-button-overlay i { color: #050d1a; font-size: 30px; margin-left: 5px; }
         
+        /* Dica de Rotação Celular */
+        .rotate-hint {
+            display: none; /* Escondido por padrão */
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            animation: fadeIn 2s;
+        }
+        .rotate-icon {
+            font-size: 1.5rem;
+            animation: rotate-phone-anim 2s infinite ease-in-out;
+        }
+
+        @keyframes rotate-phone-anim {
+            0%, 10% { transform: rotate(0deg); }
+            40%, 60% { transform: rotate(90deg); }
+            90%, 100% { transform: rotate(0deg); }
+        }
+
         /* MODO CINEMA */
         #cinema-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 99999; flex-direction: column; align-items: center; justify-content: center; }
         #cinema-overlay.active { display: flex; }
@@ -402,7 +438,11 @@
             animation: pulse-energy 1.5s ease-in-out infinite; 
             position: relative; z-index: 10; 
         }
-        
+
+        /* Lógica para quebra de linha do Slogan */
+        .slogan-text-wrapper { display: inline-block; }
+        .slogan-word-energy { display: inline-block; }
+
         @keyframes pulse-energy {
             0%, 100% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px rgba(245, 166, 35, 0.5); }
             50% { opacity: 0.9; transform: scale(1.05); text-shadow: 0 0 20px rgba(245, 166, 35, 0.8), 0 0 30px rgba(245, 166, 35, 0.6); }
@@ -483,6 +523,22 @@
             .milestone-badge { font-size: 0.8rem; padding: 8px 15px; width: 100%; justify-content: center; }
             .map-frame { height: 350px; } .place-tag { width: 100%; justify-content: center; } .main-location-container { width: 100%; }
             .music-player { padding: 8px 15px; width: 95%; max-width: 350px; } .track-title { font-size: 0.8rem; }
+
+            /* Alterações Específicas Mobile */
+            .slogan-text-wrapper {
+                display: block; /* Força quebra de linha */
+                margin-bottom: 5px;
+            }
+            .slogan-word-energy {
+                display: block; /* Fica em linha própria */
+                font-size: 1.8rem; /* Destaca mais a energia no mobile */
+                margin-top: 5px;
+            }
+        }
+        
+        /* Mostra dica de rotação apenas em telas pequenas que estão em pé (Portrait) */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .rotate-hint { display: flex; }
         }
     </style>
 </head>
@@ -628,7 +684,7 @@
             
             <div class="main-location-container">
                 <a href="https://maps.app.goo.gl/NK8pmGF3HMDKzMgm8" target="_blank" class="place-tag main-place">
-                    <i class="fas fa-map-marker-alt"></i> Praça José Antunes Toledo
+                    <i class="fas fa-home"></i> Praça José Antunes Toledo
                 </a>
                 
                 <div class="schedule-box">
@@ -641,7 +697,7 @@
                 </div>
                 
                 <div class="location-highlight" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-home location-icon"></i>
+                    <i class="fas fa-map-marked-alt location-icon"></i>
                     <div>
                         <p>Local fixo dos nossos treinos e encontros nos últimos meses.</p>
                         <span>A CASA DA ALCATEIA AOS SÁBADOS!</span>
@@ -651,19 +707,19 @@
 
             <div class="places-list">
                 <a href="https://maps.app.goo.gl/nx7Gmj32PdGUmFFYA" target="_blank" class="place-tag">
-                    <i class="fas fa-map-marker-alt"></i> Centro Esportivo
+                    <i class="fas fa-dumbbell"></i> Centro Esportivo
                 </a>
-                <a href="https://maps.app.goo.gl/QasxkmfoDBmVLSRF8" target="_blank" class="place-tag">
-                    <i class="fas fa-map-marker-alt"></i> Olympia Park Clube Condomínio
+                <a href="https://maps.app.goo.gl/QasxkmfoDBmVLSRF8" target="_blank" class="place-tag sand-court">
+                    <i class="fas fa-umbrella-beach"></i> Olympia Park Clube Condomínio
                 </a>
                 <a href="https://maps.app.goo.gl/a8DhTtoh2DKwvtgr6" target="_blank" class="place-tag">
-                    <i class="fas fa-map-marker-alt"></i> Praça Maria Magdala da Gama Oliveira
+                    <i class="fas fa-volleyball-ball"></i> Praça Maria Magdala da Gama Oliveira
                 </a>
                 <a href="https://www.google.com/maps?q=Rua+Narciso+Kalili,+165+-+Campo+Grande,+Rio+de+Janeiro+-+RJ,+23045-435,+Brasil&ftid=0x9be6a91365bb0f:0x6fe45b088ce3f871" target="_blank" class="place-tag">
-                    <i class="fas fa-map-marker-alt"></i> Quadra Kids (Comari)
+                    <i class="fas fa-volleyball-ball"></i> Quadra Kids (Comari)
                 </a>
-                 <a href="https://maps.app.goo.gl/CLkDVfDj6y7NzJzU8" target="_blank" class="place-tag">
-                    <i class="fas fa-map-marker-alt"></i> RJ Beach Arena
+                 <a href="https://maps.app.goo.gl/CLkDVfDj6y7NzJzU8" target="_blank" class="place-tag sand-court">
+                    <i class="fas fa-umbrella-beach"></i> RJ Beach Arena
                 </a>
             </div>
         </div>
@@ -725,12 +781,20 @@
                     <div class="monitor-base"></div>
                 </div>
 
-                <div class="phone-mockup mobile-only" id="phoneContainer" style="margin: 0 auto;">
-                    <div class="video-cover" id="cover-mobile" onclick="playVideo('mobile')">
-                        <img src="https://img.youtube.com/vi/nh3Ydq6pTw0/maxresdefault.jpg" alt="Capa Vídeo">
-                        <div class="play-button-overlay"><i class="fas fa-play"></i></div>
+                <div class="mobile-only" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                    
+                    <div class="rotate-hint">
+                        <i class="fas fa-mobile-alt rotate-icon"></i>
+                        <span>Gire para ampliar</span>
                     </div>
-                    <div class="embed-container" id="video-container-mobile"></div>
+
+                    <div class="phone-mockup" id="phoneContainer">
+                        <div class="video-cover" id="cover-mobile" onclick="playVideo('mobile')">
+                            <img src="https://img.youtube.com/vi/nh3Ydq6pTw0/maxresdefault.jpg" alt="Capa Vídeo">
+                            <div class="play-button-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="embed-container" id="video-container-mobile"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -775,8 +839,12 @@
         <div class="container" data-aos="zoom-in" style="position: relative; z-index: 5;">
             <p class="slogan-cta">
                 <i class="fas fa-fingerprint" style="display:block; font-size: 2rem; margin-bottom: 10px;"></i>
-                ⚡ VENHA SENTIR ESSA ENERGIA ⚡<br>
-                <span style="font-size: 0.9rem; font-weight: normal; opacity: 0.8;">Toque na imagem abaixo</span>
+                
+                <span class="slogan-text-wrapper">VENHA SENTIR ESSA</span> 
+                <span class="slogan-word-energy">⚡ ENERGIA ⚡</span>
+                
+                <br>
+                <span style="font-size: 0.9rem; font-weight: normal; opacity: 0.8; display: block; margin-top: 10px;">Toque na imagem abaixo</span>
             </p>
             <img src="imagens/slogan.png" alt="Slogan Alcateia" class="slogan-img interactive-img" id="anim-slogan">
         </div>
@@ -800,10 +868,8 @@
         AOS.init({ duration: 1000, once: true });
 
         // --- GLOBAL: TRATAMENTO DE ERRO DE IMAGEM ROBUSTO ---
-        // Se qualquer imagem der erro, substitui por "imagens/galeria/alcateia.jpg"
         document.addEventListener('error', function(e) {
             if (e.target.tagName.toLowerCase() === 'img') {
-                // Evita loop infinito se a imagem de fallback também falhar
                 if(e.target.dataset.triedFallback === 'true') {
                    console.log("Fallback também falhou para: " + e.target.src);
                    return;
@@ -812,13 +878,13 @@
                 e.target.src = 'imagens/galeria/alcateia.jpg';
                 e.target.alt = 'Imagem indisponível';
             }
-        }, true); // Use capture phase
+        }, true);
 
         // --- FUNÇÃO PARA EMBARALHAR A GALERIA COM EFEITO 3D ---
         let isShuffling = false;
         
         function shuffleGallery() {
-            if(isShuffling) return; // Evita cliques múltiplos
+            if(isShuffling) return; 
             isShuffling = true;
             
             const btn = document.getElementById('shuffleBtn');
@@ -828,58 +894,50 @@
             const container = document.getElementById('main-gallery-grid');
             const items = Array.from(container.children);
             
-            // 1. Efeito de Saída (Flip e Scale Down)
+            // 1. Efeito de Saída
             items.forEach((item, index) => {
-                // Adiciona um pequeno delay aleatório para saída ficar mais orgânica
                 setTimeout(() => {
                     item.classList.add('shuffling-out');
                 }, index * 10);
             });
 
-            // 2. Aguarda a animação de saída terminar antes de embaralhar o DOM
+            // 2. Aguarda a animação de saída terminar
             setTimeout(() => {
-                // Algoritmo Fisher-Yates
                 for (let i = items.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [items[i], items[j]] = [items[j], items[i]];
                 }
 
-                // Esvazia e Reinsere
                 items.forEach(item => {
                     container.appendChild(item);
-                    // Remove classe de saída mas mantem opacidade 0 para entrada
                     item.classList.remove('shuffling-out');
                     item.style.opacity = '0';
                     item.style.transform = 'scale(0.5)';
                 });
 
-                // 3. Efeito de Entrada (Staggered Pop-up)
+                // 3. Efeito de Entrada
                 items.forEach((item, index) => {
                     setTimeout(() => {
                         item.classList.add('shuffling-in');
-                        // Limpa a classe depois da animação para não atrapalhar o hover
                         setTimeout(() => { 
                             item.classList.remove('shuffling-in'); 
                             item.style.opacity = '1'; 
                             item.style.transform = 'none';
                         }, 500);
-                    }, index * 30); // Delay em cascata
+                    }, index * 30);
                 });
                 
-                // Reinstancia o Lightbox
                 new SimpleLightbox('.gallery-grid a', { overlayOpacity: 0.95, animationSpeed: 250 });
                 
-                // Restaura o botão
                 setTimeout(() => {
                     btn.innerHTML = originalBtnText;
                     isShuffling = false;
                 }, items.length * 30 + 500);
 
-            }, 600); // Tempo para todas as imagens saírem
+            }, 600);
         }
 
-
-        // --- FUNÇÃO PARA TOCAR VÍDEOS VERTICAIS NA PRÓPRIA PÁGINA ---
+        // --- FUNÇÃO PARA TOCAR VÍDEOS VERTICAIS ---
         function playVerticalVideo(type) {
             let container, cover, embedCode;
             
@@ -905,7 +963,7 @@
             }
         }
 
-        // --- FUNÇÃO DO VÍDEO PRINCIPAL (MODO TV/CELULAR) ---
+        // --- FUNÇÃO DO VÍDEO PRINCIPAL ---
         function playVideo(device) {
             const videoId = 'nh3Ydq6pTw0';
             let container, cover;
@@ -971,7 +1029,6 @@
         const countDate = new Date('Jan 1, 2026 00:00:00').getTime();
         
         function celebrationProtocol() {
-            // Esconde contador e mostra mensagem
             const countdownEl = document.getElementById('countdown');
             const msgEl = document.getElementById('ny-message');
             
@@ -986,7 +1043,6 @@
         }
 
         function triggerFireworks() {
-            // Simulação de fogos de artifício usando canvas-confetti
             var duration = 15 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999999 };
@@ -1002,7 +1058,6 @@
 
                 var particleCount = 50 * (timeLeft / duration);
                 
-                // Fogos de artifício aleatórios
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
             }, 250);
@@ -1014,7 +1069,7 @@
 
             if (gap < 0) {
                 clearInterval(countdownInterval);
-                celebrationProtocol(); // Chama a função especial
+                celebrationProtocol();
             } else {
                 const second = 1000; const minute = second * 60; const hour = minute * 60; const day = hour * 24;
                 document.getElementById('d').innerText = Math.floor(gap / day);
