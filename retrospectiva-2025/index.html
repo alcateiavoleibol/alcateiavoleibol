@@ -348,11 +348,6 @@
         }
         .vertical-cinema-btn:hover { transform: scale(1.05); text-shadow: 0 0 10px var(--accent-color); }
 
-        /* Layout do Vídeo Principal (Horizontal) */
-        .video-layout { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
-        .video-info { flex: 1; }
-        .video-info h2 { font-size: 2.2rem; color: var(--accent-color); margin-bottom: 15px; }
-        
         /* MOCKUP DO CELULAR (MOBILE) */
         .phone-mockup { 
             flex: 0 0 auto; width: 320px; height: 640px; background: #000; border-radius: 35px; border: 8px solid #1f2a3d; 
@@ -417,8 +412,6 @@
         .btn-exit-cinema { position: absolute; top: 20px; right: 20px; background: rgba(255, 0, 0, 0.8); color: white; padding: 10px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; z-index: 10000; border: 2px solid white; text-transform: uppercase; }
         
         /* CONTROLE DE EXIBIÇÃO */
-        .desktop-only { display: flex; } .mobile-only { display: none; }
-
         #contacts-section { padding: 60px 0; background: #081020; text-align: center; font-size: 25px; border-top: 1px solid #1f2a3d; }
         .contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
         .btn-contact { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 140px; height: 140px; border-radius: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; text-decoration: none; transition: 0.3s; }
@@ -448,7 +441,8 @@
             50% { opacity: 0.9; transform: scale(1.05); text-shadow: 0 0 20px rgba(245, 166, 35, 0.8), 0 0 30px rgba(245, 166, 35, 0.6); }
         }
 
-        .slogan-img { max-width: 660px; width: 90%; height: auto; transition: transform 0.3s; position: relative; z-index: 5; }
+        /* SLOGAN AUMENTADO EM DESKTOP */
+        .slogan-img { max-width: 1000px; width: 95%; height: auto; transition: transform 0.3s; position: relative; z-index: 5; }
         
         @keyframes glitch-skew {
             0% { transform: skew(0deg) translate(0,0); filter: hue-rotate(0deg); }
@@ -482,27 +476,45 @@
         .shine-container:hover .shine-img { transform: scale(1.03); }
 
         /* =========================================
-           RESPONSIVIDADE E CORREÇÕES MOBILE
+           RESPONSIVIDADE E CORREÇÕES MOBILE [CORRIGIDO AQUI]
            ========================================= */
-        @media (min-width: 768px) {
-            .schedule-box { flex-direction: row; gap: 20px; } 
-            .location-highlight { display: flex; align-items: center; gap: 20px; text-align: left; padding: 30px; }
-            .location-icon { margin-bottom: 0; font-size: 2.5rem; padding-right: 20px; border-right: 1px solid rgba(255,255,255,0.1); }
-            .location-highlight p { font-size: 1.2rem; }
-            .location-highlight span { font-size: 1.6rem; }
+        
+        /* 1. Classes Padrão (Desktop/Telas Grandes) */
+        .desktop-only { display: flex !important; width: 100%; justify-content: center; }
+        .mobile-only { display: none !important; }
+        
+        /* Layout flexível para evitar quebra */
+        .video-layout { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            gap: 40px; 
+            flex-wrap: wrap; 
         }
 
-        @media (max-width: 900px) {
+        /* 2. Tablets e Mobile (Abaixo de 992px) */
+        @media (max-width: 992px) {
+            /* Inverte a lógica: Esconde Monitor, Mostra Celular */
+            .desktop-only { display: none !important; }
+            .mobile-only { display: flex !important; flex-direction: column; align-items: center; width: 100%; }
+            
+            /* Centraliza tudo em coluna */
+            .video-layout { 
+                flex-direction: column; 
+                text-align: center; 
+                gap: 50px;
+            }
+            .video-info { width: 100%; }
+            
             .highlight-row, .highlight-row.reverse { flex-direction: column; text-align: center; gap: 30px; }
             .highlight-text h3 { border-left: none; border-bottom: 3px solid var(--accent-color); display: inline-block; padding-bottom: 10px; padding-left: 0; }
-            .vertical-video-frame { width: 100%; max-width: 320px; height: 570px; }
+            .vertical-video-frame { width: 100%; max-width: 320px; height: 570px; margin: 0 auto; }
             .vertical-cinema-btn { margin-top: 15px; margin-bottom: 30px; display: block;}
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
-        @media (max-width: 992px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
-        
+        /* 3. Ajustes Finos para Celulares Pequenos (Abaixo de 768px) */
         @media (max-width: 768px) {
-            .desktop-only { display: none !important; } .mobile-only { display: block !important; }
             h1 { font-size: 2.2rem !important; } h2 { font-size: 1.5rem !important; line-height: 1.3; } h3 { font-size: 1.3rem !important; }
             .intro-logo { width: 220px; } .intro-title { font-size: 1.8rem; } .time-box { min-width: 60px; padding: 8px; } .time-val { font-size: 1.5rem; }
             .hero-text h1 { font-size: 2.2rem; } .hero-text h1 span { font-size: 3rem; position: relative; display: block; } .hero-text p { font-size: 1.1rem; padding: 0 10px; margin-top: 10px; }
@@ -513,30 +525,27 @@
             .uniform-img { width: 150%; max-width: none; margin-left: -25%; }
             .new-uniform-teaser { margin-top: 30px; } .teaser-intro { font-size: 0.75rem; letter-spacing: 2px; } .teaser-headline { font-size: 1.6rem; } .teaser-sub { font-size: 1rem; padding: 0 10px; }
             
-            /* Ajustes Slogan Mobile */
-            .slogan-img { width: 100% !important; max-width: 500px; } /* Aumentado no mobile */
-            .slogan-cta { font-size: 1.5rem; letter-spacing: 1px; padding: 0 20px; line-height: 1.4; margin-bottom: 30px; display: block; }
+            /* SLOGAN AUMENTADO NO MOBILE (Sem limite de largura) */
+            .slogan-img { width: 100% !important; max-width: none; }
 
-            .video-layout { flex-direction: column; } 
+            .slogan-cta { font-size: 1.5rem; letter-spacing: 1px; padding: 0 20px; line-height: 1.4; margin-bottom: 30px; display: block; }
             .phone-mockup { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
             .milestone-badge { font-size: 0.8rem; padding: 8px 15px; width: 100%; justify-content: center; }
             .map-frame { height: 350px; } .place-tag { width: 100%; justify-content: center; } .main-location-container { width: 100%; }
             .music-player { padding: 8px 15px; width: 95%; max-width: 350px; } .track-title { font-size: 0.8rem; }
-
-            /* Alterações Específicas Mobile */
-            .slogan-text-wrapper {
-                display: block; /* Força quebra de linha */
-                margin-bottom: 5px;
-            }
-            .slogan-word-energy {
-                display: block; /* Fica em linha própria */
-                font-size: 1.8rem; /* Destaca mais a energia no mobile */
-                margin-top: 5px;
-            }
+            .slogan-text-wrapper { display: block; margin-bottom: 5px; }
+            .slogan-word-energy { display: block; font-size: 1.8rem; margin-top: 5px; }
         }
         
-        /* Mostra dica de rotação apenas em telas pequenas que estão em pé (Portrait) */
+        @media (min-width: 768px) {
+            .schedule-box { flex-direction: row; gap: 20px; } 
+            .location-highlight { display: flex; align-items: center; gap: 20px; text-align: left; padding: 30px; }
+            .location-icon { margin-bottom: 0; font-size: 2.5rem; padding-right: 20px; border-right: 1px solid rgba(255,255,255,0.1); }
+            .location-highlight p { font-size: 1.2rem; }
+            .location-highlight span { font-size: 1.6rem; }
+        }
+
         @media (max-width: 768px) and (orientation: portrait) {
             .rotate-hint { display: flex; }
         }
@@ -764,6 +773,10 @@
             <div class="video-info" data-aos="fade-up">
                 <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">A TEMPORADA EM VÍDEO</h2>
                 <p style="text-align: center; margin-bottom: 30px;">Reviva cada momento épico de 2025.</p>
+
+                <p class="mobile-only" style="text-align: center; margin-bottom: 25px; color: var(--accent-color); font-weight: 700; font-size: 1.1rem;">
+                    <i class="fas fa-mobile-alt fa-spin" style="margin-right: 5px; animation-duration: 3s;"></i> DICA: Gire seu celular para assistir em tela cheia!
+                </p>
                 
                 <div style="text-align: center; color: var(--accent-color); font-weight:bold; cursor:pointer; margin-bottom: 20px;" onclick="openCinema('main')">
                     <i class="fas fa-expand-arrows-alt"></i> CLIQUE PARA TELA CHEIA
@@ -862,8 +875,6 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <script src="https://www.youtube.com/iframe_api"></script>
-    <script async src="https://www.tiktok.com/embed.js"></script>
-
     <script>
         AOS.init({ duration: 1000, once: true });
 
@@ -871,8 +882,8 @@
         document.addEventListener('error', function(e) {
             if (e.target.tagName.toLowerCase() === 'img') {
                 if(e.target.dataset.triedFallback === 'true') {
-                   console.log("Fallback também falhou para: " + e.target.src);
-                   return;
+                    console.log("Fallback também falhou para: " + e.target.src);
+                    return;
                 }
                 e.target.dataset.triedFallback = 'true';
                 e.target.src = 'imagens/galeria/alcateia.jpg';
@@ -937,7 +948,7 @@
             }, 600);
         }
 
-        // --- FUNÇÃO PARA TOCAR VÍDEOS VERTICAIS ---
+        // --- FUNÇÃO PARA TOCAR VÍDEOS VERTICAIS (CORRIGIDO TIKTOK) ---
         function playVerticalVideo(type) {
             let container, cover, embedCode;
             
@@ -945,21 +956,39 @@
                 container = document.getElementById('video-container-shorts');
                 cover = document.getElementById('cover-shorts');
                 embedCode = `
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/CjBnR4NM9vY?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/CjBnR4NM9vY?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 15px;"></iframe>
                 `;
+                
+                if (container && cover) {
+                    cover.style.display = 'none';
+                    container.innerHTML = embedCode;
+                }
+
             } else if (type === 'tiktok') {
                 container = document.getElementById('video-container-tiktok');
                 cover = document.getElementById('cover-tiktok');
+                
+                // Embed padrão do TikTok
                 embedCode = `
-                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alcateiavoleibol/video/7586806658018381072" data-video-id="7586806658018381072" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@alcateiavoleibol" href="https://www.tiktok.com/@alcateiavoleibol?refer=embed">@alcateiavoleibol</a> </section> </blockquote> 
+                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alcateiavoleibol/video/7586806658018381072" data-video-id="7586806658018381072" style="max-width: 605px;min-width: 325px;"> 
+                        <section> <a target="_blank" title="@alcateiavoleibol" href="https://www.tiktok.com/@alcateiavoleibol?refer=embed">@alcateiavoleibol</a> </section> 
+                    </blockquote>
                 `;
-                if (window.tiktok) window.tiktok.reload();
-            }
 
-            if (container && cover) {
-                cover.style.display = 'none';
-                container.innerHTML = embedCode;
-                 if(type === 'tiktok') setTimeout(() => { if (window.tiktok) window.tiktok.reload(); }, 100);
+                if (container && cover) {
+                    cover.style.display = 'none';
+                    container.innerHTML = embedCode;
+                    
+                    // FORÇA O CARREGAMENTO DO SCRIPT DO TIKTOK DINAMICAMENTE
+                    let oldScript = document.getElementById('tiktok-script-loader');
+                    if(oldScript) oldScript.remove();
+
+                    let script = document.createElement('script');
+                    script.src = "https://www.tiktok.com/embed.js";
+                    script.async = true;
+                    script.id = 'tiktok-script-loader';
+                    document.body.appendChild(script);
+                }
             }
         }
 
@@ -976,10 +1005,10 @@
                 cover = document.getElementById('cover-mobile');
             }
 
-            cover.style.display = 'none';
+            if (cover) cover.style.display = 'none';
 
             container.innerHTML = `
-                <iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0&modestbranding=1&controls=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0&modestbranding=1&controls=1" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             `;
         }
 
@@ -996,17 +1025,29 @@
 
             if (type === 'main') {
                 const videoId = 'nh3Ydq6pTw0';
-                embedCode = `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                embedCode = `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                cinemaContainer.innerHTML = embedCode;
+
             } else if (type === 'shorts') {
-                embedCode = `<iframe src="https://www.youtube.com/embed/CjBnR4NM9vY?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="aspect-ratio: 9/16; max-width: 400px;"></iframe>`;
+                embedCode = `<iframe src="https://www.youtube.com/embed/CjBnR4NM9vY?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="aspect-ratio: 9/16; height: 90vh; max-width: 500px; border-radius: 10px;"></iframe>`;
+                cinemaContainer.innerHTML = embedCode;
+
             } else if (type === 'tiktok') {
                  embedCode = `
                     <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alcateiavoleibol/video/7586806658018381072" data-video-id="7586806658018381072" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@alcateiavoleibol" href="https://www.tiktok.com/@alcateiavoleibol?refer=embed">@alcateiavoleibol</a> </section> </blockquote> 
                 `;
-            }
+                cinemaContainer.innerHTML = embedCode;
 
-            cinemaContainer.innerHTML = embedCode;
-            if(type === 'tiktok') setTimeout(() => { if (window.tiktok) window.tiktok.reload(); }, 100);
+                // Reinjeta script também no cinema
+                let oldScript = document.getElementById('tiktok-script-loader-cinema');
+                if(oldScript) oldScript.remove();
+
+                let script = document.createElement('script');
+                script.src = "https://www.tiktok.com/embed.js";
+                script.async = true;
+                script.id = 'tiktok-script-loader-cinema';
+                document.body.appendChild(script);
+            }
         }
 
         function closeCinema() {
