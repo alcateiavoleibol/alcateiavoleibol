@@ -336,28 +336,35 @@
         .highlight-text p { font-size: 1.1rem; color: var(--text-light); margin-bottom: 15px; }
         .highlight-text span.hashtag { color: var(--text-gray); font-size: 0.9rem; font-weight: bold; }
         
-        /* CORREÇÃO DO LAYOUT VERTICAL (CELULAR) */
+        /* CORREÇÃO DO LAYOUT VERTICAL (CELULAR PROFISSIONAL) */
         .vertical-video-frame {
-            /* Remove altura fixa e usa aspect-ratio de celular */
-            flex: 0 0 320px;
+            position: relative; /* Necessário para o conteúdo absoluto */
             width: 100%;
-            max-width: 320px; 
-            aspect-ratio: 9 / 16; /* Formato Celular Profissional */
-            height: auto;
-            background: #000; border-radius: 20px; border: 4px solid #1f2a3d;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6); overflow: hidden; position: relative;
+            max-width: 300px; /* Largura padrão de um smartphone */
+            aspect-ratio: 9 / 16; /* Força proporção exata de celular */
+            height: auto; /* A altura será calculada pelo aspect-ratio */
+            background: #000; 
+            border: 8px solid #1f2a3d; /* Borda grossa estilo bezel */
+            border-radius: 35px; /* Bordas bem arredondadas */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6); 
+            overflow: hidden; /* Corta o que sobrar */
         }
-        .vertical-video-frame iframe { width: 100%; height: 100%; border: none; margin: 0; }
         
-        /* Força o TikTok a preencher o espaço */
-        .vertical-video-frame blockquote.tiktok-embed { 
-            margin: 0 !important; 
-            border-radius: 15px !important; 
-            width: 100% !important; 
-            height: 100% !important; 
+        /* O SEGREDO: Forçar o conteúdo a preencher o espaço */
+        .vertical-video-frame iframe,
+        .vertical-video-frame blockquote {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            border: none;
             min-width: unset !important;
             max-width: unset !important;
         }
+        
+        .tiktok-embed { margin: 0 !important; border-radius: 0 !important; }
         
         .vertical-cinema-btn {
              display: inline-block; margin-top: 20px; color: var(--accent-color); font-weight: bold; cursor: pointer; transition: 0.3s;
