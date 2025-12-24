@@ -221,7 +221,7 @@ function startJourney() {
 
 // --- CONTAGEM REGRESSIVA E CELEBRAÇÃO ---
 // ATENÇÃO: Defina a data correta aqui. Ex: 'Jan 1, 2026 00:00:00'
-const countDate = new Date('Dec 23, 2025 00:00:00').getTime();
+const countDate = new Date('Jan 1, 2026 00:00:00').getTime();
 
 // CONFIGURAÇÃO DOS SLOGANS DINÂMICOS
 const slogansList = [
