@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 
     <style>
@@ -36,7 +37,7 @@
             position: relative;
         }
 
-        /* Efeito de linhas de TV (Scanlines) */
+        /* Scanlines */
         body::before {
             content: " ";
             display: block;
@@ -48,12 +49,11 @@
             pointer-events: none;
         }
 
-        /* Container Principal */
         .tv-container {
             z-index: 2;
             text-align: center;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px; /* Aumentei um pouco para caber o logo de 450px com folga no PC */
             border: 2px solid #333;
             padding: 40px;
             background: rgba(0,0,0,0.8);
@@ -62,7 +62,9 @@
         }
 
         .logo-season {
-            width: 450px;
+            width: 450px;          /* Tamanho desejado */
+            max-width: 100%;       /* IMPEDE que estoure a tela no celular */
+            height: auto;          /* Mantém a proporção */
             opacity: 0.8;
             filter: grayscale(100%) contrast(1.2);
             margin-bottom: 20px;
@@ -81,6 +83,7 @@
             margin-bottom: 10px;
             letter-spacing: 5px;
             animation: text-flicker 3s infinite;
+            line-height: 1;
         }
 
         h2 {
@@ -89,7 +92,7 @@
             margin-bottom: 40px;
         }
 
-        /* Barra de Loading Travada */
+        /* Loading Bar */
         .loading-wrapper {
             width: 100%;
             background: #222;
@@ -108,7 +111,7 @@
                 #00aaaa 10px,
                 #00aaaa 20px
             );
-            width: 99%; /* Travado em 99% */
+            width: 99%;
             animation: bar-pulse 2s infinite;
         }
 
@@ -119,7 +122,7 @@
             margin-bottom: 30px;
         }
 
-        /* Terminal de Logs */
+        /* Terminal Log */
         .terminal-log {
             text-align: left;
             font-size: 1rem;
@@ -130,7 +133,7 @@
             padding-top: 10px;
         }
         
-        .log-entry { margin-bottom: 5px; }
+        .log-entry { margin-bottom: 5px; word-wrap: break-word; } /* word-wrap evita texto saindo da caixa */
         .log-success { color: var(--terminal-green); }
         .log-error { color: #ff3333; background: rgba(255,0,0,0.1); }
         .log-wait { color: #ffcc00; }
@@ -143,15 +146,38 @@
             animation: blink 1s infinite;
         }
 
+        /* Animações */
         @keyframes text-flicker {
             0% { opacity: 1; } 5% { opacity: 0.1; } 10% { opacity: 1; }
             50% { opacity: 1; } 55% { opacity: 0.8; transform: skewX(10deg); } 60% { opacity: 1; transform: skewX(0deg); }
         }
-
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        
-        @keyframes bar-pulse { 
-            0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } 
+        @keyframes bar-pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+
+        /* === AJUSTES MOBILE === */
+        @media (max-width: 600px) {
+            .tv-container {
+                width: 95%;      /* Ocupa quase toda a largura */
+                padding: 20px;   /* Menos padding interno */
+            }
+            .logo-season {
+                width: 280px;    /* Reduz o logo visualmente no celular */
+            }
+            h1 {
+                font-size: 2rem; /* Fonte menor para não quebrar linha */
+                letter-spacing: 2px;
+            }
+            h2 {
+                font-size: 1rem;
+                margin-bottom: 25px;
+            }
+            .loading-text {
+                font-size: 1rem;
+            }
+            .terminal-log {
+                height: 100px; /* Terminal menor no celular */
+                font-size: 0.9rem;
+            }
         }
 
     </style>
@@ -160,6 +186,7 @@
 
     <div class="tv-container">
         <img src="../imagens/logo-lobo.png" class="logo-season" alt="Logo Alcateia">
+        
         <h1>NO SIGNAL</h1>
         <h2>Directory: /Alcateia/Season_2025/</h2>
 
@@ -200,8 +227,8 @@
 
         function addLog() {
             if (index >= logs.length) {
-                index = 0; // Loopa as mensagens
-                terminal.innerHTML = ''; // Limpa pra começar de novo
+                index = 0;
+                terminal.innerHTML = '';
             }
 
             const entry = logs[index];
@@ -210,17 +237,13 @@
             div.innerText = entry.text;
             
             terminal.appendChild(div);
-            terminal.scrollTop = terminal.scrollHeight; // Rola pra baixo
+            terminal.scrollTop = terminal.scrollHeight;
             
             index++;
-
-            // Tempo aleatório entre mensagens para parecer processamento real
             setTimeout(addLog, Math.random() * 800 + 200);
         }
 
-        // Inicia o loop
         setTimeout(addLog, 1000);
-
     </script>
 </body>
 </html>
