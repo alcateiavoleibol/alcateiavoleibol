@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SIGNAL | Alcateia Voleibol</title>
 
     <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
@@ -25,33 +25,40 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Previne rolagem lateral */
+        }
+
         body {
             background-color: var(--radar-bg);
             color: var(--radar-green);
             font-family: 'Orbitron', sans-serif;
             
-            /* --- ALTERAÇÃO: TRAVAR ROLAGEM DA PÁGINA --- */
-            height: 100vh; /* Altura fixa da tela */
-            overflow: hidden; /* Remove barra de rolagem geral */
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
             
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            position: relative;
             
             background-image: 
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 30px 30px;
-            padding: 10px;
+            /* Padding remove para não somar altura no mobile */
+            padding: 0; 
         }
 
-        /* Efeito de varredura do radar no fundo */
+        /* Radar de fundo FIXED para não causar rolagem */
         body::after {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 50%; left: 50%;
             width: 150vmax; height: 150vmax;
             background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0, 255, 170, 0.1) 60deg, transparent 61deg);
@@ -61,27 +68,32 @@
             pointer-events: none;
         }
 
+        /* --- CORREÇÃO DO CONTAINER --- */
         .container {
             background: rgba(0, 26, 17, 0.9);
             padding: 30px;
             border: 2px solid var(--radar-green);
             box-shadow: 0 0 30px rgba(0, 255, 170, 0.3);
             border-radius: 10px;
-            width: 100%;
-            max-width: 700px;
+            
             position: relative;
-
-            /* --- ALTERAÇÃO: SEGURANÇA PARA TELAS PEQUENAS --- */
-            /* Se o conteúdo for maior que a tela, rola SÓ DENTRO do container */
-            max-height: 98vh; 
+            
+            /* Lógica de Largura Corrigida */
+            width: 90%;        /* Ocupa 90% da tela em celulares (deixa margem) */
+            max-width: 700px;  /* TRAVA em 700px no Desktop */
+            
+            /* Scroll interno apenas se o conteúdo for muito alto */
+            max-height: 90vh; 
             overflow-y: auto;
-            /* Esconde a barra de rolagem do container para ficar bonito */
             scrollbar-width: none; 
+            
+            /* Margem vertical para garantir que não cole no topo/fundo em telas pequenas */
+            margin: 20px auto; 
         }
         .container::-webkit-scrollbar { display: none; }
 
         .target-reticle {
-            position: absolute;
+            position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             width: 300px; height: 300px;
@@ -95,6 +107,7 @@
         .radar-logo {
             width: 450px;
             max-width: 100%;
+            height: auto;
             filter: grayscale(100%) sepia(100%) hue-rotate(120deg) saturate(300%) brightness(1.2) drop-shadow(0 0 10px var(--radar-green));
             margin-bottom: 20px;
         }
@@ -104,6 +117,7 @@
             margin-bottom: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
+            word-wrap: break-word;
         }
         h1 span { color: #fff; animation: blink 1s infinite; }
 
@@ -113,7 +127,6 @@
             opacity: 0.8;
         }
 
-        /* --- SLIDER DE TUNING --- */
         .tuner-section {
             margin: 20px 0;
             padding: 15px;
@@ -146,7 +159,6 @@
             box-shadow: 0 0 10px var(--radar-green);
         }
 
-        /* --- GRID DE BOTÕES DE EMERGÊNCIA --- */
         .sector-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -200,27 +212,26 @@
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        /* === RESPONSIVIDADE MOBILE === */
+        /* === AJUSTES FINAIS PARA CELULAR === */
         @media (max-width: 600px) {
             .container {
-                padding: 20px; /* Reduzi padding para caber mais coisa */
+                width: 95%; /* Um pouco mais largo no celular */
+                padding: 15px;
             }
 
             h1 { font-size: 1.4rem; margin-bottom: 5px; }
             h2 { font-size: 0.8rem; margin-bottom: 10px; }
             
-            /* Logo menor no celular para evitar rolagem */
-            .radar-logo { width: 200px; margin-bottom: 10px; }
-            
+            .radar-logo { width: 180px; margin-bottom: 10px; }
             .tuner-section { margin: 10px 0; padding: 10px; }
 
             .sector-grid {
                 grid-template-columns: 1fr; 
-                gap: 10px; /* Menos espaço entre botões */
+                gap: 10px;
             }
             
             .sector-btn {
-                padding: 10px;
+                padding: 12px;
                 flex-direction: row;
                 justify-content: flex-start;
                 gap: 15px;
