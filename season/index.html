@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEASON LOADING... | Alcateia Voleibol</title>
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #050505;
+            --terminal-green: #33ff00;
+            --static-color: #1a1a1a;
+            --cyan-glitch: #0ff;
+            --magenta-glitch: #f0f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: #ddd;
+            font-family: 'VT323', monospace;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        /* Efeito de linhas de TV (Scanlines) */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 10;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Container Principal */
+        .tv-container {
+            z-index: 2;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            border: 2px solid #333;
+            padding: 40px;
+            background: rgba(0,0,0,0.8);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .logo-season {
+            width: 450px;
+            opacity: 0.8;
+            filter: grayscale(100%) contrast(1.2);
+            margin-bottom: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 2px 2px var(--magenta-glitch), -2px -2px var(--cyan-glitch);
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+            animation: text-flicker 3s infinite;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--cyan-glitch);
+            margin-bottom: 40px;
+        }
+
+        /* Barra de Loading Travada */
+        .loading-wrapper {
+            width: 100%;
+            background: #222;
+            height: 30px;
+            border: 1px solid #555;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .loading-bar {
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--cyan-glitch),
+                var(--cyan-glitch) 10px,
+                #00aaaa 10px,
+                #00aaaa 20px
+            );
+            width: 99%; /* Travado em 99% */
+            animation: bar-pulse 2s infinite;
+        }
+
+        .loading-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        /* Terminal de Logs */
+        .terminal-log {
+            text-align: left;
+            font-size: 1rem;
+            color: #aaa;
+            height: 150px;
+            overflow: hidden;
+            border-top: 1px dashed #444;
+            padding-top: 10px;
+        }
+        
+        .log-entry { margin-bottom: 5px; }
+        .log-success { color: var(--terminal-green); }
+        .log-error { color: #ff3333; background: rgba(255,0,0,0.1); }
+        .log-wait { color: #ffcc00; }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 15px;
+            background: var(--cyan-glitch);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes text-flicker {
+            0% { opacity: 1; } 5% { opacity: 0.1; } 10% { opacity: 1; }
+            50% { opacity: 1; } 55% { opacity: 0.8; transform: skewX(10deg); } 60% { opacity: 1; transform: skewX(0deg); }
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        
+        @keyframes bar-pulse { 
+            0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="tv-container">
+        <img src="../imagens/logo-lobo.png" class="logo-season" alt="Logo Alcateia">
+        <h1>NO SIGNAL</h1>
+        <h2>Directory: /Alcateia/Season_2025/</h2>
+
+        <div class="loading-wrapper">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-text">
+            <span>INSTALLING ASSETS...</span>
+            <span>99%</span>
+        </div>
+
+        <div class="terminal-log" id="terminal">
+            <div class="log-entry">> Mount volume: SEASON_2025... <span class="log-success">OK</span></div>
+            <div class="log-entry">> Loading players... <span class="log-success">OK</span></div>
+            <div class="log-entry">> Checking ball pressure... <span class="log-success">OK</span></div>
+        </div>
+        <span class="cursor"></span>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        
+        const logs = [
+            { text: "> Rendering uniforms...", type: "log-success" },
+            { text: "> Compiling strategies...", type: "log-success" },
+            { text: "> Connecting to servers...", type: "log-wait" },
+            { text: "> ERROR: RECEPTION_SKILL not found.", type: "log-error" },
+            { text: "> Retrying connection...", type: "log-wait" },
+            { text: "> Importing 'Volei_Arte.exe'...", type: "log-success" },
+            { text: "> WARNING: SACE_OVERFLOW detected.", type: "log-wait" },
+            { text: "> Deleting old season files...", type: "log-success" },
+            { text: "> FATAL: Timeout waiting for coach.", type: "log-error" },
+            { text: "> Rebooting logic system...", type: "log-wait" },
+            { text: "> Loading...", type: "log-wait" }
+        ];
+
+        let index = 0;
+
+        function addLog() {
+            if (index >= logs.length) {
+                index = 0; // Loopa as mensagens
+                terminal.innerHTML = ''; // Limpa pra começar de novo
+            }
+
+            const entry = logs[index];
+            const div = document.createElement('div');
+            div.className = `log-entry ${entry.type}`;
+            div.innerText = entry.text;
+            
+            terminal.appendChild(div);
+            terminal.scrollTop = terminal.scrollHeight; // Rola pra baixo
+            
+            index++;
+
+            // Tempo aleatório entre mensagens para parecer processamento real
+            setTimeout(addLog, Math.random() * 800 + 200);
+        }
+
+        // Inicia o loop
+        setTimeout(addLog, 1000);
+
+    </script>
+</body>
+</html>
