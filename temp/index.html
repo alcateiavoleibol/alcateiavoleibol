@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEMP FILE UPLOAD | Alcateia Voleibol</title>
+
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="Imaginista">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
+
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --matrix-green: #00ff41;
+            --dark-bg: #0d0208;
+            --dim-green: #008F11;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: black;
+            color: var(--matrix-green);
+            font-family: 'Share Tech Mono', monospace;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Canvas para o efeito Matrix no fundo */
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 0;
+        }
+
+        /* Container do Conteúdo (Fica por cima do Matrix) */
+        .upload-container {
+            z-index: 10;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.85); /* Fundo escuro semi-transparente */
+            padding: 40px;
+            border: 1px solid var(--matrix-green);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            width: 90%;
+            max-width: 600px;
+            backdrop-filter: blur(5px);
+            border-radius: 5px;
+        }
+
+        .logo-temp {
+            width: 450px; /* Tamanho grande no PC */
+            max-width: 100%; /* Segurança para não estourar */
+            
+            /* Filtro verde para combinar com o tema */
+            filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(300%) brightness(0.9) drop-shadow(0 0 5px var(--matrix-green));
+            margin-bottom: 20px;
+            transition: filter 0.5s;
+        }
+        
+        /* Efeito ao passar o mouse no logo: volta a cor original */
+        .logo-temp:hover {
+            filter: none; 
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        h2 {
+            font-size: 1rem;
+            color: var(--dim-green);
+            margin-bottom: 30px;
+            border-bottom: 1px dashed var(--dim-green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Barra de Progresso "File Transfer" */
+        .progress-box {
+            width: 100%;
+            height: 25px;
+            background: #111;
+            border: 1px solid var(--dim-green);
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--matrix-green),
+                var(--matrix-green) 5px,
+                #000 5px,
+                #000 10px
+            );
+            width: 0%;
+            animation: upload-anim 5s linear infinite;
+        }
+
+        .status-text {
+            font-size: 0.9rem;
+            text-align: left;
+            min-height: 1.2em;
+            color: #fff;
+        }
+        .status-label { color: var(--matrix-green); font-weight: bold; }
+
+        .blink-cursor {
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 5px var(--dim-green); opacity: 1; }
+            50% { text-shadow: 0 0 20px var(--matrix-green); opacity: 0.8; }
+            100% { text-shadow: 0 0 5px var(--dim-green); opacity: 1; }
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        @keyframes upload-anim {
+            0% { width: 0%; }
+            20% { width: 40%; }
+            40% { width: 45%; } /* Travadinha */
+            60% { width: 80%; }
+            90% { width: 95%; }
+            100% { width: 100%; }
+        }
+
+        /* === AJUSTES MOBILE === */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .upload-container { padding: 20px; }
+            
+            /* Ajustei aqui para 280px para não ficar muito pequeno no celular */
+            .logo-temp { width: 280px; } 
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix"></canvas>
+
+    <div class="upload-container">
+        <img src="../imagens/logo-lobo.png" class="logo-temp" alt="Logo Alcateia Temp">
+        
+        <h1>System Update</h1>
+        <h2>/var/www/alcateia/temp/</h2>
+
+        <div class="progress-box">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="status-text">
+            <span class="status-label">STATUS:</span> <span id="file-name">Initializing...</span><span class="blink-cursor">_</span>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURAÇÃO DO EFEITO MATRIX ---
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        // Ajusta o canvas para tela cheia
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize; // Número de colunas
+
+        const drops = [];
+        // Inicializa as posições de queda (todas começando no topo)
+        for(let x = 0; x < columns; x++)
+            drops[x] = 1;
+
+        function drawMatrix() {
+            // Fundo preto com transparência bem leve para criar o rastro
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#0F0"; // Texto Verde
+            ctx.font = fontSize + "px arial";
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                // Envia a gota de volta para o topo randomicamente após cruzar a tela
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+                    drops[i] = 0;
+
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+
+        // Ajusta canvas se redimensionar a tela
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // --- SIMULADOR DE NOMES DE ARQUIVO ---
+        const fileNameEl = document.getElementById('file-name');
+        const fakeFiles = [
+            "uploading index.php...",
+            "compressing assets.zip...",
+            "optimizing logo-lobo.png...",
+            "updating database schema...",
+            "patching security_hole_v2.fix...",
+            "downloading more RAM...", 
+            "compiling season_stats.json...",
+            "generating player_sprites...",
+            "clearing cache...",
+            "syncing with orbital satellite..."
+        ];
+
+        function changeFileName() {
+            const randomFile = fakeFiles[Math.floor(Math.random() * fakeFiles.length)];
+            fileNameEl.innerText = randomFile;
+            
+            // Muda o nome a cada tempo aleatório entre 0.5s e 2s
+            setTimeout(changeFileName, Math.random() * 1500 + 500);
+        }
+        changeFileName();
+
+    </script>
+</body>
+</html>
