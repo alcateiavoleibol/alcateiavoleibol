@@ -3,435 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Retrospectiva 2025 - Alcateia Voleibol</title>
-    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="theme-color" content="#050d1a">
+    <title>SIGNAL | Alcateia Voleibol</title>
 
-    <meta property="og:title" content="Retrospectiva 2025 - Alcateia Voleibol">
-    <meta property="og:description" content="Confira os melhores momentos da nossa temporada! 🐺🏐">
-    <meta property="og:image" content="imagens/banner-topo.jpg">
-    
     <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
     <link rel="shortcut icon" href="/favicon/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="Imaginista">
     <link rel="manifest" href="/favicon/site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="css/main.css">
+    <style>
+        :root {
+            --radar-green: #00ffaa;
+            --radar-bg: #001a11;
+            --grid-color: rgba(0, 255, 170, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Previne rolagem lateral */
+        }
+
+        body {
+            background-color: var(--radar-bg);
+            color: var(--radar-green);
+            font-family: 'Orbitron', sans-serif;
+            
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            /* Padding remove para não somar altura no mobile */
+            padding: 0; 
+        }
+
+        /* Radar de fundo FIXED para não causar rolagem */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 50%; left: 50%;
+            width: 150vmax; height: 150vmax;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0, 255, 170, 0.1) 60deg, transparent 61deg);
+            transform: translate(-50%, -50%);
+            animation: radar-sweep 4s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- CORREÇÃO DO CONTAINER --- */
+        .container {
+            background: rgba(0, 26, 17, 0.9);
+            padding: 30px;
+            border: 2px solid var(--radar-green);
+            box-shadow: 0 0 30px rgba(0, 255, 170, 0.3);
+            border-radius: 10px;
+            
+            position: relative;
+            
+            /* Lógica de Largura Corrigida */
+            width: 90%;        /* Ocupa 90% da tela em celulares (deixa margem) */
+            max-width: 700px;  /* TRAVA em 700px no Desktop */
+            
+            /* Scroll interno apenas se o conteúdo for muito alto */
+            max-height: 90vh; 
+            overflow-y: auto;
+            scrollbar-width: none; 
+            
+            /* Margem vertical para garantir que não cole no topo/fundo em telas pequenas */
+            margin: 20px auto; 
+        }
+        .container::-webkit-scrollbar { display: none; }
+
+        .target-reticle {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; height: 300px;
+            border: 1px dashed var(--radar-green);
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .radar-logo {
+            width: 450px;
+            max-width: 100%;
+            height: auto;
+            filter: grayscale(100%) sepia(100%) hue-rotate(120deg) saturate(300%) brightness(1.2) drop-shadow(0 0 10px var(--radar-green));
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            word-wrap: break-word;
+        }
+        h1 span { color: #fff; animation: blink 1s infinite; }
+
+        h2 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .tuner-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-top: 1px solid var(--grid-color);
+            border-bottom: 1px solid var(--grid-color);
+        }
+        
+        .frequency-display {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 255, 170, 0.2);
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid var(--radar-green);
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px; height: 20px;
+            background: var(--radar-green);
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--radar-green);
+        }
+
+        .sector-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .sector-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            background: rgba(0, 255, 170, 0.05);
+            color: var(--radar-green);
+            border: 1px solid var(--radar-green);
+            padding: 15px;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sector-btn i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .sector-btn:hover {
+            background: var(--radar-green);
+            color: var(--radar-bg);
+            box-shadow: 0 0 20px var(--radar-green);
+            transform: translateY(-2px);
+        }
+        
+        .sector-btn::after {
+            content: 'OFFLINE';
+            position: absolute;
+            top: 2px; right: 2px;
+            font-size: 0.5rem;
+            opacity: 0.6;
+        }
+
+        @keyframes radar-sweep {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* === AJUSTES FINAIS PARA CELULAR === */
+        @media (max-width: 600px) {
+            .container {
+                width: 95%; /* Um pouco mais largo no celular */
+                padding: 15px;
+            }
+
+            h1 { font-size: 1.4rem; margin-bottom: 5px; }
+            h2 { font-size: 0.8rem; margin-bottom: 10px; }
+            
+            .radar-logo { width: 180px; margin-bottom: 10px; }
+            .tuner-section { margin: 10px 0; padding: 10px; }
+
+            .sector-grid {
+                grid-template-columns: 1fr; 
+                gap: 10px;
+            }
+            
+            .sector-btn {
+                padding: 12px;
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 15px;
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <div id="intro-screen">
-        <div class="intro-content">
-            <img src="imagens/logo-lobo.png" alt="Logo Alcateia" class="intro-logo">
-            <h1 class="intro-title">RETROSPECTIVA 2025</h1>
-            <h2 class="intro-subtitle">© ALCATEIA VOLEIBOL 🏐</h2>
-            <div id="countdown">
-                <div class="time-box"><span class="time-val" id="d">00</span><span class="time-label">Dias</span></div>
-                <div class="time-box"><span class="time-val" id="h">00</span><span class="time-label">Horas</span></div>
-                <div class="time-box"><span class="time-val" id="m">00</span><span class="time-label">Min</span></div>
-                <div class="time-box"><span class="time-val" id="s">00</span><span class="time-label">Seg</span></div>
-            </div>
-            
-            <div id="ny-message">
-                FELIZ ANO NOVO, ALCATEIA VOLEIBOL! ✨2026✨<br>
-                <div style="min-height: 80px; display: flex; align-items: center; justify-content: center;">
-                    <span id="dynamic-slogan" style="font-size: 1.5rem; font-weight: normal; color: #fff; display: block;"></span>
-                </div>
-            </div>
+    <div class="target-reticle"></div>
 
-            <button class="btn-start" onclick="startJourney()">INICIAR JORNADA <i class="fas fa-chevron-right"></i></button>
+    <div class="container">
+        <img src="../v2025/imagens/logo-lobo.png" class="radar-logo" alt="Alcateia Radar">
+
+        <h1>SIGNAL <span>LOST</span> // 404</h1>
+        <h2>Scanning for backup sectors...</h2>
+
+        <div class="tuner-section">
+            <div class="frequency-display" id="freq-val">SEARCHING...</div>
+            <input type="range" min="100" max="999" value="500" id="tunerInput">
         </div>
-    </div>
-
-    <audio id="bg-music" loop><source src="song/alcateia.mp3" type="audio/mp3"></audio>
-
-    <div class="floating-action" id="btn-share" onclick="sharePage()">
-        <i class="fas fa-share-alt"></i>
-    </div>
-    <div class="floating-action" id="btn-top" onclick="scrollToTop()">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <div id="music-player-container">
-        <div class="music-player paused" id="player-ui">
-            <button class="play-btn" onclick="toggleMusic()">
-                <i class="fas fa-play" id="play-icon"></i>
-            </button>
-            <div class="track-wrapper">
-                <span class="track-title">HINO DA ALCATEIA - RETROSPECTIVA 2025 - A FORÇA DA MATILHA    </span>
-            </div>
-            <div class="controls-right">
-                <button class="btn-control" onclick="adjustVolume(-0.1)"><i class="fas fa-volume-down"></i></button>
-                <button class="btn-control" onclick="adjustVolume(0.1)"><i class="fas fa-volume-up"></i></button>
-            </div>
-        </div>
-    </div>
-
-    <div id="cinema-overlay">
-        <div class="btn-exit-cinema" onclick="closeCinema()"><i class="fas fa-times"></i> SAIR DO MODO CINEMA</div>
-        <div class="cinema-video-container" id="cinemaContainer">
-            </div>
-    </div>
-
-    <div id="wallpaper-modal">
-        <button class="btn-close-wp" onclick="closeWallpaperModal()"><i class="fas fa-arrow-left"></i> VOLTAR / FECHAR</button>
-        <img id="wp-modal-target" class="wp-modal-img" src="" alt="Wallpaper Full">
-    </div>
-
-    <header id="navbar">
-        <div class="container header-content">
-            <div class="logo-area">
-                <img src="imagens/logo-lobo.png" alt="Lobo" class="logo-img">
-                <div class="logo-text">ALCATEIA VOLEIBOL <span>2025</span></div>
-            </div>
-            <a href="https://www.alcateiavoleibol.com.br" class="btn-back">INÍCIO</a>
-        </div>
-    </header>
-
-    <section id="hero">
-        <div class="container hero-text" data-aos="zoom-in">
-            <h1>RETROSPECTIVA<br><span>ALCATEIA VOLEIBOL <img src="imagens/bola.png" class="bola-bounce" alt="Bola"></span></h1>
-            <p>Juntos somos mais fortes.</p>
-        </div>
-    </section>
-
-    <section id="highlights">
-        <div class="container" style="text-align: center; margin-bottom: 20px;">
-            <h3 style="color:var(--text-light)">MOMENTOS</h3>
-        </div>
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (1).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (2).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (3).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (4).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (5).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (6).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (7).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (8).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (9).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (10).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (11).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (12).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (13).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (14).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (15).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (16).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (17).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (18).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (19).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (20).jpg"></div>
-                <div class="swiper-slide"><img src="imagens/galeria/slide/alcateia (21).jpg"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="uniform-section">
-        <div class="container" data-aos="fade-up">
-            <h3 style="color: var(--accent-color); margin-bottom: 30px;">NOSSO MANTO</h3>
-            <div class="shine-container">
-                 <img src="imagens/uniforme.png" alt="Uniforme Alcateia" class="uniform-img shine-img">
-            </div>
-
-            <div class="new-uniform-teaser" data-aos="fade-up" data-aos-delay="300">
-                <p class="teaser-intro">O futuro já está sendo forjado</p>
-                <h4 class="teaser-headline">2026: A NOVA ARMADURA DA ALCATEIA</h4>
-                <div class="teaser-divider"></div>
-                <p class="teaser-sub">"Inovação, design e a mesma garra de sempre. Prepare-se para a evolução."</p>
-            </div>
-            </div>
-    </section>
-
-    <section id="tournament">
-        <div class="container" data-aos="zoom-in-up">
-            <h2 style="color: var(--text-light); margin-bottom: 15px;">1° TORNEIO INTERNO DE VÔLEI DE AREIA</h2>
-            <div class="tourn-date">21 DE ABRIL DE 2025</div>
-            <div class="shine-container">
-                <img src="imagens/torneio.jpeg" alt="Torneio de Vôlei" class="tourn-img shine-img">
-            </div>
-            <p class="tourn-desc">Um dia marcado pela competição saudável, superação de limites e união do time. Esse torneio ficou para a história!</p>
-        </div>
-    </section>
-
-    <section id="celebration">
-        <div class="container" data-aos="fade-up">
-            <img src="imagens/2anos.png" alt="2 Anos Alcateia" class="celeb-img">
-            <div class="celeb-text">
-                <h3 style="color: var(--accent-color); margin-bottom: 15px;">🎉🐺 Parabéns, Alcateia Voleibol! 🏐🥳</h3>
-                <p>Mais um ano juntos, com garra, amizade e muitas histórias pra contar! 💙💛<br>
-                🔥 Obrigado a todos que fazem parte da Alcateia! Esse projeto é de cada um de nós. 🐺💪</p>
-                <div class="milestone-badge">
-                    <i class="fas fa-calendar-check"></i>
-                    <span>17 DE AGOSTO • 2 ANOS DE HISTÓRIA</span>
-                </div>
-            </div>
-            <button class="btn-confetti" onclick="lancarConfetes()">COMEMORAR! 🎉</button>
-        </div>
-    </section>
-
-    <section id="galeria">
-        <div class="container">
-            <div style="text-align:center; margin-bottom:40px;" data-aos="fade-up">
-                <h2>NOSSA JORNADA</h2>
-                <p style="color:var(--accent-color)">Clique para ampliar</p>
-                <button class="btn-shuffle" id="shuffleBtn" onclick="shuffleGallery()">
-                    <i class="fas fa-random"></i> EMBARALHAR MEMÓRIAS
-                </button>
-            </div>
-            <div class="gallery-grid" id="main-gallery-grid"></div>
-        </div>
-    </section>
-
-    <section id="map-section">
-        <div class="container" data-aos="fade-up">
-            <h3 style="color: var(--accent-color); margin-bottom: 30px;">ONDE FIZEMOS HISTÓRIA</h3>
-            <iframe class="map-frame" src="https://www.google.com/maps/d/u/3/embed?mid=1ZblUu70GKhVinuoZx_uU8qDnoHA32Uc&ehbc=2E312F" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            
-            <div class="main-location-container">
-                <a href="https://maps.app.goo.gl/NK8pmGF3HMDKzMgm8" target="_blank" class="place-tag main-place">
-                    <i class="fas fa-home"></i><i class="fas fa-volleyball-ball"></i> Praça José Antunes Toledo
-                </a>
-                
-                <div class="schedule-box">
-                    <div class="schedule-time">
-                        <i class="far fa-clock"></i> Todo Sábado | 07h às 12h
-                    </div>
-                    <div class="schedule-badge">
-                        <i class="fas fa-lock"></i> Lista Fechada
-                    </div>
-                </div>
-                
-                <div class="location-highlight" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-map-marked-alt location-icon"></i>
-                    <div>
-                        <p>Local fixo dos nossos treinos e encontros nos últimos meses.</p>
-                        <span>A CASA DA ALCATEIA AOS SÁBADOS!</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="places-list">
-                <a href="https://maps.app.goo.gl/nx7Gmj32PdGUmFFYA" target="_blank" class="place-tag">
-                    <i class="fas fa-dumbbell"></i><i class="fas fa-volleyball-ball"></i> Centro Esportivo
-                </a>
-                <a href="https://maps.app.goo.gl/QasxkmfoDBmVLSRF8" target="_blank" class="place-tag sand-court">
-                    <i class="fas fa-umbrella-beach"></i> Olympia Park Clube Condomínio
-                </a>
-                <a href="https://maps.app.goo.gl/a8DhTtoh2DKwvtgr6" target="_blank" class="place-tag">
-                    <i class="fas fa-volleyball-ball"></i> Praça Maria Magdala da Gama Oliveira
-                </a>
-                <a href="https://www.google.com/maps?q=Rua+Narciso+Kalili,+165+-+Campo+Grande,+Rio+de+Janeiro+-+RJ,+23045-435,+Brasil&ftid=0x9be6a91365bb0f:0x6fe45b088ce3f871" target="_blank" class="place-tag">
-                    <i class="fas fa-volleyball-ball"></i> Quadra Kids (Comari)
-                </a>
-                 <a href="https://maps.app.goo.gl/CLkDVfDj6y7NzJzU8" target="_blank" class="place-tag sand-court">
-                    <i class="fas fa-umbrella-beach"></i> RJ Beach Arena
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="christmas-section">
-        <div id="snow-container"></div>
-        <img src="imagens/bola.png" class="bola-bounce" alt="Bola" style="bottom: 20px;">
-        <div class="container xmas-content">
-            <h2 style="color: #fff; text-shadow: 0 0 10px red;">FELIZ NATAL & UM 2026 DE VITÓRIAS</h2>
-            <img src="imagens/banner-natal.png" alt="Banner Natal" class="xmas-banner" data-aos="zoom-in">
-            <div class="xmas-message" data-aos="fade-up">
-                "✨ Que a magia do Natal renove nossas energias e fortaleça ainda mais nossa união. Em 2026, seguiremos juntos, com força coletiva e determinação, para dominarmos a quadra lado a lado. Somos mais que um time, somos uma família: Alcateia Voleibol!🎄🏐"
-            </div>
-            <div class="xmas-message" data-aos="fade-up">
-                Boas festas, time, em nome de toda a Administração. 📋🖊️
-            </div>
-        </div>
-    </section>
-
-    <section id="video-section">
-        <div class="container highlight-row" data-aos="fade-right">
-            <div class="highlight-text">
-                <h3>A Resenha da Dupla 🐺😂</h3>
-                <p>Hoje é dia de mostrar o que rola nos bastidores e na quadra com a família Alcateia Voleibol! A gente tem orgulho de quem corre junto.</p>
-                <p><strong>Gustavo e MaFe:</strong> Um registro especial dessa dupla que tem cadeira cativa na nossa história. Obrigado por cada grito, pela parceria e por toda a vibração nos jogos. A casa é e sempre será de vocês! ✨</p>
-                <p><span class="hashtag">#AlcateiaVoleibol #Resenha #VoleiBrasil #Humor</span></p>
-                <div class="vertical-cinema-btn" onclick="openCinema('shorts')">
-                    <i class="fas fa-expand"></i> ASSISTIR NO MODO CINEMA
-                </div>
-            </div>
-            <div class="vertical-video-frame">
-                 <div class="video-cover" id="cover-shorts" onclick="playVerticalVideo('shorts')">
-                    <img src="imagens/movie.png" alt="Capa Vídeo Vertical">
-                    <div class="play-button-overlay"><i class="fas fa-play"></i></div>
-                </div>
-                <div class="embed-container" id="video-container-shorts"></div>
-            </div>
-        </div>
-
-        <div class="container video-layout" style="margin-bottom: 100px;">
-            <div class="video-info" data-aos="fade-up">
-                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">A TEMPORADA EM VÍDEO</h2>
-                <p style="text-align: center; margin-bottom: 30px;">Reviva cada momento épico de 2025.</p>
-
-                <p class="mobile-only" style="text-align: center; margin-bottom: 25px; color: var(--accent-color); font-weight: 700; font-size: 1.1rem;">
-                    <i class="fas fa-mobile-alt fa-spin" style="margin-right: 5px; animation-duration: 3s;"></i> DICA: Gire seu celular para assistir em tela cheia!
-                </p>
-                
-                <div style="text-align: center; color: var(--accent-color); font-weight:bold; cursor:pointer; margin-bottom: 20px;" onclick="openCinema('main')">
-                    <i class="fas fa-expand-arrows-alt"></i> CLIQUE PARA TELA CHEIA
-                </div>
-
-                <div class="monitor-wrapper desktop-only" style="margin: 0 auto;">
-                    <div class="monitor-screen">
-                        <div class="video-cover" id="cover-desktop" onclick="playVideo('desktop')">
-                            <img src="https://img.youtube.com/vi/nh3Ydq6pTw0/maxresdefault.jpg" alt="Capa Vídeo">
-                            <div class="play-button-overlay"><i class="fas fa-play"></i></div>
-                        </div>
-                        <div class="embed-container" id="video-container-desktop"></div>
-                    </div>
-                    <div class="monitor-stand"></div>
-                    <div class="monitor-base"></div>
-                </div>
-
-                <div class="mobile-only" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-                    
-                    <div class="rotate-hint">
-                        <i class="fas fa-mobile-alt rotate-icon"></i>
-                        <span>Gire para ampliar</span>
-                    </div>
-
-                    <div class="phone-mockup" id="phoneContainer">
-                        <div class="video-cover" id="cover-mobile" onclick="playVideo('mobile')">
-                            <img src="https://img.youtube.com/vi/nh3Ydq6pTw0/maxresdefault.jpg" alt="Capa Vídeo">
-                            <div class="play-button-overlay"><i class="fas fa-play"></i></div>
-                        </div>
-                        <div class="embed-container" id="video-container-mobile"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container highlight-row reverse" data-aos="fade-left">
-            <div class="highlight-text">
-                <h3>A Energia do Andrey ⚡😁</h3>
-                <p>Ligado no 220v e com a cara de quem tá no melhor lugar do mundo! Se não for pra entrar em quadra com essa animação, o Andrey nem sai de casa.</p>
-                <p>A energia dele contagia o time todo: é sobre jogar sério, mas sem perder a alegria nunca. <strong>O inimigo do mau humor ataca novamente!</strong></p>
-                <p>Que vibe boa ter você na Alcateia, craque! 🐺💙</p>
-                <p><span class="hashtag">#AlcateiaVoleibol #GoodVibes #Alegria #Time</span></p>
-                 <div class="vertical-cinema-btn" onclick="openCinema('tiktok')">
-                    <i class="fas fa-expand"></i> ASSISTIR NO MODO CINEMA
-                </div>
-            </div>
-            
-            <div class="vertical-video-frame" style="border-color: #f5a623;"> <div class="video-cover" id="cover-tiktok" onclick="playVerticalVideo('tiktok')">
-                    <img src="imagens/movie.png" alt="Capa Vídeo TikTok">
-                    <div class="play-button-overlay"><i class="fas fa-play"></i></div>
-                </div>
-                <div id="video-container-tiktok" style="width:100%; height:100%;"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contacts-section">
-        <div class="container" data-aos="fade-up">
-            <h3 style="color: var(--text-light);">FALE CONOSCO</h3>
-            <p style="color: var(--text-gray);">Faça parte ou acompanhe nossas redes</p>
-            <div class="contact-grid">
-                <a href="https://wa.me/5521967248256" target="_blank" class="btn-contact whatsapp"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
-                <a href="https://www.instagram.com/alcateiavoleibol.oficial/" target="_blank" class="btn-contact instagram"><i class="fab fa-instagram"></i><span>Instagram</span></a>
-                <a href="https://www.tiktok.com/@alcateiavoleibol" target="_blank" class="btn-contact tiktok"><i class="fab fa-tiktok"></i><span>TikTok</span></a>
-                <a href="https://alcateiavoleibol.com.br/contato/" target="_blank" class="btn-contact website"><i class="fas fa-envelope-open-text"></i><span>Formulário</span></a>
-            </div>
-        </div>
-    </section>
-
-    <section id="slogan-section">
-        <div id="energy-container" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
         
-        <div class="container" data-aos="zoom-in" style="position: relative; z-index: 5;">
-            <p class="slogan-cta">
-                <i class="fas fa-fingerprint" style="display:block; font-size: 2rem; margin-bottom: 10px;"></i>
-                
-                <span class="slogan-text-wrapper">VENHA SENTIR ESSA</span> 
-                <span class="slogan-word-energy">⚡ ENERGIA ⚡</span>
-                
-                <br>
-                <span style="font-size: 0.9rem; font-weight: normal; opacity: 0.8; display: block; margin-top: 10px;">Toque na imagem abaixo</span>
-            </p>
-            <img src="imagens/slogan.png" alt="Slogan Alcateia" class="slogan-img interactive-img" id="anim-slogan">
-        </div>
-    </section>
+        <p style="font-size: 0.8rem; opacity: 0.7;">AVAILABLE EMERGENCY JUMPS:</p>
 
-    <section id="wallpapers-section">
-        <div class="container" data-aos="fade-up">
-            <h3 style="color: var(--text-light); font-size: 1.5rem; margin-bottom: 10px;">WALLPAPERS EXCLUSIVOS</h3>
-            <p style="color: var(--text-gray); font-size: 0.9rem;">Leve a Alcateia para a sua tela. Clique na imagem para ver ou no botão para baixar.</p>
+        <div class="sector-grid">
             
-            <div class="wallpaper-grid">
-                <div class="wallpaper-card">
-                    <div class="wallpaper-thumb" onclick="openWallpaperModal('imagens/wallpaper/1.jpg')">
-                        <img src="imagens/wallpaper/1.jpg" alt="Wallpaper 1">
-                        <div class="thumb-overlay"><i class="fas fa-expand"></i></div>
-                    </div>
-                    <div onclick="forceDownload('imagens/wallpaper/1.jpg', 'Wallpaper_Alcateia_01.jpg')" class="btn-dl-row">BAIXAR <i class="fas fa-download"></i></div>
-                </div>
+            <a href="../v2025" class="sector-btn">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>SECTOR v2025<br><small>(System Crash)</small></span>
+            </a>
 
-                <div class="wallpaper-card">
-                    <div class="wallpaper-thumb" onclick="openWallpaperModal('imagens/wallpaper/2.jpg')">
-                        <img src="imagens/wallpaper/2.jpg" alt="Wallpaper 2">
-                        <div class="thumb-overlay"><i class="fas fa-expand"></i></div>
-                    </div>
-                    <div onclick="forceDownload('imagens/wallpaper/2.jpg', 'Wallpaper_Alcateia_02.jpg')" class="btn-dl-row">BAIXAR <i class="fas fa-download"></i></div>
-                </div>
+            <a href="../season" class="sector-btn">
+                <i class="fa-solid fa-tv"></i>
+                <span>SECTOR SEASON<br><small>(No Signal)</small></span>
+            </a>
 
-                <div class="wallpaper-card">
-                    <div class="wallpaper-thumb" onclick="openWallpaperModal('imagens/wallpaper/3.jpg')">
-                        <img src="imagens/wallpaper/3.jpg" alt="Wallpaper 3">
-                        <div class="thumb-overlay"><i class="fas fa-expand"></i></div>
-                    </div>
-                    <div onclick="forceDownload('imagens/wallpaper/3.jpg', 'Wallpaper_Alcateia_03.jpg')" class="btn-dl-row">BAIXAR <i class="fas fa-download"></i></div>
-                </div>
+            <a href="../temp" class="sector-btn">
+                <i class="fa-solid fa-microchip"></i>
+                <span>SECTOR TEMP<br><small>(Uploading)</small></span>
+            </a>
 
-                <div class="wallpaper-card">
-                    <div class="wallpaper-thumb" onclick="openWallpaperModal('imagens/wallpaper/4.jpg')">
-                        <img src="imagens/wallpaper/4.jpg" alt="Wallpaper 4">
-                        <div class="thumb-overlay"><i class="fas fa-expand"></i></div>
-                    </div>
-                    <div onclick="forceDownload('imagens/wallpaper/4.jpg', 'Wallpaper_Alcateia_04.jpg')" class="btn-dl-row">BAIXAR <i class="fas fa-download"></i></div>
-                </div>
+            <a href="../retro" class="sector-btn">
+                <i class="fa-brands fa-windows"></i>
+                <span>SECTOR RETRO<br><small>(Legacy OS)</small></span>
+            </a>
 
-                <div class="wallpaper-card">
-                    <div class="wallpaper-thumb" onclick="openWallpaperModal('imagens/wallpaper/5.jpg')">
-                        <img src="imagens/wallpaper/5.jpg" alt="Wallpaper 5">
-                        <div class="thumb-overlay"><i class="fas fa-expand"></i></div>
-                    </div>
-                    <div onclick="forceDownload('imagens/wallpaper/5.jpg', 'Wallpaper_Alcateia_05.jpg')" class="btn-dl-row">BAIXAR <i class="fas fa-download"></i></div>
-                </div>
-            </div>
         </div>
-    </section>
+    </div>
 
-    <footer>
-        <div class="container">
-            <p>© 2023 ALCATEIA VOLEIBOL. <span class="footer-break"></span>Todos os direitos reservados.</p>
-        </div>
-    </footer>
+    <script>
+        const tunerInput = document.getElementById('tunerInput');
+        const freqVal = document.getElementById('freq-val');
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
+        tunerInput.addEventListener('input', function() {
+            const randomDecimal = Math.floor(Math.random() * 99);
+            freqVal.innerText = `TUNING: ${this.value}.${randomDecimal} MHz`;
+        });
+    </script>
 
-    <script src="js/main.js"></script>
 </body>
 </html>
