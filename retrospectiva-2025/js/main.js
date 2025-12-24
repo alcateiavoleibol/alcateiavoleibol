@@ -8,7 +8,7 @@ document.addEventListener('error', function(e) {
             return;
         }
         e.target.dataset.triedFallback = 'true';
-        // Ajuste se necessário para caminho relativo
+        // Ajuste o caminho se necessário (ex: ../imagens/...)
         e.target.src = 'imagens/galeria/alcateia.jpg';
         e.target.alt = 'Imagem indisponível';
     }
@@ -220,6 +220,7 @@ function startJourney() {
 }
 
 // --- CONTAGEM REGRESSIVA E CELEBRAÇÃO ---
+// ATENÇÃO: Defina a data correta aqui. Ex: 'Jan 1, 2026 00:00:00'
 const countDate = new Date('Dec 23, 2025 00:00:00').getTime();
 
 // CONFIGURAÇÃO DOS SLOGANS DINÂMICOS
@@ -229,24 +230,34 @@ const slogansList = [
 ];
 let sloganIndex = 0;
 
+// --- NOVO EFEITO: FADE SUAVE (ELEGANTE E ESTÁVEL) ---
 function rotateSlogans(element) {
+    // 1. Define o primeiro slogan imediatamente e visível
+    element.innerHTML = slogansList[sloganIndex];
+    element.style.opacity = '1';
+
     const updateText = () => {
-        element.classList.remove('text-explosion');
-        element.style.opacity = '0'; 
+        // Passo 1: Fade Out (Sair suavemente) - usa classe auxiliar do CSS
+        element.classList.add('fade-out');
         
+        // Aguarda o tempo do fade-out (800ms, sincronizado com o CSS)
         setTimeout(() => {
-            element.innerHTML = slogansList[sloganIndex];
-            element.classList.add('text-explosion');
+            // Passo 2: Troca o texto enquanto está invisível
             sloganIndex = (sloganIndex + 1) % slogansList.length;
-        }, 200); 
+            element.innerHTML = slogansList[sloganIndex];
+            
+            // Passo 3: Fade In (Entrar suavemente)
+            element.classList.remove('fade-out');
+        }, 800); 
     };
-    updateText();
-    setInterval(updateText, 4000);
+
+    // Troca a cada 4.5 segundos (tempo suficiente para leitura + transição)
+    setInterval(updateText, 4500);
     
-    // Reforço de confetes na troca
+    // Reforço de confetes na troca (opcional, mas legal)
     setInterval(() => {
         confetti({ particleCount: 15, spread: 80, origin: { y: 0.8 } });
-    }, 4000);
+    }, 4500);
 }
 
 function celebrationProtocol() {
@@ -260,7 +271,7 @@ function celebrationProtocol() {
             countdownEl.style.display = 'none';
             msgEl.style.display = 'block';
             loopFireworks(); // Chama função de loop infinito
-            rotateSlogans(dynamicSlogan); 
+            rotateSlogans(dynamicSlogan); // Inicia rotação suave
         }, 500);
     }
 }
