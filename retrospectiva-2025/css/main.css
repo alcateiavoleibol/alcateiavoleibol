@@ -23,16 +23,8 @@ body {
 }
 
 /* --- SELEÇÃO DE TEXTO PERSONALIZADA --- */
-::selection {
-    background: var(--accent-color);
-    color: #050d1a;
-    text-shadow: none;
-}
-::-moz-selection {
-    background: var(--accent-color);
-    color: #050d1a;
-    text-shadow: none;
-}
+::selection { background: var(--accent-color); color: #050d1a; text-shadow: none; }
+::-moz-selection { background: var(--accent-color); color: #050d1a; text-shadow: none; }
 
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 8px; }
@@ -50,7 +42,7 @@ h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 900; text-t
 .container { width: 90%; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
 
 /* =========================================
-   INTRODUÇÃO
+   INTRODUÇÃO (DESKTOP PADRÃO)
    ========================================= */
 #intro-screen {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -77,8 +69,6 @@ h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 900; text-t
     line-height: 1.2; width: 90%; max-width: 800px;
 }
 @keyframes pop-in { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-/* Animação dos Slogans (Desktop) */
 .text-explosion { animation: textBoom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 @keyframes textBoom {
     0% { transform: scale(0.5); opacity: 0; letter-spacing: -5px; filter: blur(10px); }
@@ -86,7 +76,7 @@ h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 900; text-t
     100% { transform: scale(1); opacity: 1; letter-spacing: normal; }
 }
 
-/* Efeito Fade Suave (Usado no Mobile via JS) */
+/* Efeito Fade Suave (JS Mobile) */
 .fade-out { opacity: 0 !important; }
 #dynamic-slogan { transition: opacity 0.8s ease-in-out; }
 
@@ -97,28 +87,15 @@ h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 900; text-t
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
 /* =========================================
-   ELEMENTOS FLUTUANTES (Share & Top)
+   ELEMENTOS FLUTUANTES
    ========================================= */
 .floating-action {
-    position: fixed; right: 20px; z-index: 9990;
-    width: 50px; height: 50px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    font-size: 1.2rem;
+    position: fixed; right: 20px; z-index: 9990; width: 50px; height: 50px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-size: 1.2rem;
 }
-
-#btn-share {
-    bottom: 150px; 
-    background: #25D366; color: white;
-    border: 2px solid #fff;
-}
+#btn-share { bottom: 150px; background: #25D366; color: white; border: 2px solid #fff; }
 #btn-share:hover { transform: scale(1.1); background: #128C7E; }
-
-#btn-top {
-    bottom: 90px;
-    background: var(--accent-color); color: var(--primary-bg);
-    opacity: 0; visibility: hidden; border: 2px solid var(--primary-bg);
-}
+#btn-top { bottom: 90px; background: var(--accent-color); color: var(--primary-bg); opacity: 0; visibility: hidden; border: 2px solid var(--primary-bg); }
 #btn-top.show { opacity: 1; visibility: visible; }
 #btn-top:hover { transform: translateY(-5px); }
 
@@ -126,52 +103,23 @@ h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 900; text-t
    PLAYER DE MÚSICA
    ========================================= */
 #music-player-container {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    z-index: 9999; display: flex; align-items: center; justify-content: center;
-    transition: 0.5s; opacity: 0; visibility: hidden; width: 90%; max-width: 400px;
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: 0.5s; opacity: 0; visibility: hidden; width: 90%; max-width: 400px;
 }
 #music-player-container.visible { opacity: 1; visibility: visible; }
-
-.music-player {
-    background: rgba(5, 13, 26, 0.95); backdrop-filter: blur(15px);
-    border: 1px solid var(--accent-color); padding: 10px 20px; border-radius: 50px;
-    display: flex; align-items: center; justify-content: space-between; gap: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 100%;
-}
-
-.track-wrapper {
-    flex: 1; overflow: hidden; white-space: nowrap; margin: 0 10px;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-.track-title {
-    display: inline-block; padding-left: 100%;
-    animation: marquee 10s linear infinite;
-    font-weight: bold; font-size: 0.9rem; color: var(--accent-color); text-transform: uppercase;
-}
+.music-player { background: rgba(5, 13, 26, 0.95); backdrop-filter: blur(15px); border: 1px solid var(--accent-color); padding: 10px 20px; border-radius: 50px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 100%; }
+.track-wrapper { flex: 1; overflow: hidden; white-space: nowrap; margin: 0 10px; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+.track-title { display: inline-block; padding-left: 100%; animation: marquee 10s linear infinite; font-weight: bold; font-size: 0.9rem; color: var(--accent-color); text-transform: uppercase; }
 @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-
-.play-btn {
-    background: var(--accent-color); border: none; width: 50px; height: 50px;
-    border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 15px rgba(245, 166, 35, 0.4); animation: pulse-btn 2s infinite; flex-shrink: 0;
-}
+.play-btn { background: var(--accent-color); border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(245, 166, 35, 0.4); animation: pulse-btn 2s infinite; flex-shrink: 0; }
 .play-btn i { color: #050d1a !important; font-size: 1.3rem; }
-
 .controls-right { display: flex; align-items: center; gap: 10px; }
-.btn-control {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); 
-    width: 35px; height: 35px; border-radius: 50%; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: 0.3s;
-}
+.btn-control { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
 .btn-control i { color: #ffffff !important; font-size: 0.9rem; }
 .btn-control:hover { background: var(--accent-color); border-color: var(--accent-color); }
 .btn-control:hover i { color: #050d1a !important; }
-
 .music-player.paused .track-title { animation-play-state: paused; opacity: 0.5; }
 .music-player.paused .play-btn { animation: none; background: #333; box-shadow: none;}
 .music-player.paused .play-btn i { color: #888 !important; }
-
 @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(245, 166, 35, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0); } }
 
 /* =========================================
@@ -190,17 +138,8 @@ header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px)
 /* =========================================
    HERO
    ========================================= */
-#hero { 
-    height: 100vh; 
-    display: flex; align-items: center; justify-content: center; text-align: center; font-size: 30px; 
-    position: relative; overflow: hidden; 
-}
-#hero::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle, rgba(10,25,47,0.6) 0%, rgba(5,13,26,1) 100%), url('../imagens/banner-topo.jpg');
-    background-size: cover; background-position: center center; background-repeat: no-repeat; 
-    z-index: 0; animation: hero-scale 20s infinite alternate linear;
-}
+#hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 30px; position: relative; overflow: hidden; }
+#hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(10,25,47,0.6) 0%, rgba(5,13,26,1) 100%), url('../imagens/banner-topo.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; z-index: 0; animation: hero-scale 20s infinite alternate linear; }
 @keyframes hero-scale { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
 #hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 50%, rgba(5, 13, 26, 0.7) 100%); z-index: 1; pointer-events: none; }
 .hero-text { z-index: 2; position: relative; }
@@ -230,15 +169,9 @@ header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px)
 
 #uniform-section { padding: 60px 0; background: var(--secondary-bg); text-align: center; font-size: 30px; }
 .uniform-img { max-width: 850px; width: 100%; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4)); animation: float 3s ease-in-out infinite alternate; display: block; margin: 0 auto; }
-
 .new-uniform-teaser { margin-top: 50px; text-align: center; position: relative; padding: 20px 0; }
 .teaser-intro { color: var(--text-gray); font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; opacity: 0.8; }
-.teaser-headline {
-    font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 15px;
-    background: linear-gradient(90deg, #f5a623, #ff4500, #00e5ff, #f5a623); background-size: 300% 100%;
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    animation: vibrant-flow 4s linear infinite; filter: drop-shadow(0 0 10px rgba(245, 166, 35, 0.3));
-}
+.teaser-headline { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 15px; background: linear-gradient(90deg, #f5a623, #ff4500, #00e5ff, #f5a623); background-size: 300% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: vibrant-flow 4s linear infinite; filter: drop-shadow(0 0 10px rgba(245, 166, 35, 0.3)); }
 @keyframes vibrant-flow { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
 .teaser-divider { height: 4px; width: 60px; background: linear-gradient(90deg, transparent, var(--accent-color), transparent); margin: 0 auto 20px auto; border-radius: 10px; }
 .teaser-sub { color: var(--text-light); font-size: 1.2rem; font-style: italic; max-width: 600px; margin: 0 auto; }
@@ -248,24 +181,14 @@ header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px)
    ========================================= */
 #galeria { padding: 80px 0; background: var(--primary-bg); font-size: 30px;}
 .gallery-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; perspective: 1000px; }
-
-.gallery-item { 
-    aspect-ratio: 1 / 1; overflow: hidden; border-radius: 8px; cursor: pointer; background-color: #0a192f; position: relative;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
-    backface-visibility: hidden; transform-style: preserve-3d;
-}
+.gallery-item { aspect-ratio: 1 / 1; overflow: hidden; border-radius: 8px; cursor: pointer; background-color: #0a192f; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease; backface-visibility: hidden; transform-style: preserve-3d; }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 0.9; display: block; }
 .gallery-item:hover img { transform: scale(1.1); opacity: 1; }
-
 .gallery-item.shuffling-out { transform: scale(0) rotateY(180deg); opacity: 0; }
 .gallery-item.shuffling-in { animation: popInCard 0.5s forwards ease-out; }
 @keyframes popInCard { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-.btn-shuffle {
-    background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);
-    padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 0.9rem;
-    margin-top: 10px; transition: 0.3s; overflow: hidden; position: relative;
-}
+.btn-shuffle { background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 0.9rem; margin-top: 10px; transition: 0.3s; overflow: hidden; position: relative; }
 .btn-shuffle:hover { background: var(--accent-color); color: var(--primary-bg); box-shadow: 0 0 15px rgba(245, 166, 35, 0.4); }
 .btn-shuffle i { margin-right: 5px; transition: transform 0.5s; }
 .btn-shuffle:hover i { transform: rotate(180deg); }
@@ -273,21 +196,14 @@ header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px)
 #map-section { padding: 60px 0; background: var(--secondary-bg); text-align: center; font-size: 30px; }
 .map-frame { width: 100%; height: 480px; border: 0; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); filter: grayscale(0.1) contrast(1.1); }
 .main-location-container { margin: 30px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-
 .schedule-box { display: inline-flex; flex-direction: column; align-items: center; background: rgba(10, 25, 47, 0.8); border: 1px solid var(--accent-color); border-radius: 12px; padding: 15px 25px; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); gap: 10px; }
 .schedule-time { font-size: 1.1rem; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 .schedule-badge { background: var(--christmas-red); color: #fff; font-size: 0.8rem; font-weight: 900; text-transform: uppercase; padding: 4px 12px; border-radius: 4px; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(0,0,0,0.4); }
-
-.location-highlight {
-    background: linear-gradient(90deg, rgba(245, 166, 35, 0.1) 0%, rgba(5, 13, 26, 0.6) 100%);
-    border-left: 4px solid var(--accent-color); padding: 20px 25px; margin-top: 25px;
-    border-radius: 0 10px 10px 0; max-width: 800px; position: relative; text-align: left; transition: transform 0.3s ease;
-}
+.location-highlight { background: linear-gradient(90deg, rgba(245, 166, 35, 0.1) 0%, rgba(5, 13, 26, 0.6) 100%); border-left: 4px solid var(--accent-color); padding: 20px 25px; margin-top: 25px; border-radius: 0 10px 10px 0; max-width: 800px; position: relative; text-align: left; transition: transform 0.3s ease; }
 .location-highlight:hover { transform: translateX(5px); background: linear-gradient(90deg, rgba(245, 166, 35, 0.15) 0%, rgba(5, 13, 26, 0.8) 100%); }
 .location-highlight p { color: #fff; font-size: 1.1rem; font-weight: 400; margin: 0; line-height: 1.6; }
 .location-highlight span { display: block; color: var(--accent-color); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; margin-top: 5px; letter-spacing: 1px; }
 .location-icon { font-size: 2rem; color: var(--accent-color); margin-bottom: 10px; display: block; }
-
 .places-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); }
 .place-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-bg); color: var(--text-light); padding: 12px 20px; border-radius: 30px; font-size: 0.9rem; border: 1px solid var(--accent-color); text-decoration: none; transition: 0.3s; }
 .place-tag:hover { background: var(--accent-color); color: var(--primary-bg); transform: translateY(-3px); }
@@ -316,22 +232,16 @@ header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px)
 .highlight-text h3 { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 20px; text-transform: uppercase; border-left: 5px solid var(--accent-color); padding-left: 15px; }
 .highlight-text p { font-size: 1.1rem; color: var(--text-light); margin-bottom: 15px; }
 .highlight-text span.hashtag { color: var(--text-gray); font-size: 0.9rem; font-weight: bold; }
-
-.vertical-video-frame {
-    position: relative; width: 100%; max-width: 300px; aspect-ratio: 9 / 16; height: auto;
-    background: #000; border: 8px solid #1f2a3d; border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); overflow: hidden;
-}
+.vertical-video-frame { position: relative; width: 100%; max-width: 300px; aspect-ratio: 9 / 16; height: auto; background: #000; border: 8px solid #1f2a3d; border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); overflow: hidden; }
 .vertical-video-frame iframe, .vertical-video-frame blockquote { position: absolute; top: 0; left: 0; width: 100% !important; height: 100% !important; margin: 0 !important; border: none; min-width: unset !important; max-width: unset !important; }
 .tiktok-embed { margin: 0 !important; border-radius: 0 !important; }
 .vertical-cinema-btn { display: inline-block; margin-top: 20px; color: var(--accent-color); font-weight: bold; cursor: pointer; transition: 0.3s; }
 .vertical-cinema-btn:hover { transform: scale(1.05); text-shadow: 0 0 10px var(--accent-color); }
-
 .phone-mockup { flex: 0 0 auto; width: 320px; height: 640px; background: #000; border-radius: 35px; border: 8px solid #1f2a3d; box-shadow: 0 30px 60px rgba(0,0,0,0.6); overflow: hidden; position: relative; }
 .monitor-wrapper { flex: 0 0 auto; width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
 .monitor-screen { width: 100%; aspect-ratio: 16/9; background: #000; border: 12px solid #1f2a3d; border-bottom-width: 25px; border-radius: 5px; position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
 .monitor-stand { width: 140px; height: 40px; background: #1f2a3d; clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%); margin-top: -2px; }
 .monitor-base { width: 240px; height: 10px; background: #1f2a3d; border-radius: 10px; }
-
 .embed-container { position: relative; width: 100%; height: 100%; }
 .embed-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 .video-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; z-index: 20; background: #000; }
@@ -339,7 +249,6 @@ header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px)
 .video-cover:hover img { opacity: 0.6; }
 .play-button-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; background: rgba(245, 166, 35, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(245, 166, 35, 0.5); animation: pulse-btn 2s infinite; }
 .play-button-overlay i { color: #050d1a; font-size: 30px; margin-left: 5px; }
-
 .rotate-hint { display: none; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; color: var(--accent-color); font-size: 0.9rem; font-weight: bold; text-transform: uppercase; animation: fadeIn 2s; }
 .rotate-icon { font-size: 1.5rem; animation: rotate-phone-anim 2s infinite ease-in-out; }
 @keyframes rotate-phone-anim { 0%, 10% { transform: rotate(0deg); } 40%, 60% { transform: rotate(90deg); } 90%, 100% { transform: rotate(0deg); } }
@@ -376,7 +285,7 @@ header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px)
 @keyframes riseUp { 0% { opacity: 0; transform: translateY(0) scale(0); } 20% { opacity: 1; transform: translateY(-20px) scale(1); } 100% { opacity: 0; transform: translateY(-300px) scale(0); } }
 
 /* =========================================
-   ÁREA DE WALLPAPERS (ATUALIZADA)
+   ÁREA DE WALLPAPERS
    ========================================= */
 #wallpapers-section { padding: 60px 0; background: #02060d; text-align: center; border-top: 1px solid rgba(245, 166, 35, 0.1); }
 .wallpaper-grid { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 30px; }
@@ -388,7 +297,6 @@ header.scrolled { background: rgba(5, 13, 26, 0.98); backdrop-filter: blur(10px)
 .thumb-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }
 .thumb-overlay i { font-size: 1.5rem; color: #fff; }
 .wallpaper-thumb:hover .thumb-overlay { opacity: 1; }
-
 .btn-dl-row { display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #fff; text-decoration: none; padding: 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; transition: 0.3s; cursor: pointer;}
 .btn-dl-row:hover { background: var(--accent-color); color: #000; border-color: var(--accent-color); }
 
@@ -445,24 +353,24 @@ footer { position: relative; z-index: 1; background: #000; padding: 30px 0; text
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: 15px !important; /* Aumentado o gap geral */
+        gap: 15px !important; 
     }
 
-    /* 2. LOGO: AUMENTADO (Pedido 1) */
+    /* 2. LOGO: AUMENTADO PARA 240px */
     .intro-logo {
-        width: 180px !important; /* Aumentado de 130px para 180px */
+        width: 240px !important; 
         margin-bottom: 10px !important;
         filter: drop-shadow(0 0 10px rgba(245, 166, 35, 0.4)) !important;
     }
 
-    /* 3. TÍTULOS */
+    /* 3. TÍTULOS: AUMENTADOS E IMPACTANTES */
     .intro-title {
-        font-size: 1.4rem !important;
-        margin-bottom: 0 !important;
+        font-size: 2.2rem !important; /* Grande e visível */
+        margin-bottom: 5px !important;
         line-height: 1.1 !important;
     }
     .intro-subtitle {
-        font-size: 0.9rem !important;
+        font-size: 1.3rem !important; /* Aumentado */
         margin-bottom: 10px !important;
         opacity: 0.9;
     }
@@ -482,7 +390,7 @@ footer { position: relative; z-index: 1; background: #000; padding: 30px 0; text
 
     /* 5. MENSAGEM DE ANO NOVO */
     #ny-message {
-        font-size: 1.4rem !important;
+        font-size: 1.5rem !important;
         line-height: 1.2 !important;
         margin-bottom: 20px !important;
         width: 100% !important;
@@ -490,27 +398,30 @@ footer { position: relative; z-index: 1; background: #000; padding: 30px 0; text
         display: none;
     }
     
-    /* Slogan Dinâmico - ESPAÇAMENTO (Pedido 2) */
-    #ny-message div { min-height: 80px !important; align-items: flex-start !important; }
+    /* Slogan Dinâmico - COM ESPAÇO E QUEBRA */
+    #ny-message div { min-height: 100px !important; align-items: flex-start !important; }
     #dynamic-slogan {
-        font-size: 1.1rem !important;
+        font-size: 1.2rem !important;
         min-height: 50px !important; 
-        margin-top: 25px !important; /* Aumentado de 5px para 25px para "pular linha" */
-        line-height: 1.3 !important;
-        display: block !important; /* Garante quebra */
+        margin-top: 25px !important; /* Espaço para "pular linha" */
+        line-height: 1.4 !important;
+        display: block !important; 
     }
 
-    /* 6. BOTÃO INICIAR: AUMENTADO (Pedido 3) */
+    /* 6. BOTÃO INICIAR: PARRUDO */
     .btn-start {
-        padding: 15px 40px !important; /* Mais gordinho */
-        font-size: 1.1rem !important; /* Letra maior */
-        width: auto !important;
-        min-width: 240px; /* Mais largo */
-        margin-top: 15px !important; /* Mais espaço acima */
-        background: rgba(245, 166, 35, 0.05) !important;
+        padding: 18px 40px !important; /* Bem gordinho */
+        font-size: 1.2rem !important; /* Letra grande */
+        width: 90% !important;
+        max-width: 320px;
+        margin-top: 20px !important; 
+        background: rgba(245, 166, 35, 0.1) !important;
         border: 2px solid var(--accent-color) !important;
-        box-shadow: 0 0 15px rgba(245, 166, 35, 0.2) !important;
+        box-shadow: 0 0 20px rgba(245, 166, 35, 0.3) !important;
         animation: pulse-btn-mobile 2s infinite !important;
+        display: flex !important; /* Garante visibilidade */
+        justify-content: center !important;
+        align-items: center !important;
     }
 
     @keyframes pulse-btn-mobile {
@@ -519,70 +430,65 @@ footer { position: relative; z-index: 1; background: #000; padding: 30px 0; text
         100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 166, 35, 0); }
     }
 
-    /* --- OUTROS AJUSTES DO SITE NO MOBILE --- */
-    h1 { font-size: 1.8rem !important; } 
-    h2 { font-size: 1.4rem !important; line-height: 1.2; } 
-    h3 { font-size: 1.2rem !important; }
+    /* --- RESTAURAÇÃO DO HERO (PÁGINA PRINCIPAL) --- */
+    .hero-text h1 { font-size: 2.8rem !important; } /* Título da página volta a ser grande */
+    .hero-text h1 span { font-size: 3.5rem !important; } 
+
+    /* --- OUTROS AJUSTES GERAIS --- */
+    h1 { font-size: 2rem !important; } 
+    h2 { font-size: 1.6rem !important; line-height: 1.2; } 
+    h3 { font-size: 1.4rem !important; }
     
-    .hero-text h1 { font-size: 2rem; } 
-    .hero-text h1 span { font-size: 2.8rem; } 
-    .hero-text p { font-size: 1rem; padding: 0 20px; }
+    .hero-text p { font-size: 1.1rem; padding: 0 20px; }
+    #hero .bola-bounce { width: 50px; }
     
-    #hero .bola-bounce { width: 50px; position: relative; bottom: auto; left: auto; display: inline-block; vertical-align: middle; margin-left: 10px; margin-top: -10px; }
-    
-    #tournament h2 { font-size: 1.35rem !important; padding: 0 10px; } 
+    #tournament h2 { font-size: 1.5rem !important; padding: 0 10px; } 
     #tournament { font-size: 16px; } 
-    .tourn-desc { font-size: 1.1rem; padding: 0 15px; }
+    .tourn-desc { font-size: 1.2rem; padding: 0 15px; }
     
-    .celeb-text { padding: 20px 15px; font-size: 0.95rem; line-height: 1.5; } 
-    .celeb-text h3 { font-size: 1.2rem !important; }
+    .celeb-text { padding: 20px 15px; font-size: 1rem; line-height: 1.5; } 
+    .celeb-text h3 { font-size: 1.4rem !important; }
     
-    .xmas-message { font-size: 1rem; padding: 15px; line-height: 1.5; width: 95%; }
+    .xmas-message { font-size: 1.1rem; padding: 15px; width: 95%; }
     
     .uniform-img { width: 150%; max-width: none; margin-left: -25%; }
     .new-uniform-teaser { margin-top: 30px; } 
-    .teaser-intro { font-size: 0.75rem; letter-spacing: 2px; } 
-    .teaser-headline { font-size: 1.6rem; } 
-    .teaser-sub { font-size: 1rem; padding: 0 10px; }
+    .teaser-intro { font-size: 0.8rem; letter-spacing: 2px; } 
+    .teaser-headline { font-size: 1.8rem; } 
+    .teaser-sub { font-size: 1.1rem; padding: 0 10px; }
     
     .slogan-img { width: 100% !important; max-width: none; }
-    .slogan-cta { font-size: 1.5rem; letter-spacing: 1px; padding: 0 20px; line-height: 1.4; margin-bottom: 30px; display: block; }
+    .slogan-cta { font-size: 1.6rem; letter-spacing: 1px; padding: 0 20px; line-height: 1.4; margin-bottom: 30px; display: block; }
     
     .phone-mockup { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
-    
     .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
-    
-    .milestone-badge { font-size: 0.8rem; padding: 8px 15px; width: 100%; justify-content: center; }
-    
+    .milestone-badge { font-size: 0.9rem; padding: 10px 15px; width: 100%; justify-content: center; }
     .map-frame { height: 350px; } 
     .place-tag { width: 100%; justify-content: center; } 
     .main-location-container { width: 100%; }
-    
     .music-player { padding: 8px 15px !important; width: 92% !important; bottom: 15px !important; }
-    .track-title { font-size: 0.75rem !important; }
+    .track-title { font-size: 0.8rem; }
     
     .slogan-text-wrapper { display: block; margin-bottom: 5px; }
-    .slogan-word-energy { display: block; font-size: 1.8rem; margin-top: 5px; }
+    .slogan-word-energy { display: block; font-size: 2rem; margin-top: 5px; }
     
-    /* Wallpapers: 2 por linha */
     .wallpaper-grid { gap: 10px !important; }
     .wallpaper-card { width: 48% !important; margin-bottom: 10px; }
     .wallpaper-thumb { height: auto !important; aspect-ratio: 16/9; }
-    .btn-dl-row { font-size: 0.7rem !important; padding: 6px !important; }
+    .btn-dl-row { font-size: 0.75rem !important; padding: 8px !important; }
     
     .footer-break { display: block; margin-top: 5px; }
-    footer { padding: 20px 0 100px 0 !important; } /* Mais espaço pro player */
+    footer { padding: 20px 0 100px 0 !important; }
     
-    /* Botões flutuantes mais para cima */
     #btn-share { bottom: 140px !important; width: 45px; height: 45px; }
     #btn-top { bottom: 85px !important; width: 45px; height: 45px; }
 }
 
-/* Ajuste Fino para telas MUITO pequenas (iPhone SE, Galaxy Fold fechado) */
+/* Ajuste Fino para telas MUITO pequenas (iPhone SE) */
 @media (max-width: 360px) {
-    .intro-logo { width: 140px !important; } /* Reduz um pouco em telas minúsculas */
-    .intro-title { font-size: 1.2rem !important; }
+    .intro-logo { width: 160px !important; }
+    .intro-title { font-size: 1.8rem !important; }
+    .intro-subtitle { font-size: 1rem !important; }
     #ny-message { font-size: 1.2rem !important; }
-    #dynamic-slogan { margin-top: 15px !important; }
-    .btn-start { padding: 12px 30px !important; font-size: 0.9rem !important; min-width: 200px; }
+    .btn-start { padding: 12px 20px !important; font-size: 1rem !important; }
 }
