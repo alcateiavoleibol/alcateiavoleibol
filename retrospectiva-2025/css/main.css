@@ -428,153 +428,136 @@ footer { position: relative; z-index: 1; background: #000; padding: 30px 0; text
 }
 
 /* =========================================
-   CORREÇÃO DEFINITIVA: MOBILE (Max 768px)
+   CORREÇÃO DEFINITIVA E COMPACTA: MOBILE
    ========================================= */
 
 @media (max-width: 768px) {
     
-    /* 1. CONTAINER INTRO: Ajuste para caber tudo na tela */
+    /* 1. CONTAINER INTRO: Usa DVH para altura real do celular */
     #intro-screen {
-        justify-content: flex-start !important; /* Começa do topo para não cortar */
-        padding-top: 40px !important; /* Espaço seguro no topo */
-        overflow-y: auto !important; /* Permite rolar se a tela for muito pequena */
+        height: 100dvh; /* Dynamic Viewport Height (A mágica para mobile) */
+        min-height: 550px; /* Garante altura mínima */
+        padding: 20px 15px !important;
+        justify-content: center !important; /* Centraliza tudo verticalmente */
+        overflow-y: auto; /* Permite rolar se o celular for muito, muito pequeno */
     }
 
     .intro-content {
         width: 100% !important;
-        padding: 0 15px !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        /* Garante que o conteúdo não estoure */
-        min-height: auto !important; 
+        gap: 10px !important; /* Espaçamento padrão entre elementos */
     }
 
-    /* 2. LOGO: Redução drástica para sobrar espaço */
+    /* 2. LOGO: Menor para sobrar espaço para a mensagem */
     .intro-logo {
-        width: 140px !important; /* Bem menor */
-        margin-bottom: 10px !important;
-        margin-top: 20px !important;
+        width: 130px !important; /* Reduzido de 180px */
+        margin-bottom: 5px !important;
+        filter: drop-shadow(0 0 10px rgba(245, 166, 35, 0.4)) !important;
     }
 
-    /* 3. TÍTULOS: Proporção correta */
+    /* 3. TÍTULOS: Mais compactos */
     .intro-title {
-        font-size: 1.6rem !important;
-        margin-bottom: 5px !important;
+        font-size: 1.4rem !important;
+        margin-bottom: 0 !important;
         line-height: 1.1 !important;
     }
     .intro-subtitle {
         font-size: 0.9rem !important;
-        margin-bottom: 15px !important;
-        letter-spacing: 1px !important;
+        margin-bottom: 10px !important;
+        opacity: 0.9;
     }
 
-    /* 4. CONTADOR: Menor e mais compacto */
+    /* 4. CONTADOR: Caixas menores e alinhadas */
     #countdown {
         margin-bottom: 15px !important;
-        gap: 8px !important;
+        gap: 6px !important;
     }
     .time-box {
-        min-width: 50px !important;
-        padding: 5px !important;
+        min-width: 45px !important; /* Mais compacto */
+        padding: 4px !important;
+        border-radius: 6px !important;
     }
-    .time-val { font-size: 1.1rem !important; }
-    .time-label { font-size: 0.6rem !important; }
+    .time-val { font-size: 1rem !important; }
+    .time-label { font-size: 0.55rem !important; }
 
-    /* 5. MENSAGEM DE ANO NOVO (O GRANDE VILÃO) */
+    /* 5. MENSAGEM DE ANO NOVO (Ajuste Fino) */
     #ny-message {
-        font-size: 1.5rem !important; /* Reduzido de 3rem para 1.5rem */
-        line-height: 1.3 !important;
-        margin-bottom: 20px !important;
+        font-size: 1.3rem !important; /* Tamanho ideal para leitura sem gritar */
+        line-height: 1.2 !important;
+        margin-bottom: 15px !important;
         width: 100% !important;
-        display: none; /* Mantém hidden até o JS ativar */
+        max-width: 350px !important;
+        display: none; /* Mantém hidden até JS ativar */
     }
     
-    /* Slogan Dinâmico dentro da mensagem */
+    /* Slogan Dinâmico (P***ADA) */
     #dynamic-slogan {
-        font-size: 1rem !important;
-        min-height: 50px !important;
+        font-size: 1.1rem !important;
+        min-height: 50px !important; /* Altura fixa para não pular layout */
         margin-top: 5px !important;
+        line-height: 1.3 !important;
     }
 
-    /* 6. BOTÃO INICIAR JORNADA (RESGATE) */
+    /* 6. BOTÃO INICIAR: Fixo e visível */
     .btn-start {
-        display: flex !important; /* Força display flex */
-        align-items: center !important;
-        justify-content: center !important;
-        margin-top: 10px !important;
-        padding: 12px 30px !important;
-        font-size: 1rem !important;
-        width: 90% !important;
-        max-width: 280px !important;
-        background: rgba(245, 166, 35, 0.1) !important; /* Fundo sutil para destaque */
+        padding: 12px 25px !important;
+        font-size: 0.95rem !important;
+        width: auto !important;
+        min-width: 200px;
+        margin-top: 5px !important;
+        background: rgba(245, 166, 35, 0.05) !important;
         border: 2px solid var(--accent-color) !important;
-        color: var(--accent-color) !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        z-index: 999999 !important; /* Garante que fique sobre tudo */
-    }
-    
-    /* Ajuste para ícone do botão */
-    .btn-start i {
-        margin-left: 10px !important;
+        box-shadow: 0 0 15px rgba(245, 166, 35, 0.2) !important;
+        /* Animação para chamar atenção */
+        animation: pulse-btn-mobile 2s infinite !important;
     }
 
-    /* Ajustes Gerais Mobile que faltavam */
-    h1 { font-size: 2.2rem !important; } 
-    h2 { font-size: 1.5rem !important; line-height: 1.3; } 
-    h3 { font-size: 1.3rem !important; }
+    @keyframes pulse-btn-mobile {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.4); }
+        70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(245, 166, 35, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 166, 35, 0); }
+    }
+
+    /* --- OUTROS AJUSTES DO SITE NO MOBILE --- */
     
-    .hero-text h1 { font-size: 2.2rem; } 
-    .hero-text h1 span { font-size: 3rem; position: relative; display: block; } 
-    .hero-text p { font-size: 1.1rem; padding: 0 10px; margin-top: 10px; }
+    /* Títulos das seções */
+    h1 { font-size: 1.8rem !important; } 
+    h2 { font-size: 1.4rem !important; line-height: 1.2; } 
+    h3 { font-size: 1.2rem !important; }
     
-    #hero .bola-bounce { width: 50px; position: relative; bottom: auto; left: auto; display: inline-block; vertical-align: middle; margin-left: 10px; margin-top: -10px; }
+    .hero-text h1 { font-size: 2rem; } 
+    .hero-text h1 span { font-size: 2.8rem; } 
+    .hero-text p { font-size: 1rem; padding: 0 20px; }
     
-    #tournament h2 { font-size: 1.35rem !important; padding: 0 10px; } 
-    #tournament { font-size: 16px; } 
-    .tourn-desc { font-size: 1.1rem; padding: 0 15px; }
+    /* Wallpapers: 2 por linha */
+    .wallpaper-grid { gap: 10px !important; }
+    .wallpaper-card { width: 48% !important; margin-bottom: 10px; }
+    .wallpaper-thumb { height: auto !important; aspect-ratio: 16/9; }
+    .btn-dl-row { font-size: 0.7rem !important; padding: 6px !important; }
+
+    /* Player de Música: Mais compacto */
+    .music-player { 
+        padding: 8px 15px !important; 
+        width: 92% !important; 
+        bottom: 15px !important;
+    }
+    .track-title { font-size: 0.75rem !important; }
     
-    .celeb-text { padding: 20px 15px; font-size: 0.95rem; line-height: 1.5; } 
-    .celeb-text h3 { font-size: 1.2rem !important; }
+    /* Botões flutuantes mais para cima */
+    #btn-share { bottom: 140px !important; width: 45px; height: 45px; }
+    #btn-top { bottom: 85px !important; width: 45px; height: 45px; }
     
-    .xmas-message { font-size: 1rem; padding: 15px; line-height: 1.5; width: 95%; }
-    
-    .uniform-img { width: 150%; max-width: none; margin-left: -25%; }
-    .new-uniform-teaser { margin-top: 30px; } 
-    .teaser-intro { font-size: 0.75rem; letter-spacing: 2px; } 
-    .teaser-headline { font-size: 1.6rem; } 
-    .teaser-sub { font-size: 1rem; padding: 0 10px; }
-    
-    .slogan-img { width: 100% !important; max-width: none; }
-    .slogan-cta { font-size: 1.5rem; letter-spacing: 1px; padding: 0 20px; line-height: 1.4; margin-bottom: 30px; display: block; }
-    
-    .phone-mockup { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
-    
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
-    
-    .milestone-badge { font-size: 0.8rem; padding: 8px 15px; width: 100%; justify-content: center; }
-    
-    .map-frame { height: 350px; } 
-    .place-tag { width: 100%; justify-content: center; } 
-    .main-location-container { width: 100%; }
-    
-    .music-player { padding: 8px 15px; width: 95%; max-width: 350px; } 
-    .track-title { font-size: 0.8rem; }
-    
-    .slogan-text-wrapper { display: block; margin-bottom: 5px; }
-    .slogan-word-energy { display: block; font-size: 1.8rem; margin-top: 5px; }
-    
-    .wallpaper-card { width: 45%; } 
-    .wallpaper-thumb { height: auto; aspect-ratio: 16/9; }
-    
-    .footer-break { display: block; margin-top: 5px; }
+    /* Ajuste Footer */
+    .footer-break { display: block; margin-top: 2px; }
+    footer { padding: 20px 0 100px 0 !important; } /* Mais espaço pro player */
 }
 
-/* Ajuste Fino para telas MUITO pequenas (iPhone SE, Galaxy Fold fechado) */
-@media (max-width: 380px) {
-    .intro-logo { width: 120px !important; }
-    .intro-title { font-size: 1.3rem !important; }
-    #ny-message { font-size: 1.2rem !important; }
+@media (max-width: 360px) {
+    .intro-logo { width: 100px !important; }
+    .intro-title { font-size: 1.2rem !important; }
+    #ny-message { font-size: 1.1rem !important; }
+    .btn-start { padding: 10px 20px !important; font-size: 0.85rem !important; }
 }
