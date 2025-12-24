@@ -427,110 +427,154 @@ footer { position: relative; z-index: 1; background: #000; padding: 30px 0; text
     .gallery-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-@media (max-width: 768px) {
-    h1 { font-size: 2.2rem !important; } h2 { font-size: 1.5rem !important; line-height: 1.3; } h3 { font-size: 1.3rem !important; }
-    .intro-logo { width: 220px; } .intro-title { font-size: 1.8rem; } .time-box { min-width: 60px; padding: 8px; } .time-val { font-size: 1.5rem; }
-    .hero-text h1 { font-size: 2.2rem; } .hero-text h1 span { font-size: 3rem; position: relative; display: block; } .hero-text p { font-size: 1.1rem; padding: 0 10px; margin-top: 10px; }
-    #hero .bola-bounce { width: 50px; position: relative; bottom: auto; left: auto; display: inline-block; vertical-align: middle; margin-left: 10px; margin-top: -10px; }
-    #tournament h2 { font-size: 1.35rem !important; padding: 0 10px; } #tournament { font-size: 16px; } .tourn-desc { font-size: 1.1rem; padding: 0 15px; }
-    .celeb-text { padding: 20px 15px; font-size: 0.95rem; line-height: 1.5; } .celeb-text h3 { font-size: 1.2rem !important; }
-    .xmas-message { font-size: 1rem; padding: 15px; line-height: 1.5; width: 95%; }
-    .uniform-img { width: 150%; max-width: none; margin-left: -25%; }
-    .new-uniform-teaser { margin-top: 30px; } .teaser-intro { font-size: 0.75rem; letter-spacing: 2px; } .teaser-headline { font-size: 1.6rem; } .teaser-sub { font-size: 1rem; padding: 0 10px; }
-    .slogan-img { width: 100% !important; max-width: none; }
-    .slogan-cta { font-size: 1.5rem; letter-spacing: 1px; padding: 0 20px; line-height: 1.4; margin-bottom: 30px; display: block; }
-    .phone-mockup { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
-    .milestone-badge { font-size: 0.8rem; padding: 8px 15px; width: 100%; justify-content: center; }
-    .map-frame { height: 350px; } .place-tag { width: 100%; justify-content: center; } .main-location-container { width: 100%; }
-    .music-player { padding: 8px 15px; width: 95%; max-width: 350px; } .track-title { font-size: 0.8rem; }
-    .slogan-text-wrapper { display: block; margin-bottom: 5px; }
-    .slogan-word-energy { display: block; font-size: 1.8rem; margin-top: 5px; }
-    .wallpaper-card { width: 45%; } .wallpaper-thumb { height: auto; aspect-ratio: 16/9; }
-    .footer-break { display: block; margin-top: 5px; }
-}
-
-@media (min-width: 768px) {
-    .schedule-box { flex-direction: row; gap: 20px; } 
-    .location-highlight { display: flex; align-items: center; gap: 20px; text-align: left; padding: 30px; }
-    .location-icon { margin-bottom: 0; font-size: 2.5rem; padding-right: 20px; border-right: 1px solid rgba(255,255,255,0.1); }
-    .location-highlight p { font-size: 1.2rem; }
-    .location-highlight span { font-size: 1.6rem; }
-}
-@media (max-width: 768px) and (orientation: portrait) { .rotate-hint { display: flex; } }
-
 /* =========================================
-   CORREÇÃO ESPECÍFICA: INTRODUÇÃO MOBILE
+   CORREÇÃO DEFINITIVA: MOBILE (Max 768px)
    ========================================= */
 
 @media (max-width: 768px) {
     
-    /* 1. Ajuste do Container da Intro para evitar "quebras" */
+    /* 1. CONTAINER INTRO: Ajuste para caber tudo na tela */
+    #intro-screen {
+        justify-content: flex-start !important; /* Começa do topo para não cortar */
+        padding-top: 40px !important; /* Espaço seguro no topo */
+        overflow-y: auto !important; /* Permite rolar se a tela for muito pequena */
+    }
+
     .intro-content {
-        width: 95%; /* Garante que use quase toda a largura */
-        padding: 0 10px;
+        width: 100% !important;
+        padding: 0 15px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        /* Garante que o conteúdo não estoure */
+        min-height: auto !important; 
     }
 
-    /* 2. Redução do Logo na Intro */
+    /* 2. LOGO: Redução drástica para sobrar espaço */
     .intro-logo {
-        width: 180px; /* Menor que os 220px anteriores para sobrar espaço */
-        margin-bottom: 15px;
+        width: 140px !important; /* Bem menor */
+        margin-bottom: 10px !important;
+        margin-top: 20px !important;
     }
 
-    /* 3. Títulos da Intro mais proporcionais */
+    /* 3. TÍTULOS: Proporção correta */
     .intro-title {
-        font-size: 1.5rem; /* Reduzido de 2.5rem */
-        margin-bottom: 5px;
+        font-size: 1.6rem !important;
+        margin-bottom: 5px !important;
+        line-height: 1.1 !important;
     }
     .intro-subtitle {
-        font-size: 1rem;
-        margin-bottom: 20px;
+        font-size: 0.9rem !important;
+        margin-bottom: 15px !important;
+        letter-spacing: 1px !important;
     }
 
-    /* 4. Correção Crítica: Mensagem de Ano Novo Gigante */
-    #ny-message {
-        font-size: 1.8rem !important; /* Força redução drástica (era 3rem) */
-        line-height: 1.3;
-        margin-bottom: 20px;
-        width: 100%;
-    }
-
-    /* 5. Ajuste da Frase/Slogan Rotativo (P***ADA) */
-    #dynamic-slogan {
-        font-size: 1.1rem !important; /* Reduzido para caber na tela sem quebrar */
-        min-height: 60px; /* Altura mínima menor para não empurrar o botão */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* 6. Contador (Countdown) mais compacto */
+    /* 4. CONTADOR: Menor e mais compacto */
     #countdown {
-        gap: 8px; /* Menos espaço entre as caixas */
-        margin-bottom: 20px;
+        margin-bottom: 15px !important;
+        gap: 8px !important;
     }
     .time-box {
-        min-width: 55px; /* Caixinhas menores */
-        padding: 5px;
+        min-width: 50px !important;
+        padding: 5px !important;
     }
-    .time-val {
-        font-size: 1.2rem;
+    .time-val { font-size: 1.1rem !important; }
+    .time-label { font-size: 0.6rem !important; }
+
+    /* 5. MENSAGEM DE ANO NOVO (O GRANDE VILÃO) */
+    #ny-message {
+        font-size: 1.5rem !important; /* Reduzido de 3rem para 1.5rem */
+        line-height: 1.3 !important;
+        margin-bottom: 20px !important;
+        width: 100% !important;
+        display: none; /* Mantém hidden até o JS ativar */
     }
-    .time-label {
-        font-size: 0.6rem;
+    
+    /* Slogan Dinâmico dentro da mensagem */
+    #dynamic-slogan {
+        font-size: 1rem !important;
+        min-height: 50px !important;
+        margin-top: 5px !important;
     }
 
-    /* 7. Botão Iniciar Jornada */
+    /* 6. BOTÃO INICIAR JORNADA (RESGATE) */
     .btn-start {
-        padding: 12px 30px;
-        font-size: 1rem;
-        width: 100%; /* Botão largura total no mobile facilita o toque */
-        max-width: 300px;
+        display: flex !important; /* Força display flex */
+        align-items: center !important;
+        justify-content: center !important;
+        margin-top: 10px !important;
+        padding: 12px 30px !important;
+        font-size: 1rem !important;
+        width: 90% !important;
+        max-width: 280px !important;
+        background: rgba(245, 166, 35, 0.1) !important; /* Fundo sutil para destaque */
+        border: 2px solid var(--accent-color) !important;
+        color: var(--accent-color) !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        z-index: 999999 !important; /* Garante que fique sobre tudo */
     }
+    
+    /* Ajuste para ícone do botão */
+    .btn-start i {
+        margin-left: 10px !important;
+    }
+
+    /* Ajustes Gerais Mobile que faltavam */
+    h1 { font-size: 2.2rem !important; } 
+    h2 { font-size: 1.5rem !important; line-height: 1.3; } 
+    h3 { font-size: 1.3rem !important; }
+    
+    .hero-text h1 { font-size: 2.2rem; } 
+    .hero-text h1 span { font-size: 3rem; position: relative; display: block; } 
+    .hero-text p { font-size: 1.1rem; padding: 0 10px; margin-top: 10px; }
+    
+    #hero .bola-bounce { width: 50px; position: relative; bottom: auto; left: auto; display: inline-block; vertical-align: middle; margin-left: 10px; margin-top: -10px; }
+    
+    #tournament h2 { font-size: 1.35rem !important; padding: 0 10px; } 
+    #tournament { font-size: 16px; } 
+    .tourn-desc { font-size: 1.1rem; padding: 0 15px; }
+    
+    .celeb-text { padding: 20px 15px; font-size: 0.95rem; line-height: 1.5; } 
+    .celeb-text h3 { font-size: 1.2rem !important; }
+    
+    .xmas-message { font-size: 1rem; padding: 15px; line-height: 1.5; width: 95%; }
+    
+    .uniform-img { width: 150%; max-width: none; margin-left: -25%; }
+    .new-uniform-teaser { margin-top: 30px; } 
+    .teaser-intro { font-size: 0.75rem; letter-spacing: 2px; } 
+    .teaser-headline { font-size: 1.6rem; } 
+    .teaser-sub { font-size: 1rem; padding: 0 10px; }
+    
+    .slogan-img { width: 100% !important; max-width: none; }
+    .slogan-cta { font-size: 1.5rem; letter-spacing: 1px; padding: 0 20px; line-height: 1.4; margin-bottom: 30px; display: block; }
+    
+    .phone-mockup { width: 100%; max-width: 300px; height: auto; aspect-ratio: 9/16; }
+    
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
+    
+    .milestone-badge { font-size: 0.8rem; padding: 8px 15px; width: 100%; justify-content: center; }
+    
+    .map-frame { height: 350px; } 
+    .place-tag { width: 100%; justify-content: center; } 
+    .main-location-container { width: 100%; }
+    
+    .music-player { padding: 8px 15px; width: 95%; max-width: 350px; } 
+    .track-title { font-size: 0.8rem; }
+    
+    .slogan-text-wrapper { display: block; margin-bottom: 5px; }
+    .slogan-word-energy { display: block; font-size: 1.8rem; margin-top: 5px; }
+    
+    .wallpaper-card { width: 45%; } 
+    .wallpaper-thumb { height: auto; aspect-ratio: 16/9; }
+    
+    .footer-break { display: block; margin-top: 5px; }
 }
 
 /* Ajuste Fino para telas MUITO pequenas (iPhone SE, Galaxy Fold fechado) */
 @media (max-width: 380px) {
-    #ny-message { font-size: 1.5rem !important; }
-    .intro-logo { width: 150px; }
+    .intro-logo { width: 120px !important; }
+    .intro-title { font-size: 1.3rem !important; }
+    #ny-message { font-size: 1.2rem !important; }
 }
