@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOST SIGNAL | Alcateia Radar</title>
+    <title>SIGNAL | Alcateia Voleibol</title>
 
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="Imaginista">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,8 +29,11 @@
             background-color: var(--radar-bg);
             color: var(--radar-green);
             font-family: 'Orbitron', sans-serif;
-            min-height: 100vh; /* Alterado de height fixo para min-height para caber botões no celular */
-            overflow-x: hidden; /* Evita rolagem lateral, mas permite vertical se precisar */
+            
+            /* --- ALTERAÇÃO: TRAVAR ROLAGEM DA PÁGINA --- */
+            height: 100vh; /* Altura fixa da tela */
+            overflow: hidden; /* Remove barra de rolagem geral */
+            
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -35,12 +41,11 @@
             text-align: center;
             position: relative;
             
-            /* Fundo de grade de radar */
             background-image: 
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 30px 30px;
-            padding: 20px; /* Margem de segurança no mobile */
+            padding: 10px;
         }
 
         /* Efeito de varredura do radar no fundo */
@@ -65,9 +70,16 @@
             width: 100%;
             max-width: 700px;
             position: relative;
-        }
 
-        /* Círculo de alvo no centro (decorativo) */
+            /* --- ALTERAÇÃO: SEGURANÇA PARA TELAS PEQUENAS --- */
+            /* Se o conteúdo for maior que a tela, rola SÓ DENTRO do container */
+            max-height: 98vh; 
+            overflow-y: auto;
+            /* Esconde a barra de rolagem do container para ficar bonito */
+            scrollbar-width: none; 
+        }
+        .container::-webkit-scrollbar { display: none; }
+
         .target-reticle {
             position: absolute;
             top: 50%; left: 50%;
@@ -82,8 +94,7 @@
 
         .radar-logo {
             width: 450px;
-            max-width: 100%; /* Responsividade mantida */
-            /* Filtro verde digital */
+            max-width: 100%;
             filter: grayscale(100%) sepia(100%) hue-rotate(120deg) saturate(300%) brightness(1.2) drop-shadow(0 0 10px var(--radar-green));
             margin-bottom: 20px;
         }
@@ -138,7 +149,7 @@
         /* --- GRID DE BOTÕES DE EMERGÊNCIA --- */
         .sector-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 colunas no PC */
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-top: 20px;
         }
@@ -149,18 +160,15 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
-            
             background: rgba(0, 255, 170, 0.05);
             color: var(--radar-green);
             border: 1px solid var(--radar-green);
             padding: 15px;
-            
             font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
             text-decoration: none;
             font-size: 0.9rem;
             letter-spacing: 1px;
-            
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
@@ -178,7 +186,6 @@
             transform: translateY(-2px);
         }
         
-        /* Etiqueta pequena no canto do botão */
         .sector-btn::after {
             content: 'OFFLINE';
             position: absolute;
@@ -187,7 +194,6 @@
             opacity: 0.6;
         }
 
-        /* Animações */
         @keyframes radar-sweep {
             from { transform: translate(-50%, -50%) rotate(0deg); }
             to { transform: translate(-50%, -50%) rotate(360deg); }
@@ -196,24 +202,31 @@
 
         /* === RESPONSIVIDADE MOBILE === */
         @media (max-width: 600px) {
-            h1 { font-size: 1.5rem; }
+            .container {
+                padding: 20px; /* Reduzi padding para caber mais coisa */
+            }
+
+            h1 { font-size: 1.4rem; margin-bottom: 5px; }
+            h2 { font-size: 0.8rem; margin-bottom: 10px; }
             
-            .radar-logo { width: 280px; }
+            /* Logo menor no celular para evitar rolagem */
+            .radar-logo { width: 200px; margin-bottom: 10px; }
             
-            /* No celular, os botões ficam um embaixo do outro (1 coluna) */
+            .tuner-section { margin: 10px 0; padding: 10px; }
+
             .sector-grid {
                 grid-template-columns: 1fr; 
+                gap: 10px; /* Menos espaço entre botões */
             }
             
             .sector-btn {
-                padding: 12px;
-                flex-direction: row; /* Ícone ao lado do texto no celular */
+                padding: 10px;
+                flex-direction: row;
                 justify-content: flex-start;
                 gap: 15px;
                 text-align: left;
             }
         }
-
     </style>
 </head>
 <body>
@@ -259,7 +272,6 @@
     </div>
 
     <script>
-        // Script simples para o slider parecer que está sintonizando
         const tunerInput = document.getElementById('tunerInput');
         const freqVal = document.getElementById('freq-val');
 
