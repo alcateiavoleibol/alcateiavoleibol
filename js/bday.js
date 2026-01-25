@@ -2,7 +2,7 @@ const birthdays = [
 
 // JANEIRO
 
-  { nome: "TESTE JAN 1", data: "2025-01-01", mostrarAno: false },
+  { nome: "PAULA RODRIGUES", data: "0000-01-14", mostrarAno: false },
   { nome: "TESTE JAN 2", data: "2025-01-02", mostrarAno: false },
   { nome: "TESTE JAN 3", data: "2025-01-03", mostrarAno: false },
   
@@ -10,14 +10,14 @@ const birthdays = [
 // FEVEREIRO
   
   { nome: "JONATHA FARIAS", data: "2005-02-25", mostrarAno: false },
-  { nome: "TESTE FEV 1", data: "2025-02-01", mostrarAno: false },
+  { nome: "DAVID SANTOS", data: "0000-02-12", mostrarAno: false },
   { nome: "TESTE FEV 2", data: "2025-02-02", mostrarAno: false },  
 
 
 // MARÇO
   
   { nome: "MAGNO LIMA", data: "2004-03-31", mostrarAno: false },
-  { nome: "TESTE MAR 1", data: "2025-03-01", mostrarAno: false },
+  { nome: "BRYAN RIBEIRO", data: "0000-03-18", mostrarAno: false },
   { nome: "TESTE MAR 2", data: "2025-03-02", mostrarAno: false },    
 
 
@@ -25,8 +25,9 @@ const birthdays = [
 
   { nome: "ANA LUIZA", data: "2003-04-17", mostrarAno: false },
   { nome: "BRUNA LAÍS", data: "0000-04-17", mostrarAno: false },
-  { nome: "TESTE ABR 1", data: "2025-04-01", mostrarAno: false }, 
-
+  { nome: "MONIQUE PAIVA", data: "0000-04-04", mostrarAno: false }, 
+{ nome: "CARLOS HENRIQUE", data:
+"0000-04-12", mostrarAno: false },
 
 // MAIO
   
@@ -39,7 +40,7 @@ const birthdays = [
  
   { nome: "HELIENE CRISTINA", data: "1994-06-23", mostrarAno: false },
   { nome: "GIAN BARZANO", data: "1996-06-30", mostrarAno: false },
-  { nome: "TESTE JUN 1", data: "2025-06-01", mostrarAno: false },  
+  { nome: "GUSTAVO SANTOS", data: "0000-06-06", mostrarAno: false },  
   
   
 // JULHO
@@ -54,6 +55,8 @@ const birthdays = [
   { nome: "DANIEL JESUS", data: "2008-08-08", mostrarAno: false },
   { nome: "ANNA CLARA RENNE", data: "2007-08-15", mostrarAno: false },
   { nome: "ALCATEIA VOLEIBOL", data: "2023-08-17", mostrarAno: true },
+{ nome: "ANA CRISTINA", data: "0000-08-12", mostrarAno: true },
+
 
 
 // SETEMBRO
