@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apoio</title>
+  <link rel="icon" href="../imagens/favicon/favicon.png" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Segoe+UI&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- CONFIGURAÇÕES GERAIS --- */
+    :root {
+      --primary: #bb86fc;
+      --secondary: #03dac6;
+      --discord: #5865F2;
+      --warning: #ffb74d;
+      --bg: #0b0b0b;
+      --glass: rgba(15, 15, 15, 0.85);
+      --glass-light: rgba(255, 255, 255, 0.05);
+      --border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+    
+    h1, h2, h3, .brand-logo, .nav-link, .thank-you-box h3 { font-family: 'Rajdhani', sans-serif; }
+
+    body {
+      margin: 0; padding: 0;
+      background-color: var(--bg);
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    #bg-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1; 
+      background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+    }
+
+    /* --- MENU SUPERIOR (NAVBAR) --- */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 5%;
+        z-index: 100;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        backdrop-filter: blur(5px);
+        animation: slideDown 0.8s ease forwards;
+    }
+
+    .brand-logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 15px var(--primary);
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .brand-logo:hover {
+        color: var(--secondary);
+        text-shadow: 0 0 20px var(--secondary);
+    }
+
+    .nav-items {
+        display: flex;
+        gap: 15px;
+    }
+
+    .nav-link {
+        color: #ccc;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 8px 20px;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        background: rgba(255,255,255,0.05);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .nav-link:hover {
+        background: var(--primary);
+        color: #000;
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(187, 134, 252, 0.5);
+    }
+
+    /* Botão Discord Específico */
+    .btn-discord {
+        border-color: var(--discord);
+        background: rgba(88, 101, 242, 0.1);
+    }
+    .btn-discord:hover {
+        background: var(--discord);
+        border-color: var(--discord);
+        color: #fff;
+        box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+    }
+
+    /* --- CONTAINER DA DOAÇÃO --- */
+    .donate-wrapper {
+        margin-top: 100px; 
+        width: 90%;
+        max-width: 1000px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 20px;
+        animation: fadeUp 1s ease forwards 0.3s;
+        opacity: 0;
+        z-index: 10;
+    }
+
+    /* Colunas (Esquerda e Direita) */
+    .info-col {
+        flex: 1;
+        min-width: 300px;
+        background: var(--glass);
+        border: var(--border);
+        border-left: 4px solid var(--secondary);
+        padding: 40px;
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    .info-col h1 {
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        background: linear-gradient(90deg, #fff, var(--secondary)); 
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .info-col p { font-size: 1.1rem; line-height: 1.6; color: #ccc; margin-bottom: 20px; }
+
+    .perks-list { list-style: none; margin-top: 10px; }
+    .perks-list li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-weight: bold; color: #fff; }
+    .perks-list li::before { content: '⚡'; color: var(--warning); }
+
+    .qr-col {
+        flex: 0 0 350px;
+        background: var(--glass);
+        border: var(--border);
+        border-radius: 12px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        position: relative;
+    }
+
+    .qr-frame {
+        width: 220px;
+        height: 220px;
+        border: 2px solid var(--primary);
+        padding: 10px;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 25px;
+        background: rgba(255,255,255,0.05);
+    }
+    .qr-frame img { width: 100%; height: 100%; border-radius: 5px; object-fit: cover; }
+
+    .scan-line {
+        position: absolute; width: 100%; height: 4px; background: var(--secondary);
+        box-shadow: 0 0 15px var(--secondary); top: 0; left: 0;
+        animation: scan 3s infinite linear; opacity: 0.6;
+    }
+    @keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+
+    .copy-area { width: 100%; }
+    .btn-copy {
+        width: 100%; padding: 15px;
+        background: linear-gradient(45deg, var(--primary), #7c4dff);
+        border: none; border-radius: 50px; color: #fff; font-size: 1.1rem;
+        cursor: pointer; font-family: 'Rajdhani', sans-serif; font-weight: bold;
+        letter-spacing: 1px; text-transform: uppercase; transition: 0.3s;
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        box-shadow: 0 5px 15px rgba(187, 134, 252, 0.4);
+    }
+    .btn-copy:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(187, 134, 252, 0.6); filter: brightness(1.2); }
+    .btn-copy:active { transform: scale(0.98); }
+    .btn-copy.copied { background: var(--secondary); box-shadow: 0 5px 15px rgba(3, 218, 198, 0.4); }
+
+    /* --- RODAPÉ DE AGRADECIMENTO --- */
+    .thank-you-box {
+        width: 90%;
+        max-width: 800px;
+        text-align: center;
+        padding: 30px;
+        margin: 0 auto 50px auto; /* Espaço embaixo */
+        background: var(--glass-light);
+        border-top: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px;
+        position: relative;
+        animation: fadeUp 1s ease forwards 0.6s; /* Delay maior para aparecer por último */
+        opacity: 0;
+    }
+
+    .thank-you-box::before, .thank-you-box::after {
+        content: '❖';
+        color: var(--secondary);
+        font-size: 1.5rem;
+        display: block;
+        margin-bottom: 10px;
+        opacity: 0.7;
+    }
+    .thank-you-box::after { margin-bottom: 0; margin-top: 10px; }
+
+    .thank-you-box h3 {
+        color: #fff;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+    }
+
+    .thank-you-box p {
+        color: #aaa;
+        font-style: italic;
+        font-size: 1rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.5;
+    }
+
+    /* Animações */
+    @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+        .navbar { padding: 0 20px; height: 70px; }
+        .brand-logo { font-size: 1.3rem; }
+        
+        .nav-items { gap: 10px; }
+        .nav-link { font-size: 0.8rem; padding: 6px 12px; }
+        .nav-link span { display: none; } /* Esconde texto "Discord" no mobile se ficar apertado, mantendo icone se tiver */
+
+        .info-col h1 { font-size: 2rem; }
+        .qr-col { flex: 1; width: 100%; }
+        .donate-wrapper { margin-top: 80px; padding-top: 10px; }
+        
+        .thank-you-box { width: 95%; padding: 20px; }
+        .thank-you-box h3 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <nav class="navbar">
+      <a href="../index.html" class="brand-logo">VALHALLA BR</a>
+      
+      <div class="nav-items">
+          <a href="https://discord.gg/xMnAT5JEgw" target="_blank" class="nav-link btn-discord">
+              Discord
+          </a>
+          <a href="../index.html" class="nav-link">
+              Início
+          </a>
+      </div>
+  </nav>
+
+  <div class="donate-wrapper">
+      
+      <div class="info-col">
+          <h1>Mantenha o Legado Vivo</h1>
+          <p>
+              A <strong>VALHALLA BR</strong> é mantida pela paixão e dedicação de seus membros. 
+              Sua contribuição é vital para manter nossa infraestrutura online e garantir a melhor experiência para todos.
+          </p>
+          <p>Todo valor arrecadado é revertido diretamente em:</p>
+          <ul class="perks-list">
+              <li>Manutenção dos Servidores (Host)</li>
+              <li>Desenvolvimento de Novas Funcionalidades</li>
+              <li>Sustentabilidade do Projeto a Longo Prazo</li>
+          </ul>
+      </div>
+
+      <div class="qr-col">
+          <div class="qr-frame">
+              <img src="../imagens/donate/qr-donate.jpg" alt="QR Code Pix" onerror="this.src='https://placehold.co/200x200/000/FFF?text=QR+Image+Error'">
+              <div class="scan-line"></div>
+          </div>
+
+          <div class="copy-area">
+              <input type="hidden" id="pix-key" value="00020126850014br.gov.bcb.pix0136859e123c-8ffd-48d2-8658-876782e7905d0223Valhalla ativo com voce5204000053039865802BR5914Robson Batista6009Sao Paulo62230519daqr1207202146567686304F5AE">
+              
+              <button class="btn-copy" onclick="copyPix()">
+                  <span id="btn-icon">❐</span> 
+                  <span id="btn-text">COPIAR CHAVE PIX</span>
+              </button>
+          </div>
+      </div>
+
+  </div>
+
+  <div class="thank-you-box">
+      <h3>Agradecimento Especial</h3>
+      <p>
+          "Agradecemos imensamente a cada guerreiro que contribui. 
+          Seu apoio não é apenas financeiro, é a mana que mantém nossa magia e nossa comunidade viva. 
+          Juntos, somos invencíveis!"
+      </p>
+      <div style="margin-top: 15px; font-size: 0.9rem; color: #666;">— Staff Valhalla BR</div>
+  </div>
+
+  <script>
+    // --- Lógica de Copiar Pix ---
+    function copyPix() {
+        const key = document.getElementById('pix-key');
+        const btn = document.querySelector('.btn-copy');
+        const btnText = document.getElementById('btn-text');
+        const btnIcon = document.getElementById('btn-icon');
+
+        navigator.clipboard.writeText(key.value).then(() => {
+            btn.classList.add('copied');
+            btnText.innerText = "CHAVE COPIADA!";
+            btnIcon.innerText = "✔";
+            setTimeout(() => {
+                btn.classList.remove('copied');
+                btnText.innerText = "COPIAR CHAVE PIX";
+                btnIcon.innerText = "❐";
+            }, 3000);
+        }).catch(err => {
+            console.error('Erro ao copiar', err);
+            alert("Erro ao copiar. Tente escanear o QR Code.");
+        });
+    }
+
+    // --- Partículas ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particlesArray = [];
+    
+    function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+    resize();
+
+    class Particle {
+      constructor() { this.x=Math.random()*width; this.y=Math.random()*height; this.vx=(Math.random()-0.5)*0.5; this.vy=(Math.random()-0.5)*0.5; this.size=Math.random()*2; }
+      update() { this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>width)this.vx*=-1; if(this.y<0||this.y>height)this.vy*=-1; }
+      draw() { ctx.fillStyle='rgba(187, 134, 252, 0.3)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
+    }
+    function initParticles() { particlesArray = []; for(let i=0; i<60; i++) particlesArray.push(new Particle()); }
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particlesArray.forEach(p => {
+        p.update(); p.draw();
+        particlesArray.forEach(p2 => {
+          let dx=p.x-p2.x, dy=p.y-p2.y, d=Math.sqrt(dx*dx+dy*dy);
+          if(d<100){ ctx.strokeStyle=`rgba(187,134,252,${0.1-d/1000})`; ctx.lineWidth=0.5; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.stroke(); }
+        });
+      });
+      requestAnimationFrame(animate);
+    }
+    initParticles(); animate();
+  </script>
+</body>
+</html>
