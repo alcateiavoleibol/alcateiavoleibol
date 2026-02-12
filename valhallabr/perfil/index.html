@@ -40,7 +40,6 @@
     }
     .hero-banner img { width: 100%; height: 100%; object-fit: contain; object-position: center center; display: block; }
     
-    /* Efeito Scanner */
     .hero-banner::after {
       content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
       background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
@@ -48,9 +47,9 @@
     }
     @keyframes scanLight { 0% { left: -100%; opacity: 0; } 20% { opacity: 1; } 50% { left: 200%; opacity: 0; } 100% { left: 200%; opacity: 0; } }
 
-    /* --- HEADER --- */
+    /* --- HEADER (MENU PRINCIPAL) --- */
     header {
-      position: sticky; top: 0; z-index: 100;
+      position: sticky; top: 0; z-index: 1000; /* Z-index alto para ficar acima de tudo */
       background: var(--glass); backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(187, 134, 252, 0.2);
       padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;
@@ -64,7 +63,7 @@
         -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         margin: 0; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
     }
-        .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
+    .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
     .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
     .cache-info { color: #888; }
     .cache-info span { color: var(--primary); font-weight: bold; }
@@ -178,24 +177,38 @@
     /* --- TABELA OTIMIZADA --- */
     .table-container-center { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 10px; }
 
+    /* AQUI ESTÁ A CORREÇÃO DE SCROLL */
     .table-wrapper {
-        display: inline-block; max-width: 100%; overflow-x: auto;
+        display: block; /* Mudado de inline-block */
+        max-width: 100%;
+        overflow-x: auto; /* Rolagem horizontal */
+        overflow-y: auto; /* Rolagem vertical dentro da tabela */
+        max-height: 70vh; /* Altura máxima da tabela na tela */
+        
         background: var(--surface); border: var(--border);
         border-radius: 12px; backdrop-filter: blur(10px);
         box-shadow: 0 0 30px rgba(0,0,0,0.5);
         scrollbar-width: thin; scrollbar-color: var(--primary) #111;
-        padding-bottom: 5px; /* Espaço pro print */
+        padding-bottom: 5px;
+        position: relative; /* Para o sticky funcionar */
     }
 
     table { border-collapse: collapse; width: auto; margin: 0 auto; }
 
+    /* FIXAÇÃO DO CABEÇALHO DA TABELA (DENTRO DO WRAPPER) */
     thead th {
-        background: rgba(10,10,10,0.95); color: var(--secondary);
+        position: sticky;
+        top: 0;
+        z-index: 50; /* Fica acima das linhas */
+        
+        background: #020202; /* COR DE FUNDO OBRIGATÓRIA PARA NÃO FICAR TRANSPARENTE */
+        color: var(--secondary);
         padding: 15px 12px; text-align: center; font-size: 0.9rem; text-transform: uppercase;
         border-bottom: 2px solid var(--border); cursor: pointer; 
         white-space: nowrap; user-select: none;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     }
-    thead th:hover { color: #fff; text-shadow: 0 0 8px var(--secondary); background: rgba(255,255,255,0.05); }
+    thead th:hover { color: #fff; text-shadow: 0 0 8px var(--secondary); background: #1a1a1a; }
 
     tbody tr { transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
     tbody tr:hover { background: rgba(187, 134, 252, 0.15) !important; }
@@ -216,18 +229,42 @@
         width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
         border: 2px solid var(--primary); box-shadow: 0 0 8px rgba(187, 134, 252, 0.3);
         background: #000; transition: transform 0.3s;
-        pointer-events: none; /* Não atrapalhar o drag */
+        pointer-events: none;
     }
     tbody tr:hover .char-img { transform: scale(1.2); border-color: var(--secondary); }
     .char-name { font-weight: bold; color: #fff; font-size: 0.9rem; }
 
+    /* --- CORES DE RARIDADE E STATUS --- */
+    option { background-color: #0b0b0b; }
+    .rarity-common { color: #aaaaaa !important; }
+    .rarity-rare   { color: #00bfff !important; font-weight: bold; }
+    .rarity-epic   { color: #ffd700 !important; font-weight: bold; }
+    .rarity-legend { color: #d845ff !important; font-weight: bold; }
+    .rarity-meta   { color: #ff007f !important; font-weight: 900; text-shadow: 0 0 8px rgba(255,0,127,0.4); }
+    .rarity-ok     { color: #00ff7f !important; font-weight: bold; text-shadow: 0 0 5px rgba(0,255,127,0.3); }
+
+    /* Cores Específicas de Colares */
+    .colar-fogo    { color: #ff4500 !important; font-weight: bold; }
+    .colar-gelo    { color: #00ffff !important; font-weight: bold; }
+    .colar-trovao  { color: #ffeb3b !important; font-weight: bold; }
+    .colar-sombra  { color: #bf55ec !important; font-weight: bold; }
+    .colar-luz     { color: #fffacd !important; font-weight: bold; }
+    .colar-vento   { color: #98fb98 !important; font-weight: bold; }
+    .colar-amor    { color: #ff69b4 !important; font-weight: bold; }
+
     /* Inputs e Selects na Tabela */
-    select, input {
+    tbody select, tbody input {
         background: rgba(0,0,0,0.4); border: 1px solid #444; color: #fff;
-        padding: 8px; border-radius: 6px; width: 100%; 
+        padding: 8px; border-radius: 6px; 
         text-align: center; font-size: 0.9rem; transition: 0.3s;
-        min-width: 60px; cursor: pointer;
+        width: 100%;
+        max-width: 130px; /* TRAVA PARA NÃO EXPANDIR A TABELA */
+        cursor: pointer;
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
     }
+    
     select {
         appearance: none; -webkit-appearance: none;
         background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23bb86fc%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
@@ -236,14 +273,14 @@
     }
     select:focus, input:focus { border-color: var(--primary); outline: none; background: #000; }
 
-    /* Badges de Poder */
+    /* Badges de Poder - CORES RESTAURADAS */
     .badge-power {
         padding: 5px 10px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; color: #fff;
         display: inline-block; min-width: 50px;
     }
-    .p-MP { background: linear-gradient(135deg, #1e3c72, #2a5298); }
-    .p-AP { background: linear-gradient(135deg, #800000, #ff0000); }
-    .p-AMP { background: linear-gradient(135deg, #4b0082, #9932cc); }
+    .p-MP { background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC); text-shadow: 0 0 5px rgba(0,0,0,0.5); }
+    .p-AP { background: linear-gradient(135deg, #800000, #ff0000); text-shadow: 0 0 5px rgba(0,0,0,0.5); }
+    .p-AMP { background: linear-gradient(135deg, #4b0082, #9932cc); text-shadow: 0 0 5px rgba(0,0,0,0.5); }
 
     /* Footer */
     footer {
@@ -255,7 +292,7 @@
     .sorted-asc::after { content: " ▲"; color: var(--secondary); font-size: 0.7em; }
     .sorted-desc::after { content: " ▼"; color: var(--primary); font-size: 0.7em; }
 
-/* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
+/* --- RESPONSIVIDADE --- */
     @media (max-width: 900px) {
         header { 
             flex-direction: column; 
@@ -263,47 +300,14 @@
             margin-top: 0; 
             padding-bottom: 1rem;
         }
-
-        /* 1. Centraliza o H1, H3 e o bloco todo da marca */
-        .brand { 
-            text-align: center; 
-            align-items: center; /* ESSA LINHA CENTRALIZA O FLEX NO MEIO */
-        }
-
-        /* 2. Centraliza especificamente o Cache e a Hora */
-        .info-panel {
-            align-items: center; /* ESSA LINHA CENTRALIZA OS ITENS INTERNOS */
-        }
-
-        /* Banner Mobile Inteligente */
-        .hero-banner { 
-            height: auto; 
-            aspect-ratio: 4/3; 
-            max-height: 50vh;
-        }
-
-        .main-nav { 
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px;
-            width: 100%;
-        }
-
-        .nav-link {
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        .brand { text-align: center; align-items: center; }
+        .info-panel { align-items: center; }
+        .hero-banner { height: auto; aspect-ratio: 4/3; max-height: 50vh; }
+        .main-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+        .nav-link { justify-content: center; background: rgba(255, 255, 255, 0.05); padding: 12px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.1); }
         .nav-link:last-child:nth-child(odd) { grid-column: span 2; }
-
         .controls { width: 100%; justify-content: center; margin-top: 10px; }
-        
-        /* Ajustes específicos de cada página */
         .account-stats-panel { flex-direction: column; gap: 15px; }
-        .dashboard-grid { grid-template-columns: 1fr; }
-        .grid-container { grid-template-columns: 1fr; padding: 0 15px; }
     }
   </style>
 </head>
@@ -533,7 +537,7 @@
         "Guardiões II": { en: "Guardians II", es: "Guardianes II", ko: "수호자 II", fr: "Gardiens II" },
         "Guardiões III": { en: "Guardians III", es: "Guardianes III", ko: "수호자 III", fr: "Gardiens III" },
 
-        // Necklaces/Anklets
+        // Necklaces/Anklets (Antigos)
         "Amor": { en: "Love", es: "Amor", ko: "사랑", fr: "Amour" },
         "Átropos": { en: "Atropos", es: "Átropos", ko: "아트로포스", fr: "Atropos" },
         "Energia Azul": { en: "Blue Energy", es: "Energía Azul", ko: "푸른 기운", fr: "Énergie Bleue" },
@@ -550,7 +554,14 @@
         "Eternidade": { en: "Eternity", es: "Eternidad", ko: "영원", fr: "Éternité" },
         "Mágica": { en: "Magic", es: "Mágica", ko: "마법", fr: "Magique" },
         "Real": { en: "Royal", es: "Real", ko: "로얄", fr: "Royal" },
-        "Zoro": { en: "Xenia", es: "Zoro", ko: "제니아", fr: "Zoro" }
+        "Zoro": { en: "Xenia", es: "Zoro", ko: "제니아", fr: "Zoro" },
+
+        // NOVAS TORNOZELEIRAS E ITENS
+        "Harmonia":   { en: "Harmony", es: "Armonía", ko: "조화", fr: "Harmonie" },
+        "Consolação": { en: "Consolation", es: "Consuelo", ko: "위로", fr: "Consolation" },
+        "Escuridão":  { en: "Darkness", es: "Oscuridad", ko: "어둠", fr: "Ténèbres" },
+        "Apocalipse": { en: "Apocalypse", es: "Apocalipsis", ko: "종말", fr: "Apocalypse" },
+        "Sagitário":  { en: "Sagittarius", es: "Sagitario", ko: "사수자리", fr: "Sagittaire" }
     };
 
     let currentLang = localStorage.getItem('valhalla_lang') || 'pt';
@@ -689,7 +700,9 @@
     const opcoesBrinco = ['Nenhum','Piupiu','Chamas','Gnosis','Fênix','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
     const opcoesPiercing = ['Nenhum','Piupiu','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
     const opcoesColar = ['Nenhum', 'Amor', 'Átropos', 'Energia Azul', 'Energia Vermelha', 'Fogo', 'Folhas da Vida', 'Gelo', 'Halloween', 'Luz', 'Morte', 'Rosas', 'Trovão', 'Vento'];
-    const opcoesTornozeleira = ['Nenhum', 'Eternidade', 'Mágica', 'Real', 'Zoro'];
+    
+    // ATUALIZADO: Nova Ordem das Tornozeleiras
+    const opcoesTornozeleira = ['Nenhum', 'Mágica', 'Real', 'Sagitário', 'Zoro', 'Eternidade', 'Harmonia', 'Consolação', 'Escuridão', 'Apocalipse'];
 
     const opcoesLevel = Array.from({length:90},(_,i)=>(i+1).toString());
     const opcoesTower = Array.from({length:30},(_,i)=>(i+1).toString());
@@ -738,12 +751,69 @@
         perfil: []
     };
 
-    function criarSelect(opcoes, valorSel){
+    // --- LÓGICA DE RARIDADE E CORES ---
+    function obterClasseRaridade(tipo, nome) {
+        if (nome === "OK") return "rarity-ok";
+        if (nome === "Nenhum") return "rarity-common";
+
+        // Regras para Colares (Baseado no nome/elemento)
+        if (tipo === 'colar') {
+            if (['Fogo', 'Fênix', 'Dragão'].includes(nome)) return 'colar-fogo';
+            if (['Gelo', 'Energia Azul'].includes(nome)) return 'colar-gelo';
+            if (['Trovão'].includes(nome)) return 'colar-trovao';
+            if (['Morte', 'Sombra', 'Escuridão'].includes(nome)) return 'colar-sombra';
+            if (['Luz', 'Real'].includes(nome)) return 'colar-luz';
+            if (['Vento', 'Folhas da Vida'].includes(nome)) return 'colar-vento';
+            if (['Amor', 'Rosas'].includes(nome)) return 'colar-amor';
+            return 'rarity-epic'; // Padrão para colares de cash
+        }
+
+        // Regras Específicas (Meta/Ancestral - O melhor do jogo)
+        if (['Ciclo Infinito', 'Caos', 'Apocalipse', 'Escuridão'].includes(nome)) return "rarity-meta";
+
+        // Regras Lendárias (Roxo)
+        if (['Fênix', 'Guardiões III', 'Ordem', 'Infinito BI', 'Infinito BII', 'Infinito BIII', 'Incumprível III', 'Dimensão BI', 'Dimensão BII', 'Dimensão BIII', 'Zoro'].includes(nome)) {
+            return "rarity-legend";
+        }
+        
+        // Regras Épicas (Amarelo)
+        if (['Gnosis', 'Chamas', 'Guardiões II', 'Harmonia', 'Consolação', 'Harkyon', 'Real', 'Sagitário'].includes(nome)) return "rarity-epic";
+
+        // Regras Raras (Azul)
+        if (['Piupiu', 'Guardiões I', 'Eternidade'].includes(nome)) return "rarity-rare";
+
+        // Regra Comum (Cinza)
+        if (['Mágica'].includes(nome)) return "rarity-common";
+
+        return "rarity-common";
+    }
+
+    function criarSelect(opcoes, valorSel, tipoCampo = null){
       const s = document.createElement("select");
+      
+      // Aplica cor no próprio select baseada no valor selecionado atual
+      if(tipoCampo) {
+         const classeAtual = obterClasseRaridade(tipoCampo, valorSel);
+         s.classList.add(classeAtual);
+         
+         // Atualiza a cor do select quando muda a opção
+         s.addEventListener('change', function() {
+            // Remove classes antigas para não acumular
+            this.classList.remove('rarity-common', 'rarity-rare', 'rarity-epic', 'rarity-legend', 'rarity-meta', 'rarity-ok', 'colar-fogo', 'colar-gelo', 'colar-trovao', 'colar-sombra', 'colar-luz', 'colar-vento', 'colar-amor');
+            this.classList.add(obterClasseRaridade(tipoCampo, this.value));
+         });
+      }
+
       opcoes.forEach(o => {
         const opt = document.createElement("option");
-        opt.value = o; // Mantém valor original (PT)
-        opt.textContent = getTerm(o); // Exibe traduzido
+        opt.value = o; 
+        opt.textContent = getTerm(o);
+        
+        // Aplica a cor na opção da lista
+        if(tipoCampo) {
+            opt.className = obterClasseRaridade(tipoCampo, o);
+        }
+
         if(String(o) === String(valorSel)) opt.selected = true;
         s.appendChild(opt);
       });
@@ -966,7 +1036,8 @@
                 else if(conf.key === 'tornozeleira') options = opcoesTornozeleira;
 
                 if(conf.type === 'select') {
-                    el = criarSelect(options, p[conf.key]);
+                    // MUDANÇA: Passamos conf.key para aplicar cor
+                    el = criarSelect(options, p[conf.key], conf.key);
                 } else {
                     el = document.createElement("input");
                     el.type = "text";

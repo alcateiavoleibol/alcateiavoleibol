@@ -13,6 +13,7 @@
     :root {
       --primary: #bb86fc;
       --secondary: #03dac6;
+      --gold: #ffd700; /* Nova cor para Donate */
       --discord: #5865F2;
       --whatsapp: #25D366;
       --warning: #ffb74d;
@@ -126,7 +127,6 @@
         position: relative; overflow: hidden;
     }
 
-    /* Animação de "Respiração" nos cards */
     .hud-card:hover {
         border-color: var(--secondary);
         box-shadow: 0 0 15px rgba(3, 218, 198, 0.2);
@@ -141,7 +141,6 @@
         display: flex; align-items: center; gap: 8px; 
     }
 
-    /* Tag de Hora (Badge) */
     .time-badge {
         font-size: 0.75em;
         background: var(--secondary);
@@ -231,7 +230,7 @@
     .ext-link { color: #888; text-decoration: none; transition: 0.3s; border-bottom: 1px solid transparent; }
     .ext-link:hover { color: var(--primary); border-color: var(--primary); }
 
-    /* Navegação */
+    /* --- NAVEGAÇÃO & CARDS --- */
     .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1200px; width: 90%; margin: 0 auto 40px auto; }
     .nav-card {
       background: var(--surface); border: var(--border); padding: 40px 20px;
@@ -243,6 +242,26 @@
     .nav-icon { font-size: 3rem; margin-bottom: 15px; }
     .nav-card h2 { color: #fff; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
     .nav-card p { color: #888; font-size: 0.9rem; margin-top: 10px; text-align: center; }
+
+    /* --- CARD DE DOAÇÃO (DESTAQUE) --- */
+    .nav-card.donate {
+        border-color: rgba(255, 215, 0, 0.3); /* Borda Dourada Suave */
+        background: linear-gradient(145deg, rgba(30, 30, 30, 0.6), rgba(50, 40, 10, 0.2));
+    }
+    .nav-card.donate:hover {
+        border-color: var(--gold);
+        background: rgba(50, 50, 10, 0.6);
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+    }
+    .nav-card.donate:hover h2 { color: var(--gold); }
+    .nav-card.donate .nav-icon {
+        animation: floatIcon 3s ease-in-out infinite;
+    }
+
+    @keyframes floatIcon {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
 
     footer { margin-top: 50px; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; width: 100%; }
     .reset-timer { font-size: 0.8rem; color: var(--warning); font-weight: bold; margin-left: 15px; border-left: 1px solid #333; padding-left: 15px; }
@@ -302,113 +321,47 @@
 
     /* --- RESPONSIVIDADE MOBILE --- */
     @media (max-width: 768px) {
-        /* Ajuste do Título e Intro */
         #intro-screen { padding: 20px; text-align: center; }
         #typed-title { 
-            font-size: clamp(1.5rem, 6vw, 3rem); /* Fonte menor no mobile */
-            white-space: normal; /* Permite quebrar linha se necessário */
+            font-size: clamp(1.5rem, 6vw, 3rem); 
+            white-space: normal; 
             text-align: center;
-            border-right: none; /* Remove cursor lateral se quebrar linha */
+            border-right: none; 
         }
-        #typed-title::after { display: none; } /* Remove o cursor piscante no final para evitar bugs visuais na quebra */
+        #typed-title::after { display: none; } 
 
-        /* Banner Hero */
         .hero-banner { 
             height: auto; 
-            aspect-ratio: 16/9; /* Mantém proporção de vídeo */
+            aspect-ratio: 16/9; 
             max-height: 40vh; 
             margin-bottom: 20px; 
         }
 
-        /* Ajuste do HUD (Topo) */
-        .status-bar-wrapper { 
-            width: 95%; 
-            justify-content: center; 
-        }
-        .hud-container { 
-            flex-direction: row; /* Mantém lado a lado se der */
-            flex-wrap: wrap; /* Se for tela muito pequena, um cai pra baixo do outro */
-            justify-content: center;
-            gap: 10px; 
-            width: 100%;
-        }
-        .hud-card { 
-            font-size: 0.8rem; 
-            padding: 8px 12px; 
-            flex: 1 1 auto; /* Permite crescer e ocupar espaço */
-            justify-content: center;
-        }
+        .status-bar-wrapper { width: 95%; justify-content: center; }
+        .hud-container { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; }
+        .hud-card { font-size: 0.8rem; padding: 8px 12px; flex: 1 1 auto; justify-content: center; }
 
-        /* Mini Dashboard (Status do Char) */
-        .mini-dashboard { 
-            flex-direction: column; 
-            gap: 0; 
-            width: 95%; 
-            padding: 10px;
-        }
-        .mini-item { 
-            width: 100%; 
-            border-bottom: 1px solid rgba(255,255,255,0.05); 
-            padding: 15px 0; 
-            flex-direction: row; /* Coloca Label e Valor lado a lado no mobile */
-            justify-content: space-between;
-        }
+        .mini-dashboard { flex-direction: column; gap: 0; width: 95%; padding: 10px; }
+        .mini-item { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 15px 0; flex-direction: row; justify-content: space-between; }
         .mini-item:last-child { border-bottom: none; }
         .mini-label { font-size: 0.85rem; }
 
-        /* Navegação e Links */
-        .nav-grid { 
-            grid-template-columns: 1fr; /* 1 Card por linha */
-            gap: 20px; 
-            width: 95%;
-        } 
-        .nav-card { 
-            height: auto; 
-            padding: 30px 20px; 
-            flex-direction: row; /* Ícone na esquerda, texto na direita */
-            justify-content: flex-start;
-            gap: 20px;
-            text-align: left;
-        }
+        .nav-grid { grid-template-columns: 1fr; gap: 20px; width: 95%; } 
+        .nav-card { height: auto; padding: 30px 20px; flex-direction: row; justify-content: flex-start; gap: 20px; text-align: left; }
         .nav-icon { margin-bottom: 0; font-size: 2.5rem; }
         .nav-card p { text-align: left; margin-top: 5px; }
 
-        /* Ações e Rodapé */
         .action-container { flex-direction: column; width: 100%; gap: 15px; }
         .action-btn { width: 100%; justify-content: center; }
         .external-links { flex-direction: column; gap: 15px; }
-        .external-links span { display: none; } /* Esconde as barras verticais | */
+        .external-links span { display: none; } 
 
-        /* --- PLAYER DOCK MOBILE (O Pulo do Gato) --- */
-        .dock-player { 
-            width: 92%; 
-            padding: 0 15px; 
-            bottom: 15px;
-            height: 60px; /* Um pouco mais alto para toque */
-        }
-        
-        /* Esconder coisas desnecessárias no mobile para limpar a visão */
-        .visualizer { display: none; } /* Remove as barrinhas pulando */
-        #volume-down, #volume-up { display: none; } /* Remove botões de volume */
-
-        /* Centralizar o Play */
-        .controls-center { 
-            position: static; /* Remove o absolute */
-            transform: none; 
-            flex: 1; 
-            justify-content: flex-start; /* Joga o play para a esquerda */
-        }
-        
-        /* Ajustar área de configurações */
-        .settings-area { 
-            margin-left: auto; /* Empurra para a direita */
-            gap: 20px;
-        }
-        
-        /* Aumentar área de toque dos botões */
+        .dock-player { width: 92%; padding: 0 15px; bottom: 15px; height: 60px; }
+        .visualizer { display: none; } 
+        #volume-down, #volume-up { display: none; } 
+        .controls-center { position: static; transform: none; flex: 1; justify-content: flex-start; }
+        .settings-area { margin-left: auto; gap: 20px; }
         .p-btn, .btn-icon { font-size: 1.4rem; padding: 10px; }
-        
-        /* Ajuste dos Popups para não saírem da tela */
         .popup-menu { bottom: 70px; right: 0; width: 180px; }
         #lang-popup { right: 0; } 
     }
@@ -447,7 +400,7 @@
                 <span class="hud-label" data-lang="label_update">UPDATE</span>
                 <span class="hud-value">
                     12/02/2026 
-                    <span class="time-badge">07:42 AM</span>
+                    <span class="time-badge">16:21 PM</span>
                 </span>
             </div>
         </div>
@@ -492,6 +445,12 @@
         <div class="nav-icon">🛡️</div>
         <h2 data-lang="menu_team">Equipe</h2>
         <p data-lang="desc_team">Membros e Staff da guilda</p>
+      </a>
+
+      <a href="donate/index.html" class="nav-card donate">
+        <div class="nav-icon">💎</div>
+        <h2 data-lang="menu_donate">Apoie</h2>
+        <p data-lang="desc_donate">Ajude a manter o servidor</p>
       </a>
     </nav>
 
@@ -592,6 +551,7 @@
             menu_titles: "Títulos", desc_titles: "Veja suas conquistas",
             menu_farm: "Farm", desc_farm: "Controle de missões e resets",
             menu_team: "Equipe", desc_team: "Membros e Staff da guilda",
+            menu_donate: "Apoie", desc_donate: "Ajude a manter o servidor",
             welcome_title: "Bem-vindos à Valhalla BR",
             welcome_text: "Somos mais que uma guilda. Somos uma família forjada nas batalhas de Ernas. Em GrandChase Classic, buscamos a glória, mas valorizamos a honra, a amizade e o espírito de equipe acima de tudo.",
             note_title: "Observação Importante",
@@ -611,6 +571,7 @@
             menu_titles: "Titles", desc_titles: "View your achievements",
             menu_farm: "Farm", desc_farm: "Mission control and resets",
             menu_team: "Team", desc_team: "Guild Members and Staff",
+            menu_donate: "Donate", desc_donate: "Help maintain the server",
             welcome_title: "Welcome to Valhalla BR",
             welcome_text: "We are more than a guild. We are a family forged in the battles of Ernas. In GrandChase Classic, we seek glory, but value honor, friendship, and team spirit above all.",
             note_title: "Important Notice",
@@ -630,6 +591,7 @@
             menu_titles: "Títulos", desc_titles: "Ver tus logros",
             menu_farm: "Farm", desc_farm: "Control de misiones y resets",
             menu_team: "Equipo", desc_team: "Miembros y Staff del gremio",
+            menu_donate: "Apoyar", desc_donate: "Ayuda a mantener el servidor",
             welcome_title: "Bienvenidos a Valhalla BR",
             welcome_text: "Somos más que un gremio. Somos una familia forjada en las batallas de Ernas. En GrandChase Classic, buscamos la gloria, pero valoramos el honor, la amistad y el espíritu de equipo ante todo.",
             note_title: "Aviso Importante",
@@ -649,6 +611,7 @@
             menu_titles: "타이틀", desc_titles: "업적 보기",
             menu_farm: "파밍", desc_farm: "미션 제어 및 초기화",
             menu_team: "팀", desc_team: "길드원 및 스태프",
+            menu_donate: "후원", desc_donate: "서버 유지 돕기",
             welcome_title: "Valhalla BR에 오신 것을 환영합니다",
             welcome_text: "우리는 단순한 길드가 아닙니다. 우리는 에르나스의 전투 속에서 맺어진 가족입니다. 그랜드체이스 클래식에서 우리는 영광을 추구하지만, 명예, 우정, 그리고 팀워크를 무엇보다 소중히 여깁니다.",
             note_title: "중요 공지",
@@ -668,6 +631,7 @@
             menu_titles: "Titres", desc_titles: "Voir vos succès",
             menu_farm: "Farm", desc_farm: "Contrôle des missions",
             menu_team: "Équipe", desc_team: "Membres et Staff",
+            menu_donate: "Soutenir", desc_donate: "Aider à maintenir le serveur",
             welcome_title: "Bienvenue sur Valhalla BR",
             welcome_text: "Nous sommes plus qu'une guilde. Nous sommes une famille forgée dans les batailles d'Ernas. Dans GrandChase Classic, nous cherchons la gloire, mais nous valorisons l'honneur, l'amitié et l'esprit d'équipe avant tout.",
             note_title: "Avis Important",

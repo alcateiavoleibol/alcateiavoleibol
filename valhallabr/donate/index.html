@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apoio</title>
+  <title>Valhalla BR - Apoio</title>
   <link rel="icon" href="../imagens/favicon/favicon.png" />
   
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Segoe+UI&display=swap" rel="stylesheet">
@@ -44,16 +44,9 @@
 
     /* --- MENU SUPERIOR (NAVBAR) --- */
     .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 5%;
-        z-index: 100;
+        position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 5%; z-index: 100;
         background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
         border-bottom: 1px solid rgba(255,255,255,0.05);
         backdrop-filter: blur(5px);
@@ -61,144 +54,91 @@
     }
 
     .brand-logo {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #fff;
-        text-decoration: none;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        text-shadow: 0 0 15px var(--primary);
-        transition: 0.3s;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        font-size: 1.8rem; font-weight: 700; color: #fff;
+        text-decoration: none; text-transform: uppercase; letter-spacing: 2px;
+        text-shadow: 0 0 15px var(--primary); transition: 0.3s;
+        display: flex; align-items: center; gap: 10px;
     }
+    .brand-logo:hover { color: var(--secondary); text-shadow: 0 0 20px var(--secondary); }
 
-    .brand-logo:hover {
-        color: var(--secondary);
-        text-shadow: 0 0 20px var(--secondary);
-    }
-
-    .nav-items {
-        display: flex;
-        gap: 15px;
-    }
+    .nav-items { display: flex; gap: 15px; align-items: center; }
 
     .nav-link {
-        color: #ccc;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        padding: 8px 20px;
-        border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 30px;
-        transition: all 0.3s ease;
-        background: rgba(255,255,255,0.05);
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        color: #ccc; text-decoration: none; font-weight: 600; font-size: 1rem;
+        text-transform: uppercase; letter-spacing: 1px; padding: 8px 20px;
+        border: 1px solid rgba(255,255,255,0.2); border-radius: 30px;
+        transition: all 0.3s ease; background: rgba(255,255,255,0.05);
+        display: flex; align-items: center; gap: 8px; cursor: pointer;
     }
-
     .nav-link:hover {
-        background: var(--primary);
-        color: #000;
-        border-color: var(--primary);
-        box-shadow: 0 0 15px rgba(187, 134, 252, 0.5);
+        background: var(--primary); color: #000;
+        border-color: var(--primary); box-shadow: 0 0 15px rgba(187, 134, 252, 0.5);
     }
 
-    /* Botão Discord Específico */
-    .btn-discord {
-        border-color: var(--discord);
-        background: rgba(88, 101, 242, 0.1);
+    .btn-discord { border-color: var(--discord); background: rgba(88, 101, 242, 0.1); }
+    .btn-discord:hover { background: var(--discord); border-color: var(--discord); color: #fff; }
+
+    /* --- MENU DE IDIOMAS (Dropdown) --- */
+    .lang-wrapper { position: relative; }
+    .lang-menu {
+        position: absolute; top: 120%; right: 0;
+        background: var(--glass); border: var(--border);
+        border-radius: 12px; padding: 10px; min-width: 140px;
+        display: none; flex-direction: column; gap: 5px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.5);
     }
-    .btn-discord:hover {
-        background: var(--discord);
-        border-color: var(--discord);
-        color: #fff;
-        box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+    .lang-menu.open { display: flex; animation: fadeIn 0.3s ease; }
+    .lang-opt {
+        padding: 8px 12px; border-radius: 8px; cursor: pointer;
+        color: #ddd; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;
+        transition: 0.2s;
     }
+    .lang-opt:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
     /* --- CONTAINER DA DOAÇÃO --- */
     .donate-wrapper {
-        margin-top: 100px; 
-        width: 90%;
-        max-width: 1000px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 30px;
-        padding: 20px;
-        animation: fadeUp 1s ease forwards 0.3s;
-        opacity: 0;
-        z-index: 10;
+        margin-top: 100px; width: 90%; max-width: 1000px;
+        display: flex; flex-wrap: wrap; justify-content: center;
+        gap: 30px; padding: 20px;
+        animation: fadeUp 1s ease forwards 0.3s; opacity: 0; z-index: 10;
     }
 
-    /* Colunas (Esquerda e Direita) */
     .info-col {
-        flex: 1;
-        min-width: 300px;
-        background: var(--glass);
-        border: var(--border);
-        border-left: 4px solid var(--secondary);
-        padding: 40px;
-        border-radius: 12px;
-        backdrop-filter: blur(10px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex: 1; min-width: 300px;
+        background: var(--glass); border: var(--border);
+        border-left: 4px solid var(--secondary); padding: 40px;
+        border-radius: 12px; backdrop-filter: blur(10px);
+        display: flex; flex-direction: column; justify-content: center;
         box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     }
-
     .info-col h1 {
-        font-size: 2.5rem;
-        text-transform: uppercase;
-        margin-bottom: 15px;
+        font-size: 2.5rem; text-transform: uppercase; margin-bottom: 15px;
         background: linear-gradient(90deg, #fff, var(--secondary)); 
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
     .info-col p { font-size: 1.1rem; line-height: 1.6; color: #ccc; margin-bottom: 20px; }
-
     .perks-list { list-style: none; margin-top: 10px; }
     .perks-list li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-weight: bold; color: #fff; }
     .perks-list li::before { content: '⚡'; color: var(--warning); }
 
     .qr-col {
-        flex: 0 0 350px;
-        background: var(--glass);
-        border: var(--border);
-        border-radius: 12px;
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        flex: 0 0 350px; background: var(--glass); border: var(--border);
+        border-radius: 12px; padding: 30px;
+        display: flex; flex-direction: column; align-items: center;
+        backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         position: relative;
     }
-
     .qr-frame {
-        width: 220px;
-        height: 220px;
-        border: 2px solid var(--primary);
-        padding: 10px;
-        border-radius: 10px;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 25px;
-        background: rgba(255,255,255,0.05);
+        width: 220px; height: 220px; border: 2px solid var(--primary);
+        padding: 10px; border-radius: 10px; position: relative;
+        overflow: hidden; margin-bottom: 25px; background: rgba(255,255,255,0.05);
     }
     .qr-frame img { width: 100%; height: 100%; border-radius: 5px; object-fit: cover; }
-
     .scan-line {
         position: absolute; width: 100%; height: 4px; background: var(--secondary);
         box-shadow: 0 0 15px var(--secondary); top: 0; left: 0;
         animation: scan 3s infinite linear; opacity: 0.6;
     }
-    @keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 
     .copy-area { width: 100%; }
     .btn-copy {
@@ -214,68 +154,37 @@
     .btn-copy:active { transform: scale(0.98); }
     .btn-copy.copied { background: var(--secondary); box-shadow: 0 5px 15px rgba(3, 218, 198, 0.4); }
 
-    /* --- RODAPÉ DE AGRADECIMENTO --- */
+    /* --- AGRADECIMENTO --- */
     .thank-you-box {
-        width: 90%;
-        max-width: 800px;
-        text-align: center;
-        padding: 30px;
-        margin: 0 auto 50px auto; /* Espaço embaixo */
-        background: var(--glass-light);
-        border-top: 1px solid rgba(255,255,255,0.1);
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        border-radius: 20px;
-        position: relative;
-        animation: fadeUp 1s ease forwards 0.6s; /* Delay maior para aparecer por último */
-        opacity: 0;
+        width: 90%; max-width: 800px; text-align: center; padding: 30px;
+        margin: 0 auto 50px auto; background: var(--glass-light);
+        border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px; position: relative;
+        animation: fadeUp 1s ease forwards 0.6s; opacity: 0;
     }
-
     .thank-you-box::before, .thank-you-box::after {
-        content: '❖';
-        color: var(--secondary);
-        font-size: 1.5rem;
-        display: block;
-        margin-bottom: 10px;
-        opacity: 0.7;
+        content: '❖'; color: var(--secondary); font-size: 1.5rem; display: block; margin-bottom: 10px; opacity: 0.7;
     }
     .thank-you-box::after { margin-bottom: 0; margin-top: 10px; }
+    .thank-you-box h3 { color: #fff; font-size: 1.5rem; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 2px; }
+    .thank-you-box p { color: #aaa; font-style: italic; font-size: 1rem; max-width: 600px; margin: 0 auto; line-height: 1.5; }
 
-    .thank-you-box h3 {
-        color: #fff;
-        font-size: 1.5rem;
-        text-transform: uppercase;
-        margin-bottom: 10px;
-        letter-spacing: 2px;
-    }
-
-    .thank-you-box p {
-        color: #aaa;
-        font-style: italic;
-        font-size: 1rem;
-        max-width: 600px;
-        margin: 0 auto;
-        line-height: 1.5;
-    }
-
-    /* Animações */
     @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Responsivo */
     @media (max-width: 768px) {
         .navbar { padding: 0 20px; height: 70px; }
         .brand-logo { font-size: 1.3rem; }
-        
         .nav-items { gap: 10px; }
         .nav-link { font-size: 0.8rem; padding: 6px 12px; }
-        .nav-link span { display: none; } /* Esconde texto "Discord" no mobile se ficar apertado, mantendo icone se tiver */
-
+        .nav-text { display: none; } /* Esconde texto dos botões no mobile */
+        
         .info-col h1 { font-size: 2rem; }
         .qr-col { flex: 1; width: 100%; }
         .donate-wrapper { margin-top: 80px; padding-top: 10px; }
-        
         .thank-you-box { width: 95%; padding: 20px; }
-        .thank-you-box h3 { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -287,11 +196,24 @@
       <a href="../index.html" class="brand-logo">VALHALLA BR</a>
       
       <div class="nav-items">
+          <div class="lang-wrapper">
+              <div class="nav-link" onclick="toggleLangMenu()">
+                  🌐
+              </div>
+              <div class="lang-menu" id="lang-menu">
+                  <div class="lang-opt" onclick="changeLanguage('pt')">🇧🇷 PT-BR</div>
+                  <div class="lang-opt" onclick="changeLanguage('en')">🇺🇸 EN-US</div>
+                  <div class="lang-opt" onclick="changeLanguage('es')">🇪🇸 ES-ES</div>
+                  <div class="lang-opt" onclick="changeLanguage('ko')">🇰🇷 한국어</div>
+                  <div class="lang-opt" onclick="changeLanguage('fr')">🇫🇷 FR-FR</div>
+              </div>
+          </div>
+
           <a href="https://discord.gg/xMnAT5JEgw" target="_blank" class="nav-link btn-discord">
-              Discord
+              <span>Discord</span>
           </a>
           <a href="../index.html" class="nav-link">
-              Início
+              <span class="nav-text" data-lang="nav_home">Início</span> 🏠
           </a>
       </div>
   </nav>
@@ -299,16 +221,16 @@
   <div class="donate-wrapper">
       
       <div class="info-col">
-          <h1>Mantenha o Legado Vivo</h1>
-          <p>
+          <h1 data-lang="title_main">Mantenha o Legado Vivo</h1>
+          <p data-lang="desc_main">
               A <strong>VALHALLA BR</strong> é mantida pela paixão e dedicação de seus membros. 
               Sua contribuição é vital para manter nossa infraestrutura online e garantir a melhor experiência para todos.
           </p>
-          <p>Todo valor arrecadado é revertido diretamente em:</p>
+          <p data-lang="list_intro">Todo valor arrecadado é revertido diretamente em:</p>
           <ul class="perks-list">
-              <li>Manutenção dos Servidores (Host)</li>
-              <li>Desenvolvimento de Novas Funcionalidades</li>
-              <li>Sustentabilidade do Projeto a Longo Prazo</li>
+              <li data-lang="list_item1">Manutenção dos Servidores (Host)</li>
+              <li data-lang="list_item2">Desenvolvimento de Novas Funcionalidades</li>
+              <li data-lang="list_item3">Sustentabilidade do Projeto a Longo Prazo</li>
           </ul>
       </div>
 
@@ -323,7 +245,7 @@
               
               <button class="btn-copy" onclick="copyPix()">
                   <span id="btn-icon">❐</span> 
-                  <span id="btn-text">COPIAR CHAVE PIX</span>
+                  <span id="btn-text" data-lang="btn_copy">COPIAR CHAVE PIX</span>
               </button>
           </div>
       </div>
@@ -331,8 +253,8 @@
   </div>
 
   <div class="thank-you-box">
-      <h3>Agradecimento Especial</h3>
-      <p>
+      <h3 data-lang="thx_title">Agradecimento Especial</h3>
+      <p data-lang="thx_text">
           "Agradecemos imensamente a cada guerreiro que contribui. 
           Seu apoio não é apenas financeiro, é a mana que mantém nossa magia e nossa comunidade viva. 
           Juntos, somos invencíveis!"
@@ -341,6 +263,109 @@
   </div>
 
   <script>
+    // --- I18N (SISTEMA DE TRADUÇÃO) ---
+    const i18n = {
+        pt: {
+            nav_home: "Início",
+            title_main: "Mantenha o Legado Vivo",
+            desc_main: "A <strong>VALHALLA BR</strong> é mantida pela paixão e dedicação de seus membros. Sua contribuição é vital para manter nossa infraestrutura online.",
+            list_intro: "Todo valor arrecadado é revertido diretamente em:",
+            list_item1: "Manutenção dos Servidores (Host)",
+            list_item2: "Desenvolvimento de Novas Funcionalidades",
+            list_item3: "Sustentabilidade do Projeto a Longo Prazo",
+            btn_copy: "COPIAR CHAVE PIX",
+            btn_copied: "CHAVE COPIADA!",
+            thx_title: "Agradecimento Especial",
+            thx_text: "\"Agradecemos imensamente a cada guerreiro que contribui. Seu apoio não é apenas financeiro, é a mana que mantém nossa magia e nossa comunidade viva. Juntos, somos invencíveis!\""
+        },
+        en: {
+            nav_home: "Home",
+            title_main: "Keep the Legacy Alive",
+            desc_main: "<strong>VALHALLA BR</strong> is maintained by the passion of its members. Your contribution is vital to keep our infrastructure online.",
+            list_intro: "All funds raised go directly into:",
+            list_item1: "Server Maintenance (Host)",
+            list_item2: "Development of New Features",
+            list_item3: "Long-term Project Sustainability",
+            btn_copy: "COPY PIX KEY",
+            btn_copied: "KEY COPIED!",
+            thx_title: "Special Thanks",
+            thx_text: "\"We immensely thank every warrior who contributes. Your support is not just financial, it is the mana that keeps our magic and community alive. Together, we are invincible!\""
+        },
+        es: {
+            nav_home: "Inicio",
+            title_main: "Mantén Vivo el Legado",
+            desc_main: "<strong>VALHALLA BR</strong> se mantiene por la pasión de sus miembros. Tu contribución es vital para mantener nuestra infraestructura en línea.",
+            list_intro: "Todo lo recaudado se invierte en:",
+            list_item1: "Mantenimiento de Servidores (Host)",
+            list_item2: "Desarrollo de Nuevas Funciones",
+            list_item3: "Sostenibilidad del Proyecto a Largo Plazo",
+            btn_copy: "COPIAR LLAVE PIX",
+            btn_copied: "¡LLAVE COPIADA!",
+            thx_title: "Agradecimiento Especial",
+            thx_text: "\"Agradecemos inmensamente a cada guerrero que contribuye. Tu apoyo no es solo financiero, es el maná que mantiene viva nuestra magia y comunidad. ¡Juntos, somos invencibles!\""
+        },
+        ko: {
+            nav_home: "홈",
+            title_main: "유산을 살아있게 하라",
+            desc_main: "<strong>VALHALLA BR</strong>은 멤버들의 열정으로 유지됩니다. 귀하의 기여는 인프라를 온라인 상태로 유지하는 데 필수적입니다.",
+            list_intro: "모금된 모든 자금은 다음에 사용됩니다:",
+            list_item1: "서버 유지 보수 (호스팅)",
+            list_item2: "새로운 기능 개발",
+            list_item3: "프로젝트의 장기적 지속 가능성",
+            btn_copy: "PIX 키 복사",
+            btn_copied: "키 복사됨!",
+            thx_title: "특별한 감사",
+            thx_text: "\"기여해주신 모든 전사분들께 진심으로 감사드립니다. 여러분의 지원은 단순한 재정이 아니라, 우리의 마법과 커뮤니티를 살아있게 하는 마나입니다. 함께라면 우린 천하무적입니다!\""
+        },
+        fr: {
+            nav_home: "Accueil",
+            title_main: "Gardez l'Héritage Vivant",
+            desc_main: "<strong>VALHALLA BR</strong> est maintenu par la passion de ses membres. Votre contribution est vitale pour garder notre infrastructure en ligne.",
+            list_intro: "Tous les fonds collectés vont directement dans :",
+            list_item1: "Maintenance des Serveurs (Hébergeur)",
+            list_item2: "Développement de Nouvelles Fonctionnalités",
+            list_item3: "Durabilité du Projet à Long Terme",
+            btn_copy: "COPIER LA CLÉ PIX",
+            btn_copied: "CLÉ COPIÉE !",
+            thx_title: "Remerciements Spéciaux",
+            thx_text: "\"Nous remercions immensément chaque guerrier qui contribue. Votre soutien n'est pas seulement financier, c'est le mana qui maintient notre magie et notre communauté en vie. Ensemble, nous sommes invincibles !\""
+        }
+    };
+
+    let currentLang = localStorage.getItem('valhalla_lang') || 'pt';
+
+    // Função para Trocar Idioma
+    function changeLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('valhalla_lang', lang);
+        
+        // Atualiza todos os textos com data-lang
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if(i18n[lang][key]) {
+                el.innerHTML = i18n[lang][key];
+            }
+        });
+
+        // Esconde menu
+        document.getElementById('lang-menu').classList.remove('open');
+    }
+
+    // Toggle Menu
+    function toggleLangMenu() {
+        document.getElementById('lang-menu').classList.toggle('open');
+    }
+
+    // Fecha menu se clicar fora
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.lang-wrapper')) {
+            document.getElementById('lang-menu').classList.remove('open');
+        }
+    });
+
+    // Inicia com idioma salvo
+    changeLanguage(currentLang);
+
     // --- Lógica de Copiar Pix ---
     function copyPix() {
         const key = document.getElementById('pix-key');
@@ -350,20 +375,22 @@
 
         navigator.clipboard.writeText(key.value).then(() => {
             btn.classList.add('copied');
-            btnText.innerText = "CHAVE COPIADA!";
+            // Usa a tradução para o texto de sucesso
+            btnText.innerText = i18n[currentLang]['btn_copied'];
             btnIcon.innerText = "✔";
+
             setTimeout(() => {
                 btn.classList.remove('copied');
-                btnText.innerText = "COPIAR CHAVE PIX";
+                // Usa a tradução para voltar ao normal
+                btnText.innerText = i18n[currentLang]['btn_copy'];
                 btnIcon.innerText = "❐";
             }, 3000);
         }).catch(err => {
-            console.error('Erro ao copiar', err);
             alert("Erro ao copiar. Tente escanear o QR Code.");
         });
     }
 
-    // --- Partículas ---
+    // --- Partículas (Fundo) ---
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     let width, height, particlesArray = [];
