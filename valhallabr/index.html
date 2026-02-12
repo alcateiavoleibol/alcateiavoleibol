@@ -13,7 +13,7 @@
     :root {
       --primary: #bb86fc;
       --secondary: #03dac6;
-      --gold: #ffd700; /* Nova cor para Donate */
+      --gold: #ffd700;
       --discord: #5865F2;
       --whatsapp: #25D366;
       --warning: #ffb74d;
@@ -400,7 +400,7 @@
                 <span class="hud-label" data-lang="label_update">UPDATE</span>
                 <span class="hud-value">
                     12/02/2026 
-                    <span class="time-badge">16:21 PM</span>
+                    <span class="time-badge">16:50 PM</span>
                 </span>
             </div>
         </div>
@@ -499,9 +499,9 @@
         <section class="fade-in fade-in-4">
             <p style="color: #666; margin-bottom: 10px;" data-lang="links_title">Links Oficiais:</p>
             <div class="external-links">
-                <a href="https://www.koggames.com/game/grandchaseclassic" target="_blank" class="ext-link">Site Oficial</a> <span>|</span>
-                <a href="https://store.steampowered.com/app/985810/GrandChase/" target="_blank" class="ext-link">Steam</a> <span>|</span>
-                <a href="https://store.epicgames.com/en-US/p/grandchase-c03eb2" target="_blank" class="ext-link">Epic Games</a>
+                <a href="https://www.koggames.com/game/grandchaseclassic" target="_blank" class="ext-link" data-lang="link_site">Site Oficial</a> <span>|</span>
+                <a href="https://store.steampowered.com/app/985810/GrandChase/" target="_blank" class="ext-link" data-lang="link_steam">Steam</a> <span>|</span>
+                <a href="https://store.epicgames.com/en-US/p/grandchase-c03eb2" target="_blank" class="ext-link" data-lang="link_epic">Epic Games</a>
             </div>
         </section>
     </div>
@@ -561,6 +561,7 @@
             quote_text: "\"Onde os heróis se encontram e as lendas renascem.\"",
             join_title: "Junte-se à Batalha!", btn_discord: "Entrar no Discord", btn_whatsapp: "Entrar no WhatsApp",
             widget_title: "Membros Online no Discord", links_title: "Links Oficiais:",
+            link_site: "Site Oficial", link_steam: "Steam", link_epic: "Epic Games",
             footer_rights: "© 2025 VALHALLA. Todos os direitos reservados."
         },
         en: {
@@ -581,6 +582,7 @@
             quote_text: "\"Where heroes meet and legends are reborn.\"",
             join_title: "Join the Battle!", btn_discord: "Join Discord", btn_whatsapp: "Join WhatsApp",
             widget_title: "Members Online on Discord", links_title: "Official Links:",
+            link_site: "Official Site", link_steam: "Steam", link_epic: "Epic Games",
             footer_rights: "© 2025 VALHALLA. All rights reserved."
         },
         es: {
@@ -601,6 +603,7 @@
             quote_text: "\"Donde los héroes se encuentran y las leyendas renacen.\"",
             join_title: "¡Únete a la Batalla!", btn_discord: "Entrar en Discord", btn_whatsapp: "Entrar en WhatsApp",
             widget_title: "Miembros en Línea en Discord", links_title: "Enlaces Oficiales:",
+            link_site: "Sitio Oficial", link_steam: "Steam", link_epic: "Epic Games",
             footer_rights: "© 2025 VALHALLA. Todos los derechos reservados."
         },
         ko: {
@@ -621,6 +624,7 @@
             quote_text: "\"영웅들이 만나고 전설이 다시 태어나는 곳.\"",
             join_title: "전투에 참여하세요!", btn_discord: "디스코드 입장", btn_whatsapp: "왓츠앱 입장",
             widget_title: "디스코드 온라인 멤버", links_title: "공식 링크:",
+            link_site: "공식 사이트", link_steam: "스팀", link_epic: "에픽 게임즈",
             footer_rights: "© 2025 VALHALLA. 모든 권리 보유."
         },
         fr: {
@@ -641,6 +645,7 @@
             quote_text: "\"Là où les héros se rencontrent et les légendes renaissent.\"",
             join_title: "Rejoignez la Bataille !", btn_discord: "Rejoindre Discord", btn_whatsapp: "Rejoindre WhatsApp",
             widget_title: "Membres en ligne sur Discord", links_title: "Liens Officiels :",
+            link_site: "Site Officiel", link_steam: "Steam", link_epic: "Epic Games",
             footer_rights: "© 2025 VALHALLA. Tous droits réservés."
         }
     };
@@ -672,8 +677,11 @@
     initParticles(); animateParticles();
 
     // --- VARS ---
-    let welcomeText = "Bem-vindo à ValhallaBR!";
-    let currentLang = 'pt';
+    // AQUI ESTÁ A CORREÇÃO: O welcomeText inicial agora pega o idioma salvo ou o padrão 'pt'
+    const savedLang = localStorage.getItem('valhalla_lang') || 'pt';
+    let welcomeText = i18n[savedLang]['welcome_title']; // Usa o título traduzido desde o início
+    
+    let currentLang = savedLang;
     const titleEl = document.getElementById("typed-title");
     const startBtn = document.getElementById("start-btn");
 
@@ -681,18 +689,22 @@
         try {
             const now = new Date(); document.getElementById('sys-date').innerText = `[${now.toLocaleDateString('pt-BR')}]`;
             const perfilData = JSON.parse(localStorage.getItem('valhalla_perfil_v6'));
+            
+            // Variável temporária para Greeting
+            let greet = 'Saudações';
+            if(currentLang==='en') greet='Greetings';
+            if(currentLang==='es') greet='Saludos';
+            if(currentLang==='ko') greet='환영합니다';
+            if(currentLang==='fr') greet='Salutations';
+
+            // Se tiver Nick, personaliza
             if(perfilData && perfilData.account && perfilData.account.nick) {
                 const nick = perfilData.account.nick;
                 if(nick.trim()!=="") {
-                    let greet = 'Saudações';
-                    if(currentLang==='en') greet='Greetings';
-                    if(currentLang==='es') greet='Saludos';
-                    if(currentLang==='ko') greet='환영합니다';
-                    if(currentLang==='fr') greet='Salutations';
-                    
                     welcomeText = `${greet}, ${nick}!`;
                     document.querySelector('.info-section h1').innerText = welcomeText;
                 }
+                
                 document.getElementById('mini-dash').style.display = 'flex';
                 let maxAtk = 0; let mainName = "Nenhum"; let mainChar = "uno";
                 if(perfilData.perfil) {
@@ -703,7 +715,14 @@
                 }
                 document.getElementById('dash-main').innerHTML = `<img src="imagens/personagens/${mainChar}.png" class="mini-avatar" onerror="this.style.display='none'"> <span>${mainName}</span>`;
                 document.getElementById('dash-power').innerHTML = `<span>⚔️</span> ${maxAtk.toLocaleString('pt-BR')}`;
+            } else {
+                // Se NÃO tiver nick, garante que o texto de boas-vindas padrão seja o traduzido
+                welcomeText = i18n[currentLang]['welcome_title'];
+                // Atualiza também o H1 da seção de info caso já tenha renderizado
+                const infoH1 = document.querySelector('.info-section h1');
+                if(infoH1) infoH1.innerText = welcomeText;
             }
+
             if(JSON.parse(localStorage.getItem('gcFarmDataV2'))) document.getElementById('dash-farm').innerHTML = `<span style="color:#03dac6">Ativo</span>`;
         } catch(e) {}
     }
@@ -739,20 +758,31 @@
         particleColor = `rgba(${t.pline}, 0.3)`; particleLineColor = t.pline;
         localStorage.setItem('valhalla_theme', name); document.getElementById('theme-popup').classList.remove('open');
     }
-    const savedTheme = localStorage.getItem('valhalla_theme'); if(savedTheme) changeTheme(savedTheme);
+    const savedThemeLoad = localStorage.getItem('valhalla_theme'); if(savedThemeLoad) changeTheme(savedThemeLoad);
 
     // --- LANGUAGE ---
     function changeLanguage(lang) {
         currentLang = lang; localStorage.setItem('valhalla_lang', lang);
+        
+        // Atualiza todos os textos com a tag data-lang
         document.querySelectorAll('[data-lang]').forEach(el => {
             const key = el.getAttribute('data-lang');
             if(i18n[lang][key]) el.innerHTML = i18n[lang][key];
         });
+        
+        // Atualiza a lógica de usuário (incluindo welcomeText se não tiver nick)
         loadUserData();
-        if(titleEl.textContent && !titleEl.textContent.includes(",")) titleEl.textContent = i18n[lang]['welcome_title'];
+        
+        // Se ainda estiver na tela de intro (título digitando ou já digitado) e sem nick, atualiza
+        if(titleEl.textContent && !titleEl.textContent.includes(",")) {
+             titleEl.textContent = i18n[lang]['welcome_title'];
+        }
+        
         document.getElementById('lang-popup').classList.remove('open');
     }
-    const savedLang = localStorage.getItem('valhalla_lang'); if(savedLang) changeLanguage(savedLang);
+    
+    // Carrega idioma salvo ao iniciar (Já fizemos a lógica do welcomeText lá em cima, aqui aplica no resto)
+    if(savedLang) changeLanguage(savedLang);
 
     // --- TYPING ---
     let i = 0;
@@ -774,7 +804,8 @@
     }
 
     window.addEventListener("load", () => {
-        loadUserData(); setTimeout(typeLetter, 500);
+        // loadUserData já é chamado dentro de changeLanguage, mas chamamos aqui para garantir updates de timer/visualizer
+        setTimeout(typeLetter, 500);
         setInterval(updateResetTimer, 1000); updateResetTimer();
         generateVisualizerBars();
     });
