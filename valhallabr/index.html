@@ -300,20 +300,117 @@
     .t-dot { width: 10px; height: 10px; border-radius: 50%; }
     .flag { font-size: 1.1rem; }
 
+    /* --- RESPONSIVIDADE MOBILE --- */
     @media (max-width: 768px) {
-        .hero-banner { height: auto; aspect-ratio: 4/3; max-height: 50vh; margin-bottom: 30px; }
-        #typed-title, .info-section h1 { font-size: 1.8rem; }
-        .quote-box h2 { font-size: 1.2rem; }
-        .nav-grid { gap: 15px; } .nav-card { height: 160px; padding: 20px; }
-        .action-container, .external-links { flex-direction: column; width: 100%; gap: 15px; }
-        .mini-dashboard { flex-direction: column; gap: 15px; width: 90%; }
-        .mini-item { width: 100%; border-bottom: 1px solid #222; padding-bottom: 10px; }
-        .dock-player { width: 95%; padding: 0 15px; } .visualizer { width: 60px; overflow: hidden; } 
+        /* Ajuste do Título e Intro */
+        #intro-screen { padding: 20px; text-align: center; }
+        #typed-title { 
+            font-size: clamp(1.5rem, 6vw, 3rem); /* Fonte menor no mobile */
+            white-space: normal; /* Permite quebrar linha se necessário */
+            text-align: center;
+            border-right: none; /* Remove cursor lateral se quebrar linha */
+        }
+        #typed-title::after { display: none; } /* Remove o cursor piscante no final para evitar bugs visuais na quebra */
+
+        /* Banner Hero */
+        .hero-banner { 
+            height: auto; 
+            aspect-ratio: 16/9; /* Mantém proporção de vídeo */
+            max-height: 40vh; 
+            margin-bottom: 20px; 
+        }
+
+        /* Ajuste do HUD (Topo) */
+        .status-bar-wrapper { 
+            width: 95%; 
+            justify-content: center; 
+        }
+        .hud-container { 
+            flex-direction: row; /* Mantém lado a lado se der */
+            flex-wrap: wrap; /* Se for tela muito pequena, um cai pra baixo do outro */
+            justify-content: center;
+            gap: 10px; 
+            width: 100%;
+        }
+        .hud-card { 
+            font-size: 0.8rem; 
+            padding: 8px 12px; 
+            flex: 1 1 auto; /* Permite crescer e ocupar espaço */
+            justify-content: center;
+        }
+
+        /* Mini Dashboard (Status do Char) */
+        .mini-dashboard { 
+            flex-direction: column; 
+            gap: 0; 
+            width: 95%; 
+            padding: 10px;
+        }
+        .mini-item { 
+            width: 100%; 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            padding: 15px 0; 
+            flex-direction: row; /* Coloca Label e Valor lado a lado no mobile */
+            justify-content: space-between;
+        }
+        .mini-item:last-child { border-bottom: none; }
+        .mini-label { font-size: 0.85rem; }
+
+        /* Navegação e Links */
+        .nav-grid { 
+            grid-template-columns: 1fr; /* 1 Card por linha */
+            gap: 20px; 
+            width: 95%;
+        } 
+        .nav-card { 
+            height: auto; 
+            padding: 30px 20px; 
+            flex-direction: row; /* Ícone na esquerda, texto na direita */
+            justify-content: flex-start;
+            gap: 20px;
+            text-align: left;
+        }
+        .nav-icon { margin-bottom: 0; font-size: 2.5rem; }
+        .nav-card p { text-align: left; margin-top: 5px; }
+
+        /* Ações e Rodapé */
+        .action-container { flex-direction: column; width: 100%; gap: 15px; }
+        .action-btn { width: 100%; justify-content: center; }
+        .external-links { flex-direction: column; gap: 15px; }
+        .external-links span { display: none; } /* Esconde as barras verticais | */
+
+        /* --- PLAYER DOCK MOBILE (O Pulo do Gato) --- */
+        .dock-player { 
+            width: 92%; 
+            padding: 0 15px; 
+            bottom: 15px;
+            height: 60px; /* Um pouco mais alto para toque */
+        }
         
-        /* Ajuste do HUD Mobile */
-        .status-bar-wrapper { justify-content: center; }
-        .hud-container { flex-direction: row; gap: 10px; }
-        .hud-card { font-size: 0.75rem; padding: 6px 10px; }
+        /* Esconder coisas desnecessárias no mobile para limpar a visão */
+        .visualizer { display: none; } /* Remove as barrinhas pulando */
+        #volume-down, #volume-up { display: none; } /* Remove botões de volume */
+
+        /* Centralizar o Play */
+        .controls-center { 
+            position: static; /* Remove o absolute */
+            transform: none; 
+            flex: 1; 
+            justify-content: flex-start; /* Joga o play para a esquerda */
+        }
+        
+        /* Ajustar área de configurações */
+        .settings-area { 
+            margin-left: auto; /* Empurra para a direita */
+            gap: 20px;
+        }
+        
+        /* Aumentar área de toque dos botões */
+        .p-btn, .btn-icon { font-size: 1.4rem; padding: 10px; }
+        
+        /* Ajuste dos Popups para não saírem da tela */
+        .popup-menu { bottom: 70px; right: 0; width: 180px; }
+        #lang-popup { right: 0; } 
     }
   </style>
 </head>
