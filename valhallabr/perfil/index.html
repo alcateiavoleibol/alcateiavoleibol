@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PERFIL</title>
   <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   
   <style>
     /* --- CONFIGURAÇÕES GERAIS --- */
@@ -63,7 +64,7 @@
         -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         margin: 0; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
     }
-	        .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
+        .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
     .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
     .cache-info { color: #888; }
     .cache-info span { color: var(--primary); font-weight: bold; }
@@ -91,6 +92,10 @@
     .btn-load { position: relative; overflow: hidden; border-color: var(--secondary); color: var(--secondary); }
     .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
     .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+    /* Botão Especial de Print */
+    .btn-print { border-color: #fff; color: #fff; }
+    .btn-print:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
 
     /* --- CONTAINER PRINCIPAL --- */
     .content-wrapper {
@@ -122,6 +127,13 @@
     .stat-input:focus {
         border-color: var(--primary); box-shadow: 0 0 15px rgba(187, 134, 252, 0.3); outline: none; background: #000;
     }
+
+    /* ESTILO DO ATAQUE TOTAL */
+    .total-atk-box {
+        border: 1px solid var(--secondary); background: rgba(3, 218, 198, 0.05);
+        color: var(--secondary); font-size: 1.2rem; text-shadow: 0 0 10px rgba(3, 218, 198, 0.4);
+        width: 200px;
+    }
     
     select.stat-input {
         appearance: none; -webkit-appearance: none; -moz-appearance: none;
@@ -129,6 +141,18 @@
         background-repeat: no-repeat; background-position: right 10px center; background-size: 10px;
         padding-right: 30px;
     }
+
+    /* --- FILTROS DE PODER --- */
+    .filter-bar {
+        display: flex; gap: 10px; justify-content: center; margin-bottom: 10px;
+    }
+    .filter-btn {
+        background: rgba(0,0,0,0.5); border: 1px solid #555; color: #888;
+        padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: bold;
+        transition: 0.3s;
+    }
+    .filter-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .filter-btn.active { border-color: var(--primary); background: var(--primary); color: #000; box-shadow: 0 0 10px var(--primary); }
 
     /* --- CONTROLES DE COLUNA --- */
     #menu-colunas {
@@ -152,7 +176,7 @@
     .col-toggle:hover { filter: brightness(1.2); }
 
     /* --- TABELA OTIMIZADA --- */
-    .table-container-center { display: flex; justify-content: center; width: 100%; }
+    .table-container-center { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 10px; }
 
     .table-wrapper {
         display: inline-block; max-width: 100%; overflow-x: auto;
@@ -160,6 +184,7 @@
         border-radius: 12px; backdrop-filter: blur(10px);
         box-shadow: 0 0 30px rgba(0,0,0,0.5);
         scrollbar-width: thin; scrollbar-color: var(--primary) #111;
+        padding-bottom: 5px; /* Espaço pro print */
     }
 
     table { border-collapse: collapse; width: auto; margin: 0 auto; }
@@ -176,12 +201,22 @@
     tbody tr:hover { background: rgba(187, 134, 252, 0.15) !important; }
     tbody td { padding: 8px 8px; text-align: center; vertical-align: middle; color: #ddd; font-size: 0.95rem; white-space: nowrap; }
 
+    /* ESTILOS DE ARRASTAR */
+    .draggable-mode tbody tr { cursor: grab; }
+    .draggable-mode tbody tr:active { cursor: grabbing; }
+    .dragging { 
+        opacity: 0.5; 
+        background: rgba(187, 134, 252, 0.3) !important; 
+        border: 2px dashed var(--secondary); 
+    }
+
     /* Célula de Personagem */
     .char-cell { display: flex; align-items: center; gap: 10px; justify-content: flex-start; padding-left: 15px; padding-right: 15px; }
     .char-img {
         width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
         border: 2px solid var(--primary); box-shadow: 0 0 8px rgba(187, 134, 252, 0.3);
         background: #000; transition: transform 0.3s;
+        pointer-events: none; /* Não atrapalhar o drag */
     }
     tbody tr:hover .char-img { transform: scale(1.2); border-color: var(--secondary); }
     .char-name { font-weight: bold; color: #fff; font-size: 0.9rem; }
@@ -286,25 +321,25 @@
   <header>
     <div class="brand">
         <h1>VALHALLA BR</h1>
-        <h3>PERFIL</h3>
-		<br>
+        <h3 data-lang="title_page">PERFIL</h3>
+        <br>
         <div class="info-panel">
-            <div class="cache-info" id="last-save-display">Memória Cache: <span>Vazio</span></div>
-            <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
+            <div class="cache-info" id="last-save-display">Cache: <span>Vazio</span></div>
+            <div class="time-info"><span data-lang="time_label">Brasília</span>: <span class="real-time" id="real-time-clock">--:--:--</span></div>
         </div>
     </div>
     
     <nav class="main-nav">
-        <a href="../index.html" class="nav-link">⌂ Início</a>
-        <a href="../farm/index.html" class="nav-link">🚜 Farm</a>
-        <a href="../titulos/index.html" class="nav-link">🏆 Títulos</a>
-        <a href="#" class="nav-link active">👤 Perfil</a>
-
+        <a href="../index.html" class="nav-link">⌂ <span data-lang="menu_home">Início</span></a>
+        <a href="../farm/index.html" class="nav-link">🚜 <span data-lang="menu_farm">Farm</span></a>
+        <a href="../titulos/index.html" class="nav-link">🏆 <span data-lang="menu_titles">Títulos</span></a>
+        <a href="#" class="nav-link active">👤 <span data-lang="menu_profile">Perfil</span></a>
     </nav>
 
     <div class="controls">
-        <button class="btn" onclick="salvarPerfilManual()">💾 SALVAR</button>
-        <div class="btn btn-load"> 📂 CARREGAR
+        <button class="btn btn-print" onclick="gerarCardImagem()">📸 <span data-lang="btn_print">IMPRIMIR</span></button>
+        <button class="btn" onclick="salvarPerfilManual()">💾 <span data-lang="btn_save">SALVAR</span></button>
+        <div class="btn btn-load"> 📂 <span data-lang="btn_load">CARREGAR</span>
             <input type="file" id="fileInput" accept=".json" onchange="carregarPerfilArquivo(this)">
         </div>
     </div>
@@ -314,7 +349,7 @@
     
     <div class="account-stats-panel">
         <div class="stat-group">
-            <label>Apelido / Nick</label>
+            <label data-lang="label_nick">Apelido / Nick</label>
             <input type="text" id="acc-nick" class="stat-input" placeholder="Nick" oninput="persistirConta()">
         </div>
         
@@ -325,40 +360,69 @@
         </div>
 
         <div class="stat-group">
-            <label>Coleção de Cartas</label>
+            <label data-lang="label_coll">Coleção</label>
             <select id="acc-coll" class="stat-input" onchange="persistirConta()">
                 </select>
+        </div>
+        
+        <div class="stat-group">
+            <label data-lang="label_filter">Exibir Personagem</label>
+            <select id="filter-char-select" class="stat-input" onchange="filtrarPorPersonagem(this.value)">
+                <option value="todos" data-lang="opt_all">TODOS</option>
+                </select>
+        </div>
+
+        <div class="stat-group">
+            <label data-lang="label_sort">Ordenar Por</label>
+            <select id="sort-order" class="stat-input" onchange="changeSort(this.value)">
+                <option value="default" data-lang="sort_default">📅 Lançamento</option>
+                <option value="name" data-lang="sort_name">🔤 Nome</option>
+                <option value="power" data-lang="sort_power">⚡ Tipo</option>
+                <option value="custom" data-lang="sort_custom">🖐️ Personalizado</option>
+            </select>
+        </div>
+
+        <div class="stat-group">
+            <label id="label-atk-main" data-lang="label_atk_max">Ataque Máximo (Main)</label>
+            <div id="display-total-atk" class="stat-input total-atk-box">0</div>
         </div>
     </div>
 
     <div id="menu-colunas">
         <div class="menu-group">
-            <div class="col-toggle action-btn" onclick="toggleTodasColunas(true)">👁️ Mostrar Todas</div>
-            <div class="col-toggle action-btn" onclick="toggleTodasColunas(false)">🙈 Ocultar Todas</div>
+            <div class="col-toggle action-btn" onclick="toggleTodasColunas(true)" data-lang="btn_show_all">👁️ Mostrar Todas</div>
+            <div class="col-toggle action-btn" onclick="toggleTodasColunas(false)" data-lang="btn_hide_all">🙈 Ocultar Todas</div>
         </div>
-        </div>
+    </div>
 
     <div class="table-container-center">
-        <div class="table-wrapper">
+        <div class="filter-bar">
+            <div class="filter-btn active" onclick="filtrarPorPoder('todos', this)" data-lang="filter_all">Todos</div>
+            <div class="filter-btn" onclick="filtrarPorPoder('MP', this)">MP</div>
+            <div class="filter-btn" onclick="filtrarPorPoder('AP', this)">AP</div>
+            <div class="filter-btn" onclick="filtrarPorPoder('AMP', this)">AMP</div>
+        </div>
+
+        <div class="table-wrapper" id="capture-area">
             <table>
                 <thead>
                     <tr>
                         <th onclick="ordenarTabela(0, 'number')">#</th>
-                        <th onclick="ordenarTabela(1, 'text')">Personagem</th>
-                        <th onclick="ordenarTabela(2, 'text')">Sistema</th>
-                        <th>Classe</th>
-                        <th onclick="ordenarTabela(4, 'number')">Nível</th>
-                        <th onclick="ordenarTabela(5, 'number')">Torre das Ilusões</th>
-                        <th onclick="ordenarTabela(6, 'number')">Berkas</th>
-                        <th onclick="ordenarTabela(7, 'number')">Vazio</th>
-                        <th onclick="ordenarTabela(8, 'number')">Sistema R.</th>
-                        <th onclick="ordenarTabela(9, 'number')">V. Chase</th>
-                        <th>Colar</th>
-                        <th>Tornozeleira</th>
-                        <th>Anel</th>
-                        <th>Brinco</th>
-                        <th>Piercing</th>
-                        <th onclick="ordenarTabela(15, 'number')">Ataque Total</th>
+                        <th onclick="ordenarTabela(1, 'text')" data-lang="col_char">Personagem</th>
+                        <th onclick="ordenarTabela(2, 'text')" data-lang="col_sys">Sistema</th>
+                        <th data-lang="col_class">Classe</th>
+                        <th onclick="ordenarTabela(4, 'number')" data-lang="col_level">Nível</th>
+                        <th onclick="ordenarTabela(5, 'number')" data-lang="col_tower">Torre</th>
+                        <th onclick="ordenarTabela(6, 'number')" data-lang="col_berkas">Berkas</th>
+                        <th onclick="ordenarTabela(7, 'number')" data-lang="col_void">Vazio</th>
+                        <th onclick="ordenarTabela(8, 'number')">SR</th>
+                        <th onclick="ordenarTabela(9, 'number')" data-lang="col_visual">Visual</th>
+                        <th data-lang="col_neck">Colar</th>
+                        <th data-lang="col_anklet">Tornozeleira</th>
+                        <th data-lang="col_ring">Anel</th>
+                        <th data-lang="col_ear">Brinco</th>
+                        <th data-lang="col_piercing">Piercing</th>
+                        <th onclick="ordenarTabela(15, 'number')" data-lang="col_atk">Ataque Total</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-personagens">
@@ -370,10 +434,153 @@
   </div>
 
   <footer>
-    © 2025 VALHALLA. Todos os direitos reservados.
+    <span data-lang="footer_rights">© 2025 VALHALLA. Todos os direitos reservados.</span>
   </footer>
 
   <script>
+    // --- I18N DATABASE ---
+    const i18n = {
+        pt: {
+            title_page: "PERFIL", time_label: "Brasília",
+            menu_home: "Início", menu_farm: "Farm", menu_titles: "Títulos", menu_profile: "Perfil", menu_team: "Equipe",
+            btn_print: "IMPRIMIR", btn_save: "SALVAR", btn_load: "CARREGAR",
+            label_nick: "Apelido / Nick", label_coll: "Coleção", label_filter: "Exibir Personagem", label_sort: "Ordenar Por", label_atk_max: "Ataque Máximo (Main)",
+            sort_default: "📅 Lançamento", sort_name: "🔤 Nome (A-Z)", sort_power: "⚡ Tipo", sort_custom: "🖐️ Personalizado",
+            btn_show_all: "👁️ Mostrar Todas", btn_hide_all: "🙈 Ocultar Todas",
+            filter_all: "Todos", opt_all: "TODOS",
+            col_char: "Personagem", col_sys: "Sistema", col_class: "Classe", col_level: "Nível", col_tower: "Torre", col_berkas: "Berkas", col_void: "Vazio", col_visual: "Visual", col_neck: "Colar", col_anklet: "Tornoz.", col_ring: "Anel", col_ear: "Brinco", col_piercing: "Piercing", col_atk: "Ataque Total",
+            footer_rights: "© 2025 VALHALLA. Todos os direitos reservados."
+        },
+        en: {
+            title_page: "PROFILE", time_label: "Time",
+            menu_home: "Home", menu_farm: "Farm", menu_titles: "Titles", menu_profile: "Profile", menu_team: "Team",
+            btn_print: "PRINT", btn_save: "SAVE", btn_load: "LOAD",
+            label_nick: "Nickname", label_coll: "Collection", label_filter: "Show Character", label_sort: "Sort By", label_atk_max: "Max Attack (Main)",
+            sort_default: "📅 Launch", sort_name: "🔤 Name (A-Z)", sort_power: "⚡ Type", sort_custom: "🖐️ Custom",
+            btn_show_all: "👁️ Show All", btn_hide_all: "🙈 Hide All",
+            filter_all: "All", opt_all: "ALL",
+            col_char: "Character", col_sys: "System", col_class: "Job", col_level: "Level", col_tower: "Tower", col_berkas: "Berkas", col_void: "Void", col_visual: "Visual", col_neck: "Necklace", col_anklet: "Anklet", col_ring: "Ring", col_ear: "Earring", col_piercing: "Piercing", col_atk: "Total Attack",
+            footer_rights: "© 2025 VALHALLA. All rights reserved."
+        },
+        es: {
+            title_page: "PERFIL", time_label: "Hora",
+            menu_home: "Inicio", menu_farm: "Farm", menu_titles: "Títulos", menu_profile: "Perfil", menu_team: "Equipo",
+            btn_print: "IMPRIMIR", btn_save: "GUARDAR", btn_load: "CARGAR",
+            label_nick: "Apodo", label_coll: "Colección", label_filter: "Mostrar Personaje", label_sort: "Ordenar Por", label_atk_max: "Ataque Máx (Main)",
+            sort_default: "📅 Lanzamiento", sort_name: "🔤 Nombre (A-Z)", sort_power: "⚡ Tipo", sort_custom: "🖐️ Personalizado",
+            btn_show_all: "👁️ Mostrar Todo", btn_hide_all: "🙈 Ocultar Todo",
+            filter_all: "Todos", opt_all: "TODOS",
+            col_char: "Personaje", col_sys: "Sistema", col_class: "Clase", col_level: "Nivel", col_tower: "Torre", col_berkas: "Berkas", col_void: "Vacío", col_visual: "Visual", col_neck: "Collar", col_anklet: "Tobillera", col_ring: "Anillo", col_ear: "Pendiente", col_piercing: "Piercing", col_atk: "Ataque Total",
+            footer_rights: "© 2025 VALHALLA. Todos los derechos reservados."
+        },
+        ko: {
+            title_page: "프로필", time_label: "시간",
+            menu_home: "홈", menu_farm: "파밍", menu_titles: "타이틀", menu_profile: "프로필", menu_team: "팀",
+            btn_print: "인쇄", btn_save: "저장", btn_load: "불러오기",
+            label_nick: "닉네임", label_coll: "컬렉션", label_filter: "캐릭터 보기", label_sort: "정렬 기준", label_atk_max: "최대 공격력 (메인)",
+            sort_default: "📅 시작하다", sort_name: "🔤 이름 (알파벳 순)", sort_power: "⚡ 타입", sort_custom: "🖐️ 사용자 지정",
+            btn_show_all: "👁️ 모두 보기", btn_hide_all: "🙈 모두 숨기기",
+            filter_all: "모두", opt_all: "모두",
+            col_char: "캐릭터", col_sys: "시스템", col_class: "전직", col_level: "레벨", col_tower: "탑", col_berkas: "베르카스", col_void: "공허", col_visual: "코디", col_neck: "목걸이", col_anklet: "발찌", col_ring: "반지", col_ear: "귀걸이", col_piercing: "피어싱", col_atk: "종합 공격력",
+            footer_rights: "© 2025 VALHALLA. 모든 권리 보유."
+        },
+        fr: {
+            title_page: "PROFIL", time_label: "Heure",
+            menu_home: "Accueil", menu_farm: "Farm", menu_titles: "Titres", menu_profile: "Profil", menu_team: "Équipe",
+            btn_print: "IMPRIMER", btn_save: "SAUVER", btn_load: "CHARGER",
+            label_nick: "Pseudo", label_coll: "Collection", label_filter: "Afficher Personnage", label_sort: "Trier Par", label_atk_max: "Attaque Max (Main)",
+            sort_default: "📅 Lancement", sort_name: "🔤 Nom (A-Z)", sort_power: "⚡ Type", sort_custom: "🖐️ Personnalisé",
+            btn_show_all: "👁️ Tout Afficher", btn_hide_all: "🙈 Tout Masquer",
+            filter_all: "Tous", opt_all: "TOUS",
+            col_char: "Personnage", col_sys: "Système", col_class: "Classe", col_level: "Niveau", col_tower: "Tour", col_berkas: "Berkas", col_void: "Vide", col_visual: "Visuel", col_neck: "Collier", col_anklet: "Cheville", col_ring: "Bague", col_ear: "Boucle", col_piercing: "Piercing", col_atk: "Attaque Totale",
+            footer_rights: "© 2025 VALHALLA. Tous droits réservés."
+        }
+    };
+
+    // --- DROPDOWN TRANSLATION DICTIONARY ---
+    const dropdownI18n = {
+        "Nenhum": { en: "None", es: "Ninguno", ko: "없음", fr: "Aucun" },
+        "OK": { en: "OK", es: "OK", ko: "완료", fr: "OK" },
+        
+        // Classes
+        "1ª Classe": { en: "1st Job", es: "1ª Clase", ko: "1차 전직", fr: "1ère Classe" },
+        "2ª Classe": { en: "2nd Job", es: "2ª Clase", ko: "2차 전직", fr: "2ème Classe" },
+        "3ª Classe": { en: "3rd Job", es: "3ª Clase", ko: "3차 전직", fr: "3ème Classe" },
+        "4ª Classe": { en: "4th Job", es: "4ª Clase", ko: "4차 전직", fr: "4ème Classe" },
+        "Despertar": { en: "Awakening", es: "Despertar", ko: "초월", fr: "Éveil" },
+        
+        // Items (Common)
+        "Piupiu": { en: "Piupiu", es: "Piupiu", ko: "퓨퓨", fr: "Piupiu" },
+        "Harkyon": { en: "Harkyon", es: "Harkyon", ko: "하르키온", fr: "Harkyon" },
+        "Ordem": { en: "Order", es: "Orden", ko: "질서", fr: "Ordre" },
+        "Caos": { en: "Chaos", es: "Caos", ko: "혼돈", fr: "Chaos" },
+        
+        // Rings
+        "Dimensão BI": { en: "Dimension I", es: "Dimensión I", ko: "차원 I", fr: "Dimension I" },
+        "Dimensão BII": { en: "Dimension II", es: "Dimensión II", ko: "차원 II", fr: "Dimension II" },
+        "Dimensão BIII": { en: "Dimension III", es: "Dimensión III", ko: "차원 III", fr: "Dimension III" },
+        "Infinito BI": { en: "Infinite I", es: "Infinito I", ko: "무한 I", fr: "Infini I" },
+        "Infinito BII": { en: "Infinite II", es: "Infinito II", ko: "무한 II", fr: "Infini II" },
+        "Infinito BIII": { en: "Infinite III", es: "Infinito III", ko: "무한 III", fr: "Infini III" },
+        "Incumprível III": { en: "Unfulfilled III", es: "Incumplible III", ko: "미완성 III", fr: "Inaccompli III" },
+        "Ciclo Infinito": { en: "Infinite Cycle", es: "Ciclo Infinito", ko: "무한의 순환", fr: "Cycle Infini" },
+        
+        // Earrings/Piercings
+        "Chamas": { en: "Flames", es: "Llamas", ko: "화염", fr: "Flammes" },
+        "Gnosis": { en: "Gnosis", es: "Gnosis", ko: "그노시스", fr: "Gnosis" },
+        "Fênix": { en: "Phoenix", es: "Fénix", ko: "피닉스", fr: "Phénix" },
+        "Guardiões I": { en: "Guardians I", es: "Guardianes I", ko: "수호자 I", fr: "Gardiens I" },
+        "Guardiões II": { en: "Guardians II", es: "Guardianes II", ko: "수호자 II", fr: "Gardiens II" },
+        "Guardiões III": { en: "Guardians III", es: "Guardianes III", ko: "수호자 III", fr: "Gardiens III" },
+
+        // Necklaces/Anklets
+        "Amor": { en: "Love", es: "Amor", ko: "사랑", fr: "Amour" },
+        "Átropos": { en: "Atropos", es: "Átropos", ko: "아트로포스", fr: "Atropos" },
+        "Energia Azul": { en: "Blue Energy", es: "Energía Azul", ko: "푸른 기운", fr: "Énergie Bleue" },
+        "Energia Vermelha": { en: "Red Energy", es: "Energía Roja", ko: "붉은 기운", fr: "Énergie Rouge" },
+        "Fogo": { en: "Fire", es: "Fuego", ko: "불", fr: "Feu" },
+        "Folhas da Vida": { en: "Leaves of Life", es: "Hojas de Vida", ko: "생명의 잎", fr: "Feuilles de Vie" },
+        "Gelo": { en: "Ice", es: "Hielo", ko: "얼음", fr: "Glace" },
+        "Halloween": { en: "Halloween", es: "Halloween", ko: "할로윈", fr: "Halloween" },
+        "Luz": { en: "Light", es: "Luz", ko: "빛", fr: "Lumière" },
+        "Morte": { en: "Death", es: "Muerte", ko: "죽음", fr: "Mort" },
+        "Rosas": { en: "Roses", es: "Rosas", ko: "장미", fr: "Roses" },
+        "Trovão": { en: "Lightning", es: "Trueno", ko: "번개", fr: "Foudre" },
+        "Vento": { en: "Wind", es: "Viento", ko: "바람", fr: "Vent" },
+        "Eternidade": { en: "Eternity", es: "Eternidad", ko: "영원", fr: "Éternité" },
+        "Mágica": { en: "Magic", es: "Mágica", ko: "마법", fr: "Magique" },
+        "Real": { en: "Royal", es: "Real", ko: "로얄", fr: "Royal" },
+        "Zoro": { en: "Xenia", es: "Zoro", ko: "제니아", fr: "Zoro" }
+    };
+
+    let currentLang = localStorage.getItem('valhalla_lang') || 'pt';
+
+    function applyLanguage() {
+        const langData = i18n[currentLang];
+        if(!langData) return;
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if(langData[key]) el.innerHTML = langData[key];
+        });
+        
+        const optAll = document.querySelector('#filter-char-select option[value="todos"]');
+        if(optAll) optAll.text = langData['opt_all'];
+        
+        const optDefault = document.querySelector('#sort-order option[value="default"]');
+        if(optDefault) optDefault.text = langData['sort_default'];
+        
+        const optCustom = document.querySelector('#sort-order option[value="custom"]');
+        if(optCustom) optCustom.text = langData['sort_custom'];
+    }
+
+    function getTerm(term) {
+        if(currentLang === 'pt') return term;
+        if(dropdownI18n[term] && dropdownI18n[term][currentLang]) {
+            return dropdownI18n[term][currentLang];
+        }
+        return term;
+    }
+
     // --- LÓGICA DE PARTÍCULAS ---
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
@@ -424,6 +631,12 @@
     function generateRange(max) {
         return Array.from({length: max + 1}, (_, i) => i.toString());
     }
+    
+    function generateRangeWithOK(max) {
+        const arr = generateRange(max); 
+        arr.push("OK");
+        return arr;
+    }
 
     // --- GERAR SELECTS DA CONTA ---
     function populateAccountSelects() {
@@ -462,7 +675,6 @@
         { key: 'sr', type: 'select' },
         { key: 'visualChase', type: 'select' },
         
-        // NOVAS COLUNAS
         { key: 'colar', type: 'select' },
         { key: 'tornozeleira', type: 'select' },
 
@@ -476,8 +688,6 @@
     const opcoesAnel = ['Nenhum','Piupiu','Harkyon','Dimensão BI','Dimensão BII','Dimensão BIII','Infinito BI','Infinito BII','Infinito BIII','Incumprível III','Ciclo Infinito'];
     const opcoesBrinco = ['Nenhum','Piupiu','Chamas','Gnosis','Fênix','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
     const opcoesPiercing = ['Nenhum','Piupiu','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
-    
-    // OPÇÕES NOVAS (ORDENADAS ALFABETICAMENTE + NENHUM)
     const opcoesColar = ['Nenhum', 'Amor', 'Átropos', 'Energia Azul', 'Energia Vermelha', 'Fogo', 'Folhas da Vida', 'Gelo', 'Halloween', 'Luz', 'Morte', 'Rosas', 'Trovão', 'Vento'];
     const opcoesTornozeleira = ['Nenhum', 'Eternidade', 'Mágica', 'Real', 'Zoro'];
 
@@ -485,15 +695,26 @@
     const opcoesTower = Array.from({length:30},(_,i)=>(i+1).toString());
 
     // --- LÓGICA DE OPÇÕES DINÂMICAS ---
-    function getOpcoesBerkasVazioSR(birth) {
-        if(birth <= 10) return generateRange(15); 
-        return generateRange(12);
+    function getOpcoesBerkas(birth) {
+        if(birth <= 10) return generateRangeWithOK(15); 
+        return generateRangeWithOK(12);
+    }
+    
+    function getOpcoesVazio(birth) {
+        if(birth <= 10) return generateRangeWithOK(10); 
+        return generateRangeWithOK(7);
+    }
+
+    function getOpcoesSR(birth) {
+        if(Number(birth) === 14) return generateRangeWithOK(2); 
+        if(birth <= 10) return generateRangeWithOK(15);
+        return generateRangeWithOK(12);
     }
 
     function getOpcoesVisual(birth) {
-        if(birth === 19) return generateRange(2);
-        if(birth <= 15) return generateRange(5);
-        return generateRange(3);
+        if(birth === 19) return generateRangeWithOK(2);
+        if(birth <= 15) return generateRangeWithOK(5);
+        return generateRangeWithOK(3);
     }
 
     const dadosIniciais = [
@@ -512,6 +733,7 @@
     ];
 
     let appData = {
+        meta: { sortOrder: 'default', customOrder: [] },
         account: { nick: "", cLevel: "1", collection: "0" },
         perfil: []
     };
@@ -520,7 +742,8 @@
       const s = document.createElement("select");
       opcoes.forEach(o => {
         const opt = document.createElement("option");
-        opt.value = opt.textContent = o;
+        opt.value = o; // Mantém valor original (PT)
+        opt.textContent = getTerm(o); // Exibe traduzido
         if(String(o) === String(valorSel)) opt.selected = true;
         s.appendChild(opt);
       });
@@ -536,6 +759,7 @@
     // --- INICIALIZAÇÃO ---
     function init() {
         startClock();
+        applyLanguage(); 
         populateAccountSelects();
         
         const cached = localStorage.getItem(CACHE_KEY);
@@ -544,6 +768,13 @@
                 const parsed = JSON.parse(cached);
                 appData.perfil = parsed.perfil || [];
                 appData.account = parsed.account || { nick: "", cLevel: "1", collection: "0" };
+                // Garante que o meta existe
+                if(!parsed.meta) appData.meta = { sortOrder: 'default', customOrder: [] };
+                else {
+                    appData.meta.sortOrder = parsed.meta.sortOrder || 'default';
+                    appData.meta.customOrder = parsed.meta.customOrder || [];
+                }
+                
                 updateSaveDisplay(parsed.meta?.dataHora || Date.now());
             } catch(e) { console.error("Erro cache", e); }
         }
@@ -559,6 +790,7 @@
                     anel: "Nenhum", brinco: "Nenhum", piercing: "Nenhum", atkTotal: "0"
                 });
             } else {
+                // Atualizações retroativas
                 if(!existing.colar) existing.colar = "Nenhum";
                 if(!existing.tornozeleira) existing.tornozeleira = "Nenhum";
             }
@@ -567,18 +799,144 @@
         document.getElementById("acc-nick").value = appData.account.nick;
         document.getElementById("acc-clv").value = appData.account.cLevel;
         document.getElementById("acc-coll").value = appData.account.collection;
+        
+        // Popula filtro de nomes
+        const charSelect = document.getElementById("filter-char-select");
+        appData.perfil.forEach(p => {
+            const opt = document.createElement("option");
+            opt.value = p.nome;
+            opt.textContent = p.nome;
+            charSelect.appendChild(opt);
+        });
+
+        // Seta o valor do select de ordenação
+        document.getElementById('sort-order').value = appData.meta.sortOrder;
 
         renderizarTabela();
         criarMenuColunas();
     }
 
+    // --- ORDENAÇÃO E DRAG ---
+    function changeSort(order) {
+        appData.meta.sortOrder = order;
+        salvarNoCache();
+        renderizarTabela();
+    }
+
+    function getSortedProfile() {
+        let list = [...appData.perfil];
+        const order = appData.meta.sortOrder;
+
+        if(order === 'name') {
+            list.sort((a, b) => a.nome.localeCompare(b.nome));
+        } else if(order === 'power') {
+            list.sort((a, b) => a.power.localeCompare(b.power));
+        } else if(order === 'custom') {
+            const orderMap = new Map();
+            if(!appData.meta.customOrder) appData.meta.customOrder = [];
+            
+            // Se algum novo char não estiver na lista custom, adiciona no fim
+            appData.perfil.forEach(p => {
+                if(!appData.meta.customOrder.includes(p.char)) appData.meta.customOrder.push(p.char);
+            });
+
+            appData.meta.customOrder.forEach((charKey, index) => {
+                orderMap.set(charKey, index);
+            });
+
+            list.sort((a, b) => {
+                const idxA = orderMap.has(a.char) ? orderMap.get(a.char) : 999;
+                const idxB = orderMap.has(b.char) ? orderMap.get(b.char) : 999;
+                return idxA - idxB;
+            });
+        }
+        // 'default' mantém a ordem do array original (birth)
+        return list;
+    }
+
+    // --- DRAG AND DROP EVENTS ---
+    let draggedRow = null;
+
+    function handleDragStart(e) {
+        draggedRow = this;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        // Necessário para Firefox
+        e.dataTransfer.setData('text/html', this.innerHTML);
+    }
+
+    function handleDragOver(e) {
+        if (e.preventDefault) e.preventDefault(); 
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+    }
+
+    function handleDrop(e) {
+        if (e.stopPropagation) e.stopPropagation(); 
+        
+        if (draggedRow !== this) {
+            const sourceChar = draggedRow.getAttribute('data-char');
+            const targetChar = this.getAttribute('data-char');
+            
+            let order = appData.meta.customOrder;
+            const fromIndex = order.indexOf(sourceChar);
+            const toIndex = order.indexOf(targetChar);
+
+            if (fromIndex >= 0 && toIndex >= 0) {
+                // Remove da posição antiga
+                order.splice(fromIndex, 1);
+                // Insere na nova
+                order.splice(toIndex, 0, sourceChar);
+                
+                appData.meta.customOrder = order;
+                salvarNoCache();
+                renderizarTabela(); // Re-renderiza na nova ordem
+            }
+        }
+        return false;
+    }
+
+    function handleDragEnd(e) {
+        this.classList.remove('dragging');
+    }
+
     function renderizarTabela() {
         const tb = document.getElementById("tbody-personagens");
+        const tableWrapper = document.querySelector('.table-container-center');
         tb.innerHTML = "";
+        
+        atualizarAtaqueTotal();
 
-        appData.perfil.forEach((p) => {
+        // Pega lista ordenada (Padrão, Nome, Poder, Custom)
+        const sortedList = getSortedProfile();
+        const currentSort = appData.meta.sortOrder;
+        const filterChar = document.getElementById('filter-char-select').value;
+
+        // Adiciona classe para mudar o cursor se estiver no modo custom
+        if(currentSort === 'custom') {
+            tableWrapper.classList.add('draggable-mode');
+        } else {
+            tableWrapper.classList.remove('draggable-mode');
+        }
+
+        sortedList.forEach((p) => {
+            // Lógica de Filtro Único
+            if (filterChar !== "todos" && p.nome !== filterChar) return;
+
             const tr = document.createElement("tr");
             tr.dataset.birth = p.birth;
+            tr.dataset.power = p.power; 
+            tr.dataset.nome = p.nome;
+            tr.setAttribute('data-char', p.char); // Importante para Drag & Drop
+
+            // Adiciona eventos de Drag se estiver no modo Custom
+            if(currentSort === 'custom' && filterChar === 'todos') {
+                tr.setAttribute('draggable', 'true');
+                tr.addEventListener('dragstart', handleDragStart);
+                tr.addEventListener('dragover', handleDragOver);
+                tr.addEventListener('drop', handleDrop);
+                tr.addEventListener('dragend', handleDragEnd);
+            }
 
             tr.innerHTML = `<td>${p.birth}</td>`;
             
@@ -600,7 +958,9 @@
                 else if(conf.key === 'anel') options = opcoesAnel;
                 else if(conf.key === 'brinco') options = opcoesBrinco;
                 else if(conf.key === 'piercing') options = opcoesPiercing;
-                else if(['berkas', 'vazio', 'sr'].includes(conf.key)) options = getOpcoesBerkasVazioSR(p.birth);
+                else if(conf.key === 'berkas') options = getOpcoesBerkas(p.birth);
+                else if(conf.key === 'vazio') options = getOpcoesVazio(p.birth);
+                else if(conf.key === 'sr') options = getOpcoesSR(p.birth);
                 else if(conf.key === 'visualChase') options = getOpcoesVisual(p.birth);
                 else if(conf.key === 'colar') options = opcoesColar;
                 else if(conf.key === 'tornozeleira') options = opcoesTornozeleira;
@@ -612,12 +972,18 @@
                     el.type = "text";
                     el.value = p[conf.key];
                     if(conf.key === 'atkTotal') {
-                        el.addEventListener('input', function() { this.value = this.value.replace(/[^0-9]/g, ''); });
+                        el.addEventListener('input', function() { 
+                            this.value = this.value.replace(/[^0-9]/g, ''); 
+                            persistirDadosTabela(p.birth, conf.key, this.value);
+                            atualizarAtaqueTotal();
+                        });
                     }
                 }
 
-                el.addEventListener('change', (e) => persistirDadosTabela(p.birth, conf.key, e.target.value));
-                if(conf.type === 'input') el.addEventListener('input', (e) => persistirDadosTabela(p.birth, conf.key, e.target.value));
+                if(conf.key !== 'atkTotal') { 
+                    el.addEventListener('change', (e) => persistirDadosTabela(p.birth, conf.key, e.target.value));
+                    if(conf.type === 'input') el.addEventListener('input', (e) => persistirDadosTabela(p.birth, conf.key, e.target.value));
+                }
 
                 td.appendChild(el);
                 tr.appendChild(td);
@@ -626,11 +992,89 @@
         });
         atualizarColunasVisiveis();
     }
+    
+    function filtrarPorPersonagem(nome) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('.filter-btn:first-child').classList.add('active');
+        renderizarTabela(); // Renderiza usando a lógica interna do loop
+    }
+
+    function atualizarAtaqueTotal() {
+        let maxAtk = 0;
+        let charName = ""; 
+
+        appData.perfil.forEach(p => {
+            let val = parseFloat(String(p.atkTotal).replace(/[^0-9]/g, '')) || 0;
+            if (val > maxAtk) {
+                maxAtk = val;
+                charName = p.nome;
+            }
+        });
+        
+        document.getElementById('display-total-atk').innerText = maxAtk.toLocaleString('pt-BR');
+        
+        const label = document.getElementById('label-atk-main');
+        if(maxAtk > 0 && charName !== "") {
+            label.innerHTML = `Main: <span style="color: var(--primary);">${charName}</span>`;
+        } else {
+            // Usa o dicionário se disponível
+            label.innerText = i18n[currentLang] ? i18n[currentLang]['label_atk_max'] : "Ataque Máximo (Main)";
+        }
+    }
+
+    function filtrarPorPoder(tipo, btn) {
+        document.getElementById("filter-char-select").value = "todos";
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const rows = document.querySelectorAll("#tbody-personagens tr");
+        rows.forEach(row => {
+            if(tipo === 'todos') {
+                row.style.display = "";
+            } else {
+                if(row.dataset.power === tipo) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            }
+        });
+        atualizarColunasVisiveis();
+    }
+    
+    function gerarCardImagem() {
+        const tableArea = document.getElementById('capture-area');
+        const btn = document.querySelector('.btn-print');
+        const oldText = btn.innerText;
+        btn.innerText = "⏳ Gerando...";
+        
+        html2canvas(tableArea, {
+            backgroundColor: "#1a1a1a", 
+            scale: 2 
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `Valhalla_Status_${new Date().toISOString().slice(0,10)}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            btn.innerText = oldText;
+        }).catch(err => {
+            console.error(err);
+            alert("Erro ao gerar imagem.");
+            btn.innerText = oldText;
+        });
+    }
 
     function salvarNoCache() {
         const ts = Date.now();
+        // Garante que o meta seja salvo
+        if(!appData.meta) appData.meta = { sortOrder: 'default', customOrder: [] };
+        
         const dataToSave = {
-            meta: { dataHora: ts },
+            meta: { 
+                dataHora: ts,
+                sortOrder: appData.meta.sortOrder,
+                customOrder: appData.meta.customOrder
+            },
             account: appData.account,
             perfil: appData.perfil
         };
@@ -659,8 +1103,15 @@
     }
 
     function salvarPerfilManual() {
+        // Garante que o meta atualizado vá para o arquivo
+        if(!appData.meta) appData.meta = { sortOrder: 'default', customOrder: [] };
+        
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
-            meta: { dataHora: new Date().toLocaleString() },
+            meta: { 
+                dataHora: new Date().toLocaleString(),
+                sortOrder: appData.meta.sortOrder,
+                customOrder: appData.meta.customOrder
+            },
             account: appData.account,
             perfil: appData.perfil
         }));
@@ -682,9 +1133,20 @@
                 appData.perfil = dados.perfil || [];
                 appData.account = dados.account || { nick: "", cLevel: "1", collection: "0" };
                 
+                // Carrega meta
+                if(dados.meta) {
+                    appData.meta = {
+                        sortOrder: dados.meta.sortOrder || 'default',
+                        customOrder: dados.meta.customOrder || []
+                    };
+                } else {
+                    appData.meta = { sortOrder: 'default', customOrder: [] };
+                }
+                
                 document.getElementById("acc-nick").value = appData.account.nick;
                 document.getElementById("acc-clv").value = appData.account.cLevel;
                 document.getElementById("acc-coll").value = appData.account.collection;
+                document.getElementById("sort-order").value = appData.meta.sortOrder; // Atualiza dropdown
                 
                 renderizarTabela();
                 salvarNoCache();
@@ -741,6 +1203,8 @@
         });
     }
 
+    // A função ordenarTabela antiga ainda existe para cliques no header, 
+    // mas não interfere na ordenação principal salva
     let sortAsc = true;
     let lastSortIdx = -1;
 

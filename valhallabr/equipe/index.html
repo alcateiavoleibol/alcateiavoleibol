@@ -13,7 +13,6 @@
       --secondary: #03dac6;
       --bg: #0b0b0b;
       --surface: rgba(30, 30, 30, 0.7);
-      --surface-hover: rgba(50, 50, 50, 0.9);
       --border: 1px solid rgba(255, 255, 255, 0.15);
       --glass: rgba(15, 15, 15, 0.95);
       
@@ -37,7 +36,7 @@
     /* --- FUNDO ANIMADO --- */
     #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); }
 
-    /* --- HERO BANNER (PC) --- */
+    /* --- HERO BANNER --- */
     .hero-banner {
       width: 100%; height: 350px; position: relative; overflow: hidden;
       background: #020202; display: flex; align-items: center; justify-content: center;
@@ -45,7 +44,6 @@
     }
     .hero-banner img { width: 100%; height: 100%; object-fit: contain; object-position: center center; display: block; }
     
-    /* Efeito Scanner */
     .hero-banner::after {
       content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
       background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
@@ -68,12 +66,12 @@
         background: linear-gradient(90deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
     }
-	        .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
+    .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
     .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 5px; }
     .time-info { color: #aaa; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
     .real-time { color: var(--secondary); font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 5px rgba(3, 218, 198, 0.4); }
 
-    /* MENU DESKTOP */
+    /* MENU */
     .main-nav { display: flex; gap: 15px; }
     .nav-link {
         text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 1.4rem;
@@ -85,13 +83,13 @@
         background: rgba(255, 255, 255, 0.05);
     }
 
-    .controls { min-width: 180px; } /* Spacer */
+    .controls { min-width: 180px; } 
 
-    /* --- TEAM STYLES (PIRÂMIDE) --- */
+    /* --- TEAM STYLES --- */
     .team-container {
         max-width: 1400px; width: 100%; margin: 40px auto; padding: 0 20px;
         display: flex; flex-direction: column; align-items: center; gap: 50px;
-        flex-grow: 1;
+        flex-grow: 1; perspective: 1000px; /* Importante para o 3D */
     }
 
     .team-row {
@@ -107,7 +105,7 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* CARD MEMBRO */
+    /* CARD MEMBRO 3D */
     .member-card {
         background: var(--surface);
         border: 1px solid rgba(255,255,255,0.1);
@@ -117,29 +115,52 @@
         display: flex; flex-direction: column; align-items: center;
         position: relative; overflow: hidden;
         backdrop-filter: blur(10px);
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+        
+        /* Configurações 3D */
+        transform-style: preserve-3d;
+        transform: perspective(1000px);
+        transition: transform 0.1s ease-out;
+        will-change: transform;
     }
-    .member-card:hover { transform: translateY(-10px); }
+    
+    .member-card:hover {
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        border-color: rgba(255,255,255,0.3);
+    }
 
-    .member-img-box { width: 120px; height: 120px; margin-bottom: 15px; }
+    .card-glare {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(125deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0.2) 100%);
+        pointer-events: none; opacity: 0; transition: opacity 0.3s;
+        z-index: 10; mix-blend-mode: overlay;
+    }
+    .member-card:hover .card-glare { opacity: 1; }
+
+    .member-content {
+        transform: translateZ(20px);
+        display: flex; flex-direction: column; align-items: center;
+        width: 100%; pointer-events: none;
+    }
+
+    .member-img-box { width: 120px; height: 120px; margin-bottom: 15px; transform: translateZ(30px); }
     .member-img {
         width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
         border: 3px solid #fff; box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        transition: 0.3s; background: #111;
+        background: #111;
     }
-    .member-card:hover .member-img { transform: scale(1.05); }
 
-    .member-name { font-size: 1.3rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 8px; text-align: center; }
+    .member-name { font-size: 1.3rem; font-weight: 800; color: #fff; text-transform: uppercase; margin-bottom: 8px; text-align: center; transform: translateZ(25px); }
     .member-badge {
         padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; 
         text-transform: uppercase; letter-spacing: 1px; color: #000;
         box-shadow: 0 0 10px rgba(0,0,0,0.5); margin-bottom: 5px;
+        transform: translateZ(20px);
     }
 
     /* --- CARGOS --- */
     /* Líder */
-    .role-lider { border-color: var(--role-leader); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); transform: scale(1.1); }
-    .role-lider:hover { box-shadow: 0 0 50px rgba(255, 215, 0, 0.5); border-color: #fff; transform: scale(1.15) translateY(-10px); }
+    .role-lider { border-color: var(--role-leader); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+    .role-lider:hover { box-shadow: 0 0 50px rgba(255, 215, 0, 0.5); border-color: #fff; }
     .role-lider .member-img { border-color: var(--role-leader); }
     .role-lider .member-badge { background: var(--role-leader); }
     .role-lider .member-name { text-shadow: 0 0 10px var(--role-leader); }
@@ -164,11 +185,10 @@
 
     /* Inativo */
     .status-inactive { opacity: 0.6; filter: grayscale(100%); border-style: dashed; }
-    .status-inactive:hover { opacity: 1; filter: grayscale(0%); border-style: solid; cursor: help; transform: scale(1.05) translateY(-10px); }
+    .status-inactive:hover { opacity: 1; filter: grayscale(0%); border-style: solid; cursor: help; }
     .status-inactive .member-badge { background: #555; color: #ccc; }
     .status-inactive:hover .member-badge { background: var(--role-founder); color: #000; }
 
-    /* Divisor */
     .level-divider {
         width: 100%; max-width: 600px; height: 1px;
         background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
@@ -176,77 +196,20 @@
 
     footer { margin-top: auto; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; width: 100%; }
 
- /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
     @media (max-width: 900px) {
+        header { flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; }
+        .brand { text-align: center; align-items: center; width: 100%; }
+        .info-panel { align-items: center; margin-top: 5px; }
+        .hero-banner { height: auto; aspect-ratio: 4/3; max-height: 50vh; }
+        .main-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+        .nav-link { justify-content: center; background: rgba(255, 255, 255, 0.08); padding: 12px; font-size: 0.9rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+        .nav-link:last-child:nth-child(odd) { grid-column: span 2; }
+        .controls { display: none; }
         
-        /* 1. CABEÇALHO E BANNER */
-        header { 
-            flex-direction: column; 
-            gap: 15px; 
-            margin-top: 0; 
-            padding-bottom: 1rem;
-        }
-
-        /* Centraliza Logo, Subtítulo e Hora */
-        .brand { 
-            text-align: center; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .hero-banner { 
-            height: auto; 
-            aspect-ratio: 4/3; /* Proporção exata para 800x600 não distorcer */
-            max-height: 50vh;  /* Limita a altura para não ocupar a tela toda */
-        }
-
-        /* 2. MENU DE NAVEGAÇÃO EM GRID (BOTÕES) */
-        .main-nav { 
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 colunas iguais */
-            gap: 10px;
-            width: 100%;
-        }
-
-        .nav-link {
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.08); /* Fundo leve para parecer botão */
-            padding: 12px;
-            font-size: 0.9rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        /* O último botão ocupa a linha toda se sobrar (ímpar) */
-        .nav-link:last-child:nth-child(odd) { 
-            grid-column: span 2; 
-        }
-
-        .controls { display: none; } /* Remove o espaçador vazio no mobile */
-
-        /* 3. AJUSTES DA EQUIPE (PIRÂMIDE VERTICAL) */
-        .team-container { 
-            margin-top: 20px; 
-            gap: 40px; /* Mais espaço entre os níveis hierárquicos */
-            padding: 0 15px;
-        }
-        
-        .team-row {
-            gap: 25px; /* Espaço entre membros do mesmo nível */
-        }
-
-        /* Cards ocupam largura confortável e removemos efeitos de mouse */
-        .member-card { 
-            width: 100%; 
-            max-width: 340px;
-        } 
-        
-        /* Remove o zoom do líder para não estourar a tela no celular */
-        .role-lider { transform: scale(1); } 
-        .role-lider:hover { transform: none; }
-        .member-card:hover { transform: none; } /* Remove pulo ao tocar */
+        .team-container { margin-top: 20px; gap: 40px; padding: 0 15px; }
+        .team-row { gap: 25px; }
+        .member-card { width: 100%; max-width: 340px; }
+        .member-card { transform: none !important; }
     }
   </style>
 </head>
@@ -264,19 +227,19 @@
   <header>
     <div class="brand">
         <h1>VALHALLA BR</h1>
-        <h3>EQUIPE</h3>
-		<br>
+        <h3 data-lang="title_team">EQUIPE</h3>
+        <br>
         <div class="info-panel">
-            <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
+            <div class="time-info"><span data-lang="time_label">Brasília</span>: <span class="real-time" id="real-time-clock">--:--:--</span></div>
         </div>
     </div>
     
     <nav class="main-nav">
-        <a href="../index.html" class="nav-link">⌂ Início</a>
-        <a href="../farm/index.html" class="nav-link">🚜 Farm</a>
-        <a href="../titulos/index.html" class="nav-link">🏆 Títulos</a>
-        <a href="../perfil/index.html" class="nav-link">👤 Perfil</a>
-        <a href="#" class="nav-link active">🛡️ Equipe</a>
+        <a href="../index.html" class="nav-link">⌂ <span data-lang="menu_home">Início</span></a>
+        <a href="../farm/index.html" class="nav-link">🚜 <span data-lang="menu_farm">Farm</span></a>
+        <a href="../titulos/index.html" class="nav-link">🏆 <span data-lang="menu_titles">Títulos</span></a>
+        <a href="../perfil/index.html" class="nav-link">👤 <span data-lang="menu_profile">Perfil</span></a>
+        <a href="#" class="nav-link active">🛡️ <span data-lang="menu_team">Equipe</span></a>
     </nav>
 
     <div class="controls"></div>
@@ -285,13 +248,16 @@
   <div class="team-container">
       
       <div class="team-row row-1">
-          <div class="member-card role-lider">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/lass.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/FFD700?text=Lider'">
+          <div class="member-card role-lider" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/FFD700?text=Lider'">
+                  </div>
+                  <div class="member-name">GD칠</div>
+                  <div class="member-badge" data-lang="role_leader_founder">Líder | Fundador</div>
+                  <div class="member-badge" data-lang="badge_current">2024 | ATUAL</div>    
               </div>
-              <div class="member-name">GD칠</div>
-              <div class="member-badge">Líder | Fundador</div>
-              <div class="member-badge">2025</div>    
           </div>
       </div>
 
@@ -299,37 +265,52 @@
 
       <div class="team-row row-2">
           
-          <div class="member-card role-founder status-inactive" title="Membro Inativo">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/arme.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=Mec'">
+          <div class="member-card role-founder status-inactive" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/arme.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=Mec'">
+                  </div>
+                  <div class="member-name">Meczao칠</div>
+                  <div class="member-badge" data-lang="role_ex_leader">Ex Líder | Fundador</div>
+                  <div class="member-badge">2024 | 2025</div>              
               </div>
-              <div class="member-name">Meczao칠</div>
-              <div class="member-badge">Ex Líder | Fundador</div>
-              <div class="member-badge">2024 | 2025</div>              
           </div>
             
-          <div class="member-card role-founder">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=Foley'">
+          <div class="member-card role-founder" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=Foley'">
+                  </div>
+                  <div class="member-name">Foley칠</div>
+                  <div class="member-badge" data-lang="role_founder">Fundador</div>
+                  <div class="member-badge">2024</div>  
               </div>
-              <div class="member-name">Foley칠</div>
-              <div class="member-badge">Fundador</div>
           </div>
 
-          <div class="member-card role-founder">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/lupus.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=Law'">
+          <div class="member-card role-founder" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/bb86fc?text=Law'">
+                  </div>
+                  <div class="member-name">Law칠</div>
+                  <div class="member-badge" data-lang="role_founder">Fundador</div>
+                  <div class="member-badge">2024</div>  
               </div>
-              <div class="member-name">Law칠</div>
-              <div class="member-badge">Fundador</div>
           </div>
 
-          <div class="member-card role-system">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/00BFFF?text=Sys'">
+          <div class="member-card role-system" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/00BFFF?text=Sys'">
+                  </div>
+                  <div class="member-name">TREV4S</div>
+                  <div class="member-badge" data-lang="role_system">404 System</div>
+                  <div class="member-badge">2024</div>  
               </div>
-              <div class="member-name">TREV4S</div>
-              <div class="member-badge">404 System</div>
           </div>
 
       </div>
@@ -338,55 +319,153 @@
 
       <div class="team-row row-3">
           
-          <div class="member-card role-admin">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=PB'">
+          <div class="member-card role-admin" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=PB'">
+                  </div>
+                  <div class="member-name">LordPb칠 | PB</div>
+                  <div class="member-badge" data-lang="role_admin">Admin</div>
+                  <div class="member-badge">2024</div>  
               </div>
-              <div class="member-name">LordPb칠 | PB</div>
-              <div class="member-badge">Admin</div>
+          </div>
+      
+          <div class="member-card role-admin" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Remmy'">
+                  </div>
+                  <div class="member-name">remmy칠</div>
+                  <div class="member-badge" data-lang="role_admin">Admin</div>
+                  <div class="member-badge">2025</div>  
+              </div>
+          </div>
+      
+          <div class="member-card role-admin" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=M0n'">
+                  </div>
+                  <div class="member-name">zFacada</div>
+                  <div class="member-badge" data-lang="role_admin">Admin</div>
+                  <div class="member-badge">2025</div>  
+              </div>
+          </div> 
+      
+          <div class="member-card role-admin" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/veigas.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=War'">
+                  </div>
+                  <div class="member-name">War전사</div>
+                  <div class="member-badge" data-lang="role_admin">Admin</div>
+                  <div class="member-badge">2025</div>  
+              </div>
+          </div> 
+
+          <div class="member-card role-admin status-inactive" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/uno.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Heitor'">
+                  </div>
+                  <div class="member-name">Kratos</div>
+                  <div class="member-badge" data-lang="role_admin">Admin</div>
+                  <div class="member-badge">2025</div>  
+              </div>
           </div>
 
-          <div class="member-card role-admin">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/equipe.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Heitor'">
+          <div class="member-card role-admin status-inactive" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/zero.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Mon'">
+                  </div>
+                  <div class="member-name">Monarca</div>
+                  <div class="member-badge" data-lang="role_admin">Admin</div>
+                  <div class="member-badge">2025</div>  
               </div>
-              <div class="member-name">Kratos</div>
-              <div class="member-badge">Admin</div>
           </div>
 
-          <div class="member-card role-admin">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/equipe.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Remmy'">
+          <div class="member-card role-admin status-inactive" data-tilt>
+              <div class="card-glare"></div>
+              <div class="member-content">
+                  <div class="member-img-box">
+                      <img src="../imagens/equipe/elesis.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Imm'">
+                  </div>
+                  <div class="member-name">Immortal</div>
+                  <div class="member-badge" data-lang="role_admin">Admin</div>
+                  <div class="member-badge">2025</div>  
               </div>
-              <div class="member-name">remmy칠</div>
-              <div class="member-badge">Admin</div>
           </div>
-
-          <div class="member-card role-admin">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/zero.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=M0n'">
-              </div>
-              <div class="member-name">Monarca</div>
-              <div class="member-badge">Admin</div>
-          </div>
-
-          <div class="member-card role-admin">
-              <div class="member-img-box">
-                  <img src="../imagens/equipe/elesis.png" class="member-img" onerror="this.src='https://placehold.co/150x150/111/DC143C?text=Imm'">
-              </div>
-              <div class="member-name">Immortal</div>
-              <div class="member-badge">Admin</div>
-          </div>
-
       </div>
 
   </div>
 
   <footer>
-    © 2025 VALHALLA. Todos os direitos reservados.
+    <span data-lang="footer_rights">© 2025 VALHALLA. Todos os direitos reservados.</span>
   </footer>
 
   <script>
+    // --- I18N DATABASE ---
+    const i18n = {
+        pt: {
+            title_team: "EQUIPE", time_label: "Brasília",
+            menu_home: "Início", menu_farm: "Farm", menu_titles: "Títulos", menu_profile: "Perfil", menu_team: "Equipe",
+            role_leader_founder: "Líder | Fundador", role_ex_leader: "Ex Líder | Fundador",
+            role_founder: "Fundador", role_admin: "Admin", role_system: "404 System",
+            badge_current: "2024 | ATUAL",
+            footer_rights: "© 2025 VALHALLA. Todos os direitos reservados."
+        },
+        en: {
+            title_team: "TEAM", time_label: "Time",
+            menu_home: "Home", menu_farm: "Farm", menu_titles: "Titles", menu_profile: "Profile", menu_team: "Team",
+            role_leader_founder: "Leader | Founder", role_ex_leader: "Ex Leader | Founder",
+            role_founder: "Founder", role_admin: "Admin", role_system: "404 System",
+            badge_current: "2024 | CURRENT",
+            footer_rights: "© 2025 VALHALLA. All rights reserved."
+        },
+        es: {
+            title_team: "EQUIPO", time_label: "Hora",
+            menu_home: "Inicio", menu_farm: "Farm", menu_titles: "Títulos", menu_profile: "Perfil", menu_team: "Equipo",
+            role_leader_founder: "Líder | Fundador", role_ex_leader: "Ex Líder | Fundador",
+            role_founder: "Fundador", role_admin: "Admin", role_system: "404 System",
+            badge_current: "2024 | ACTUAL",
+            footer_rights: "© 2025 VALHALLA. Todos los derechos reservados."
+        },
+        ko: {
+            title_team: "팀", time_label: "시간",
+            menu_home: "홈", menu_farm: "파밍", menu_titles: "타이틀", menu_profile: "프로필", menu_team: "팀",
+            role_leader_founder: "길드장 | 설립자", role_ex_leader: "전 길드장 | 설립자",
+            role_founder: "설립자", role_admin: "관리자", role_system: "404 시스템",
+            badge_current: "2024 | 현재",
+            footer_rights: "© 2025 VALHALLA. 모든 권리 보유."
+        },
+        fr: {
+            title_team: "ÉQUIPE", time_label: "Heure",
+            menu_home: "Accueil", menu_farm: "Farm", menu_titles: "Titres", menu_profile: "Profil", menu_team: "Équipe",
+            role_leader_founder: "Chef | Fondateur", role_ex_leader: "Ex Chef | Fondateur",
+            role_founder: "Fondateur", role_admin: "Admin", role_system: "404 Système",
+            badge_current: "2024 | ACTUEL",
+            footer_rights: "© 2025 VALHALLA. Tous droits réservés."
+        }
+    };
+
+    let currentLang = localStorage.getItem('valhalla_lang') || 'pt';
+
+    function applyLanguage() {
+        const langData = i18n[currentLang];
+        if(!langData) return;
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if(langData[key]) el.innerHTML = langData[key];
+        });
+    }
+
     // --- LÓGICA DE PARTÍCULAS ---
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
@@ -421,6 +500,38 @@
     }
     initParticles(); animateParticles();
 
+    // --- EFEITO 3D TILT ---
+    if(window.matchMedia("(min-width: 900px)").matches) {
+        const cards = document.querySelectorAll('.member-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -15; 
+                const rotateY = ((x - centerX) / centerX) * 15;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                
+                const glareX = ((x / rect.width) * 100);
+                const glareY = ((y / rect.height) * 100);
+                const glare = card.querySelector('.card-glare');
+                if(glare) {
+                    glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%)`;
+                    glare.style.opacity = '1';
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+                const glare = card.querySelector('.card-glare');
+                if(glare) glare.style.opacity = '0';
+            });
+        });
+    }
+
     // --- RELÓGIO ---
     function startClock() {
         const clockEl = document.getElementById('real-time-clock');
@@ -430,8 +541,10 @@
         }
         setInterval(update, 1000); update();
     }
+    
+    // Iniciar tudo
     startClock();
+    applyLanguage(); // Aplica a tradução ao carregar
   </script>
 </body>
-
 </html>

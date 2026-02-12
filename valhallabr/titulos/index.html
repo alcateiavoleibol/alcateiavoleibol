@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TÍTULOS</title>
   <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   
   <style>
     /* --- CONFIGURAÇÕES GERAIS --- */
@@ -70,7 +71,7 @@
         -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         margin: 0; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3);
     }
-	        .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
+    .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
     .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
     .cache-info { color: #888; }
     .cache-info span { color: var(--primary); font-weight: bold; }
@@ -88,42 +89,36 @@
         background: rgba(255, 255, 255, 0.05);
     }
 
-        .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
-        .btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--primary); color: var(--primary);
-            padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
-        }
-        .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
-        
-        .btn-load { position: relative; overflow: hidden; border-color: var(--secondary); color: var(--secondary); }
-        .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
-        .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
+    .btn {
+        background: rgba(255,255,255,0.05); border: 1px solid var(--primary); color: var(--primary);
+        padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
+    }
+    .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
+    
+    .btn-load { position: relative; overflow: hidden; border-color: var(--secondary); color: var(--secondary); }
+    .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
+    .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+    .btn-print { border-color: #fff; color: #fff; }
+    .btn-print:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
 
     /* --- FILTRO SUPERIOR --- */
     .filter-wrapper {
-        display: flex; justify-content: center; align-items: center; gap: 10px; 
-        margin: 30px auto; padding: 15px;
+        display: flex; justify-content: center; align-items: center; gap: 15px; 
+        margin: 30px auto; padding: 20px;
         background: var(--surface); border-radius: 50px; border: var(--border);
         width: fit-content; backdrop-filter: blur(10px);
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
+    .filter-group { display: flex; flex-direction: column; }
+    .filter-group label { font-size: 0.7rem; color: #aaa; margin-left: 10px; margin-bottom: 2px; text-transform: uppercase; }
     .filter-select {
         background: rgba(0,0,0,0.6); border: 1px solid #444; color: #fff;
-        padding: 10px 20px; border-radius: 20px; font-size: 1rem; width: 300px;
+        padding: 10px 20px; border-radius: 20px; font-size: 0.9rem; width: 220px;
         cursor: pointer; text-align: center;
     }
     .filter-select:focus { border-color: var(--primary); outline: none; }
-
-    /* Botão Limpar Filtro */
-    .btn-clear {
-        background: rgba(255, 255, 255, 0.1); border: 1px solid var(--secondary);
-        color: var(--secondary); padding: 8px 15px; border-radius: 50%;
-        cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 1.1rem;
-        width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
-    }
-    .btn-clear:hover {
-        background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); transform: rotate(90deg);
-    }
 
     /* --- GRID DE PERSONAGENS --- */
     .grid-container {
@@ -138,7 +133,7 @@
         background: var(--surface); border: var(--border);
         border-radius: 12px; overflow: hidden;
         display: flex; flex-direction: column;
-        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
         backdrop-filter: blur(10px); position: relative;
     }
     .char-card:hover {
@@ -147,242 +142,101 @@
         border-color: var(--secondary);
     }
 
+    /* DRAG STYLES */
+    .grid-container.draggable-mode .char-card { cursor: grab; }
+    .grid-container.draggable-mode .char-card:active { cursor: grabbing; }
+    .char-card.dragging { 
+        opacity: 0.5; border: 2px dashed var(--secondary); transform: scale(0.98); 
+    }
+
     /* Cabeçalho do Card */
     .char-header {
         background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(30,30,30,0.9) 100%);
-        padding: 25px;
-        display: flex; align-items: center; gap: 20px;
-        border-bottom: 1px solid rgba(255,255,255,0.1); position: relative;
+        padding: 25px; display: flex; align-items: center; gap: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; pointer-events: none;
     }
-    .avatar {
-        width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--primary);
-        object-fit: cover; box-shadow: 0 0 15px rgba(187, 134, 252, 0.4);
+    .avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; box-shadow: 0 0 15px rgba(187, 134, 252, 0.4); }
+    .char-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+    .char-name { font-size: 1.4rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1px; line-height: 1.1; }
+    
+    .char-atk-badge {
+        display: inline-flex; align-items: center; gap: 5px;
+        background: rgba(255, 204, 0, 0.1); border: 1px solid rgba(255, 204, 0, 0.3);
+        color: #ffcc00; padding: 2px 8px; border-radius: 4px;
+        font-size: 0.85rem; font-weight: bold; margin-top: 5px; width: fit-content;
+        text-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
     }
-    .char-info { flex-grow: 1; }
-    .char-name { font-size: 1.4rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
-    .char-birth { font-size: 0.9rem; color: #888; font-family: monospace; }
 
-    /* Slot Equipado */
     .equipped-slot {
         width: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;
         border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px; min-height: 80px;
+        pointer-events: auto;
     }
     .equipped-img { width: 70px; height: 70px; object-fit: contain; filter: drop-shadow(0 0 5px var(--secondary)); }
     .equipped-label { font-size: 0.75rem; color: var(--secondary); text-align: center; line-height: 1.2; margin-top: 5px; font-weight: bold; }
     .placeholder-text { font-size: 0.75rem; color: #555; font-style: italic; }
 
-    /* Grid de Títulos */
-    .titles-grid {
-        display: flex; flex-wrap: wrap; gap: 12px; padding: 25px;
-        justify-content: center; min-height: 180px; align-content: flex-start;
-    }
-    
+    .titles-grid { display: flex; flex-wrap: wrap; gap: 12px; padding: 25px; justify-content: center; min-height: 180px; align-content: flex-start; pointer-events: auto; }
     .title-item {
-        width: 60px; height: 60px; border-radius: 10px;
-        border: 1px solid transparent; cursor: pointer;
+        width: 60px; height: 60px; border-radius: 10px; border: 1px solid transparent; cursor: pointer;
         display: flex; align-items: center; justify-content: center;
         background: rgba(0,0,0,0.3); transition: 0.2s; position: relative;
     }
-    .title-item img {
-        width: 100%; height: 100%; object-fit: contain;
-        opacity: 0.2; filter: grayscale(1); transition: 0.3s;
-    }
-
-    /* Estados */
+    .title-item img { width: 100%; height: 100%; object-fit: contain; opacity: 0.2; filter: grayscale(1); transition: 0.3s; }
     .title-item:hover { background: rgba(255,255,255,0.05); transform: scale(1.15); z-index: 2; }
     .title-item:hover img { opacity: 0.8; }
-    
     .title-item.obtained img { opacity: 1; filter: grayscale(0); }
     .title-item.obtained { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
-
-    .title-item.equipped {
-        border-color: var(--secondary);
-        box-shadow: 0 0 15px rgba(3, 218, 198, 0.25);
-        background: rgba(3, 218, 198, 0.05);
-    }
+    .title-item.equipped { border-color: var(--secondary); box-shadow: 0 0 15px rgba(3, 218, 198, 0.25); background: rgba(3, 218, 198, 0.05); }
     .title-item.equipped img { opacity: 1; filter: drop-shadow(0 0 5px var(--secondary)); }
 
     /* Tooltip */
     #tooltip {
         position: fixed; display: none; z-index: 9999; pointer-events: none;
-        background: rgba(10, 12, 16, 0.98); 
-        border: 2px solid #333;
-        border-radius: 8px; 
-        box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-        min-width: 320px; max-width: 380px;
-        color: #eee; font-size: 0.9rem;
+        background: rgba(10, 12, 16, 0.98); border: 2px solid #333;
+        border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+        min-width: 320px; max-width: 380px; color: #eee; font-size: 0.9rem;
     }
-
-    .tt-header {
-        padding: 12px 15px;
-        background: linear-gradient(90deg, rgba(30,30,30,0.8), transparent);
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        border-radius: 6px 6px 0 0;
-    }
+    .tt-header { padding: 12px 15px; background: linear-gradient(90deg, rgba(30,30,30,0.8), transparent); border-bottom: 1px solid rgba(255,255,255,0.1); border-radius: 6px 6px 0 0; }
     .tt-name { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
     .tt-meta { font-size: 0.75rem; color: #aaa; margin-top: 2px; display: flex; justify-content: space-between; }
-
-    /* Cores das Bordas e Textos por Raridade */
-    .rarity-normal { border-top: 3px solid var(--normal); }
-    .rarity-normal .tt-name { color: var(--normal); }
-
-    .rarity-raro { border-top: 3px solid var(--rare); }
-    .rarity-raro .tt-name { color: var(--rare); text-shadow: 0 0 10px rgba(0, 191, 255, 0.4); }
-
-    .rarity-epico { border-top: 3px solid var(--epic); }
-    .rarity-epico .tt-name { color: var(--epic); text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
-
-    .rarity-lendario { border-top: 3px solid var(--legendary); }
-    .rarity-lendario .tt-name { color: var(--legendary); text-shadow: 0 0 10px rgba(176, 38, 255, 0.4); }
-
-    .rarity-ancestral { border-top: 3px solid var(--ancestral); }
-    .rarity-ancestral .tt-name { color: var(--ancestral); text-shadow: 0 0 10px rgba(255, 20, 147, 0.4); }
-
+    .rarity-normal { border-top: 3px solid var(--normal); } .rarity-normal .tt-name { color: var(--normal); }
+    .rarity-raro { border-top: 3px solid var(--rare); } .rarity-raro .tt-name { color: var(--rare); text-shadow: 0 0 10px rgba(0, 191, 255, 0.4); }
+    .rarity-epico { border-top: 3px solid var(--epic); } .rarity-epico .tt-name { color: var(--epic); text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+    .rarity-lendario { border-top: 3px solid var(--legendary); } .rarity-lendario .tt-name { color: var(--legendary); text-shadow: 0 0 10px rgba(176, 38, 255, 0.4); }
+    .rarity-ancestral { border-top: 3px solid var(--ancestral); } .rarity-ancestral .tt-name { color: var(--ancestral); text-shadow: 0 0 10px rgba(255, 20, 147, 0.4); }
     .tt-body { padding: 15px; }
-
-    .tt-stats-grid {
-        display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; 
-        background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px;
-    }
+    .tt-stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px; }
     .tt-stat { display: flex; flex-direction: column; align-items: center; }
     .tt-stat-val { font-weight: bold; font-size: 1rem; color: #fff; }
     .tt-stat-label { font-size: 0.65rem; color: #aaa; text-transform: uppercase; }
-
     .tt-effects { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
     .tt-effect-row { display: flex; align-items: flex-start; gap: 8px; color: #ddd; font-size: 0.85rem; line-height: 1.3; }
     .tt-bullet { color: var(--secondary); font-size: 1rem; line-height: 1; }
-
-    .tt-notes { 
-        margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); 
-        font-size: 0.8rem; color: #888; font-style: italic; 
-    }
+    .tt-notes { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; color: #888; font-style: italic; }
     .tt-note-item { margin-bottom: 4px; display: block; }
     .tt-fallback-img { width: 100%; display: block; border-radius: 8px; }
 
-    /* Footer */
-    footer {
-        margin-top: auto; padding: 25px; text-align: center;
-        background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1);
-        color: #777; font-size: 0.85rem; letter-spacing: 1px;
-    }
+    footer { margin-top: auto; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; width: 100%; }
 
-/* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
     @media (max-width: 900px) {
-        
-        /* 1. CABEÇALHO E BANNER */
-        header { 
-            flex-direction: column; 
-            gap: 15px; 
-            margin-top: 0; 
-            padding-bottom: 1rem;
-        }
-
-        /* Centraliza Logo, Título e o Painel de Info */
-        .brand { 
-            text-align: center; 
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centraliza Horizontalmente */
-            width: 100%;
-        }
-
-        /* Centraliza Cache e Horário Oficial */
-        .info-panel {
-            align-items: center; /* Garante que os textos fiquem no meio */
-            display: flex;
-            flex-direction: column;
-            margin-top: 5px;
-        }
-
-        .hero-banner { 
-            height: auto; 
-            aspect-ratio: 4/3; 
-            max-height: 50vh; 
-        }
-
-        /* 2. MENU DE NAVEGAÇÃO EM GRID (APP STYLE) */
-        .main-nav { 
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px;
-            width: 100%;
-        }
-
-        .nav-link {
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.08); 
-            font-size: 0.9rem;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: auto; 
-        }
-        
-        .nav-link:last-child:nth-child(odd) { 
-            grid-column: span 2; 
-        }
-
-        /* 3. BOTÕES DE AÇÃO */
-        .controls { 
-            width: 100%; 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px;
-            margin-top: 5px; 
-        }
-        .btn, .btn-load { width: 100%; justify-content: center; }
-
-        /* 4. ÁREA DE FILTRO */
-        .filter-wrapper { 
-            width: 95%; 
-            padding: 10px; 
-            flex-direction: row; 
-            gap: 10px;
-            align-items: stretch;
-        }
-        .filter-select { flex-grow: 1; width: auto; } 
-        .btn-clear { width: 45px; flex-shrink: 0; } 
-
-        /* 5. GRID DE PERSONAGENS */
-        .grid-container { 
-            grid-template-columns: 1fr; 
-            padding: 0 15px; 
-        }
-
-        /* 6. CARD DO PERSONAGEM */
-        .char-header { 
-            flex-direction: column; 
-            text-align: center; 
-            gap: 10px;
-            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%);
-        }
-
-        .char-info { margin-bottom: 5px; }
-
-        .equipped-slot { 
-            width: 100%; 
-            border-left: none; 
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            padding-left: 0; 
-            padding-top: 15px; 
-            margin-top: 5px;
-            background: rgba(255, 255, 255, 0.02); 
-            border-radius: 8px;
-        }
-
-        .titles-grid { gap: 15px; }
-        .title-item { width: 55px; height: 55px; }
-
-        /* 7. TOOLTIP */
-        #tooltip { 
-            max-width: 90%; 
-            width: 90%;
-            left: 50% !important; 
-            top: 50% !important; 
-            transform: translate(-50%, -50%); 
-            font-size: 0.85rem;
-            pointer-events: none; 
-        }
+        header { flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; }
+        .brand { text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .info-panel { align-items: center; display: flex; flex-direction: column; margin-top: 5px; }
+        .hero-banner { height: auto; aspect-ratio: 4/3; max-height: 50vh; }
+        .main-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+        .nav-link { justify-content: center; background: rgba(255, 255, 255, 0.08); font-size: 0.9rem; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); width: auto; }
+        .nav-link:last-child:nth-child(odd) { grid-column: span 2; }
+        .controls { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px; }
+        .btn, .btn-load, .btn-print { width: 100%; justify-content: center; }
+        .filter-wrapper { width: 95%; padding: 10px; flex-direction: column; gap: 10px; align-items: stretch; }
+        .filter-select { flex-grow: 1; width: 100%; } .filter-group label { text-align: center; }
+        .grid-container { grid-template-columns: 1fr; padding: 0 15px; }
+        .char-header { flex-direction: column; text-align: center; gap: 10px; background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%); }
+        .char-info { margin-bottom: 5px; } .char-atk-badge { margin: 5px auto 0 auto; }
+        .equipped-slot { width: 100%; border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.15); padding-left: 0; padding-top: 15px; margin-top: 5px; background: rgba(255, 255, 255, 0.02); border-radius: 8px; }
+        .titles-grid { gap: 15px; } .title-item { width: 55px; height: 55px; }
+        #tooltip { max-width: 90%; width: 90%; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%); font-size: 0.85rem; pointer-events: none; }
     }
   </style>
 </head>
@@ -400,33 +254,45 @@
   <header>
     <div class="brand">
         <h1>VALHALLA BR</h1>
-		<h3>TÍTULOS</h3>
-		 <br>
+        <h3 data-lang="title_titles">TÍTULOS</h3>
+         <br>
         <div class="info-panel">
-            <div class="cache-info" id="last-save-display">Memória Cache: <span>⛬</span></div>
-            <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
+            <div class="cache-info" id="last-save-display">Cache: <span>Vazio</span></div>
+            <div class="time-info"><span data-lang="time_label">Brasília</span>: <span class="real-time" id="real-time-clock">--:--:--</span></div>
         </div>
     </div>
     
     <nav class="main-nav">
-        <a href="../index.html" class="nav-link">⌂ Início</a>
-        <a href="../farm/index.html" class="nav-link">🚜 Farm</a>
-        <a href="#" class="nav-link active">🏆 Títulos</a>
-        <a href="../perfil/index.html" class="nav-link">👤 Perfil</a>
+        <a href="../index.html" class="nav-link">⌂ <span data-lang="menu_home">Início</span></a>
+        <a href="../farm/index.html" class="nav-link">🚜 <span data-lang="menu_farm">Farm</span></a>
+        <a href="#" class="nav-link active">🏆 <span data-lang="menu_titles">Títulos</span></a>
+        <a href="../perfil/index.html" class="nav-link">👤 <span data-lang="menu_profile">Perfil</span></a>
     </nav>
 
     <div class="controls">
-        <button class="btn" onclick="salvarTitulos()">💾 SALVAR</button>
-        <button class="btn btn-load" onclick="document.getElementById('fileInput').click()">📂 CARREGAR</button>
+        <button class="btn btn-print" onclick="gerarCardImagem()">📸 <span data-lang="btn_print">IMPRIMIR</span></button>
+        <button class="btn" onclick="salvarTitulos()">💾 <span data-lang="btn_save">SALVAR</span></button>
+        <button class="btn btn-load" onclick="document.getElementById('fileInput').click()">📂 <span data-lang="btn_load">CARREGAR</span></button>
         <input type="file" id="fileInput" style="display:none" accept=".json" onchange="carregarArquivo(this)">
     </div>
   </header>
 
   <div class="filter-wrapper">
-      <select id="seletor-personagem" class="filter-select" onchange="filtrarPersonagem()">
-          <option value="">Todos os Personagens</option>
-      </select>
-      <button class="btn-clear" onclick="limparFiltro()" title="Limpar Filtro">✖</button>
+      <div class="filter-group">
+          <label data-lang="label_filter">Personagem</label>
+          <select id="seletor-personagem" class="filter-select" onchange="renderAll()">
+              <option value="todos" data-lang="opt_all">Todos</option>
+          </select>
+      </div>
+      
+      <div class="filter-group">
+          <label data-lang="label_sort">Ordenar Por</label>
+          <select id="sort-order" class="filter-select" onchange="changeSort(this.value)">
+              <option value="default" data-lang="sort_default">📅 Lançamento</option>
+              <option value="name" data-lang="sort_name">🔤 Nome (A-Z)</option>
+              <option value="custom" data-lang="sort_custom">🖐️ Personalizado</option>
+          </select>
+      </div>
   </div>
 
   <div class="grid-container" id="lista-personagens">
@@ -435,11 +301,152 @@
   <div id="tooltip"></div>
 
   <footer>
-    © 2025 VALHALLA. Todos os direitos reservados.
+    <span data-lang="footer_rights">© 2025 VALHALLA. Todos os direitos reservados.</span>
   </footer>
 
   <script>
-    // --- DATABASE DE TÍTULOS COMPLETO ---
+    // --- I18N DATABASE (DICIONÁRIOS) ---
+    const i18n = {
+        pt: {
+            title_titles: "TÍTULOS", time_label: "Brasília",
+            menu_home: "Início", menu_farm: "Farm", menu_titles: "Títulos", menu_profile: "Perfil", menu_team: "Equipe",
+            btn_print: "IMPRIMIR", btn_save: "SALVAR", btn_load: "CARREGAR",
+            label_filter: "Personagem", opt_all: "Todos",
+            label_sort: "Ordenar Por", sort_default: "📅 Lançamento", sort_name: "🔤 Nome (A-Z)", sort_custom: "🖐️ Personalizado",
+            txt_atk: "Ataque", txt_def: "Defesa", txt_hp: "HP", txt_level: "Nível",
+            txt_rarity_normal: "Normal", txt_rarity_rare: "Raro", txt_rarity_epic: "Épico", txt_rarity_legendary: "Lendário", txt_rarity_ancestral: "Ancestral",
+            txt_none: "Nenhum",
+            footer_rights: "© 2025 VALHALLA. Todos os direitos reservados."
+        },
+        en: {
+            title_titles: "TITLES", time_label: "Time",
+            menu_home: "Home", menu_farm: "Farm", menu_titles: "Titles", menu_profile: "Profile", menu_team: "Team",
+            btn_print: "PRINT", btn_save: "SAVE", btn_load: "LOAD",
+            label_filter: "Character", opt_all: "All",
+            label_sort: "Sort By", sort_default: "📅 Launch", sort_name: "🔤 Name (A-Z)", sort_custom: "🖐️ Custom",
+            txt_atk: "Attack", txt_def: "Defense", txt_hp: "HP", txt_level: "Level",
+            txt_rarity_normal: "Normal", txt_rarity_rare: "Rare", txt_rarity_epic: "Epic", txt_rarity_legendary: "Legendary", txt_rarity_ancestral: "Ancestral",
+            txt_none: "None",
+            footer_rights: "© 2025 VALHALLA. All rights reserved."
+        },
+        es: {
+            title_titles: "TÍTULOS", time_label: "Hora",
+            menu_home: "Inicio", menu_farm: "Farm", menu_titles: "Títulos", menu_profile: "Perfil", menu_team: "Equipo",
+            btn_print: "IMPRIMIR", btn_save: "GUARDAR", btn_load: "CARGAR",
+            label_filter: "Personaje", opt_all: "Todos",
+            label_sort: "Ordenar Por", sort_default: "📅 Lanzamiento", sort_name: "🔤 Nombre (A-Z)", sort_custom: "🖐️ Personalizado",
+            txt_atk: "Ataque", txt_def: "Defensa", txt_hp: "HP", txt_level: "Nivel",
+            txt_rarity_normal: "Normal", txt_rarity_rare: "Raro", txt_rarity_epic: "Épico", txt_rarity_legendary: "Legendario", txt_rarity_ancestral: "Ancestral",
+            txt_none: "Ninguno",
+            footer_rights: "© 2025 VALHALLA. Todos los derechos reservados."
+        },
+        ko: {
+            title_titles: "타이틀", time_label: "시간",
+            menu_home: "홈", menu_farm: "파밍", menu_titles: "타이틀", menu_profile: "프로필", menu_team: "팀",
+            btn_print: "인쇄", btn_save: "저장", btn_load: "불러오기",
+            label_filter: "캐릭터", opt_all: "모두",
+            label_sort: "정렬 기준", sort_default: "📅 시작하다", sort_name: "🔤 이름 (알파벳 순)", sort_custom: "🖐️ 사용자 지정",
+            txt_atk: "공격력", txt_def: "방어력", txt_hp: "생명력", txt_level: "레벨",
+            txt_rarity_normal: "노멀", txt_rarity_rare: "레어", txt_rarity_epic: "에픽", txt_rarity_legendary: "레전드", txt_rarity_ancestral: "고대",
+            txt_none: "없음",
+            footer_rights: "© 2025 VALHALLA. 모든 권리 보유."
+        },
+        fr: {
+            title_titles: "TITRES", time_label: "Heure",
+            menu_home: "Accueil", menu_farm: "Farm", menu_titles: "Titres", menu_profile: "Profil", menu_team: "Équipe",
+            btn_print: "IMPRIMER", btn_save: "SAUVER", btn_load: "CHARGER",
+            label_filter: "Personnage", opt_all: "Tous",
+            label_sort: "Trier Par", sort_default: "📅 Lancement", sort_name: "🔤 Nom (A-Z)", sort_custom: "🖐️ Personnalisé",
+            txt_atk: "Attaque", txt_def: "Défense", txt_hp: "HP", txt_level: "Niveau",
+            txt_rarity_normal: "Normal", txt_rarity_rare: "Rare", txt_rarity_epic: "Épique", txt_rarity_legendary: "Légendaire", txt_rarity_ancestral: "Ancestral",
+            txt_none: "Aucun",
+            footer_rights: "© 2025 VALHALLA. Tous droits réservés."
+        }
+    };
+
+    // --- DICIONÁRIO DE EFEITOS E NOMES ---
+    // Este dicionário busca as palavras-chave em Português e as substitui.
+    const dictionary = {
+        // Nomes de Títulos (Principais)
+        "Portador da Enorme Coragem": { en: "Bearer of Huge Courage", es: "Portador del Gran Coraje", ko: "엄청난 용기의 소유자", fr: "Porteur du Grand Courage" },
+        "Maquinista Infernal": { en: "Hellish Engineer", es: "Maquinista Infernal", ko: "지옥의 기술자", fr: "Ingénieur Infernal" },
+        "O Dia do Julgamento": { en: "Day of Judgment", es: "Día del Juicio", ko: "심판의 날", fr: "Jour du Jugement" },
+        "Conquistador do Continente Harrier": { en: "Harrier Continent Conqueror", es: "Conquistador de Harrier", ko: "해리어 대륙의 정복자", fr: "Conquérant de Harrier" },
+        "Rebelião das Mascotes": { en: "Pet Rebellion", es: "Rebelión de Mascotas", ko: "펫의 반란", fr: "Rébellion des Familiers" },
+        "Tirano do Deserto": { en: "Desert Tyrant", es: "Tirano del Desierto", ko: "사막의 폭군", fr: "Tyran du Désert" },
+        "Retorno a Calnat": { en: "Return to Kounat", es: "Regreso a Kounat", ko: "코우나트로의 귀환", fr: "Retour à Kounat" },
+        "Aquele que Consome o Caos": { en: "Consumer of Chaos", es: "Consumidor del Caos", ko: "혼돈을 삼키는 자", fr: "Consommateur du Chaos" },
+        "Aquele que Superou a Morte": { en: "One Who Overcame Death", es: "Aquel que Superó la Muerte", ko: "죽음을 극복한 자", fr: "Celui qui a Vaincu la Mort" },
+        "Iluminador Abissal": { en: "Abyssal Illuminator", es: "Iluminador Abisal", ko: "심연의 조명자", fr: "Illuminateur Abyssal" },
+        "Iluminador Abissal Ancestral": { en: "Ancient Abyssal Illuminator", es: "Iluminador Abisal Ancestral", ko: "고대 심연의 조명자", fr: "Illuminateur Abyssal Ancestral" },
+        "Apocalipse do Mundo": { en: "World Apocalypse", es: "Apocalipsis del Mundo", ko: "세계의 종말", fr: "Apocalypse du Monde" },
+        "Aniquilador do Vazio": { en: "Void Annihilator", es: "Aniquilador del Vacío", ko: "공허의 섬멸자", fr: "Annihilateur du Vide" },
+        "Aniquilador do Vazio Ancestral": { en: "Ancient Void Annihilator", es: "Aniquilador del Vacío Ancestral", ko: "고대 공허의 섬멸자", fr: "Annihilateur du Vide Ancestral" },
+        "Início do Caos": { en: "Beginning of Chaos", es: "Inicio del Caos", ko: "혼돈의 시작", fr: "Début du Chaos" },
+        "Sacrifício dos 12 Discípulos": { en: "Sacrifice of 12 Disciples", es: "Sacrificio de los 12 Discípulos", ko: "12사도의 희생", fr: "Sacrifice des 12 Disciples" },
+        "Origem do Caos Ancestral": { en: "Ancient Origin of Chaos", es: "Origen del Caos Ancestral", ko: "고대 혼돈의 기원", fr: "Origine du Chaos Ancestral" },
+        "Apocalipse do Mundo Ancestral": { en: "Ancient World Apocalypse", es: "Apocalipsis Ancestral", ko: "고대 세계의 종말", fr: "Apocalypse Ancestrale" },
+        "Prelúdio da Escuridão": { en: "Prelude of Darkness", es: "Preludio de Oscuridad", ko: "어둠의 서곡", fr: "Prélude des Ténèbres" },
+        
+        // Efeitos
+        "Acerto Crítico": { en: "Crit Chance", es: "Prob. Crítico", ko: "치명타 확률", fr: "Taux Critique" },
+        "Dano Crítico": { en: "Crit Damage", es: "Daño Crítico", ko: "치명타 데미지", fr: "Dégâts Critiques" },
+        "Ataque Especial": { en: "Special Attack", es: "Ataque Especial", ko: "필살기 공격력", fr: "Attaque Spéciale" },
+        "Resistência a Contaminação": { en: "Contamination Resist", es: "Resist. Contaminación", ko: "침식 저항력", fr: "Résist. Contamination" },
+        "EXP Adquirido": { en: "EXP Gained", es: "EXP Obtenida", ko: "EXP 획득량", fr: "EXP Gagnée" },
+        "MP Recuperado": { en: "MP Recovery", es: "Recup. MP", ko: "MP 회복량", fr: "Récup. MP" },
+        "Atq. pelas costas": { en: "Back Attack", es: "Ataque por la espalda", ko: "백어택", fr: "Attaque de dos" },
+        "Velocidade Aumentada em": { en: "Speed Increased by", es: "Velocidad Aumentada en", ko: "이동속도 증가", fr: "Vitesse Augmentée de" },
+        "Lim. recup. HP missão": { en: "HP Recovery Limit", es: "Límite Recup. HP", ko: "던전 HP 회복 제한", fr: "Limite Récup. HP" },
+        "Resist. status anormais": { en: "Status Resist", es: "Resist. Estado Anormal", ko: "상태이상 저항력", fr: "Résist. Statut Anormal" },
+        "Invencibilidade arena": { en: "Arena Invincibility", es: "Invencibilidad Arena", ko: "대전 무적시간", fr: "Invincibilité Arène" },
+        
+        // Notas
+        "Não acumula com": { en: "Does not stack with", es: "No se acumula con", ko: "중복 적용 불가", fr: "Ne se cumule pas avec" },
+        "Missão": { en: "Dungeon", es: "Misión", ko: "던전", fr: "Donjon" },
+        "Grupo": { en: "Party", es: "Grupo", ko: "파티", fr: "Groupe" }
+    };
+
+    let currentLang = localStorage.getItem('valhalla_lang') || 'pt';
+
+    function applyLanguage() {
+        const langData = i18n[currentLang];
+        if(!langData) return;
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if(langData[key]) el.innerHTML = langData[key];
+        });
+        
+        const optAll = document.querySelector('#seletor-personagem option[value="todos"]');
+        if(optAll) optAll.text = langData['opt_all'];
+        
+        const optDefault = document.querySelector('#sort-order option[value="default"]');
+        if(optDefault) optDefault.text = langData['sort_default'];
+        
+        const optCustom = document.querySelector('#sort-order option[value="custom"]');
+        if(optCustom) optCustom.text = langData['sort_custom'];
+    }
+
+    // Função que varre a string e substitui termos conhecidos
+    function smartTranslate(text) {
+        if(currentLang === 'pt') return text; // Se for PT, retorna original
+        
+        // Primeiro, verifica correspondência exata (para nomes de títulos)
+        if(dictionary[text] && dictionary[text][currentLang]) {
+            return dictionary[text][currentLang];
+        }
+
+        // Se não, faz substituição parcial (para efeitos e notas)
+        let translated = text;
+        for (const [key, transObj] of Object.entries(dictionary)) {
+            if (translated.includes(key) && transObj[currentLang]) {
+                translated = translated.replace(key, transObj[currentLang]);
+            }
+        }
+        return translated;
+    }
+
+    // --- DATABASE DE TÍTULOS (ORIGINAL - FONTE DA VERDADE) ---
     const titleDatabase = {
         'portador-da-enorme-coragem': {
             name: "Portador da Enorme Coragem", rarity: "epico", level: 0,
@@ -474,12 +481,12 @@
         'tirano-do-deserto': {
             name: "Tirano do Deserto", rarity: "normal", level: 0,
             stats: { atk: 173, def: 263, hp: 263 },
-            effects: ["Lim. recup. HP missão + 9.00%", "Resist. status anormais + 9.00%", "Invencibilidade arena + 8.00%", "EXP adquirido + 15.00%"]
+            effects: ["Lim. recup. HP missão + 9.00%", "Resist. status anormais + 9.00%", "Invencibilidade arena + 8.00%", "EXP Adquirido + 15.00%"]
         },
         'retorno-a-calnat': {
             name: "Retorno a Calnat", rarity: "normal", level: 0,
             stats: { atk: 175, def: 265, hp: 265 },
-            effects: ["Lim. recup. HP missão + 9.00%", "Resist. status anormais + 10.00%", "Invencibilidade arena + 8.00%", "EXP adquirido + 15.00%"]
+            effects: ["Lim. recup. HP missão + 9.00%", "Resist. status anormais + 10.00%", "Invencibilidade arena + 8.00%", "EXP Adquirido + 15.00%"]
         },
         'aquele-que-consome-o-caos': {
             name: "Aquele que Consome o Caos", rarity: "epico", level: 0,
@@ -608,39 +615,28 @@
     ];
 
     const listaTitulos = Object.keys(titleDatabase).map(key => key + '.png');
-    listaTitulos.sort((a, b) => {
-        const slugA = a.replace('.png', '');
-        const slugB = b.replace('.png', '');
-        const nomeA = titleDatabase[slugA]?.name || slugA;
-        const nomeB = titleDatabase[slugB]?.name || slugB;
-        return nomeA.localeCompare(nomeB);
-    });
+    // Ordenação inicial básica
+    listaTitulos.sort();
 
     let appData = {
-        meta: { dataHora: Date.now() },
+        meta: { dataHora: Date.now(), sortOrder: 'default', customOrder: [] },
         chars: {} 
     };
 
-    function formatarSlug(slug) {
-      if(!slug) return "";
-      const clean = slug.replace('.png','');
-      const dbEntry = titleDatabase[clean];
-      if(dbEntry) return dbEntry.name;
-      const s = clean.replace(/-/g, ' ');
-      return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-
     function translateRarity(rarity) {
-        if(rarity === 'raro') return 'Raro';
-        if(rarity === 'epico') return 'Épico';
-        if(rarity === 'lendario') return 'Lendário';
-        if(rarity === 'ancestral') return 'Ancestral';
-        return 'Normal';
+        const labels = i18n[currentLang];
+        if(!labels) return 'Normal';
+        if(rarity === 'raro') return labels.txt_rarity_rare;
+        if(rarity === 'epico') return labels.txt_rarity_epic;
+        if(rarity === 'lendario') return labels.txt_rarity_legendary;
+        if(rarity === 'ancestral') return labels.txt_rarity_ancestral;
+        return labels.txt_rarity_normal;
     }
 
     // --- INICIALIZAÇÃO ---
     function init() {
         startClock();
+        applyLanguage();
         
         const sel = document.getElementById('seletor-personagem');
         dadosIniciais.forEach(p => {
@@ -654,6 +650,10 @@
             try {
                 const parsed = JSON.parse(cached);
                 appData = parsed;
+                // Garante integridade
+                if(!appData.meta.sortOrder) appData.meta.sortOrder = 'default';
+                if(!appData.meta.customOrder) appData.meta.customOrder = [];
+                
                 updateSaveDisplay(appData.meta.dataHora);
             } catch(e) { console.error("Erro cache", e); }
         }
@@ -661,19 +661,135 @@
         dadosIniciais.forEach(p => {
             if(!appData.chars[p.char]) appData.chars[p.char] = { obtidos: [], equipado: null };
         });
+        
+        document.getElementById('sort-order').value = appData.meta.sortOrder;
 
         renderAll();
     }
 
+    // --- INTEGRAÇÃO COM PERFIL (ATAQUE TOTAL) ---
+    function getAtkFromProfile(charKey) {
+        try {
+            const perfilDataStr = localStorage.getItem('valhalla_perfil_v6');
+            if(!perfilDataStr) return null;
+            const perfilData = JSON.parse(perfilDataStr);
+            const charProfile = perfilData.perfil.find(p => p.char === charKey);
+            
+            if(charProfile && charProfile.atkTotal && charProfile.atkTotal !== "0") {
+                let num = parseFloat(charProfile.atkTotal.replace(/[^0-9]/g, ''));
+                if(num > 1000000) return (num/1000000).toFixed(1) + 'M';
+                if(num > 1000) return (num/1000).toFixed(0) + 'k';
+                return num;
+            }
+        } catch(e) { return null; }
+        return null;
+    }
+
+    // --- ORDENAÇÃO E DRAG & DROP ---
+    function changeSort(order) {
+        appData.meta.sortOrder = order;
+        persist();
+        renderAll();
+    }
+
+    function getSortedChars() {
+        let list = [...dadosIniciais];
+        const order = appData.meta.sortOrder;
+
+        if(order === 'name') {
+            list.sort((a, b) => a.nome.localeCompare(b.nome));
+        } else if(order === 'custom') {
+            const orderMap = new Map();
+            if(!appData.meta.customOrder) appData.meta.customOrder = [];
+            
+            dadosIniciais.forEach(p => {
+                if(!appData.meta.customOrder.includes(p.char)) appData.meta.customOrder.push(p.char);
+            });
+
+            appData.meta.customOrder.forEach((charKey, index) => {
+                orderMap.set(charKey, index);
+            });
+
+            list.sort((a, b) => {
+                const idxA = orderMap.has(a.char) ? orderMap.get(a.char) : 999;
+                const idxB = orderMap.has(b.char) ? orderMap.get(b.char) : 999;
+                return idxA - idxB;
+            });
+        }
+        return list;
+    }
+
+    // --- LOGICA DRAG & DROP ---
+    let draggedItem = null;
+
+    function handleDragStart(e) {
+        draggedItem = this;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.innerHTML);
+    }
+
+    function handleDragOver(e) {
+        if (e.preventDefault) e.preventDefault(); 
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+    }
+
+    function handleDrop(e) {
+        if (e.stopPropagation) e.stopPropagation(); 
+        
+        if (draggedItem !== this) {
+            const sourceChar = draggedItem.getAttribute('data-char');
+            const targetChar = this.getAttribute('data-char');
+            
+            let order = appData.meta.customOrder;
+            const fromIndex = order.indexOf(sourceChar);
+            const toIndex = order.indexOf(targetChar);
+
+            if (fromIndex >= 0 && toIndex >= 0) {
+                order.splice(fromIndex, 1);
+                order.splice(toIndex, 0, sourceChar);
+                appData.meta.customOrder = order;
+                persist();
+                renderAll(); 
+            }
+        }
+        return false;
+    }
+
+    function handleDragEnd(e) {
+        this.classList.remove('dragging');
+    }
+
+    // --- RENDERIZAR ---
     function renderAll() {
         const container = document.getElementById('lista-personagens');
         container.innerHTML = '';
+        
+        const sortOrder = appData.meta.sortOrder;
+        const filterChar = document.getElementById('seletor-personagem').value;
+        const sortedList = getSortedChars();
+        const langData = i18n[currentLang];
 
-        dadosIniciais.forEach(p => {
+        // Ativa modo drag se for personalizado
+        if(sortOrder === 'custom' && filterChar === 'todos') {
+            container.classList.add('draggable-mode');
+        } else {
+            container.classList.remove('draggable-mode');
+        }
+
+        sortedList.forEach(p => {
+            if(filterChar !== 'todos' && p.char !== filterChar) return;
+
             const charData = appData.chars[p.char];
             const equipadoSlug = charData.equipado;
             const obtidosSet = new Set(charData.obtidos);
+            
+            // Busca ataque do Perfil
+            const atkTotal = getAtkFromProfile(p.char);
+            const atkBadge = atkTotal ? `<div class="char-atk-badge">⚔️ ${atkTotal}</div>` : '';
 
+            // Ordena títulos do card
             const titulosOrdenados = [...listaTitulos].sort((a, b) => {
                 const slugA = a.replace('.png', '');
                 const slugB = b.replace('.png', '');
@@ -683,19 +799,34 @@
                 const hasB = obtidosSet.has(slugB);
                 if (hasA && !hasB) return -1;
                 if (!hasA && hasB) return 1;
-                const nomeA = titleDatabase[slugA]?.name || slugA;
-                const nomeB = titleDatabase[slugB]?.name || slugB;
+                
+                // Tradução do Nome no Sorting
+                const dbA = titleDatabase[slugA];
+                const dbB = titleDatabase[slugB];
+                const nomeA = dbA ? smartTranslate(dbA.name) : slugA;
+                const nomeB = dbB ? smartTranslate(dbB.name) : slugB;
+                
                 return nomeA.localeCompare(nomeB);
             });
 
             const card = document.createElement('div');
             card.className = 'char-card';
             card.dataset.char = p.char;
+            
+            // Drag Events
+            if(sortOrder === 'custom' && filterChar === 'todos') {
+                card.setAttribute('draggable', 'true');
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragover', handleDragOver);
+                card.addEventListener('drop', handleDrop);
+                card.addEventListener('dragend', handleDragEnd);
+            }
 
-            let equippedHtml = `<div class="placeholder-text">Nenhum</div>`;
+            // Tradução do "Nenhum"
+            let equippedHtml = `<div class="placeholder-text">${langData.txt_none}</div>`;
             if(equipadoSlug) {
                 const dbInfo = titleDatabase[equipadoSlug];
-                const realName = dbInfo ? dbInfo.name : equipadoSlug;
+                const realName = dbInfo ? smartTranslate(dbInfo.name) : equipadoSlug;
                 equippedHtml = `
                     <img src="../imagens/titulos/${equipadoSlug}.png" class="equipped-img" onerror="this.style.display='none'">
                     <div class="equipped-label">${realName}</div>
@@ -708,7 +839,7 @@
                 <img src="../imagens/personagens/${p.char}.png" class="avatar" onerror="this.src='https://placehold.co/80x80/333/FFF?text=?'">
                 <div class="char-info">
                     <div class="char-name">${p.nome}</div>
-                    <div class="char-birth">#${p.birth}</div>
+                    ${atkBadge}
                 </div>
                 <div class="equipped-slot" id="eq-slot-${p.char}">${equippedHtml}</div>
             `;
@@ -738,8 +869,6 @@
             card.appendChild(grid);
             container.appendChild(card);
         });
-        
-        filtrarPersonagem();
     }
 
     // --- INTERAÇÕES ---
@@ -762,61 +891,53 @@
         persist(); renderAll();
     }
 
-    function filtrarPersonagem() {
-        const val = document.getElementById('seletor-personagem').value;
-        const cards = document.querySelectorAll('.char-card');
-        cards.forEach(c => {
-            if(val === "" || c.dataset.char === val) c.style.display = 'flex';
-            else c.style.display = 'none';
-        });
-    }
-
-    function limparFiltro() {
-        document.getElementById('seletor-personagem').value = "";
-        filtrarPersonagem();
-    }
-
-    // --- TOOLTIP HYBRIDO (HTML + IMG FALLBACK) ---
+    // --- TOOLTIP HYBRIDO (TRADUÇÃO APLICADA) ---
     const tooltip = document.getElementById('tooltip');
 
     function showTooltip(e, slug) {
         const dbData = titleDatabase[slug];
+        const langData = i18n[currentLang];
         let htmlContent = '';
 
         if(dbData) {
-            const notesHtml = dbData.notes ? 
-                `<div class="tt-notes">${dbData.notes.map(n => `<span class="tt-note-item">${n}</span>`).join('')}</div>` : '';
+            // Aplica a tradução inteligente nos dados
+            const displayName = smartTranslate(dbData.name);
+            const displayEffects = dbData.effects.map(ef => smartTranslate(ef));
+            const displayNotes = dbData.notes ? dbData.notes.map(n => smartTranslate(n)) : [];
+            
+            const notesHtml = displayNotes.length ? 
+                `<div class="tt-notes">${displayNotes.map(n => `<span class="tt-note-item">${n}</span>`).join('')}</div>` : '';
 
             htmlContent = `
                 <div class="tt-content">
                     <div class="tt-header rarity-${dbData.rarity}">
-                        <div class="tt-name">${dbData.name}</div>
+                        <div class="tt-name">${displayName}</div>
                         <div class="tt-meta">
-                            <span>Nível ${dbData.level}</span>
+                            <span>${langData.txt_level} ${dbData.level}</span>
                             <span>${translateRarity(dbData.rarity)}</span>
                         </div>
                     </div>
                     <div class="tt-body">
                         <div class="tt-stats-grid">
-                            <div class="tt-stat"><span class="tt-stat-val">${dbData.stats.atk}</span><span class="tt-stat-label">Ataque</span></div>
-                            <div class="tt-stat"><span class="tt-stat-val">${dbData.stats.def}</span><span class="tt-stat-label">Defesa</span></div>
-                            <div class="tt-stat"><span class="tt-stat-val">${dbData.stats.hp}</span><span class="tt-stat-label">HP</span></div>
+                            <div class="tt-stat"><span class="tt-stat-val">${dbData.stats.atk}</span><span class="tt-stat-label">${langData.txt_atk}</span></div>
+                            <div class="tt-stat"><span class="tt-stat-val">${dbData.stats.def}</span><span class="tt-stat-label">${langData.txt_def}</span></div>
+                            <div class="tt-stat"><span class="tt-stat-val">${dbData.stats.hp}</span><span class="tt-stat-label">${langData.txt_hp}</span></div>
                         </div>
                         <div class="tt-effects">
-                            ${dbData.effects.map(ef => `<div class="tt-effect-row"><span class="tt-bullet">◆</span> ${ef}</div>`).join('')}
+                            ${displayEffects.map(ef => `<div class="tt-effect-row"><span class="tt-bullet">◆</span> ${ef}</div>`).join('')}
                         </div>
                         ${notesHtml}
                     </div>
                 </div>
             `;
         } else {
+            // Fallback para imagem
             htmlContent = `<img src="../imagens/titulos-descricao/${slug}.png" class="tt-fallback-img" onerror="this.style.display='none'">`;
         }
 
         tooltip.innerHTML = htmlContent;
         tooltip.style.display = 'block';
         
-        // Ajuste para mobile: tooltip centralizado ou fixo
         if(window.innerWidth < 768) {
              tooltip.style.left = '50%';
              tooltip.style.top = '50%';
@@ -834,6 +955,28 @@
              tooltip.style.left = (e.clientX + 15) + 'px';
              tooltip.style.top = (e.clientY + 15) + 'px';
         }
+    }
+
+    // --- NOVO: GERAR CARD (PRINT) ---
+    function gerarCardImagem() {
+        const btn = document.querySelector('.btn-print');
+        const oldText = btn.innerText;
+        btn.innerText = "⏳ ...";
+        
+        html2canvas(document.querySelector('.grid-container'), {
+            backgroundColor: "#0b0b0b", 
+            scale: 2 
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `Valhalla_Titulos_${new Date().toISOString().slice(0,10)}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            btn.innerText = oldText;
+        }).catch(err => {
+            console.error(err);
+            alert("Erro ao gerar imagem.");
+            btn.innerText = oldText;
+        });
     }
 
     // --- PERSISTÊNCIA ---
@@ -868,7 +1011,7 @@
             try {
                 const json = JSON.parse(e.target.result);
                 if(Array.isArray(json.perfil)) {
-                    appData = { meta: json.meta, chars: {} };
+                    appData = { meta: { sortOrder: 'default', customOrder: [] }, chars: {} };
                     json.perfil.forEach(p => {
                         const charObj = dadosIniciais.find(d => d.birth === p.birth);
                         if(charObj) {
@@ -880,7 +1023,10 @@
                     });
                 } else {
                     appData = json;
+                    if(!appData.meta) appData.meta = { sortOrder: 'default', customOrder: [] };
                 }
+                
+                document.getElementById('sort-order').value = appData.meta.sortOrder || 'default';
                 persist(); renderAll(); alert("Títulos carregados!");
             } catch(err) { alert("Erro ao ler JSON"); }
         };

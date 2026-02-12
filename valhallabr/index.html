@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Valhalla BR</title>
   <link rel="icon" href="imagens/favicon/favicon.png" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Segoe+UI&display=swap" rel="stylesheet">
+
   <style>
     /* --- CONFIGURAÇÕES GERAIS --- */
     :root {
@@ -17,10 +20,24 @@
       --surface: rgba(30, 30, 30, 0.6);
       --surface-hover: rgba(50, 50, 50, 0.8);
       --border: 1px solid rgba(255, 255, 255, 0.1);
-      --glass: rgba(15, 15, 15, 0.95);
+      --glass: rgba(10, 10, 10, 0.95);
+      
+      /* Tema Padrão */
+      --bg-gradient-1: #1a1a1a;
+      --bg-gradient-2: #000000;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    
+    h1, h2, h3, .widget-header, .mini-label, .status-text, .nav-card h2, .hud-text {
+        font-family: 'Rajdhani', sans-serif;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
     body {
       margin: 0; padding: 0;
@@ -29,15 +46,18 @@
       min-height: 100vh;
       overflow-x: hidden;
       display: flex; flex-direction: column;
+      transition: background-color 0.5s;
+      padding-bottom: 100px; 
     }
 
-    /* --- FUNDO ANIMADO --- */
     #bg-canvas {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+      z-index: -1; 
+      background: radial-gradient(circle at center, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
+      transition: background 0.5s ease;
     }
 
-    /* --- TELA DE INTRODUÇÃO --- */
+    /* --- INTRO --- */
     #intro-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #000; z-index: 999;
@@ -67,15 +87,16 @@
     .main-content { display: none; flex-direction: column; align-items: center; width: 100%; min-height: 100vh; animation: fadeInContent 1.5s ease forwards; }
     @keyframes fadeInContent { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* --- HERO BANNER (PC) --- */
+    /* --- HERO BANNER --- */
     .hero-banner {
       width: 100%; height: 400px; position: relative; overflow: hidden;
       background: #020202; display: flex; align-items: center; justify-content: center;
-      border-bottom: 1px solid rgba(187, 134, 252, 0.2); box-shadow: 0 10px 40px rgba(0,0,0,0.6); margin-bottom: 40px;
+      border-bottom: 1px solid var(--primary);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
+      margin-bottom: 20px; transition: border-color 0.5s;
     }
     .hero-banner img { width: 100%; height: 100%; object-fit: contain; object-position: center center; display: block; }
     
-    /* Efeito Scanner */
     .hero-banner::after {
       content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
       background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
@@ -83,16 +104,88 @@
     }
     @keyframes scanLight { 0% { left: -100%; opacity: 0; } 20% { opacity: 1; } 50% { left: 200%; opacity: 0; } 100% { left: 200%; opacity: 0; } }
 
-    /* --- CONTEÚDO --- */
-    .content-wrapper {
-        max-width: 1000px; width: 90%; margin: 0 auto;
-        display: flex; flex-direction: column; gap: 50px; text-align: center; flex-grow: 1;
+    /* --- NOVO HUD SYSTEM (SISTEMA ONLINE + UPDATE) --- */
+    .status-bar-wrapper {
+        width: 90%; max-width: 1000px; margin: 0 auto 20px auto;
+        display: flex; justify-content: flex-end; /* Alinha à direita */
     }
 
-    .info-section h1 {
-        font-size: clamp(2rem, 4vw, 3.5rem); color: #fff; text-transform: uppercase;
-        margin-bottom: 15px; text-shadow: 0 2px 10px rgba(187, 134, 252, 0.5);
+    .hud-container {
+        display: flex; gap: 15px;
     }
+
+    .hud-card {
+        display: flex; align-items: center; gap: 10px;
+        background: rgba(10, 10, 10, 0.8);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 8px 15px; border-radius: 20px;
+        backdrop-filter: blur(10px);
+        font-family: 'Rajdhani', monospace; font-size: 0.9rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+        position: relative; overflow: hidden;
+    }
+
+    /* Animação de "Respiração" nos cards */
+    .hud-card:hover {
+        border-color: var(--secondary);
+        box-shadow: 0 0 15px rgba(3, 218, 198, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .hud-icon { font-size: 1rem; }
+    .hud-label { color: #fff; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    
+    .hud-value { 
+        color: #aaa; font-family: monospace; font-weight: bold; margin-left: 5px; 
+        display: flex; align-items: center; gap: 8px; 
+    }
+
+    /* Tag de Hora (Badge) */
+    .time-badge {
+        font-size: 0.75em;
+        background: var(--secondary);
+        color: #000;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-weight: 800;
+        vertical-align: middle;
+    }
+
+    /* Estilo Específico para ONLINE */
+    .hud-card.online .status-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: var(--secondary);
+        box-shadow: 0 0 8px var(--secondary);
+        animation: pulseDot 2s infinite;
+    }
+    .hud-card.online:hover .status-dot { background: #0f0; box-shadow: 0 0 10px #0f0; }
+
+    /* Estilo Específico para UPDATE */
+    .hud-card.update { border-left: 3px solid var(--primary); }
+    .hud-card.update .time-badge { background: var(--primary); color: #fff; }
+
+    @keyframes pulseDot { 0% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } 100% { opacity: 0.5; transform: scale(1); } }
+
+    /* --- MINI DASHBOARD --- */
+    .mini-dashboard {
+        width: 90%; max-width: 1000px;
+        background: linear-gradient(90deg, rgba(11,11,11,0.9), rgba(30,30,30,0.9), rgba(11,11,11,0.9));
+        border: 1px solid var(--border); border-radius: 12px;
+        display: flex; justify-content: space-around; align-items: center;
+        padding: 20px; margin-bottom: 50px; 
+        backdrop-filter: blur(5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .mini-item { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 120px; }
+    .mini-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+    .mini-value { font-size: 1.1rem; font-weight: bold; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .mini-value span { color: var(--secondary); transition: color 0.5s; }
+    .mini-avatar { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--primary); object-fit: cover; transition: border-color 0.5s; }
+
+    /* --- CONTEÚDO --- */
+    .content-wrapper { max-width: 1000px; width: 90%; margin: 0 auto; display: flex; flex-direction: column; gap: 50px; text-align: center; flex-grow: 1; }
+    .info-section h1 { font-size: clamp(2rem, 4vw, 3.5rem); color: #fff; text-transform: uppercase; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2); }
     .info-section p { font-size: 1.1rem; color: #ccc; line-height: 1.6; max-width: 800px; margin: 0 auto; }
 
     /* Nota do Sistema */
@@ -101,10 +194,7 @@
         border-radius: 8px; padding: 30px; text-align: justify; margin-top: 30px; position: relative;
         backdrop-filter: blur(5px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
-    .system-note h2 {
-        color: var(--warning); font-size: 1.4rem; margin-bottom: 20px;
-        display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px;
-    }
+    .system-note h2 { color: var(--warning); font-size: 1.4rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; }
     .system-note h2::before { content: '⚠️'; font-size: 1.2em; }
     .system-note p { color: #ddd; font-size: 1rem; line-height: 1.8; margin-bottom: 15px; text-align: justify; }
     .system-note strong { color: #fff; font-weight: 700; }
@@ -114,9 +204,9 @@
     .quote-box {
         background: var(--surface); border: var(--border); padding: 30px;
         border-radius: 12px; backdrop-filter: blur(5px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        border-left: 4px solid var(--primary);
+        border-left: 4px solid var(--primary); transition: border-color 0.5s;
     }
-    .quote-box h2 { font-style: italic; color: var(--primary); font-size: 1.5rem; font-weight: 500; }
+    .quote-box h2 { font-style: italic; color: var(--primary); font-size: 1.5rem; font-weight: 500; transition: color 0.5s; }
 
     /* Botões */
     .action-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin: 20px 0; }
@@ -136,16 +226,13 @@
     }
     .widget-header { background: #5865F2; color: white; padding: 10px; font-weight: bold; text-align: center; font-size: 0.9rem; }
 
-    /* Links Externos */
+    /* Links */
     .external-links { display: flex; justify-content: center; gap: 20px; font-size: 1.1rem; margin-top: 20px; flex-wrap: wrap; }
     .ext-link { color: #888; text-decoration: none; transition: 0.3s; border-bottom: 1px solid transparent; }
     .ext-link:hover { color: var(--primary); border-color: var(--primary); }
 
     /* Navegação */
-    .nav-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px; max-width: 1200px; width: 90%; margin: 40px auto;
-    }
+    .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1200px; width: 90%; margin: 0 auto 40px auto; }
     .nav-card {
       background: var(--surface); border: var(--border); padding: 40px 20px;
       border-radius: 12px; text-decoration: none; display: flex; flex-direction: column;
@@ -157,59 +244,76 @@
     .nav-card h2 { color: #fff; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
     .nav-card p { color: #888; font-size: 0.9rem; margin-top: 10px; text-align: center; }
 
-    /* Audio Panel */
-    .audio-panel {
-      position: fixed; bottom: 20px; right: 20px; background: var(--glass); padding: 10px 20px;
-      border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); display: flex; gap: 15px; align-items: center;
-      backdrop-filter: blur(10px); z-index: 100;
-    }
-    .audio-btn { background: none; border: none; color: #aaa; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
-    .audio-btn:hover { color: var(--secondary); transform: scale(1.1); }
-
-    footer {
-        margin-top: 50px; padding: 25px; text-align: center; background: #050505;
-        border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; width: 100%;
-    }
-
+    footer { margin-top: 50px; padding: 25px; text-align: center; background: #050505; border-top: 1px solid rgba(187, 134, 252, 0.1); color: #777; font-size: 0.85rem; letter-spacing: 1px; width: 100%; }
+    .reset-timer { font-size: 0.8rem; color: var(--warning); font-weight: bold; margin-left: 15px; border-left: 1px solid #333; padding-left: 15px; }
     .fade-in { animation: fadeInSection 1s ease forwards; opacity: 0; }
-    .fade-in-1 { animation-delay: 0.2s; }
-    .fade-in-2 { animation-delay: 0.4s; }
-    .fade-in-3 { animation-delay: 0.6s; }
-    .fade-in-4 { animation-delay: 0.8s; }
     @keyframes fadeInSection { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* --- RESPONSIVIDADE (MOBILE) --- */
+    /* --- CÁPSULA PLAYER (FLUTUANTE) --- */
+    .dock-player {
+        position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+        width: 90%; max-width: 600px; height: 50px;
+        background: var(--glass); border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 50px; display: flex; justify-content: space-between; align-items: center;
+        padding: 0 25px; z-index: 500; backdrop-filter: blur(15px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8); transition: all 0.3s ease;
+    }
+    .dock-player:hover { border-color: var(--secondary); box-shadow: 0 10px 40px rgba(3, 218, 198, 0.2); }
+
+    .visualizer { display: flex; align-items: center; gap: 3px; height: 20px; flex-grow: 1; margin-right: 20px; }
+    .v-bar { flex: 1; max-width: 6px; background: var(--secondary); border-radius: 2px; animation: soundWave 1s infinite; }
+    .v-bar:nth-child(odd) { height: 8px; animation-duration: 0.8s; }
+    .v-bar:nth-child(even) { height: 16px; animation-duration: 1.1s; }
+    .paused .v-bar { animation: none; height: 3px; opacity: 0.3; }
+    @keyframes soundWave { 0%, 100% { height: 4px; opacity: 0.5; } 50% { height: 20px; opacity: 1; box-shadow: 0 0 8px var(--secondary); } }
+
+    .controls-center { display: flex; gap: 20px; align-items: center; position: absolute; left: 50%; transform: translateX(-50%); }
+    .p-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+    .p-btn:hover { color: var(--primary); transform: scale(1.2); }
+    .btn-play { font-size: 1.5rem; color: #fff; }
+    .btn-play:hover { color: var(--secondary); }
+
+    /* --- CONFIGURAÇÕES DUPLAS --- */
+    .settings-area { display: flex; gap: 15px; position: relative; margin-left: 20px; }
+    .btn-icon { font-size: 1.2rem; color: #888; cursor: pointer; background: none; border: none; transition: 0.3s; }
+    .btn-icon:hover { color: var(--secondary); transform: scale(1.2); }
+    .btn-icon.gear:hover { transform: rotate(90deg); }
+
+    /* Pop-ups */
+    .popup-menu {
+        position: absolute; bottom: 60px; right: 0;
+        background: var(--glass); border: 1px solid var(--border);
+        border-radius: 12px; padding: 10px; width: 150px;
+        display: none; flex-direction: column; gap: 5px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.5); animation: popUp 0.3s ease;
+    }
+    .popup-menu::after { content: ''; position: absolute; bottom: -5px; right: 10px; width: 10px; height: 10px; background: var(--glass); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transform: rotate(45deg); }
+    .popup-menu.open { display: flex; }
+    
+    #lang-popup { right: 40px; } 
+    #theme-popup { right: 0px; } 
+
+    @keyframes popUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .t-opt { padding: 8px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; color: #ddd; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+    .t-opt:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .flag { font-size: 1.1rem; }
+
     @media (max-width: 768px) {
-        /* Banner Otimizado para Mobile */
-        .hero-banner { 
-            height: auto; 
-            aspect-ratio: 4/3; /* Proporção do 800x600 */
-            max-height: 50vh; 
-        }
-        
-        /* Ajuste de Texto */
-        #typed-title { font-size: 1.8rem; margin-bottom: 20px; }
-        .info-section h1 { font-size: 1.8rem; }
+        .hero-banner { height: auto; aspect-ratio: 4/3; max-height: 50vh; margin-bottom: 30px; }
+        #typed-title, .info-section h1 { font-size: 1.8rem; }
         .quote-box h2 { font-size: 1.2rem; }
-
-        /* Ajuste da Nota */
-        .system-note { padding: 20px; }
-        .system-note h2 { font-size: 1.1rem; flex-wrap: wrap; }
-
-        /* Navegação */
-        .nav-grid { gap: 15px; }
-        .nav-card { height: 160px; padding: 20px; }
-
-        /* Botões em Coluna */
-        .action-container { flex-direction: column; width: 100%; }
-        .action-btn { width: 100%; justify-content: center; }
-
-        /* Links do Footer em Coluna */
-        .external-links { flex-direction: column; gap: 15px; }
-        .external-links span { display: none; } /* Remove as barras separadoras no mobile */
+        .nav-grid { gap: 15px; } .nav-card { height: 160px; padding: 20px; }
+        .action-container, .external-links { flex-direction: column; width: 100%; gap: 15px; }
+        .mini-dashboard { flex-direction: column; gap: 15px; width: 90%; }
+        .mini-item { width: 100%; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        .dock-player { width: 95%; padding: 0 15px; } .visualizer { width: 60px; overflow: hidden; } 
         
-        /* Audio Panel Menor */
-        .audio-panel { padding: 8px 15px; bottom: 10px; right: 10px; }
+        /* Ajuste do HUD Mobile */
+        .status-bar-wrapper { justify-content: center; }
+        .hud-container { flex-direction: row; gap: 10px; }
+        .hud-card { font-size: 0.75rem; padding: 6px 10px; }
     }
   </style>
 </head>
@@ -218,7 +322,7 @@
 
   <div id="intro-screen">
     <h1 id="typed-title"></h1>
-    <button id="start-btn">⚡ SALVE SUA LOG</button>
+    <button id="start-btn" data-lang="btn_start">⚡ INICIAR SISTEMA</button>
   </div>
 
   <audio id="type-sound" src="mp3/typewriter.mp3" preload="auto"></audio>
@@ -233,204 +337,423 @@
         </picture>
     </div>
 
+    <div class="status-bar-wrapper">
+        <div class="hud-container">
+            <div class="hud-card online">
+                <div class="status-dot"></div>
+                <span class="hud-label" data-lang="system_online">SYSTEM ONLINE</span>
+                <span class="hud-value" id="sys-date">--/--</span>
+            </div>
+            
+            <div class="hud-card update">
+                <span class="hud-icon">↺</span>
+                <span class="hud-label" data-lang="label_update">UPDATE</span>
+                <span class="hud-value">
+                    12/02/2026 
+                    <span class="time-badge">03:38</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mini-dashboard fade-in fade-in-1" id="mini-dash" style="display:none;">
+        <div class="mini-item">
+            <div class="mini-label" data-lang="label_main">Personagem Principal</div>
+            <div class="mini-value" id="dash-main">--</div>
+        </div>
+        <div class="mini-item">
+            <div class="mini-label" data-lang="label_power">Poder de Ataque</div>
+            <div class="mini-value" id="dash-power">--</div>
+        </div>
+        <div class="mini-item">
+            <div class="mini-label" data-lang="label_farm">Status do Farm</div>
+            <div class="mini-value" id="dash-farm">--%</div>
+        </div>
+        <div class="mini-item">
+            <div class="mini-label" data-lang="label_reset">Reset Diário</div>
+            <div class="mini-value"><span style="color:var(--warning)" id="reset-countdown">--:--:--</span></div>
+        </div>
+    </div>
+
     <nav class="nav-grid fade-in fade-in-1">
       <a href="perfil/index.html" class="nav-card">
         <div class="nav-icon">👤</div>
-        <h2>Perfil</h2>
-        <p>Gerencie sua conta e dados</p>
+        <h2 data-lang="menu_profile">Perfil</h2>
+        <p data-lang="desc_profile">Gerencie sua conta e dados</p>
       </a>
       <a href="titulos/index.html" class="nav-card">
         <div class="nav-icon">🏆</div>
-        <h2>Títulos</h2>
-        <p>Veja suas conquistas</p>
+        <h2 data-lang="menu_titles">Títulos</h2>
+        <p data-lang="desc_titles">Veja suas conquistas</p>
       </a>
       <a href="farm/index.html" class="nav-card">
         <div class="nav-icon">🚜</div>
-        <h2>Farm</h2>
-        <p>Controle de missões e resets</p>
+        <h2 data-lang="menu_farm">Farm</h2>
+        <p data-lang="desc_farm">Controle de missões e resets</p>
       </a>
       <a href="equipe/index.html" class="nav-card">
         <div class="nav-icon">🛡️</div>
-        <h2>Equipe</h2>
-        <p>Membros e Staff da guilda</p>
+        <h2 data-lang="menu_team">Equipe</h2>
+        <p data-lang="desc_team">Membros e Staff da guilda</p>
       </a>
     </nav>
 
     <div class="content-wrapper">
-        
         <section class="info-section fade-in fade-in-2">
-            <h1>EM MANUTENÇÃO | SISTEMA VAI SER REINICIADO ÀS 23h</h1>
-          <h1>Para não perder seus dados, salvem suas logs para carregamentos futuros</h1>
-            <p>Somos mais que uma guilda. Somos uma família forjada nas batalhas de Ernas. Em GrandChase Classic, buscamos a glória, mas valorizamos a honra, a amizade e o espírito de equipe acima de tudo.</p>
+            <h1 data-lang="welcome_title">Bem-vindos à Valhalla BR</h1>
+            <p data-lang="welcome_text">Somos mais que uma guilda. Somos uma família forjada nas batalhas de Ernas. Em GrandChase Classic, buscamos a glória, mas valorizamos a honra, a amizade e o espírito de equipe acima de tudo.</p>
             
             <div class="system-note">
-                <h2>Observação Importante</h2>
-                <p>
-                    Para aqueles que desejam utilizar os sistemas de controle, é necessário observar que todo sistema possui uma proteção de <strong>Auto Save</strong> (memória cache do navegador). Contudo, para garantir a segurança absoluta de seu perfil, títulos, dados de <em>Farm</em> e demais informações, é indispensável clicar no botão <strong>Salvar</strong>, o qual gerará o download de um arquivo de backup.
+                <h2 data-lang="note_title">Observação Importante</h2>
+                <p data-lang="note_p1">
+                    Para aqueles que desejam utilizar os sistemas de controle, é necessário observar que todo sistema possui uma proteção de <strong>Auto Save</strong> (memória cache do navegador). Contudo, para garantir a segurança absoluta de seus dados, é indispensável clicar no botão <strong>Salvar</strong>.
                 </p>
-                <p>
+                <p data-lang="note_p2">
                     Para acessar novamente esses dados em outro momento ou dispositivo, basta utilizar o botão <strong>Carregar</strong> e selecionar o arquivo salvo anteriormente.
                 </p>
-                <p>
-                    Na página de <strong>FARM</strong>, o sistema opera com um relógio interno sincronizado, realizando o <em>Reset Automático</em> das missões exatamente às 03:00 AM (Horário de Brasília), sejam elas diárias, semanais ou de fim de semana.
-                </p>
-                <p>
-                    Portanto, recomendamos fortemente a utilização combinada do cache com o <strong>Salvamento Manual</strong> (Download) para preservar seu progresso com total segurança.
+                <p data-lang="note_p3">
+                    Na página de <strong>FARM</strong>, o sistema opera com um relógio interno sincronizado, realizando o <em>Reset Automático</em> das missões exatamente às 03:00 AM (Horário de Brasília).
                 </p>
             </div>
         </section>
 
         <section class="quote-box fade-in fade-in-2">
-            <h2>"Onde os heróis se encontram e as lendas renascem."</h2>
+            <h2 data-lang="quote_text">"Onde os heróis se encontram e as lendas renascem."</h2>
         </section>
 
         <section class="fade-in fade-in-3">
-            <h3 style="text-transform: uppercase; color: #fff; margin-bottom: 20px;">Junte-se à Batalha!</h3>
+            <h3 style="text-transform: uppercase; color: #fff; margin-bottom: 20px;" data-lang="join_title">Junte-se à Batalha!</h3>
             <div class="action-container">
                 <a href="https://discord.gg/RFWSRpfmQd" target="_blank" class="action-btn btn-discord">
-                    Entrar no Discord
+                    <span data-lang="btn_discord">Entrar no Discord</span>
                 </a>
                 <a href="https://chat.whatsapp.com/LYh72ivtkm3Kw0xG2MN7rn" target="_blank" class="action-btn btn-whatsapp">
-                    Entrar no WhatsApp
+                    <span data-lang="btn_whatsapp">Entrar no WhatsApp</span>
                 </a>
             </div>
         </section>
 
         <section class="fade-in fade-in-4" style="display: flex; justify-content: center;">
             <div class="widget-container">
-                <div class="widget-header">Membros Online no Discord</div>
-                <iframe 
-                    src="https://discord.com/widget?id=1437993172369150095&theme=dark" 
-                    width="100%" 
-                    height="500" 
-                    allowtransparency="true" 
-                    frameborder="0" 
-                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-                </iframe>
+                <div class="widget-header" data-lang="widget_title">Membros Online no Discord</div>
+                <iframe src="https://discord.com/widget?id=1437993172369150095&theme=dark" width="100%" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
             </div>
         </section>
 
         <section class="fade-in fade-in-4">
-            <p style="color: #666; margin-bottom: 10px;">Links Oficiais:</p>
+            <p style="color: #666; margin-bottom: 10px;" data-lang="links_title">Links Oficiais:</p>
             <div class="external-links">
-                <a href="https://www.koggames.com/game/grandchaseclassic" target="_blank" class="ext-link">Site Oficial</a>
-                <span>|</span>
-                <a href="https://store.steampowered.com/app/985810/GrandChase/" target="_blank" class="ext-link">Steam</a>
-                <span>|</span>
+                <a href="https://www.koggames.com/game/grandchaseclassic" target="_blank" class="ext-link">Site Oficial</a> <span>|</span>
+                <a href="https://store.steampowered.com/app/985810/GrandChase/" target="_blank" class="ext-link">Steam</a> <span>|</span>
                 <a href="https://store.epicgames.com/en-US/p/grandchase-c03eb2" target="_blank" class="ext-link">Epic Games</a>
             </div>
         </section>
-
     </div>
 
     <footer>
-      © 2025 VALHALLA. Todos os direitos reservados.
+      <span data-lang="footer_rights">© 2025 VALHALLA. Todos os direitos reservados.</span>
     </footer>
   </div>
 
-  <div class="audio-panel" style="display:none;" id="audio-panel">
-    <button class="audio-btn" id="play-pause" title="Play/Pause">▶</button>
-    <button class="audio-btn" id="volume-down" title="Diminuir Volume">🔉</button>
-    <button class="audio-btn" id="volume-up" title="Aumentar Volume">🔊</button>
+  <div class="dock-player" style="display:none;" id="audio-panel">
+    <div class="visualizer paused" id="visualizer"></div>
+    
+    <div class="controls-center">
+        <button class="p-btn" id="volume-down" title="- Volume">🔉</button>
+        <button class="p-btn btn-play" id="play-pause" title="Play">▶</button>
+        <button class="p-btn" id="volume-up" title="+ Volume">🔊</button>
+    </div>
+    
+    <div class="settings-area">
+        <button class="btn-icon" onclick="toggleLangPopup()" title="Idiomas">🌐</button>
+        <div class="popup-menu" id="lang-popup">
+            <div class="t-opt" onclick="changeLanguage('pt')"><span class="flag">🇧🇷</span> PT-BR</div>
+            <div class="t-opt" onclick="changeLanguage('en')"><span class="flag">🇺🇸</span> EN-US</div>
+            <div class="t-opt" onclick="changeLanguage('es')"><span class="flag">🇪🇸</span> ES-ES</div>
+            <div class="t-opt" onclick="changeLanguage('ko')"><span class="flag">🇰🇷</span> 한국어</div>
+            <div class="t-opt" onclick="changeLanguage('fr')"><span class="flag">🇫🇷</span> FR-FR</div>
+        </div>
+
+        <button class="btn-icon gear" onclick="toggleThemePopup()" title="Temas">⚙️</button>
+        <div class="popup-menu" id="theme-popup">
+            <div class="t-opt" onclick="changeTheme('valhalla')"><div class="t-dot" style="background:#bb86fc"></div> Classic</div>
+            <div class="t-opt" onclick="changeTheme('ellia')"><div class="t-dot" style="background:#ff5252"></div> Eclipse</div>
+            <div class="t-opt" onclick="changeTheme('xenia')"><div class="t-dot" style="background:#ffd700"></div> Kricktria</div>
+            <div class="t-opt" onclick="changeTheme('arquimidia')"><div class="t-dot" style="background:#8d6e63"></div> Solene</div>
+        </div>
+    </div>
   </div>
 
   <script>
-    // --- LÓGICA DE PARTÍCULAS ---
+    // --- I18N ---
+    const i18n = {
+        pt: {
+            btn_start: "⚡ INICIAR SISTEMA", system_online: "SISTEMA ONLINE", label_update: "ATUALIZAÇÃO",
+            label_main: "Personagem Principal", label_power: "Poder de Ataque",
+            label_farm: "Status do Farm", label_reset: "Reset Diário",
+            menu_profile: "Perfil", desc_profile: "Gerencie sua conta e dados",
+            menu_titles: "Títulos", desc_titles: "Veja suas conquistas",
+            menu_farm: "Farm", desc_farm: "Controle de missões e resets",
+            menu_team: "Equipe", desc_team: "Membros e Staff da guilda",
+            welcome_title: "Bem-vindos à Valhalla BR",
+            welcome_text: "Somos mais que uma guilda. Somos uma família forjada nas batalhas de Ernas. Em GrandChase Classic, buscamos a glória, mas valorizamos a honra, a amizade e o espírito de equipe acima de tudo.",
+            note_title: "Observação Importante",
+            note_p1: "Para aqueles que desejam utilizar os sistemas de controle, é necessário observar que todo sistema possui uma proteção de <strong>Auto Save</strong> (memória cache do navegador). Contudo, para garantir a segurança absoluta de seus dados, é indispensável clicar no botão <strong>Salvar</strong>.",
+            note_p2: "Para acessar novamente esses dados em outro momento ou dispositivo, basta utilizar o botão <strong>Carregar</strong> e selecionar o arquivo salvo anteriormente.",
+            note_p3: "Na página de <strong>FARM</strong>, o sistema opera com um relógio interno sincronizado, realizando o <em>Reset Automático</em> das missões exatamente às 03:00 AM (Horário de Brasília).",
+            quote_text: "\"Onde os heróis se encontram e as lendas renascem.\"",
+            join_title: "Junte-se à Batalha!", btn_discord: "Entrar no Discord", btn_whatsapp: "Entrar no WhatsApp",
+            widget_title: "Membros Online no Discord", links_title: "Links Oficiais:",
+            footer_rights: "© 2025 VALHALLA. Todos os direitos reservados."
+        },
+        en: {
+            btn_start: "⚡ START SYSTEM", system_online: "SYSTEM ONLINE", label_update: "UPDATE",
+            label_main: "Main Character", label_power: "Attack Power",
+            label_farm: "Farm Status", label_reset: "Daily Reset",
+            menu_profile: "Profile", desc_profile: "Manage account and data",
+            menu_titles: "Titles", desc_titles: "View your achievements",
+            menu_farm: "Farm", desc_farm: "Mission control and resets",
+            menu_team: "Team", desc_team: "Guild Members and Staff",
+            welcome_title: "Welcome to Valhalla BR",
+            welcome_text: "We are more than a guild. We are a family forged in the battles of Ernas. In GrandChase Classic, we seek glory, but value honor, friendship, and team spirit above all.",
+            note_title: "Important Notice",
+            note_p1: "For those using the control systems, note that all systems have <strong>Auto Save</strong> protection (browser cache). However, to guarantee absolute safety of your data, clicking the <strong>Save</strong> button is indispensable.",
+            note_p2: "To access this data again on another device, simply use the <strong>Load</strong> button and select the previously saved file.",
+            note_p3: "On the <strong>FARM</strong> page, the system operates with a synchronized internal clock, performing <em>Automatic Resets</em> exactly at 03:00 AM (Brasilia Time).",
+            quote_text: "\"Where heroes meet and legends are reborn.\"",
+            join_title: "Join the Battle!", btn_discord: "Join Discord", btn_whatsapp: "Join WhatsApp",
+            widget_title: "Members Online on Discord", links_title: "Official Links:",
+            footer_rights: "© 2025 VALHALLA. All rights reserved."
+        },
+        es: {
+            btn_start: "⚡ INICIAR SISTEMA", system_online: "SISTEMA EN LÍNEA", label_update: "ACTUALIZACIÓN",
+            label_main: "Personaje Principal", label_power: "Poder de Ataque",
+            label_farm: "Estado del Farm", label_reset: "Reinicio Diario",
+            menu_profile: "Perfil", desc_profile: "Gestionar cuenta y datos",
+            menu_titles: "Títulos", desc_titles: "Ver tus logros",
+            menu_farm: "Farm", desc_farm: "Control de misiones y resets",
+            menu_team: "Equipo", desc_team: "Miembros y Staff del gremio",
+            welcome_title: "Bienvenidos a Valhalla BR",
+            welcome_text: "Somos más que un gremio. Somos una familia forjada en las batallas de Ernas. En GrandChase Classic, buscamos la gloria, pero valoramos el honor, la amistad y el espíritu de equipo ante todo.",
+            note_title: "Aviso Importante",
+            note_p1: "Para aquellos que deseen utilizar los sistemas de control, tengan en cuenta que todo el sistema tiene protección de <strong>Auto Guardado</strong> (caché del navegador). Sin embargo, para garantizar la seguridad absoluta de sus datos, es indispensable hacer clic en el botón <strong>Guardar</strong>.",
+            note_p2: "Para acceder nuevamente a estos datos en otro dispositivo, simplemente use el botón <strong>Cargar</strong> y seleccione el archivo guardado anteriormente.",
+            note_p3: "En la página de <strong>FARM</strong>, el sistema opera con un reloj interno sincronizado, realizando el <em>Reinicio Automático</em> de las misiones exactamente a las 03:00 AM (Hora de Brasilia).",
+            quote_text: "\"Donde los héroes se encuentran y las leyendas renacen.\"",
+            join_title: "¡Únete a la Batalla!", btn_discord: "Entrar en Discord", btn_whatsapp: "Entrar en WhatsApp",
+            widget_title: "Miembros en Línea en Discord", links_title: "Enlaces Oficiales:",
+            footer_rights: "© 2025 VALHALLA. Todos los derechos reservados."
+        },
+        ko: {
+            btn_start: "⚡ 시스템 시작", system_online: "시스템 온라인", label_update: "업데이트",
+            label_main: "메인 캐릭터", label_power: "공격력",
+            label_farm: "파밍 상태", label_reset: "일일 초기화",
+            menu_profile: "프로필", desc_profile: "계정 및 데이터 관리",
+            menu_titles: "타이틀", desc_titles: "업적 보기",
+            menu_farm: "파밍", desc_farm: "미션 제어 및 초기화",
+            menu_team: "팀", desc_team: "길드원 및 스태프",
+            welcome_title: "Valhalla BR에 오신 것을 환영합니다",
+            welcome_text: "우리는 단순한 길드가 아닙니다. 우리는 에르나스의 전투 속에서 맺어진 가족입니다. 그랜드체이스 클래식에서 우리는 영광을 추구하지만, 명예, 우정, 그리고 팀워크를 무엇보다 소중히 여깁니다.",
+            note_title: "중요 공지",
+            note_p1: "제어 시스템을 사용하는 분들은 모든 시스템에 <strong>자동 저장</strong>(브라우저 캐시) 보호 기능이 있음을 유의하십시오. 그러나 데이터의 절대적인 안전을 보장하기 위해 <strong>저장</strong> 버튼을 클릭하는 것은 필수입니다.",
+            note_p2: "다른 기기에서 이 데이터에 다시 액세스하려면 <strong>불러오기</strong> 버튼을 사용하여 이전에 저장된 파일을 선택하면 됩니다.",
+            note_p3: "<strong>파밍</strong> 페이지에서 시스템은 동기화된 내부 시계로 작동하며, 정확히 오전 03:00(브라질리아 시간)에 <em>자동 초기화</em>를 수행합니다.",
+            quote_text: "\"영웅들이 만나고 전설이 다시 태어나는 곳.\"",
+            join_title: "전투에 참여하세요!", btn_discord: "디스코드 입장", btn_whatsapp: "왓츠앱 입장",
+            widget_title: "디스코드 온라인 멤버", links_title: "공식 링크:",
+            footer_rights: "© 2025 VALHALLA. 모든 권리 보유."
+        },
+        fr: {
+            btn_start: "⚡ DÉMARRER LE SYSTÈME", system_online: "SYSTÈME EN LIGNE", label_update: "MISE À JOUR",
+            label_main: "Personnage Principal", label_power: "Puissance d'Attaque",
+            label_farm: "État du Farm", label_reset: "Réinitialisation",
+            menu_profile: "Profil", desc_profile: "Gérer le compte et les données",
+            menu_titles: "Titres", desc_titles: "Voir vos succès",
+            menu_farm: "Farm", desc_farm: "Contrôle des missions",
+            menu_team: "Équipe", desc_team: "Membres et Staff",
+            welcome_title: "Bienvenue sur Valhalla BR",
+            welcome_text: "Nous sommes plus qu'une guilde. Nous sommes une famille forgée dans les batailles d'Ernas. Dans GrandChase Classic, nous cherchons la gloire, mais nous valorisons l'honneur, l'amitié et l'esprit d'équipe avant tout.",
+            note_title: "Avis Important",
+            note_p1: "Pour ceux qui utilisent les systèmes de contrôle, notez que tout le système dispose d'une protection de <strong>Sauvegarde Auto</strong> (cache du navigateur). Cependant, pour garantir la sécurité absolue de vos données, cliquer sur le bouton <strong>Sauvegarder</strong> est indispensable.",
+            note_p2: "Pour accéder à nouveau à ces données sur un autre appareil, utilisez simplement le bouton <strong>Charger</strong> et sélectionnez le fichier précédemment enregistré.",
+            note_p3: "Sur la page <strong>FARM</strong>, le système fonctionne avec une horloge interne synchronisée, effectuant une <em>Réinitialisation Automatique</em> des missions exactement à 03:00 AM (Heure de Brasilia).",
+            quote_text: "\"Là où les héros se rencontrent et les légendes renaissent.\"",
+            join_title: "Rejoignez la Bataille !", btn_discord: "Rejoindre Discord", btn_whatsapp: "Rejoindre WhatsApp",
+            widget_title: "Membres en ligne sur Discord", links_title: "Liens Officiels :",
+            footer_rights: "© 2025 VALHALLA. Tous droits réservés."
+        }
+    };
+
+    // --- PARTICLES ---
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
-    let width, height;
-    let particlesArray = [];
-
+    let width, height, particlesArray = [], particleColor = 'rgba(187, 134, 252, 0.3)', particleLineColor = '187, 134, 252';
     function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
     window.addEventListener('resize', () => { resize(); initParticles(); });
     resize();
-
     class Particle {
-      constructor() {
-        this.x = Math.random() * width; this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2;
-      }
-      update() {
-        this.x += this.vx; this.y += this.vy;
-        if(this.x < 0 || this.x > width) this.vx *= -1;
-        if(this.y < 0 || this.y > height) this.vy *= -1;
-      }
-      draw() {
-        ctx.fillStyle = 'rgba(187, 134, 252, 0.3)'; ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-      }
+      constructor() { this.x = Math.random() * width; this.y = Math.random() * height; this.vx = (Math.random() - 0.5)*0.5; this.vy = (Math.random() - 0.5)*0.5; this.size = Math.random()*2; }
+      update() { this.x += this.vx; this.y += this.vy; if(this.x<0||this.x>width)this.vx*=-1; if(this.y<0||this.y>height)this.vy*=-1; }
+      draw() { ctx.fillStyle = particleColor; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
     }
-
-    function initParticles() {
-      particlesArray = []; for(let i = 0; i < 80; i++) particlesArray.push(new Particle());
-    }
-
+    function initParticles() { particlesArray = []; for(let i=0; i<80; i++) particlesArray.push(new Particle()); }
     function animateParticles() {
       ctx.clearRect(0, 0, width, height);
       particlesArray.forEach(p => {
         p.update(); p.draw();
         particlesArray.forEach(p2 => {
           const dx = p.x - p2.x; const dy = p.y - p2.y; const dist = Math.sqrt(dx*dx + dy*dy);
-          if(dist < 100) {
-            ctx.strokeStyle = `rgba(187, 134, 252, ${0.1 - dist/1000})`;
-            ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-          }
+          if(dist < 100) { ctx.strokeStyle = `rgba(${particleLineColor}, ${0.1 - dist/1000})`; ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
         });
       });
       requestAnimationFrame(animateParticles);
     }
     initParticles(); animateParticles();
 
-    // --- DIGITAÇÃO E INTRO ---
-    const text = "Bem-vindo à ValhallaBR!";
+    // --- VARS ---
+    let welcomeText = "Bem-vindo à ValhallaBR!";
+    let currentLang = 'pt';
     const titleEl = document.getElementById("typed-title");
-    const typeSound = document.getElementById("type-sound");
     const startBtn = document.getElementById("start-btn");
 
+    function loadUserData() {
+        try {
+            const now = new Date(); document.getElementById('sys-date').innerText = `[${now.toLocaleDateString('pt-BR')}]`;
+            const perfilData = JSON.parse(localStorage.getItem('valhalla_perfil_v6'));
+            if(perfilData && perfilData.account && perfilData.account.nick) {
+                const nick = perfilData.account.nick;
+                if(nick.trim()!=="") {
+                    let greet = 'Saudações';
+                    if(currentLang==='en') greet='Greetings';
+                    if(currentLang==='es') greet='Saludos';
+                    if(currentLang==='ko') greet='환영합니다';
+                    if(currentLang==='fr') greet='Salutations';
+                    
+                    welcomeText = `${greet}, ${nick}!`;
+                    document.querySelector('.info-section h1').innerText = welcomeText;
+                }
+                document.getElementById('mini-dash').style.display = 'flex';
+                let maxAtk = 0; let mainName = "Nenhum"; let mainChar = "uno";
+                if(perfilData.perfil) {
+                    perfilData.perfil.forEach(p => {
+                        let val = parseFloat(String(p.atkTotal).replace(/[^0-9]/g, '')) || 0;
+                        if(val > maxAtk) { maxAtk = val; mainName = p.nome; mainChar = p.char; }
+                    });
+                }
+                document.getElementById('dash-main').innerHTML = `<img src="imagens/personagens/${mainChar}.png" class="mini-avatar" onerror="this.style.display='none'"> <span>${mainName}</span>`;
+                document.getElementById('dash-power').innerHTML = `<span>⚔️</span> ${maxAtk.toLocaleString('pt-BR')}`;
+            }
+            if(JSON.parse(localStorage.getItem('gcFarmDataV2'))) document.getElementById('dash-farm').innerHTML = `<span style="color:#03dac6">Ativo</span>`;
+        } catch(e) {}
+    }
+
+    // --- MENU LOGIC ---
+    function toggleThemePopup() {
+        document.getElementById('lang-popup').classList.remove('open');
+        document.getElementById('theme-popup').classList.toggle('open');
+    }
+    function toggleLangPopup() {
+        document.getElementById('theme-popup').classList.remove('open');
+        document.getElementById('lang-popup').classList.toggle('open');
+    }
+    document.addEventListener('click', (e) => {
+        if(!e.target.closest('.settings-area')) {
+            document.getElementById('theme-popup').classList.remove('open');
+            document.getElementById('lang-popup').classList.remove('open');
+        }
+    });
+
+    // --- THEME ---
+    const themes = {
+        valhalla: { p:'#bb86fc', s:'#03dac6', bg1:'#1a1a1a', bg2:'#000000', pline:'187, 134, 252' },
+        ellia:    { p:'#ff5252', s:'#ffb74d', bg1:'#2c0e0e', bg2:'#000000', pline:'255, 82, 82' },
+        xenia:    { p:'#ffd700', s:'#ffffff', bg1:'#2c2c2c', bg2:'#111111', pline:'255, 215, 0' },
+        arquimidia:{ p:'#8d6e63', s:'#bcaaa4', bg1:'#1e1b18', bg2:'#000000', pline:'141, 110, 99' }
+    };
+    function changeTheme(name) {
+        const t = themes[name]; if(!t)return;
+        const r = document.documentElement.style;
+        r.setProperty('--primary', t.p); r.setProperty('--secondary', t.s);
+        r.setProperty('--bg-gradient-1', t.bg1); r.setProperty('--bg-gradient-2', t.bg2);
+        particleColor = `rgba(${t.pline}, 0.3)`; particleLineColor = t.pline;
+        localStorage.setItem('valhalla_theme', name); document.getElementById('theme-popup').classList.remove('open');
+    }
+    const savedTheme = localStorage.getItem('valhalla_theme'); if(savedTheme) changeTheme(savedTheme);
+
+    // --- LANGUAGE ---
+    function changeLanguage(lang) {
+        currentLang = lang; localStorage.setItem('valhalla_lang', lang);
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if(i18n[lang][key]) el.innerHTML = i18n[lang][key];
+        });
+        loadUserData();
+        if(titleEl.textContent && !titleEl.textContent.includes(",")) titleEl.textContent = i18n[lang]['welcome_title'];
+        document.getElementById('lang-popup').classList.remove('open');
+    }
+    const savedLang = localStorage.getItem('valhalla_lang'); if(savedLang) changeLanguage(savedLang);
+
+    // --- TYPING ---
     let i = 0;
     function typeLetter() {
-      if (i < text.length) {
-        titleEl.textContent += text.charAt(i);
-        typeSound.currentTime = 0; try { typeSound.play(); } catch(e){} 
-        i++; setTimeout(typeLetter, Math.random() * 50 + 80);
-      } else {
-        titleEl.style.borderRight = "none"; startBtn.classList.add("show");
-      }
+        if (i < welcomeText.length) {
+            titleEl.textContent += welcomeText.charAt(i);
+            try { const audio = document.getElementById("type-sound"); audio.currentTime = 0; audio.play(); } catch(e){} 
+            i++; setTimeout(typeLetter, Math.random() * 50 + 80);
+        } else { titleEl.style.borderRight = "none"; startBtn.classList.add("show"); }
     }
-    window.addEventListener("load", () => setTimeout(typeLetter, 500));
 
-    // --- ÁUDIO ---
+    // --- TIMER ---
+    function updateResetTimer() {
+        const now = new Date(); const reset = new Date(); reset.setHours(3, 0, 0, 0);
+        if(now > reset) reset.setDate(reset.getDate() + 1);
+        const diff = reset - now;
+        const h = Math.floor(diff / (36e5)); const m = Math.floor((diff % 36e5) / 6e4); const s = Math.floor((diff % 6e4) / 1e3);
+        document.getElementById('reset-countdown').innerText = `${h<10?'0'+h:h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
+    }
+
+    window.addEventListener("load", () => {
+        loadUserData(); setTimeout(typeLetter, 500);
+        setInterval(updateResetTimer, 1000); updateResetTimer();
+        generateVisualizerBars();
+    });
+
+    // --- AUDIO ---
     const audio = document.getElementById('bg-music');
     const playPauseBtn = document.getElementById('play-pause');
-    const volumeUpBtn = document.getElementById('volume-up');
-    const volumeDownBtn = document.getElementById('volume-down');
-    const introScreen = document.getElementById('intro-screen');
-    const mainContent = document.getElementById('main-content');
-    const audioPanel = document.getElementById('audio-panel');
+    const visualizer = document.getElementById('visualizer');
     let isPlaying = false;
 
+    function generateVisualizerBars() {
+        visualizer.innerHTML = '';
+        for(let j=0; j<20; j++) {
+            const bar = document.createElement('div'); bar.className = 'v-bar';
+            bar.style.height = (Math.floor(Math.random()*15)+5) + 'px';
+            bar.style.animationDuration = (Math.random()*0.5+0.5).toFixed(2) + 's';
+            visualizer.appendChild(bar);
+        }
+    }
+
     startBtn.addEventListener('click', () => {
-      introScreen.style.opacity = 0;
-      setTimeout(() => { introScreen.style.display = 'none'; mainContent.style.display = 'flex'; audioPanel.style.display = 'flex'; }, 1000);
-      audio.volume = 0.3;
-      audio.play().then(() => { isPlaying = true; playPauseBtn.innerHTML = '⏸'; })
-           .catch(err => { console.log('Autoplay block:', err); playPauseBtn.innerHTML = '▶'; });
+        document.getElementById('intro-screen').style.opacity = 0;
+        setTimeout(() => { 
+            document.getElementById('intro-screen').style.display = 'none'; 
+            document.getElementById('main-content').style.display = 'flex'; 
+            document.getElementById('audio-panel').style.display = 'flex'; 
+        }, 1000);
+        audio.volume = 0.3; togglePlay();
     });
 
-    playPauseBtn.addEventListener('click', () => {
-      if (isPlaying) { audio.pause(); playPauseBtn.innerHTML = '▶'; } else { audio.play(); playPauseBtn.innerHTML = '⏸'; }
-      isPlaying = !isPlaying;
-    });
+    playPauseBtn.addEventListener('click', togglePlay);
+    function togglePlay() {
+        if (isPlaying) { audio.pause(); playPauseBtn.innerHTML = '▶'; visualizer.classList.add('paused'); }
+        else { audio.play().then(() => { playPauseBtn.innerHTML = '⏸'; visualizer.classList.remove('paused'); }).catch(e=>console.log(e)); }
+        isPlaying = !isPlaying;
+    }
 
-    volumeUpBtn.addEventListener('click', () => { if(audio.volume < 0.9) audio.volume += 0.1; });
-    volumeDownBtn.addEventListener('click', () => { if(audio.volume > 0.1) audio.volume -= 0.1; });
-
-    document.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => { sessionStorage.setItem('audioTime', audio.currentTime); });
-    });
+    document.getElementById('volume-up').addEventListener('click', () => { if(audio.volume < 0.9) audio.volume += 0.1; });
+    document.getElementById('volume-down').addEventListener('click', () => { if(audio.volume > 0.1) audio.volume -= 0.1; });
+    document.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { sessionStorage.setItem('audioTime', audio.currentTime); }); });
   </script>
 </body>
-
 </html>
-

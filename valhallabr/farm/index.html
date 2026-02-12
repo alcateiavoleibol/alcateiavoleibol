@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FARM</title>
     <link rel="icon" type="image/png" href="../imagens/favicon/favicon.png">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
     <style>
         /* --- CONFIGURAÇÕES GERAIS --- */
         :root {
             --primary: #bb86fc;
             --secondary: #03dac6; /* Ciano/Teal */
+            --danger: #cf6679;
             --bg: #0b0b0b;
             --surface: rgba(30, 30, 30, 0.6);
             --surface-hover: rgba(50, 50, 50, 0.8);
@@ -75,23 +78,23 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 10px rgba(187, 134, 252, 0.3); margin: 0;
         }
-	        .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
-    .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
-    .cache-info { color: #888; }
-    .cache-info span { color: var(--primary); font-weight: bold; }
-    .time-info { color: #aaa; font-size: 0.8rem; display: flex; align-items: center; gap: 5px;}
-    .real-time { color: var(--secondary); font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 5px rgba(3, 218, 198, 0.4); }
+        .brand h3 { margin: 0; color: #aaa; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-top: -5px; }
+        .info-panel { font-size: 0.75rem; display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
+        .cache-info { color: #888; }
+        .cache-info span { color: var(--primary); font-weight: bold; }
+        .time-info { color: #aaa; font-size: 0.8rem; display: flex; align-items: center; gap: 5px;}
+        .real-time { color: var(--secondary); font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 5px rgba(3, 218, 198, 0.4); }
 
-    .main-nav { display: flex; gap: 15px; }
-    .nav-link {
-        text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 1.4rem;
-        padding: 8px 16px; border-radius: 4px; transition: 0.3s; display: flex; align-items: center; gap: 6px;
-        border-bottom: 2px solid transparent;
-    }
-    .nav-link:hover, .nav-link.active {
-        color: #fff; text-shadow: 0 0 10px var(--secondary); border-bottom: 2px solid var(--secondary);
-        background: rgba(255, 255, 255, 0.05);
-    }
+        .main-nav { display: flex; gap: 15px; }
+        .nav-link {
+            text-decoration: none; color: #ccc; font-weight: 700; text-transform: uppercase; font-size: 1.4rem;
+            padding: 8px 16px; border-radius: 4px; transition: 0.3s; display: flex; align-items: center; gap: 6px;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #fff; text-shadow: 0 0 10px var(--secondary); border-bottom: 2px solid var(--secondary);
+            background: rgba(255, 255, 255, 0.05);
+        }
 
         /* --- CONTROLES --- */
         .controls { display: flex; gap: 10px; align-items: center; min-width: 180px; justify-content: flex-end; }
@@ -107,12 +110,15 @@
         .btn-load:hover { background: var(--secondary); color: #000; box-shadow: 0 0 15px var(--secondary); border-color: var(--secondary); }
         .btn-load input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
+        .btn-print { border-color: #fff; color: #fff; }
+        .btn-print:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
+
         /* --- DASHBOARD --- */
         .dashboard { max-width: 1400px; margin: 30px auto; padding: 0 20px; display: flex; justify-content: center; width: 100%; }
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 25px;
             align-items: stretch;
             width: 100%;
@@ -121,16 +127,43 @@
         .dash-card {
             background: linear-gradient(135deg, rgba(44, 26, 61, 0.7) 0%, rgba(30, 30, 30, 0.7) 100%);
             border: 1px solid var(--primary); border-radius: 12px;
-            padding: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
             box-shadow: 0 0 30px rgba(187, 134, 252, 0.1);
             position: relative; overflow: hidden; backdrop-filter: blur(10px);
             min-height: 140px;
         }
         .dash-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--secondary)); }
         
-        .dash-card h2 { color: var(--secondary); text-transform: uppercase; font-size: 1.2rem; margin-bottom: 5px; letter-spacing: 1px; text-align: center; }
-        .dash-card .subtitle { font-size: 0.85rem; color: #aaa; margin-bottom: 15px; text-align: center; }
+        .dash-card h2 { color: var(--secondary); text-transform: uppercase; font-size: 1.1rem; margin-bottom: 5px; letter-spacing: 1px; text-align: center; }
+        .dash-card .subtitle { font-size: 0.8rem; color: #aaa; margin-bottom: 15px; text-align: center; }
 
+        /* Ferramentas do Dashboard */
+        .tools-row { display: flex; width: 100%; gap: 10px; margin-top: 10px; }
+        .tool-group { display: flex; flex-direction: column; width: 100%; }
+        .tool-group label { font-size: 0.7rem; color: #888; margin-bottom: 3px; text-transform: uppercase; }
+        
+        select.dash-select {
+            background: rgba(0,0,0,0.5); border: 1px solid #555; color: #fff;
+            padding: 8px; border-radius: 6px; width: 100%; font-size: 0.9rem;
+            cursor: pointer; transition: 0.3s;
+        }
+        select.dash-select:focus { border-color: var(--secondary); outline: none; background: #000; }
+
+        /* Botões de Ação em Lote */
+        .action-buttons { display: flex; gap: 5px; margin-top: 5px; }
+        
+        .btn-action {
+            flex: 1; border: none; padding: 8px;
+            font-weight: bold; cursor: pointer; border-radius: 6px; 
+            text-transform: uppercase; font-size: 0.8rem; transition: 0.3s;
+        }
+        .btn-exec { background: var(--secondary); color: #000; }
+        .btn-exec:hover { background: #fff; box-shadow: 0 0 10px var(--secondary); }
+        
+        .btn-reset { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
+        .btn-reset:hover { background: var(--danger); color: #fff; box-shadow: 0 0 10px var(--danger); }
+
+        /* PIPS (Bolinhas) */
         .pips-container { display: flex; gap: 8px; }
         .pip {
             width: 20px; height: 20px; border: 2px solid #555; border-radius: 50%;
@@ -143,7 +176,7 @@
             box-shadow: 0 0 10px var(--secondary);
         }
 
-        /* PROGRESSO GLOBAL */
+        /* Progresso */
         .progress-container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 8px; }
         .progress-header { display: flex; justify-content: space-between; align-items: flex-end; }
         .pct-big { font-size: 2rem; font-weight: 800; color: var(--primary); text-shadow: 0 0 15px rgba(187, 134, 252, 0.5); line-height: 1; }
@@ -162,7 +195,7 @@
             background: var(--surface); border: var(--border);
             border-radius: 10px; overflow: hidden;
             display: flex; flex-direction: column;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
             backdrop-filter: blur(5px);
         }
 
@@ -172,11 +205,25 @@
             border-color: rgba(187, 134, 252, 0.3);
             background: var(--surface-hover);
         }
+        
+        .char-card.dragging {
+            opacity: 0.5;
+            border: 2px dashed var(--secondary);
+            transform: scale(0.95);
+        }
+        
+        .grid-container.draggable-mode .char-card {
+            cursor: grab;
+        }
+        .grid-container.draggable-mode .char-card:active {
+            cursor: grabbing;
+        }
 
         .char-header {
             position: relative; height: 90px; background: #000;
             display: flex; align-items: center; padding: 0 15px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
+            pointer-events: none; 
         }
 
         .char-bg-img {
@@ -192,11 +239,13 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
-        .char-details { margin-left: 15px; z-index: 2; }
-        .char-name { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px black; }
+        .char-details { margin-left: 15px; z-index: 2; display: flex; flex-direction: column; justify-content: center; }
+        .char-name { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px black; line-height: 1; }
+        .char-info-row { display: flex; gap: 8px; margin-top: 4px; align-items: center; }
         .char-tag { font-size: 0.7rem; background: var(--secondary); color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .char-atk { font-size: 0.75rem; color: #ffcc00; font-weight: bold; text-shadow: 0 0 5px rgba(255, 204, 0, 0.5); display: flex; align-items: center; gap: 3px; }
 
-        .char-missions { padding: 15px; flex-grow: 1; }
+        .char-missions { padding: 15px; flex-grow: 1; pointer-events: auto; }
 
         .cat-title {
             font-size: 0.7rem; color: #888; text-transform: uppercase;
@@ -245,53 +294,18 @@
 
 /* --- RESPONSIVIDADE PROFISSIONAL (MOBILE) --- */
     @media (max-width: 900px) {
-        header { 
-            flex-direction: column; 
-            gap: 15px; 
-            margin-top: 0; 
-            padding-bottom: 1rem;
-        }
-
-        /* 1. Centraliza o H1, H3 e o bloco todo da marca */
-        .brand { 
-            text-align: center; 
-            align-items: center; /* ESSA LINHA CENTRALIZA O FLEX NO MEIO */
-        }
-
-        /* 2. Centraliza especificamente o Cache e a Hora */
-        .info-panel {
-            align-items: center; /* ESSA LINHA CENTRALIZA OS ITENS INTERNOS */
-        }
-
-        /* Banner Mobile Inteligente */
-        .hero-banner { 
-            height: auto; 
-            aspect-ratio: 4/3; 
-            max-height: 50vh;
-        }
-
-        .main-nav { 
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px;
-            width: 100%;
-        }
-
-        .nav-link {
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        header { flex-direction: column; gap: 15px; margin-top: 0; padding-bottom: 1rem; }
+        .brand { text-align: center; align-items: center; }
+        .info-panel { align-items: center; }
+        .hero-banner { height: auto; aspect-ratio: 4/3; max-height: 50vh; }
+        .main-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+        .nav-link { justify-content: center; background: rgba(255, 255, 255, 0.05); padding: 12px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.1); }
         .nav-link:last-child:nth-child(odd) { grid-column: span 2; }
-
         .controls { width: 100%; justify-content: center; margin-top: 10px; }
-        
-        /* Ajustes específicos de cada página */
         .account-stats-panel { flex-direction: column; gap: 15px; }
         .dashboard-grid { grid-template-columns: 1fr; }
         .grid-container { grid-template-columns: 1fr; padding: 0 15px; }
+        .tools-row { flex-direction: column; }
     }
     </style>
 </head>
@@ -309,25 +323,25 @@
 <header>
     <div class="brand">
         <h1>VALHALLA BR</h1>
-        <h3>FARM</h3>
-		<br>
+        <h3 data-lang="title_farm">FARM</h3>
+        <br>
         <div class="info-panel">
-            <div class="cache-info" id="last-save-display">Memória Cache: <span>⛬</span></div>
-            <div class="time-info">Horário de Brasília: <span class="real-time" id="real-time-clock">--:--:--</span></div>
+            <div class="cache-info" id="last-save-display">Cache: <span>Vazio</span></div>
+            <div class="time-info"><span data-lang="time_label">Brasília</span>: <span class="real-time" id="real-time-clock">--:--:--</span></div>
         </div>
     </div>
 
     <nav class="main-nav">
-        <a href="../index.html" class="nav-link">⌂ Início</a>
-        <a href="#" class="nav-link active">🚜 Farm</a>
-        <a href="../titulos/index.html" class="nav-link">🏆 Títulos</a>
-        <a href="../perfil/index.html" class="nav-link">👤 Perfil</a>
-        
+        <a href="../index.html" class="nav-link">⌂ <span data-lang="menu_home">Início</span></a>
+        <a href="#" class="nav-link active">🚜 <span data-lang="menu_farm">Farm</span></a>
+        <a href="../titulos/index.html" class="nav-link">🏆 <span data-lang="menu_titles">Títulos</span></a>
+        <a href="../perfil/index.html" class="nav-link">👤 <span data-lang="menu_profile">Perfil</span></a>
     </nav>
 
     <div class="controls">
-        <button class="btn" onclick="downloadJSON()">💾 SALVAR</button>
-        <div class="btn btn-load"> 📂 CARREGAR
+        <button class="btn btn-print" onclick="gerarCardImagem()">📸 <span data-lang="btn_print">IMPRIMIR</span></button>
+        <button class="btn" onclick="downloadJSON()">💾 <span data-lang="btn_save">SALVAR</span></button>
+        <div class="btn btn-load"> 📂 <span data-lang="btn_load">CARREGAR</span>
             <input type="file" id="fileInput" accept=".json" onchange="uploadJSON(this)">
         </div>
     </div>
@@ -335,16 +349,17 @@
 
 <div class="dashboard">
     <div class="dashboard-grid">
+        
         <div class="dash-card">
-            <h2>Claustro Infinito</h2>
-            <div class="subtitle">3 Idas por Conta (Diário)</div>
+            <h2 data-lang="card_claustro">Claustro Infinito</h2>
+            <div class="subtitle" data-lang="sub_claustro">3 Idas por Conta (Diário)</div>
             <div class="pips-container" id="claustro-container"></div>
         </div>
 
         <div class="dash-card">
             <div class="progress-container">
                 <div class="progress-header">
-                    <span class="pct-label">Progresso Atual</span>
+                    <span class="pct-label" data-lang="prog_label">Progresso Atual</span>
                     <span class="pct-big" id="global-pct">0%</span>
                 </div>
                 <div class="progress-track">
@@ -352,6 +367,43 @@
                 </div>
             </div>
         </div>
+
+        <div class="dash-card" style="align-items: flex-start;">
+            <h2 data-lang="panel_admin">Painel Admin</h2>
+            <div class="subtitle" style="text-align: left; width: 100%;" data-lang="sub_admin">Torre de Controle</div>
+            
+            <div class="tools-row">
+                <div class="tool-group">
+                    <label data-lang="label_filter">Exibir Personagem</label>
+                    <select id="filter-char" class="dash-select" onchange="renderAll()">
+                        <option value="todos" data-lang="opt_all">Todos</option>
+                    </select>
+                </div>
+                <div class="tool-group">
+                    <label data-lang="label_sort">Ordenar Por</label>
+                    <select id="sort-order" class="dash-select" onchange="changeSort(this.value)">
+                        <option value="default" data-lang="sort_default">📜 Lançamento</option>
+                        <option value="name" data-lang="sort_name">🏷️ Nome (A-Z)</option>
+                        <option value="power" data-lang="sort_power">⚔️ Tipo</option>
+                        <option value="custom" data-lang="sort_custom">✨ Personalizado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="tools-row">
+                <div class="tool-group">
+                    <label data-lang="label_batch">Missões em Lote</label>
+                    <select id="batch-mission" class="dash-select">
+                        <option value="" disabled selected data-lang="opt_select_mission">Selecione a Missão...</option>
+                    </select>
+                    <div class="action-buttons">
+                        <button class="btn-action btn-exec" onclick="executarBatch()" data-lang="btn_batch_done">Concluir Todos</button>
+                        <button class="btn-action btn-reset" onclick="resetarBatch()" data-lang="btn_batch_reset">Resetar Todos</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -363,10 +415,122 @@
 </div>
 
 <footer>
-    © 2025 VALHALLA. Todos os direitos reservados.
+    <span data-lang="footer_rights">© 2025 VALHALLA. Todos os direitos reservados.</span>
 </footer>
 
 <script>
+    // --- I18N DATABASE ---
+    const i18n = {
+        pt: {
+            title_farm: "FARM", time_label: "Brasília",
+            menu_home: "Início", menu_farm: "Farm", menu_titles: "Títulos", menu_profile: "Perfil", menu_team: "Equipe",
+            btn_print: "IMPRIMIR", btn_save: "SALVAR", btn_load: "CARREGAR",
+            card_claustro: "Claustro Infinito", sub_claustro: "3 Idas por Conta (Diário)",
+            prog_label: "Progresso Atual",
+            panel_admin: "Painel Admin", sub_admin: "Torre de Controle",
+            label_filter: "Exibir Personagem", opt_all: "Todos",
+            label_sort: "Ordenar Por", sort_default: "📅 Lançamento", sort_name: "🔤 Nome (A-Z)", sort_power: "⚡ Tipo", sort_custom: "🖐️ Personalizado",
+            label_batch: "Missões em Lote", opt_select_mission: "Selecione a Missão...",
+            btn_batch_done: "Concluir Todos", btn_batch_reset: "Resetar Todos",
+            cat_daily: "Diárias", cat_weekly: "Semanais", cat_raid: "Raid Vazio", cat_event: "Eventos",
+            reset_daily: "03:00 AM", reset_weekly: "Qua 03:00", reset_raid: "Seg/Qua/Sex", reset_event: "Fim de Semana",
+            // Missions
+            m_towerExt: "Torre da Extinção", m_covil: "Covil de Berkas", m_calnat: "Explosão de Calnat", m_teroka: "Cerco de Teroka", m_templo: "Templo do Tempo",
+            m_furnace: "Fornalha Infernal", m_altar: "Altar da Ruína", m_towerIllusion: "Torre das Ilusões", m_abyss: "Caminho Abissal",
+            m_void1: "Vazio 1 (Invasão)", m_void2: "Vazio 2 (Contaminação)", m_void3: "Vazio 3 (Pesadelo)", m_judgment: "Terra do Julgamento",
+            footer_rights: "© 2025 VALHALLA. Todos os direitos reservados."
+        },
+        en: {
+            title_farm: "FARM", time_label: "Time",
+            menu_home: "Home", menu_farm: "Farm", menu_titles: "Titles", menu_profile: "Profile", menu_team: "Team",
+            btn_print: "PRINT", btn_save: "SAVE", btn_load: "LOAD",
+            card_claustro: "Infinite Cloister", sub_claustro: "3 Runs per Account (Daily)",
+            prog_label: "Current Progress",
+            panel_admin: "Admin Panel", sub_admin: "Control Tower",
+            label_filter: "Show Character", opt_all: "All",
+            label_sort: "Sort By", sort_default: "📜 Launch", sort_name: "🏷️ Name (A-Z)", sort_power: "⚔️ Type", sort_custom: "✨ Custom",
+            label_batch: "Batch Missions", opt_select_mission: "Select Mission...",
+            btn_batch_done: "Complete All", btn_batch_reset: "Reset All",
+            cat_daily: "Daily", cat_weekly: "Weekly", cat_raid: "Void Raid", cat_event: "Events",
+            reset_daily: "03:00 AM", reset_weekly: "Wed 03:00", reset_raid: "Mon/Wed/Fri", reset_event: "Weekend",
+            // Missions
+            m_towerExt: "Tower of Disappearance", m_covil: "Berkas Lair", m_calnat: "Kounat Collapse", m_teroka: "Siege of Teroka", m_templo: "Temple of Time",
+            m_furnace: "Hell Furnace", m_altar: "Altar of Ruin", m_towerIllusion: "Tower of Illusion", m_abyss: "Wizard's Labyrinth",
+            m_void1: "Void 1 (Invasion)", m_void2: "Void 2 (Taint)", m_void3: "Void 3 (Nightmare)", m_judgment: "Land of Judgment",
+            footer_rights: "© 2025 VALHALLA. All rights reserved."
+        },
+        es: {
+            title_farm: "FARM", time_label: "Hora",
+            menu_home: "Inicio", menu_farm: "Farm", menu_titles: "Títulos", menu_profile: "Perfil", menu_team: "Equipo",
+            btn_print: "IMPRIMIR", btn_save: "GUARDAR", btn_load: "CARGAR",
+            card_claustro: "Claustro Infinito", sub_claustro: "3 Idas por Cuenta (Diario)",
+            prog_label: "Progreso Actual",
+            panel_admin: "Panel Admin", sub_admin: "Torre de Control",
+            label_filter: "Mostrar Personaje", opt_all: "Todos",
+            label_sort: "Ordenar Por", sort_default: "📜 Lanzamiento", sort_name: "🏷️ Nombre (A-Z)", sort_power: "⚔️ Tipo", sort_custom: "✨ Personalizado",
+            label_batch: "Misiones en Lote", opt_select_mission: "Seleccione Misión...",
+            btn_batch_done: "Completar Todos", btn_batch_reset: "Reiniciar Todos",
+            cat_daily: "Diarias", cat_weekly: "Semanales", cat_raid: "Raid Vacío", cat_event: "Eventos",
+            reset_daily: "03:00 AM", reset_weekly: "Mié 03:00", reset_raid: "Lun/Mié/Vie", reset_event: "Fin de Semana",
+            // Missions
+            m_towerExt: "Torre de la Extinción", m_covil: "Guarida de Berkas", m_calnat: "Explosión de Kounat", m_teroka: "Asedio de Teroka", m_templo: "Templo del Tiempo",
+            m_furnace: "Horno Infernal", m_altar: "Altar de la Ruina", m_towerIllusion: "Torre de las Ilusiones", m_abyss: "Laberinto del Mago",
+            m_void1: "Vacío 1 (Invasión)", m_void2: "Vacío 2 (Contaminación)", m_void3: "Vacío 3 (Pesadilla)", m_judgment: "Tierra del Juicio",
+            footer_rights: "© 2025 VALHALLA. Todos los derechos reservados."
+        },
+        ko: {
+            title_farm: "파밍", time_label: "시간",
+            menu_home: "홈", menu_farm: "파밍", menu_titles: "타이틀", menu_profile: "프로필", menu_team: "팀",
+            btn_print: "인쇄", btn_save: "저장", btn_load: "불러오기",
+            card_claustro: "무한의 사원", sub_claustro: "계정당 3회 (일일)",
+            prog_label: "현재 진행도",
+            panel_admin: "관리 패널", sub_admin: "제어탑",
+            label_filter: "캐릭터 보기", opt_all: "모두",
+            label_sort: "정렬 기준", sort_default: "📜 시작하다", sort_name: "🏷️ 이름 (알파벳 순)", sort_power: "⚔️ 타입", sort_custom: "✨ 사용자 지정",
+            label_batch: "일괄 미션", opt_select_mission: "미션 선택...",
+            btn_batch_done: "모두 완료", btn_batch_reset: "모두 초기화",
+            cat_daily: "일일", cat_weekly: "주간", cat_raid: "공허 레이드", cat_event: "이벤트",
+            reset_daily: "03:00 AM", reset_weekly: "수 03:00", reset_raid: "월/수/금", reset_event: "주말",
+            // Missions
+            m_towerExt: "소멸의 탑", m_covil: "베르카스의 요새", m_calnat: "코우나트 붕괴지", m_teroka: "테로카 공성전", m_templo: "시간의 사원",
+            m_furnace: "지옥의 용광로", m_altar: "파멸의 성소", m_towerIllusion: "환영의 미궁", m_abyss: "심판의 땅",
+            m_void1: "공허 1 (침공)", m_void2: "공허 2 (오염)", m_void3: "공허 3 (악몽)", m_judgment: "심판의 땅",
+            footer_rights: "© 2025 VALHALLA. 모든 권리 보유."
+        },
+        fr: {
+            title_farm: "FARM", time_label: "Heure",
+            menu_home: "Accueil", menu_farm: "Farm", menu_titles: "Titres", menu_profile: "Profil", menu_team: "Équipe",
+            btn_print: "IMPRIMER", btn_save: "SAUVER", btn_load: "CHARGER",
+            card_claustro: "Cloître Infini", sub_claustro: "3 fois par compte (Quotidien)",
+            prog_label: "Progrès Actuel",
+            panel_admin: "Panneau Admin", sub_admin: "Tour de Contrôle",
+            label_filter: "Afficher Personnage", opt_all: "Tous",
+            label_sort: "Trier Par", sort_default: "📜 Lancement", sort_name: "🏷️ Nom (A-Z)", sort_power: "⚔️ Type", sort_custom: "✨ Personnalisé",
+            label_batch: "Missions en Lot", opt_select_mission: "Sélectionner Mission...",
+            btn_batch_done: "Tout Compléter", btn_batch_reset: "Tout Réinitialiser",
+            cat_daily: "Quotidien", cat_weekly: "Hebdo", cat_raid: "Raid Vide", cat_event: "Événements",
+            reset_daily: "03:00 AM", reset_weekly: "Mer 03:00", reset_raid: "Lun/Mer/Ven", reset_event: "Week-end",
+            // Missions
+            m_towerExt: "Tour de l'Extinction", m_covil: "Repaire de Berkas", m_calnat: "Effondrement de Kounat", m_teroka: "Siège de Teroka", m_templo: "Temple du Temps",
+            m_furnace: "Fournaise Infernale", m_altar: "Autel de la Ruine", m_towerIllusion: "Tour des Illusions", m_abyss: "Labyrinthe du Magicien",
+            m_void1: "Vide 1 (Invasion)", m_void2: "Vide 2 (Contamination)", m_void3: "Vide 3 (Cauchemar)", m_judgment: "Terre du Jugement",
+            footer_rights: "© 2025 VALHALLA. Tous droits réservés."
+        }
+    };
+
+    let currentLang = localStorage.getItem('valhalla_lang') || 'pt';
+
+    function applyLanguage() {
+        const langData = i18n[currentLang];
+        if(!langData) return;
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            const key = el.getAttribute('data-lang');
+            if(langData[key]) el.innerHTML = langData[key];
+        });
+        // Atualiza selects de batch
+        populateSelectors();
+    }
+
     // --- DADOS E CONFIGURAÇÃO ---
     const personagens = [
         {char:"elesis", nome:"ELESIS", power:"MP"}, {char:"lire", nome:"LIRE", power:"MP"},
@@ -385,30 +549,34 @@
 
     const missoesConfig = {
         diarias: [
-            { id: 'towerExt', label: 'Torre da Extinção', max: 3 },
-            { id: 'covil', label: 'Covil de Berkas', max: 1 },
-            { id: 'calnat', label: 'Explosão de Calnat', max: 1 },
-            { id: 'teroka', label: 'Cerco de Teroka', max: 1 },
-            { id: 'templo', label: 'Templo do Tempo', max: 1 }
+            { id: 'towerExt', key: 'm_towerExt', max: 3 },
+            { id: 'covil', key: 'm_covil', max: 1 },
+            { id: 'calnat', key: 'm_calnat', max: 1 },
+            { id: 'teroka', key: 'm_teroka', max: 1 },
+            { id: 'templo', key: 'm_templo', max: 1 }
         ],
         semanais: [
-            { id: 'furnace', label: 'Fornalha Infernal', max: 3, resetDay: 3 },
-            { id: 'altar', label: 'Altar da Ruína', max: 3, resetDay: 3 },
-            { id: 'towerIllusion', label: 'Torre das Ilusões', max: 5, resetDay: 3 },
-            { id: 'abyss', label: 'Caminho Abissal', max: 1, resetDay: 3 }
+            { id: 'furnace', key: 'm_furnace', max: 3, resetDay: 3 },
+            { id: 'altar', key: 'm_altar', max: 3, resetDay: 3 },
+            { id: 'towerIllusion', key: 'm_towerIllusion', max: 5, resetDay: 3 },
+            { id: 'abyss', key: 'm_abyss', max: 1, resetDay: 3 }
         ],
         raids: [
-            { id: 'void1', label: 'Vazio 1 (Invasão)', max: 2, resetDay: 1 }, // Seg
-            { id: 'void2', label: 'Vazio 2 (Contaminação)', max: 2, resetDay: 3 }, // Qua
-            { id: 'void3', label: 'Vazio 3 (Pesadelo)', max: 2, resetDay: 5 }  // Sex
+            { id: 'void1', key: 'm_void1', max: 2, resetDay: 1 }, // Seg
+            { id: 'void2', key: 'm_void2', max: 2, resetDay: 3 }, // Qua
+            { id: 'void3', key: 'm_void3', max: 2, resetDay: 5 }  // Sex
         ],
         eventos: [
-            { id: 'judgment', label: 'Terra do Julgamento', max: 1, isWeekend: true }
+            { id: 'judgment', key: 'm_judgment', max: 1, isWeekend: true }
         ]
     };
 
     let appState = {
-        meta: { lastSave: Date.now() },
+        meta: { 
+            lastSave: Date.now(), 
+            sortOrder: 'default',
+            customOrder: [] // Guarda a ordem personalizada (array de char IDs)
+        },
         account: { claustro: 0 },
         chars: {}
     };
@@ -495,11 +663,17 @@
     // --- SYSTEM ---
     function init() {
         startClock();
+        applyLanguage();
+
         const localData = localStorage.getItem('gcFarmDataV2');
         if (localData) {
             try {
                 const parsed = JSON.parse(localData);
                 appState = { ...appState, ...parsed };
+                // Garantias de integridade para versões antigas
+                if(!appState.meta.sortOrder) appState.meta.sortOrder = 'default';
+                if(!appState.meta.customOrder) appState.meta.customOrder = [];
+                
                 checkAndApplyResets(appState.meta.lastSave);
             } catch (e) { console.error("Erro cache", e); }
         } else {
@@ -508,8 +682,42 @@
             });
             persist();
         }
+        
+        document.getElementById('sort-order').value = appState.meta.sortOrder || 'default';
+
         renderAll();
         initBackground();
+    }
+
+    function populateSelectors() {
+        const langData = i18n[currentLang];
+
+        // Seletor de Personagem
+        const charSelect = document.getElementById('filter-char');
+        charSelect.innerHTML = `<option value="todos">${langData['opt_all']}</option>`;
+        personagens.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.char;
+            opt.textContent = p.nome;
+            charSelect.appendChild(opt);
+        });
+
+        // Seletor de Batch (Missões)
+        const batchSelect = document.getElementById('batch-mission');
+        batchSelect.innerHTML = `<option value="" disabled selected>${langData['opt_select_mission']}</option>`;
+        const allMissions = [
+            ...missoesConfig.diarias, 
+            ...missoesConfig.semanais, 
+            ...missoesConfig.raids, 
+            ...missoesConfig.eventos
+        ];
+        allMissions.forEach(m => {
+            const opt = document.createElement('option');
+            opt.value = m.id;
+            // Traduz o nome da missão
+            opt.textContent = langData[m.key] || m.label;
+            batchSelect.appendChild(opt);
+        });
     }
 
     function persist() {
@@ -563,9 +771,27 @@
         reader.readAsText(file);
     }
 
+    // --- INTEGRAÇÃO COM PERFIL ---
+    function getAtkFromProfile(charKey) {
+        try {
+            const perfilDataStr = localStorage.getItem('valhalla_perfil_v6');
+            if(!perfilDataStr) return null;
+            const perfilData = JSON.parse(perfilDataStr);
+            const charProfile = perfilData.perfil.find(p => p.char === charKey);
+            
+            if(charProfile && charProfile.atkTotal && charProfile.atkTotal !== "0") {
+                let num = parseFloat(charProfile.atkTotal.replace(/[^0-9]/g, ''));
+                if(num > 1000000) return (num/1000000).toFixed(1) + 'M';
+                if(num > 1000) return (num/1000).toFixed(0) + 'k';
+                return num;
+            }
+        } catch(e) { return null; }
+        return null;
+    }
+
     // --- CALCULO DE PROGRESSO INTELIGENTE ---
     function updateGlobalProgress() {
-        let maxPoints = 3; // Claustro
+        let maxPoints = 3; 
         let currentPoints = parseInt(appState.account.claustro) || 0;
         
         const today = new Date().getDay();
@@ -573,12 +799,10 @@
 
         personagens.forEach(p => {
             const charData = appState.chars[p.char] || {};
-
             [...missoesConfig.diarias, ...missoesConfig.semanais, ...missoesConfig.raids].forEach(m => {
                 maxPoints += m.max;
                 currentPoints += (parseInt(charData[m.id]) || 0);
             });
-
             if(isWeekend) {
                 missoesConfig.eventos.forEach(m => {
                     maxPoints += m.max;
@@ -591,9 +815,126 @@
         document.getElementById('global-pct').innerText = `${percent}%`;
         const fill = document.getElementById('global-fill');
         fill.style.width = `${percent}%`;
-        
         if(percent === 100) fill.style.background = '#03dac6'; 
         else fill.style.background = 'linear-gradient(90deg, var(--primary), var(--secondary))';
+    }
+
+    // --- ORDENAÇÃO E DRAG & DROP ---
+    function changeSort(order) {
+        appState.meta.sortOrder = order;
+        persist();
+        renderAll();
+    }
+
+    function getSortedChars() {
+        let list = [...personagens];
+        const order = appState.meta.sortOrder || 'default';
+
+        if(order === 'name') {
+            list.sort((a, b) => a.nome.localeCompare(b.nome));
+        } else if(order === 'power') {
+            list.sort((a, b) => a.power.localeCompare(b.power));
+        } else if(order === 'custom') {
+            const orderMap = new Map();
+            if(!appState.meta.customOrder) appState.meta.customOrder = [];
+            
+            personagens.forEach(p => {
+                if(!appState.meta.customOrder.includes(p.char)) appState.meta.customOrder.push(p.char);
+            });
+
+            appState.meta.customOrder.forEach((charKey, index) => {
+                orderMap.set(charKey, index);
+            });
+
+            list.sort((a, b) => {
+                const idxA = orderMap.has(a.char) ? orderMap.get(a.char) : 999;
+                const idxB = orderMap.has(b.char) ? orderMap.get(b.char) : 999;
+                return idxA - idxB;
+            });
+        }
+        return list;
+    }
+
+    // --- LÓGICA DE DRAG & DROP ---
+    let draggedItem = null;
+
+    function handleDragStart(e) {
+        draggedItem = this;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.innerHTML);
+    }
+
+    function handleDragOver(e) {
+        if (e.preventDefault) e.preventDefault(); 
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+    }
+
+    function handleDrop(e) {
+        if (e.stopPropagation) e.stopPropagation(); 
+        
+        if (draggedItem !== this) {
+            const sourceChar = draggedItem.getAttribute('data-char');
+            const targetChar = this.getAttribute('data-char');
+            
+            let order = appState.meta.customOrder;
+            const fromIndex = order.indexOf(sourceChar);
+            const toIndex = order.indexOf(targetChar);
+
+            if (fromIndex >= 0 && toIndex >= 0) {
+                order.splice(fromIndex, 1);
+                order.splice(toIndex, 0, sourceChar);
+                appState.meta.customOrder = order;
+                registrarAcao(); 
+            }
+        }
+        return false;
+    }
+
+    function handleDragEnd(e) {
+        this.classList.remove('dragging');
+    }
+
+    // --- FUNÇÕES BATCH ---
+    function executarBatch() {
+        const missionId = document.getElementById('batch-mission').value;
+        if(!missionId) { showToast("Selecione uma missão!"); return; }
+
+        const allMissions = [...missoesConfig.diarias, ...missoesConfig.semanais, ...missoesConfig.raids, ...missoesConfig.eventos];
+        const missionInfo = allMissions.find(m => m.id === missionId);
+
+        const today = new Date().getDay();
+        const isWeekend = (today === 5 || today === 6 || today === 0);
+        if(missionInfo.isWeekend && !isWeekend) {
+            showToast("Missão disponível apenas FDS!");
+            return;
+        }
+
+        Object.keys(appState.chars).forEach(charKey => {
+            appState.chars[charKey][missionId] = missionInfo.max;
+        });
+
+        registrarAcao();
+        // Usar nome traduzido no toast
+        const label = i18n[currentLang][missionInfo.key] || missionInfo.label;
+        showToast(`Todos completaram: ${label}`);
+    }
+
+    function resetarBatch() {
+        const missionId = document.getElementById('batch-mission').value;
+        if(!missionId) { showToast("Selecione uma missão para resetar!"); return; }
+
+        const allMissions = [...missoesConfig.diarias, ...missoesConfig.semanais, ...missoesConfig.raids, ...missoesConfig.eventos];
+        const missionInfo = allMissions.find(m => m.id === missionId);
+
+        Object.keys(appState.chars).forEach(charKey => {
+            appState.chars[charKey][missionId] = 0;
+        });
+
+        registrarAcao();
+        const label = i18n[currentLang][missionInfo.key] || missionInfo.label;
+        showToast(`Resetado: ${label}`);
     }
 
     // --- RENDER ---
@@ -612,31 +953,61 @@
         
         const today = new Date().getDay();
         const isWeekend = (today === 5 || today === 6 || today === 0);
+        const filterChar = document.getElementById('filter-char').value;
+        const sortOrder = appState.meta.sortOrder;
+        const langData = i18n[currentLang];
 
-        personagens.forEach(p => {
+        if(sortOrder === 'custom' && filterChar === 'todos') {
+            grid.classList.add('draggable-mode');
+        } else {
+            grid.classList.remove('draggable-mode');
+        }
+
+        const charList = getSortedChars();
+
+        charList.forEach(p => {
+            if(filterChar !== 'todos' && p.char !== filterChar) return;
+
             if(!appState.chars[p.char]) appState.chars[p.char] = {};
-            const html = `
-            <div class="char-card">
+            const atkTotal = getAtkFromProfile(p.char);
+            const atkBadge = atkTotal ? `<div class="char-atk">⚔️ ${atkTotal}</div>` : '';
+
+            const card = document.createElement('div');
+            card.className = 'char-card';
+            card.setAttribute('data-char', p.char);
+            
+            if(sortOrder === 'custom' && filterChar === 'todos') {
+                card.setAttribute('draggable', 'true');
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragover', handleDragOver);
+                card.addEventListener('drop', handleDrop);
+                card.addEventListener('dragend', handleDragEnd);
+            }
+
+            card.innerHTML = `
                 <div class="char-header">
                     <img src="../imagens/personagens/${p.char}.png" class="char-bg-img" onerror="this.style.display='none'">
                     <img src="../imagens/personagens/${p.char}.png" class="char-avatar" onerror="this.src='https://placehold.co/60x60/111/FFF?text=?'">
                     <div class="char-details">
                         <div class="char-name">${p.nome}</div>
-                        <span class="char-tag">${p.power}</span>
+                        <div class="char-info-row">
+                            <span class="char-tag">${p.power}</span>
+                            ${atkBadge}
+                        </div>
                     </div>
                 </div>
                 <div class="char-missions">
-                    <div class="cat-title">Diárias <span class="reset-info">03:00 AM</span></div>
+                    <div class="cat-title">${langData['cat_daily']} <span class="reset-info">${langData['reset_daily']}</span></div>
                     ${missoesConfig.diarias.map(m => renderMissionRow(p.char, m)).join('')}
-                    <div class="cat-title">Semanais <span class="reset-info">Qua 03:00</span></div>
+                    <div class="cat-title">${langData['cat_weekly']} <span class="reset-info">${langData['reset_weekly']}</span></div>
                     ${missoesConfig.semanais.map(m => renderMissionRow(p.char, m)).join('')}
-                    <div class="cat-title">Raid Vazio <span class="reset-info">Seg/Qua/Sex</span></div>
+                    <div class="cat-title">${langData['cat_raid']} <span class="reset-info">${langData['reset_raid']}</span></div>
                     ${missoesConfig.raids.map(m => renderMissionRow(p.char, m)).join('')}
-                    <div class="cat-title">Eventos <span class="reset-info">Fim de Semana</span></div>
+                    <div class="cat-title">${langData['cat_event']} <span class="reset-info">${langData['reset_event']}</span></div>
                     ${missoesConfig.eventos.map(m => renderMissionRow(p.char, m, isWeekend)).join('')}
-                </div>
-            </div>`;
-            grid.innerHTML += html;
+                </div>`;
+            
+            grid.appendChild(card);
         });
 
         updateGlobalProgress();
@@ -648,13 +1019,16 @@
         const blockedClass = (mission.isWeekend && !isWeekendOpen) ? 'row-blocked' : '';
         const weekendTag = (mission.isWeekend && !isWeekendOpen) ? '<span style="font-size:0.6rem; margin-left:5px">(Fechado)</span>' : '';
         
+        // Nome traduzido
+        const label = i18n[currentLang][mission.key] || mission.label;
+
         let pips = '';
         for(let i=1; i<=mission.max; i++) {
             const active = i <= val ? 'active' : '';
-            pips += `<div class="pip-small ${active}" onclick="toggleMission('${charKey}', '${mission.id}', ${i}, '${mission.label}')"></div>`;
+            pips += `<div class="pip-small ${active}" onclick="toggleMission('${charKey}', '${mission.id}', ${i}, '${label}')"></div>`;
         }
         return `<div class="mission-row ${isDone ? 'done' : ''} ${blockedClass}">
-            <span class="mission-name ${mission.isWeekend ? 'tag-weekend':''}">${mission.label}${weekendTag}</span>
+            <span class="mission-name ${mission.isWeekend ? 'tag-weekend':''}">${label}${weekendTag}</span>
             <div class="pips-container-small">${pips}</div></div>`;
     }
 
@@ -669,6 +1043,29 @@
         if(current === val) appState.chars[charKey][mId] = val - 1; 
         else { appState.chars[charKey][mId] = val; showToast(`${label} OK!`); }
         registrarAcao();
+    }
+
+    // --- NOVO: GERAR CARD (PRINT) ---
+    function gerarCardImagem() {
+        const area = document.body; 
+        const btn = document.querySelector('.btn-print');
+        const oldText = btn.innerText;
+        btn.innerText = "⏳ ...";
+        
+        html2canvas(document.querySelector('.grid-container'), {
+            backgroundColor: "#0b0b0b", 
+            scale: 2
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `Valhalla_Farm_${new Date().toISOString().slice(0,10)}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            btn.innerText = oldText;
+        }).catch(err => {
+            console.error(err);
+            alert("Erro ao gerar imagem.");
+            btn.innerText = oldText;
+        });
     }
 
     function showToast(msg) {
