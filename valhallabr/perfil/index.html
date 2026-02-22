@@ -707,28 +707,26 @@
     const opcoesLevel = Array.from({length:90},(_,i)=>(i+1).toString());
     const opcoesTower = Array.from({length:30},(_,i)=>(i+1).toString());
 
-    // --- LÓGICA DE OPÇÕES DINÂMICAS ---
-    function getOpcoesBerkas(birth) {
-        if(birth <= 10) return generateRangeWithOK(15); 
-        return generateRangeWithOK(12);
-    }
-    
-    function getOpcoesVazio(birth) {
-        if(birth <= 10) return generateRangeWithOK(10); 
-        return generateRangeWithOK(7);
-    }
+// --- LÓGICA DE OPÇÕES DINÂMICAS ---
+    function getOpcoesBerkas(birth) {
+        if(birth <= 10) return generateRangeWithOK(15); 
+        return generateRangeWithOK(12);
+    }
+    
+    function getOpcoesVazio(birth) {
+        if(birth <= 10) return generateRangeWithOK(10); 
+        return generateRangeWithOK(7);
+    }
 
-    function getOpcoesSR(birth) {
-        if(Number(birth) === 14) return generateRangeWithOK(2); 
-        if(birth <= 10) return generateRangeWithOK(15);
-        return generateRangeWithOK(12);
-    }
+    function getOpcoesSR(birth) {
+        // Corrigido: 0 a 12 + OK para todos os personagens
+        return generateRangeWithOK(12);
+    }
 
-    function getOpcoesVisual(birth) {
-        if(birth === 19) return generateRangeWithOK(2);
-        if(birth <= 15) return generateRangeWithOK(5);
-        return generateRangeWithOK(3);
-    }
+    function getOpcoesVisual(birth) {
+        // Corrigido: 0 a 2 + OK para todos os personagens
+        return generateRangeWithOK(2);
+    }
 
     const dadosIniciais = [
       {birth:1,char:"elesis",nome:"ELESIS",power:"MP"}, {birth:2,char:"lire",nome:"LIRE",power:"MP"},
