@@ -334,9 +334,9 @@
     </div>
     
     <nav class="main-nav">
-        <a href="../index.html" class="nav-link">⌂ <span data-lang="menu_home">Início</span></a>
-        <a href="../farm/index.html" class="nav-link">🚜 <span data-lang="menu_farm">Farm</span></a>
-        <a href="../titulos/index.html" class="nav-link">🏆 <span data-lang="menu_titles">Títulos</span></a>
+        <a href="https://alcateiavoleibol.com.br/valhallabr/" class="nav-link">⌂ <span data-lang="menu_home">Início</span></a>
+        <a href="../farm/" class="nav-link">🚜 <span data-lang="menu_farm">Farm</span></a>
+        <a href="../titulos/" class="nav-link">🏆 <span data-lang="menu_titles">Títulos</span></a>
         <a href="#" class="nav-link active">👤 <span data-lang="menu_profile">Perfil</span></a>
     </nav>
 
@@ -520,14 +520,17 @@
         "Caos": { en: "Chaos", es: "Caos", ko: "혼돈", fr: "Chaos" },
         
         // Rings
-        "Dimensão BI": { en: "Dimension I", es: "Dimensión I", ko: "차원 I", fr: "Dimension I" },
-        "Dimensão BII": { en: "Dimension II", es: "Dimensión II", ko: "차원 II", fr: "Dimension II" },
-        "Dimensão BIII": { en: "Dimension III", es: "Dimensión III", ko: "차원 III", fr: "Dimension III" },
-        "Infinito BI": { en: "Infinite I", es: "Infinito I", ko: "무한 I", fr: "Infini I" },
-        "Infinito BII": { en: "Infinite II", es: "Infinito II", ko: "무한 II", fr: "Infini II" },
-        "Infinito BIII": { en: "Infinite III", es: "Infinito III", ko: "무한 III", fr: "Infini III" },
-        "Incumprível III": { en: "Unfulfilled III", es: "Incumplible III", ko: "미완성 III", fr: "Inaccompli III" },
-        "Ciclo Infinito": { en: "Infinite Cycle", es: "Ciclo Infinito", ko: "무한의 순환", fr: "Cycle Infini" },
+        "Esmaecido I": { en: "Faded I", es: "Desvanecido I", ko: "빛바랜 I", fr: "Estompé I" },
+        "Forjado I": { en: "Forged I", es: "Forjado I", ko: "제련된 I", fr: "Forgé I" },
+        "Brilhante I": { en: "Brilliant I", es: "Brillante I", ko: "찬란한 I", fr: "Brillant I" },
+        "Esmaecido II": { en: "Faded II", es: "Desvanecido II", ko: "빛바랜 II", fr: "Estompé II" },
+        "Forjado II": { en: "Forged II", es: "Forjado II", ko: "제련된 II", fr: "Forgé II" },
+        "Brilhante II": { en: "Brilliant II", es: "Brillante II", ko: "찬란한 II", fr: "Brillant II" },
+        "Esmaecido III": { en: "Faded III", es: "Desvanecido III", ko: "빛바랜 III", fr: "Estompé III" },
+        "Forjado III": { en: "Forged III", es: "Forjado III", ko: "제련된 III", fr: "Forgé III" },
+        "Brilhante III": { en: "Brilliant III", es: "Brillante III", ko: "찬란한 III", fr: "Brillant III" },
+        "Incumprível III": { en: "Unfulfilled III", es: "Incumplible III", ko: "미완성 III", fr: "Inaccompli III" },
+        "Ciclo Infinito": { en: "Infinite Cycle", es: "Ciclo Infinito", ko: "무한의 순환", fr: "Cycle Infini" },
         
         // Earrings/Piercings
         "Chamas": { en: "Flames", es: "Llamas", ko: "화염", fr: "Flammes" },
@@ -696,7 +699,7 @@
     ];
 
     const opcoesClasse = ['1ª Classe','2ª Classe','3ª Classe','4ª Classe','Despertar'];
-    const opcoesAnel = ['Nenhum','Piupiu','Harkyon','Dimensão BI','Dimensão BII','Dimensão BIII','Infinito BI','Infinito BII','Infinito BIII','Incumprível III','Ciclo Infinito'];
+    const opcoesAnel = ['Nenhum','Piupiu','Harkyon','Esmaecido I','Forjado I','Brilhante I','Esmaecido II','Forjado II','Brilhante II','Esmaecido III','Forjado III','Brilhante III','Incumprível III','Ciclo Infinito'];
     const opcoesBrinco = ['Nenhum','Piupiu','Chamas','Gnosis','Fênix','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
     const opcoesPiercing = ['Nenhum','Piupiu','Guardiões I','Guardiões II','Guardiões III','Ordem','Caos'];
     const opcoesColar = ['Nenhum', 'Amor', 'Átropos', 'Energia Azul', 'Energia Vermelha', 'Fogo', 'Folhas da Vida', 'Gelo', 'Halloween', 'Luz', 'Morte', 'Rosas', 'Trovão', 'Vento'];
@@ -769,10 +772,10 @@
         // Regras Específicas (Meta/Ancestral - O melhor do jogo)
         if (['Ciclo Infinito', 'Caos', 'Apocalipse', 'Escuridão'].includes(nome)) return "rarity-meta";
 
-        // Regras Lendárias (Roxo)
-        if (['Fênix', 'Guardiões III', 'Ordem', 'Infinito BI', 'Infinito BII', 'Infinito BIII', 'Incumprível III', 'Dimensão BI', 'Dimensão BII', 'Dimensão BIII', 'Zoro'].includes(nome)) {
-            return "rarity-legend";
-        }
+       // Regras Lendárias (Roxo)
+        if (['Fênix', 'Guardiões III', 'Ordem', 'Esmaecido I', 'Forjado I', 'Brilhante I', 'Esmaecido II', 'Forjado II', 'Brilhante II', 'Esmaecido III', 'Forjado III', 'Brilhante III', 'Incumprível III', 'Zoro'].includes(nome)) {
+            return "rarity-legend";
+        }
         
         // Regras Épicas (Amarelo)
         if (['Gnosis', 'Chamas', 'Guardiões II', 'Harmonia', 'Consolação', 'Harkyon', 'Real', 'Sagitário'].includes(nome)) return "rarity-epic";
