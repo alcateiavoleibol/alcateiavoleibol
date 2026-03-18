@@ -339,8 +339,7 @@
     </nav>
 
     <div class="controls">
-       <!-- <button class="btn btn-print" onclick="gerarCardImagem()">📸 <span data-lang="btn_print">IMPRIMIR</span></button> -->
-        <button class="btn" onclick="downloadJSON()">💾 <span data-lang="btn_save">SALVAR</span></button>
+       <button class="btn" onclick="downloadJSON()">💾 <span data-lang="btn_save">SALVAR</span></button>
         <div class="btn btn-load"> 📂 <span data-lang="btn_load">CARREGAR</span>
             <input type="file" id="fileInput" accept=".json" onchange="uploadJSON(this)">
         </div>
@@ -551,9 +550,9 @@
         diarias: [
             { id: 'towerExt', key: 'm_towerExt', max: 3 },
             { id: 'covil', key: 'm_covil', max: 1 },
-            { id: 'calnat', key: 'm_calnat', max: 1 },
             { id: 'teroka', key: 'm_teroka', max: 1 },
-            { id: 'templo', key: 'm_templo', max: 1 }
+            { id: 'templo', key: 'm_templo', max: 1 },
+            { id: 'calnat', key: 'm_calnat', max: 1 }
         ],
         semanais: [
             { id: 'furnace', key: 'm_furnace', max: 3, resetDay: 3 },
@@ -789,13 +788,24 @@
         return null;
     }
 
+    // --- CONTROLE DE EVENTO ---
+    function isEventOpen() {
+        const now = new Date();
+        const day = now.getDay();
+        const time = now.getHours() * 60 + now.getMinutes(); // Tempo em minutos
+
+        if (day === 5 && time >= 480) return true; // Sexta a partir das 08:00
+        if (day === 6 || day === 0) return true;   // Sábado e Domingo o dia todo
+        if (day === 1 && time < 350) return true;  // Segunda até 05:50
+        return false;
+    }
+
     // --- CALCULO DE PROGRESSO INTELIGENTE ---
     function updateGlobalProgress() {
         let maxPoints = 3; 
         let currentPoints = parseInt(appState.account.claustro) || 0;
         
-        const today = new Date().getDay();
-        const isWeekend = (today === 0 || today === 5 || today === 6);
+        const isWeekend = isEventOpen();
 
         personagens.forEach(p => {
             const charData = appState.chars[p.char] || {};
@@ -904,8 +914,7 @@
         const allMissions = [...missoesConfig.diarias, ...missoesConfig.semanais, ...missoesConfig.raids, ...missoesConfig.eventos];
         const missionInfo = allMissions.find(m => m.id === missionId);
 
-        const today = new Date().getDay();
-        const isWeekend = (today === 5 || today === 6 || today === 0);
+        const isWeekend = isEventOpen();
         if(missionInfo.isWeekend && !isWeekend) {
             showToast("Missão disponível apenas FDS!");
             return;
@@ -951,8 +960,7 @@
         const grid = document.getElementById('char-grid');
         grid.innerHTML = '';
         
-        const today = new Date().getDay();
-        const isWeekend = (today === 5 || today === 6 || today === 0);
+        const isWeekend = isEventOpen();
         const filterChar = document.getElementById('filter-char').value;
         const sortOrder = appState.meta.sortOrder;
         const langData = i18n[currentLang];
